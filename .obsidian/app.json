@@ -1,0 +1,7 @@
+{
+  "strictLineBreaks": true,
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "absolute",
+  "showUnsupportedFiles": true,
+  "uriCallbacks": true
+}

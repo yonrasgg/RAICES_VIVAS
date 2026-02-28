@@ -1,0 +1,45 @@
+/* ============================================
+   Dashboard Hero Image — Raíces Vivas
+   Snippet para el vault de gestión de proyecto
+   ============================================ */
+
+/* Hero image styling for dashboard notes */
+.dashboard .markdown-preview-view .image-embed[alt="hero-banner"],
+.dashboard .markdown-preview-view img[alt="hero-banner"] {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  display: block;
+  margin: 0 auto 0.5em auto;
+}
+
+/* Overlay gradient for title readability */
+.dashboard .hero-container {
+  position: relative;
+  margin-bottom: 0.5em;
+}
+
+/* Title styling for dashboard */
+.dashboard .markdown-preview-view h1:first-of-type {
+  text-align: center;
+  font-size: 1.8em;
+  margin-top: 0.3em;
+}
+
+/* KPI callout boxes — compact and side-by-side feel */
+.dashboard .callout {
+  border-radius: 10px;
+}
+
+/* Quick action table — subtle styling */
+.dashboard table {
+  font-size: 0.92em;
+}
+
+/* Milestone table emphasis */
+.dashboard .markdown-preview-view table tr:nth-child(1) td:nth-child(4) {
+  font-weight: bold;
+}

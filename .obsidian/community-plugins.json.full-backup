@@ -1,0 +1,22 @@
+[
+  "dataview",
+  "templater-obsidian",
+  "obsidian-tasks-plugin",
+  "obsidian-kanban",
+  "calendar",
+  "mermaid-tools",
+  "table-editor-obsidian",
+  "obsidian-git",
+  "homepage",
+  "obsidian-linter",
+  "quickadd",
+  "multi-column-markdown",
+  "buttons",
+  "obsidian-banners",
+  "obsidian-meta-bind-plugin",
+  "obsidian-tracker",
+  "obsidian-projects",
+  "tag-wrangler",
+  "folder-notes",
+  "periodic-notes"
+]

@@ -1,0 +1,8 @@
+{
+  "cssTheme": "Shiba Inu",
+  "accentColor": "#5cf55f",
+  "baseFontSizeAction": true,
+  "enabledCssSnippets": [
+    "dashboard-hero"
+  ]
+}
