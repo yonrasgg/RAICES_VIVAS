@@ -9,7 +9,6 @@ tags:
   - dashboard
   - home
 ---
-
 # 🎛️ Raíces Vivas — Centro de Control
 
 > **Sistema Integral de Apoyo a Comunidades Indígenas**
