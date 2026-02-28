@@ -215,7 +215,7 @@ Dado el contexto indígena, se incorporan criterios mínimos para no vulnerar id
 - **Principio de minimización:** recolectar solo lo necesario para definir requerimientos.
 
 ---
-## ● Requerimientos Funcionales y No Funcionales
+## Requerimientos Funcionales y No Funcionales
 
 ### 1) WBS / EDT de Alto Nivel (orientada a requerimientos)
 

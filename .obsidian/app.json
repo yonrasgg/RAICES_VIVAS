@@ -3,5 +3,6 @@
   "alwaysUpdateLinks": true,
   "newLinkFormat": "absolute",
   "showUnsupportedFiles": true,
-  "uriCallbacks": true
+  "uriCallbacks": true,
+  "vimMode": false
 }

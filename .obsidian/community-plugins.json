@@ -13,7 +13,6 @@
   "buttons",
   "tag-wrangler",
   "folder-notes",
-  "breadcrumbs",
   "obsidian-charts",
   "obsidian-checklist-plugin",
   "highlightr-plugin",
@@ -22,6 +21,5 @@
   "obsidian-meta-bind-plugin",
   "obsidian-projects",
   "periodic-notes",
-  "obsidian-auto-link-title",
-  "obsidian-excalidraw-plugin"
+  "obsidian-auto-link-title"
 ]
