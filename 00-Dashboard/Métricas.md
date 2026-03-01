@@ -455,7 +455,8 @@ const risks = dv.pages('"01-Proyecto/Riesgos"').where(r => r.type === "risk");
 const headers = ["ID", "Riesgo", "Prob.", "Impacto", "Severidad", "Estado", "Responsable"];
 const rows = [];
 for (const r of risks.sort(r => r.severity, "desc")) {
-  const sevIcon = (r.severity >= 12) ? "🔴" : (r.severity >= 6) ? "🟡" : "🟢";
+  const sev = String(r.severity).toLowerCase();
+  const sevIcon = (sev === "crítico" || sev === "critico") ? "🔴" : (sev === "alto") ? "🔴" : (sev === "medio") ? "🟠" : (sev === "bajo") ? "🟡" : "⚪";
   rows.push([r.id, r.title, r.probability, r.impact, `${sevIcon} ${r.severity}`, r.status, r.owner]);
 }
 dv.table(headers, rows);
