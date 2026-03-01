@@ -1,4 +1,6 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-sprints.png"
+banner_src_y: 0.42
 type: sprint-review
 sprint: <% tp.system.prompt("Número de sprint (ej: 01)") %>
 date: <% tp.date.now("YYYY-MM-DD") %>
