@@ -38,7 +38,19 @@ tags:
 
 ## Decisiones Tomadas
 
+> **Formato:** `- [ ] Descripción de la decisión — Justificación breve`
+> **Promover a ADR formal:** Seleccionar la línea → `Ctrl+P` → `🏗️ Promover Decisión`
+> Cuando se promueve, reemplazar la línea por: `- [ ] [[ADR-XXX|Descripción]] — Justificación`
+
 - [ ] Decisión 1
+
+## Riesgos Identificados
+
+> **Formato:** `- [ ] Riesgo: descripción del riesgo`
+> **Promover a riesgo formal:** Seleccionar la línea → `Ctrl+P` → `⚠️ Promover Riesgo`
+> Cuando se promueve, reemplazar la línea por: `- [ ] [[RSK-XXX|Descripción del riesgo]]`
+
+- [ ] Riesgo: 
 
 ## Action Items
 

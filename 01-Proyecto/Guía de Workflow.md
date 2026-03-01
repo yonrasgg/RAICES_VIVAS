@@ -153,20 +153,22 @@ flowchart TD
 
 **Atajo:** `Ctrl+P` → escribe "QuickAdd"
 
-Tienes 9 macros pre-configuradas:
+Tienes **12 macros** pre-configuradas:
 
 | Macro | Qué Crea | Dónde |
 |-------|----------|-------|
-| **Nueva Tarea** | Nota de tarea con frontmatter completo | Te pregunta sprint y datos |
-| **Nuevo RF** | Requerimiento funcional | `03-Requerimientos/Funcionales/` |
-| **Nuevo RNF** | Requerimiento no funcional | `03-Requerimientos/No Funcionales/` |
-| **Nueva Minuta** | Acta de reunión | `07-Reuniones/` |
-| **Nuevo ADR** | Architecture Decision Record | `01-Proyecto/Decisiones/` |
-| **Nuevo Riesgo** | Entrada de riesgo | `01-Proyecto/Riesgos/` |
-| **Nueva Entrevista** | Guía de entrevista | `02-Investigación/Entrevistas/` |
-| **Nuevo Sprint Planning** | Nota de planning de sprint | `05-Sprints/Sprint-XX/` |
-| **Nuevo Sprint Review** | Nota de review de sprint | `05-Sprints/Sprint-XX/` |
+| **✅ Nueva Tarea** | Nota de tarea con Auto-ID | Te pregunta sprint y datos |
+| **📐 Nuevo RF** | Requerimiento funcional | `03-Requerimientos/Funcionales/` |
+| **📐 Nuevo RNF** | Requerimiento no funcional | `03-Requerimientos/No Funcionales/` |
+| **📝 Nueva Minuta** | Acta de reunión | `07-Reuniones/` |
+| **🏗️ Nuevo ADR** | Architecture Decision Record con Auto-ID | `01-Proyecto/Decisiones/` |
+| **⚠️ Nuevo Riesgo** | Riesgo con Auto-ID y severidad calculada | `01-Proyecto/Riesgos/` |
+| **🎙️ Nueva Entrevista** | Guía de entrevista | `02-Investigación/Entrevistas/` |
+| **🚀 Nuevo Sprint Planning** | Nota de planning de sprint | `05-Sprints/Sprint-XX/` |
+| **📋 Nuevo Sprint Review** | Nota de review de sprint | `05-Sprints/Sprint-XX/` |
 | **📋 Promover Action Item** | Tarea formal desde action item de minuta | Te pregunta sprint + pre-rellena datos |
+| **🏗️ Promover Decisión** | ADR formal desde decisión de minuta | `01-Proyecto/Decisiones/` (auto) |
+| **⚠️ Promover Riesgo** | Riesgo formal desde riesgo de minuta | `01-Proyecto/Riesgos/` (auto) |
 
 **Uso:**
 1. `Ctrl+P` → Escribir "QuickAdd" → Enter
@@ -263,26 +265,49 @@ attendees: [Geovanny, Elkin, Santiago]
 
 ```yaml
 type: risk
-id: RISK-XXX
+id: RSK-XXX                    # Auto-generado via dv.pages() + Templater
 title: "Descripción del riesgo"
-status: open | mitigated | closed
+status: open | mitigating | mitigated | occurred | closed | accepted
+category: técnico | alcance | recurso | calendario | calidad | externo | cultural | comunicación
 probability: alta | media | baja
 impact: alto | medio | bajo
-owner: Responsable
+severity: crítico | alto | medio | bajo    # Calculado automáticamente (prob × imp)
+strategy: mitigar | transferir | aceptar | evitar
+owner: Geovanny | Elkin | Santiago | Equipo
+module: educacion | saberes | salud | transversal | proyecto
+phase: investigación | análisis | ... | todas
+source: MIN-XXX | ""            # Minuta que originó este riesgo
+trigger: ""                     # Indicador de materialización inminente
+related_requirements: []        # RF/RNF afectados
+related_decisions: []           # ADRs vinculados
+review_date: YYYY-MM-DD         # Próxima fecha de revisión (auto: +14d)
 ```
+
+> **Auto-ID:** El campo `id` se calcula automáticamente (`RSK-XXX`). El archivo se renombra al ID.
+> **Severidad:** Se calcula automáticamente: `probabilidad × impacto` → crítico (≥6), alto (≥3), medio (≥2), bajo (1).
 
 #### ADR (`type: adr`)
 
 ```yaml
 type: adr
-id: "ADR-XXX"
+id: ADR-XXX                    # Auto-generado via dv.pages() + Templater
 title: "Decisión"
-status: proposed | accepted | deprecated
+status: proposed | accepted | deprecated | superseded
+category: arquitectura | tecnología | proceso | diseño | integración | seguridad | gobernanza | otro
+module: educacion | saberes | salud | transversal | proyecto
+impact: alto | medio | bajo
+deciders: [Geovanny, Elkin, Santiago]
+source: MIN-XXX | ""            # Minuta que originó esta decisión
 date: YYYY-MM-DD
-deciders: [Nombres]
+superseded_by: ""               # ID de ADR que reemplaza a este
+related_requirements: []        # RF/RNF afectados
+related_risks: []               # Riesgos vinculados
 ```
 
-> 📌 **Trazabilidad bidireccional:** Cada nota de requerimiento (RF y RNF) incluye una query Dataview al final que lista automáticamente todas las tareas vinculadas. Cada nota de tarea tiene un campo `requirement:` que referencia al requerimiento asociado.
+> **Auto-ID:** El campo `id` se calcula automáticamente (`ADR-XXX`). El archivo se renombra al ID.
+> **Superseded:** Cuando una decisión es reemplazada, se pone `status: superseded` y se llena `superseded_by: ADR-XXX`.
+
+> 📌 **Trazabilidad bidireccional completa:** Cada nota de requerimiento (RF y RNF) incluye una query Dataview al final que lista automáticamente todas las tareas vinculadas. Cada nota de tarea tiene un campo `requirement:` que referencia al requerimiento asociado. Las decisiones y riesgos se interconectan entre sí y con los requerimientos que afectan.
 
 ---
 
@@ -1043,5 +1068,5 @@ El Dashboard Home tiene 7 botones precreados:
 
 *Guía creada: 2026-02-27 · Última actualización: 2026-03-01*
 *Equipo: Geovanny (Project Lead) · Elkin (Líder Investigación — SAB) · Santiago (Líder QA — SAL)*
-*Versión: 4.0 — Auto-ID de tareas, promoción de Action Items, trazabilidad bidireccional completa, diagrama de ciclo de vida*
+*Versión: 5.0 — Auto-ID de tareas/decisiones/riesgos, promoción de Action Items + Decisiones + Riesgos, trazabilidad bidireccional completa, gestión de decisiones y riesgos*
 *Revisar y actualizar cada sprint*

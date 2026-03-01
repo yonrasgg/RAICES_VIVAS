@@ -1,9 +1,12 @@
 <%*
 // ══════════════════════════════════════════════════════════════
-// 🏗️ Nuevo ADR (Architecture Decision Record)
+// 🏗️ Promover Decisión desde Minuta → ADR Formal
 // ══════════════════════════════════════════════════════════════
-// Auto-ID: ADR-XXX calculado via dv.pages()
-// Destino: 01-Proyecto/Decisiones/
+// Uso: Desde una minuta, seleccionar el texto de la decisión
+//      y ejecutar QuickAdd → "🏗️ Promover Decisión"
+//
+// Formato esperado en la minuta:
+//   - [ ] Decisión tomada — Justificación breve
 // ══════════════════════════════════════════════════════════════
 
 // ── Auto-ID: calcula el siguiente ADR-XXX consecutivo ──
@@ -12,8 +15,31 @@ const ids = adrPages.map(p => parseInt(String(p.id).replace("ADR-", ""))).filter
 const maxId = ids.length > 0 ? Math.max(...ids) : 0;
 const nextId = `ADR-${String(maxId + 1).padStart(3, "0")}`;
 
-// ── Prompts del usuario ──
-const title = await tp.system.prompt("Título de la decisión");
+// ── Extraer datos de la línea seleccionada ──
+const selection = tp.file.selection || "";
+let extractedTitle = "";
+
+if (selection) {
+  let clean = selection.replace(/^-\s*\[.\]\s*/, "").trim();
+  // Quitar emojis comunes
+  clean = clean.replace(/[📅✅❌⏫🔺🔼🔽⏬🏗️⚠️]\s*/g, "").trim();
+  extractedTitle = clean;
+}
+
+// ── Detectar minuta activa como source ──
+const activeFile = tp.config.active_file;
+let detectedSource = "";
+if (activeFile && activeFile.path.includes("07-Reuniones")) {
+  const cache = app.metadataCache.getFileCache(activeFile);
+  if (cache && cache.frontmatter && cache.frontmatter.id) {
+    detectedSource = cache.frontmatter.id;
+  } else {
+    detectedSource = activeFile.basename;
+  }
+}
+
+// ── Prompts (con valores pre-rellenados) ──
+const title = await tp.system.prompt("Título de la decisión", extractedTitle);
 const status = await tp.system.suggester(
   ["proposed", "accepted", "deprecated", "superseded"],
   ["proposed", "accepted", "deprecated", "superseded"],
@@ -29,18 +55,13 @@ const module_ = await tp.system.suggester(
   ["educacion", "saberes", "salud", "transversal", "proyecto"],
   false, "Módulo afectado"
 );
-const deciders = await tp.system.prompt("Decisores (separados por coma)", "Geovanny, Elkin, Santiago");
 const impact = await tp.system.suggester(
   ["alto", "medio", "bajo"],
   ["alto", "medio", "bajo"],
   false, "Impacto"
 );
-const source = await tp.system.prompt("Origen (ej: MIN-001, Sprint-02 o vacío)", "");
+const source = await tp.system.prompt("Minuta origen", detectedSource);
 const today = tp.date.now("YYYY-MM-DD");
-
-// ── Parsear decisores a array ──
-const decidersArray = deciders.split(",").map(d => d.trim()).filter(d => d);
-const decidersYaml = decidersArray.map(d => `\n  - "${d}"`).join("");
 
 // ── Renombrar archivo al ID ──
 await tp.file.rename(nextId);
@@ -53,7 +74,10 @@ status: <% status %>
 category: <% category %>
 module: <% module_ %>
 impact: <% impact %>
-deciders:<% decidersYaml %>
+deciders:
+  - "Geovanny"
+  - "Elkin"
+  - "Santiago"
 source: "<% source %>"
 date: <% today %>
 superseded_by: ""
@@ -79,7 +103,7 @@ tags:
 
 ## Contexto
 
-> ¿Cuál es el problema o la decisión que necesitamos tomar? ¿Qué lo motivó?
+> Decisión originada en [[<% source %>]].
 
 ## Opciones Consideradas
 
@@ -87,11 +111,10 @@ tags:
 |---|--------|------|---------|
 | 1 | **Opción A** | | |
 | 2 | **Opción B** | | |
-| 3 | **Opción C** | | |
 
 ## Decisión
 
-> ¿Qué decidimos y por qué? Justificación técnica y de negocio.
+> ¿Qué decidimos y por qué?
 
 **Opción seleccionada:** 
 
@@ -109,30 +132,20 @@ tags:
 
 - 
 
-## Criterios de Evaluación
-
-| Criterio | Peso | Opción A | Opción B | Opción C |
-|----------|------|----------|----------|----------|
-| | | | | |
-
 ## Requerimientos Relacionados
-
-> Vincular los RF/RNF que esta decisión afecta
 
 - [[]]
 
 ## Riesgos Relacionados
 
-> Vincular los riesgos que esta decisión mitiga o introduce
-
 - [[]]
 
 ## Referencias
 
-- 
+- [[<% source %>]]
 
 ## Historial de Cambios
 
 | Fecha | Cambio | Autor |
 |-------|--------|-------|
-| <% today %> | Creación | |
+| <% today %> | Creación (desde [[<% source %>]]) | |

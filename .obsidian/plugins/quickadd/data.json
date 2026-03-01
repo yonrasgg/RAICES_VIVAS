@@ -218,6 +218,50 @@
         "direction": "vertical",
         "focus": true
       }
+    },
+    {
+      "id": "qa-promote-decision",
+      "name": "🏗️ Promover Decisión",
+      "type": "Template",
+      "command": true,
+      "templatePath": "99-Templates/_template-adr-from-minuta.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{VALUE}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": ["01-Proyecto/Decisiones"],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      }
+    },
+    {
+      "id": "qa-promote-risk",
+      "name": "⚠️ Promover Riesgo",
+      "type": "Template",
+      "command": true,
+      "templatePath": "99-Templates/_template-riesgo-from-minuta.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{VALUE}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": ["01-Proyecto/Riesgos"],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      }
     }
   ],
   "inputPrompt": "single-line",

@@ -1,9 +1,12 @@
 <%*
 // ══════════════════════════════════════════════════════════════
-// ⚠️ Nuevo Riesgo
+// ⚠️ Promover Riesgo desde Minuta → Riesgo Formal
 // ══════════════════════════════════════════════════════════════
-// Auto-ID: RSK-XXX calculado via dv.pages()
-// Destino: 01-Proyecto/Riesgos/
+// Uso: Desde una minuta, seleccionar el texto del riesgo
+//      y ejecutar QuickAdd → "⚠️ Promover Riesgo"
+//
+// Formato esperado en la minuta:
+//   - [ ] Riesgo: descripción del riesgo
 // ══════════════════════════════════════════════════════════════
 
 // ── Auto-ID: calcula el siguiente RSK-XXX consecutivo ──
@@ -12,8 +15,33 @@ const ids = riskPages.map(p => parseInt(String(p.id).replace("RSK-", "").replace
 const maxId = ids.length > 0 ? Math.max(...ids) : 0;
 const nextId = `RSK-${String(maxId + 1).padStart(3, "0")}`;
 
-// ── Prompts del usuario ──
-const title = await tp.system.prompt("Título del riesgo");
+// ── Extraer datos de la línea seleccionada ──
+const selection = tp.file.selection || "";
+let extractedTitle = "";
+
+if (selection) {
+  let clean = selection.replace(/^-\s*\[.\]\s*/, "").trim();
+  // Quitar prefijo "Riesgo:" si existe
+  clean = clean.replace(/^[Rr]iesgo:\s*/i, "").trim();
+  // Quitar emojis comunes
+  clean = clean.replace(/[📅✅❌⏫🔺🔼🔽⏬⚠️🏗️]\s*/g, "").trim();
+  extractedTitle = clean;
+}
+
+// ── Detectar minuta activa como source ──
+const activeFile = tp.config.active_file;
+let detectedSource = "";
+if (activeFile && activeFile.path.includes("07-Reuniones")) {
+  const cache = app.metadataCache.getFileCache(activeFile);
+  if (cache && cache.frontmatter && cache.frontmatter.id) {
+    detectedSource = cache.frontmatter.id;
+  } else {
+    detectedSource = activeFile.basename;
+  }
+}
+
+// ── Prompts (con valores pre-rellenados) ──
+const title = await tp.system.prompt("Título del riesgo", extractedTitle);
 const category = await tp.system.suggester(
   ["técnico", "alcance", "recurso", "calendario", "calidad", "externo", "cultural", "comunicación"],
   ["técnico", "alcance", "recurso", "calendario", "calidad", "externo", "cultural", "comunicación"],
@@ -51,12 +79,7 @@ const module_ = await tp.system.suggester(
   ["educacion", "saberes", "salud", "transversal", "proyecto"],
   false, "Módulo afectado"
 );
-const phase = await tp.system.suggester(
-  ["investigación", "análisis", "requerimientos", "diseño", "implementación", "testing", "gestión", "todas"],
-  ["investigación", "análisis", "requerimientos", "diseño", "implementación", "testing", "gestión", "todas"],
-  false, "Fase del proyecto"
-);
-const source = await tp.system.prompt("Origen (ej: MIN-001, Sprint review, o vacío)", "");
+const source = await tp.system.prompt("Minuta origen", detectedSource);
 const today = tp.date.now("YYYY-MM-DD");
 
 // ── Renombrar archivo al ID ──
@@ -74,7 +97,7 @@ severity: <% severity %>
 strategy: <% strategy %>
 owner: "<% owner %>"
 module: <% module_ %>
-phase: <% phase %>
+phase: gestión
 source: "<% source %>"
 trigger: ""
 related_requirements: []
@@ -101,28 +124,23 @@ tags:
 
 ## Descripción
 
-> ¿Qué podría salir mal? Descripción clara y específica del riesgo.
+> Riesgo identificado en [[<% source %>]].
 
 ## Causa Raíz
 
-> ¿Por qué podría ocurrir? Identificar las causas subyacentes.
+> ¿Por qué podría ocurrir?
 
 - 
 
 ## Impacto Detallado
-
-> ¿Qué consecuencias tendría si se materializa?
 
 | Dimensión | Descripción del Impacto |
 |-----------|------------------------|
 | **Alcance** | |
 | **Calendario** | |
 | **Calidad** | |
-| **Recursos** | |
 
 ## Trigger (Indicador de Alerta)
-
-> ¿Qué señales indicarían que el riesgo está por materializarse?
 
 - 
 
@@ -142,13 +160,9 @@ tags:
 
 ## Requerimientos Relacionados
 
-> RF/RNF que podrían verse afectados
-
 - [[]]
 
 ## Decisiones Relacionadas
-
-> ADRs vinculados (que mitigan o introducen este riesgo)
 
 - [[]]
 
@@ -156,10 +170,10 @@ tags:
 
 | Fecha | Observación | Prob. | Imp. | Acción Tomada |
 |-------|-------------|-------|------|---------------|
-| <% today %> | Identificado | <% probability %> | <% impact %> | Monitorear |
+| <% today %> | Identificado en [[<% source %>]] | <% probability %> | <% impact %> | Monitorear |
 
 ## Historial de Cambios
 
 | Fecha | Cambio | Autor |
 |-------|--------|-------|
-| <% today %> | Creación | <% owner %> |
+| <% today %> | Creación (desde [[<% source %>]]) | <% owner %> |
