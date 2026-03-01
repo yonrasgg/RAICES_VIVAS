@@ -567,7 +567,6 @@ LIMIT 10
 
 ### 8.3 Gantt con Mermaid (embebido)
 
-````markdown
 ```mermaid
 gantt
     title Raíces Vivas - Roadmap
@@ -593,7 +592,6 @@ gantt
     Testing y refinamiento        :         c4, 2026-05-15, 2026-05-30
     Entrega Final                 :milestone, m3, 2026-05-30, 0d
 ```
-````
 
 ---
 
@@ -630,7 +628,7 @@ gantt
 
 **Flujo de sincronización:**
 ```
-Integrante 1 (VS Code/Obsidian) → commit → push → GitHub (repo privado)
+Integrante 1 (Obsidian) → commit → push → GitHub (repo privado)
 Integrante 2 (Obsidian)          → pull  → edita → push ↑
 Integrante 3 (github.dev)        → edita directamente en navegador ↑
 ```
