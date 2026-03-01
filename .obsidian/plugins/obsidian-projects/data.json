@@ -63,18 +63,25 @@
               "priority",
               "kanban-plugin",
               "assignee",
-              "actor",
-              "author"
+              "author",
+              "created",
+              "completed",
+              "due",
+              "id"
             ],
-            "columns": {
-              "No status": {
-                "weight": 0
-              }
-            }
+            "groupByField": "status",
+            "columnWidth": 20
           },
           "filter": {
             "conjunction": "and",
-            "conditions": []
+            "conditions": [
+              {
+                "field": "tags",
+                "operator": "has-keyword",
+                "enabled": true,
+                "value": "tarea"
+              }
+            ]
           },
           "colors": {
             "conditions": []
@@ -105,7 +112,12 @@
           "type": "calendar"
         },
         {
-          "config": {},
+          "config": {
+            "fitStyle": "contain",
+            "includeFields": [
+              "assignee"
+            ]
+          },
           "filter": {
             "conjunction": "and",
             "conditions": []
