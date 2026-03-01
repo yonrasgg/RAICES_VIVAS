@@ -55,8 +55,8 @@ const proposed = adrs.where(d => d.status === "proposed").length;
 // Horas (estimadas vs reales)
 let estHours = 0, actHours = 0, doneEstH = 0, doneActH = 0;
 for (const t of tasks.where(t => t.effort)) {
-  const est = parseInt(String(t.effort)) || 0;
-  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const est = ((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort);
+  const act = t.effort_actual ? (((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort_actual)) : 0;
   estHours += est;
   actHours += act || est;
   if (t.status === "done") { doneEstH += est; doneActH += act || est; }
@@ -70,8 +70,8 @@ const defectRate = total > 0 ? Math.round((blocked / total) * 100) : 0;
 const tarifas = { "Geovanny": 12248.23, "Elkin": 12248.23, "Santiago": 12248.23 };
 let estCost = 0, actCost = 0;
 for (const t of tasks.where(t => t.effort)) {
-  const est = parseInt(String(t.effort)) || 0;
-  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const est = ((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort);
+  const act = t.effort_actual ? (((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort_actual)) : 0;
   const tarifa = tarifas[t.assignee] || 5000;
   estCost += est * tarifa;
   actCost += (act || est) * tarifa;
@@ -225,8 +225,8 @@ for (const t of tasks) {
   const a = t.assignee || "Sin asignar";
   if (!people[a]) people[a] = { total: 0, done: 0, inProgress: 0, todo: 0, estH: 0, actH: 0 };
   people[a].total++;
-  const est = parseInt(String(t.effort)) || 0;
-  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const est = ((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort);
+  const act = t.effort_actual ? (((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort_actual)) : 0;
   people[a].estH += est;
   people[a].actH += act || est;
   if (t.status === "done") people[a].done++;
@@ -482,8 +482,8 @@ SORT id ASC
 > const costos = {};
 > for (const t of tasks) {
 >   const person = t.assignee || "Sin asignar";
->   const est = parseInt(String(t.effort)) || 0;
->   const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+>   const est = ((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort);
+>   const act = t.effort_actual ? (((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort_actual)) : 0;
 >   const hours = act || est;
 >   const tarifa = tarifas[person] || 5000;
 >   if (!costos[person]) costos[person] = { estH: 0, actH: 0, estCost: 0, actCost: 0 };

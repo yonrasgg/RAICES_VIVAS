@@ -150,8 +150,8 @@ for (const t of tasks) {
   const a = t.assignee || "Sin asignar";
   if (!people[a]) people[a] = {total: 0, done: 0, inProgress: 0, todo: 0, estH: 0, actH: 0, doneEstH: 0, doneActH: 0};
   people[a].total++;
-  const est = parseInt(String(t.effort)) || 0;
-  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const est = ((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort);
+  const act = t.effort_actual ? (((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort_actual)) : 0;
   const real = act || est;
   people[a].estH += est;
   people[a].actH += real;
@@ -279,7 +279,7 @@ const reworkRate = total > 0 ? ((review / total) * 100).toFixed(1) : 0; // % en 
 // Cycle time estimado (promedio horas por tarea completada)
 const doneTasks = tasks.where(t => t.status === "done" && t.effort);
 let totalEffort = 0;
-for (const t of doneTasks) totalEffort += t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : (parseInt(String(t.effort)) || 0);
+for (const t of doneTasks) totalEffort += t.effort_actual ? (((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort_actual)) : (((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort));
 const avgCycleTime = doneTasks.length > 0 ? (totalEffort / doneTasks.length).toFixed(1) : "N/A";
 
 dv.table(
@@ -384,8 +384,8 @@ for (const t of tasks) {
   const s = String(t.sprint);
   if (!sprints[s]) sprints[s] = { planned: 0, done: 0, points: 0, donePoints: 0 };
   sprints[s].planned++;
-  const estPts = parseInt(String(t.effort)) || 1;
-  const actPts = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const estPts = ((v) => { if (!v) return 1; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 1; })(t.effort);
+  const actPts = t.effort_actual ? (((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort_actual)) : 0;
   const pts = actPts || estPts;
   sprints[s].points += estPts;
   if (t.status === "done") {
@@ -481,8 +481,8 @@ const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.effort)
 const costos = {};
 for (const t of tasks) {
   const person = t.assignee || "Sin asignar";
-  const est = parseInt(String(t.effort)) || 0;
-  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const est = ((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort);
+  const act = t.effort_actual ? (((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort_actual)) : 0;
   const hours = act || est;
   const tarifa = tarifas[person] || 5000;
   if (!costos[person]) costos[person] = { estH: 0, actH: 0, estCost: 0, actCost: 0 };
