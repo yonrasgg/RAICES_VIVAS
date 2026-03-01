@@ -19,131 +19,74 @@ banner_src_x: 0.47714
 
 ## 📊 Indicadores Clave (KPIs)
 
-=== start-multi-column: kpi-panel
-```column-settings
-number of columns: 4
-border: off
-shadow: off
+```dataviewjs
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const done = tasks.where(t => t.status === "done").length;
+const total = tasks.length;
+const pct = total > 0 ? Math.round((done/total)*100) : 0;
+
+// Sprint actual
+const groups = {};
+for (const t of tasks.where(t => t.sprint)) {
+  const s = String(t.sprint);
+  if (!groups[s]) groups[s] = { active: 0, done: 0, total: 0 };
+  groups[s].total++;
+  if (t.status === "done") groups[s].done++;
+  else groups[s].active++;
+}
+const sorted = Object.keys(groups).sort();
+let current = sorted[sorted.length - 1] || "N/A";
+for (const s of sorted) { if (groups[s].active > 0) { current = s; break; } }
+const g = groups[current] || { done: 0, total: 0 };
+
+// Requerimientos
+const rf = dv.pages('"03-Requerimientos/Funcionales"').where(r => r.type === "requirement/functional").length;
+const rnf = dv.pages('"03-Requerimientos/No Funcionales"').where(r => r.type === "requirement/non-functional").length;
+
+// Riesgos
+const risks = dv.pages('"01-Proyecto/Riesgos"').where(r => r.type === "risk");
+const openRisks = risks.where(r => r.status === "open").length;
+
+// ADR
+const adrs = dv.pages('"01-Proyecto/Decisiones"').where(d => d.type === "adr");
+const accepted = adrs.where(d => d.status === "accepted").length;
+const proposed = adrs.where(d => d.status === "proposed").length;
+
+// Horas
+let totalHours = 0, doneHours = 0;
+for (const t of tasks.where(t => t.effort)) {
+  const h = parseInt(String(t.effort)) || 0;
+  totalHours += h;
+  if (t.status === "done") doneHours += h;
+}
+
+// Calidad
+const blocked = tasks.where(t => t.status === "blocked").length;
+const defectRate = total > 0 ? Math.round((blocked / total) * 100) : 0;
+
+// Finanzas
+const tarifas = { "Geovanny": 7500, "Elkin": 6000, "Santiago": 6000 };
+let totalCost = 0;
+for (const t of tasks.where(t => t.effort)) {
+  const h = parseInt(String(t.effort)) || 0;
+  const tarifa = tarifas[t.assignee] || 5000;
+  totalCost += h * tarifa;
+}
+
+dv.table(
+  ["📊 Indicador", "Valor", "Detalle"],
+  [
+    ["🎯 Progreso General", `**${pct}%** (${done}/${total})`, pct >= 80 ? "🟢" : pct >= 50 ? "🟡" : "🔴"],
+    ["✅ Sprint Actual", `**${current}**`, `${g.done}/${g.total} completadas`],
+    ["📋 Requerimientos", `**${rf + rnf}** total`, `${rf} RF · ${rnf} RNF`],
+    ["⚠️ Riesgos", openRisks > 0 ? `**${openRisks}** abierto(s)` : "✅ Bajo control", `${risks.length} registrados`],
+    ["🏗️ Decisiones (ADR)", `**${accepted}** aceptadas`, `${proposed} propuestas · ${adrs.length} total`],
+    ["⏱️ Horas", `**${doneHours}h** completadas`, `${totalHours}h planificadas`],
+    ["🎯 Calidad (LSS)", `Defectos: **${defectRate}%**`, `Throughput: **${done}** tareas`],
+    ["💰 Finanzas", `₡${totalCost.toLocaleString()}`, `~$${Math.round(totalCost / 535).toLocaleString()} USD`]
+  ]
+);
 ```
-
-> [!abstract]+ 🎯 Progreso General
-> ```dataviewjs
-> const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
-> const done = tasks.where(t => t.status === "done").length;
-> const total = tasks.length;
-> const pct = total > 0 ? Math.round((done/total)*100) : 0;
-> const bar = "█".repeat(Math.round(pct/5)) + "░".repeat(20 - Math.round(pct/5));
-> dv.paragraph(`## ${pct}%`);
-> dv.paragraph(`\`${bar}\` ${done}/${total}`);
-> ```
-
-=== end-column ===
-
-> [!tip]+ ✅ Sprint Actual
-> ```dataviewjs
-> const sprints = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.sprint);
-> const groups = {};
-> for (const t of sprints) {
->   const s = String(t.sprint);
->   if (!groups[s]) groups[s] = { active: 0, done: 0, total: 0 };
->   groups[s].total++;
->   if (t.status === "done") groups[s].done++;
->   else groups[s].active++;
-> }
-> const sorted = Object.keys(groups).sort();
-> let current = sorted[sorted.length - 1] || "N/A";
-> for (const s of sorted) { if (groups[s].active > 0) { current = s; break; } }
-> const g = groups[current] || { done: 0, total: 0 };
-> dv.paragraph(`**${g.done}/${g.total}** completadas`);
-> dv.paragraph(`${current}`);
-> ```
-
-=== end-column ===
-
-> [!info]+ 📋 Requerimientos
-> ```dataviewjs
-> const rf = dv.pages('"03-Requerimientos/Funcionales"').where(r => r.type === "requirement/functional").length;
-> const rnf = dv.pages('"03-Requerimientos/No Funcionales"').where(r => r.type === "requirement/non-functional").length;
-> dv.paragraph(`**${rf}** RF · **${rnf}** RNF`);
-> dv.paragraph(`**${rf + rnf}** total`);
-> ```
-
-=== end-column ===
-
-> [!warning]+ ⚠️ Riesgos Abiertos
-> ```dataviewjs
-> const risks = dv.pages('"01-Proyecto/Riesgos"').where(r => r.type === "risk");
-> const open = risks.where(r => r.status === "open").length;
-> const total = risks.length;
-> dv.paragraph(open > 0 ? `**${open}** abierto(s) / ${total}` : `✅ Bajo control`);
-> ```
-
-=== end-multi-column
-
-=== start-multi-column: kpi-panel-row2
-```column-settings
-number of columns: 4
-border: off
-shadow: off
-```
-
-> [!example]+ 🏗️ Decisiones (ADR)
-> ```dataviewjs
-> const adrs = dv.pages('"01-Proyecto/Decisiones"').where(d => d.type === "adr");
-> const accepted = adrs.where(d => d.status === "accepted").length;
-> const proposed = adrs.where(d => d.status === "proposed").length;
-> dv.paragraph(`**${accepted}** aceptadas`);
-> dv.paragraph(`**${proposed}** propuestas · ${adrs.length} total`);
-> ```
-
-=== end-column ===
-
-> [!quote]+ ⏱️ Horas Invertidas
-> ```dataviewjs
-> const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.effort);
-> let totalHours = 0;
-> let doneHours = 0;
-> for (const t of tasks) {
->   const h = parseInt(String(t.effort)) || 0;
->   totalHours += h;
->   if (t.status === "done") doneHours += h;
-> }
-> dv.paragraph(`**${doneHours}h** completadas`);
-> dv.paragraph(`${totalHours}h planificadas`);
-> ```
-
-=== end-column ===
-
-> [!success]+ 🎯 Calidad (LSS)
-> ```dataviewjs
-> const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
-> const total = tasks.length;
-> const done = tasks.where(t => t.status === "done").length;
-> const blocked = tasks.where(t => t.status === "blocked").length;
-> const defectRate = total > 0 ? Math.round((blocked / total) * 100) : 0;
-> const throughput = done;
-> dv.paragraph(`Defectos: **${defectRate}%**`);
-> dv.paragraph(`Throughput: **${throughput}** tareas`);
-> ```
-
-=== end-column ===
-
-> [!bug]+ 💰 Finanzas
-> ```dataviewjs
-> const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.effort);
-> const tarifas = { "Geovanny": 7500, "Elkin": 6000, "Santiago": 6000 };
-> let totalCost = 0;
-> for (const t of tasks) {
->   const h = parseInt(String(t.effort)) || 0;
->   const person = t.assignee || "";
->   const tarifa = tarifas[person] || 5000;
->   totalCost += h * tarifa;
-> }
-> dv.paragraph(`₡${totalCost.toLocaleString()}`);
-> dv.paragraph(`~$${Math.round(totalCost / 535).toLocaleString()} USD`);
-> ```
-
-=== end-multi-column
 
 ---
 
@@ -237,10 +180,48 @@ color default
 
 === end-multi-column
 
-> [!abstract]+ ⚡ Acciones Avanzadas
-> | 📋 Promover Action Item | 🏗️ Promover Decisión | ⚠️ Promover Riesgo | 💰 [[01-Proyecto/Finanzas\|Finanzas]] |
-> |:---:|:---:|:---:|:---:|
-> | *QuickAdd macro* | *QuickAdd macro* | *QuickAdd macro* | *Enlace directo* |
+=== start-multi-column: quick-actions-row3
+```column-settings
+number of columns: 4
+border: off
+shadow: off
+```
+
+```button
+name 📋 Promover Action Item
+type command
+action QuickAdd: Run QuickAdd
+color blue
+```
+
+=== end-column ===
+
+```button
+name 🏗️ Promover Decisión
+type command
+action QuickAdd: Run QuickAdd
+color purple
+```
+
+=== end-column ===
+
+```button
+name ⚠️ Promover Riesgo
+type command
+action QuickAdd: Run QuickAdd
+color yellow
+```
+
+=== end-column ===
+
+```button
+name 💰 Finanzas
+type link
+action [[01-Proyecto/Finanzas]]
+color green
+```
+
+=== end-multi-column
 
 > **12 macros disponibles en QuickAdd:** Nueva Tarea · Nueva Minuta · Nuevo RF · Nuevo RNF · Nuevo Riesgo · Nuevo ADR · Entrevista · Sprint Planning · Sprint Review · 📋 Promover Action Item · 🏗️ Promover Decisión · ⚠️ Promover Riesgo
 
@@ -258,7 +239,7 @@ width: 50%
 labelColors: true
 ```
 
-> *Los datos del gráfico estático son referencia; la tabla dinámica abajo se actualiza en tiempo real.*
+> *Gráfico de referencia. La tabla dinámica abajo muestra datos en tiempo real.*
 
 ```dataviewjs
 const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
@@ -326,51 +307,38 @@ dv.table(headers, rows);
 
 ## 🗺️ Navegación del Proyecto
 
-=== start-multi-column: nav-panel
-```column-settings
-number of columns: 3
-border: off
-shadow: off
-```
+> [!tip]+ 📁 Gobierno y Gestión
+> - 👥 [[01-Proyecto/Equipo|Equipo]]
+> - 📜 [[01-Proyecto/Charter|Charter]]
+> - 🎯 [[01-Proyecto/Alcance|Alcance]]
+> - 👤 [[01-Proyecto/Stakeholders|Stakeholders]]
+> - 📖 [[01-Proyecto/Glosario|Glosario]]
+> - 📋 [[01-Proyecto/Plan de Gestión|Plan de Gestión]]
+> - 📕 [[01-Proyecto/Guía de Workflow|Guía de Workflow]]
+> - 🚀 [[01-Proyecto/Onboarding|Onboarding]]
+> - 💰 [[01-Proyecto/Finanzas|Finanzas]]
+> - 🗂️ [[01-Proyecto/Decisiones/|Decisiones (ADR)]]
+> - ⚠️ [[01-Proyecto/Riesgos/|Riesgos (RSK)]]
 
-### 📁 Gobierno y Gestión
-- 👥 [[01-Proyecto/Equipo|Equipo]]
-- 📜 [[01-Proyecto/Charter|Charter]]
-- 🎯 [[01-Proyecto/Alcance|Alcance]]
-- 👤 [[01-Proyecto/Stakeholders|Stakeholders]]
-- 📖 [[01-Proyecto/Glosario|Glosario]]
-- 📋 [[01-Proyecto/Plan de Gestión|Plan de Gestión]]
-- 📕 [[01-Proyecto/Guía de Workflow|Guía de Workflow]]
-- 🚀 [[01-Proyecto/Onboarding|Onboarding]]
-- 💰 [[01-Proyecto/Finanzas|Finanzas]]
-- 🗂️ [[01-Proyecto/Decisiones/|Decisiones (ADR)]]
-- ⚠️ [[01-Proyecto/Riesgos/|Riesgos (RSK)]]
+> [!example]+ 📐 Técnico y Arquitectura
+> - 📐 [[03-Requerimientos/_RTM|RTM — Trazabilidad]]
+> - 🏗️ [[04-Arquitectura/WBS|WBS]]
+> - 🏗️ [[04-Arquitectura/Visión General|Arquitectura General]]
+> - 🏗️ [[04-Arquitectura/Modelo de Datos|Modelo de Datos]]
+> - 💻 [[04-Arquitectura/Stack Tecnológico|Stack Tecnológico]]
+> - 📊 [[00-Dashboard/Roadmap|Roadmap / Gantt]]
+> - 📈 [[00-Dashboard/Métricas|Métricas de Avance]]
+> - ✅ [[09-QA/README|QA — Calidad]]
 
-=== end-column ===
-
-### 📐 Técnico y Arquitectura
-- 📐 [[03-Requerimientos/_RTM|RTM — Trazabilidad]]
-- 🏗️ [[04-Arquitectura/WBS|WBS]]
-- 🏗️ [[04-Arquitectura/Visión General|Arquitectura General]]
-- 🏗️ [[04-Arquitectura/Modelo de Datos|Modelo de Datos]]
-- 💻 [[04-Arquitectura/Stack Tecnológico|Stack Tecnológico]]
-- 📊 [[00-Dashboard/Roadmap|Roadmap / Gantt]]
-- 📈 [[00-Dashboard/Métricas|Métricas de Avance]]
-- ✅ [[09-QA/README|QA — Calidad]]
-
-=== end-column ===
-
-### 🔬 Investigación y Entregables
-- 🔍 [[02-Investigación/Contexto/Educación|Contexto EDU]]
-- 🔍 [[02-Investigación/Contexto/Saberes Ancestrales|Contexto SAB]]
-- 🔍 [[02-Investigación/Contexto/Salud Comunitaria|Contexto SAL]]
-- 🗺️ [[02-Investigación/Contexto/Mapa de Territorios Indígenas|Mapa Territorios]]
-- 📄 [[06-Entregables/Avance-1/Raíces Vivas – Sistema Integral de Apoyo a Comunidades Indígenas|Avance 1]]
-- 📦 [[05-Sprints/Sprint-01/Sprint-01-Planning|Sprint 01]]
-- 📦 [[05-Sprints/Sprint-02/Sprint-02-Planning|Sprint 02]]
-- 📝 [[07-Reuniones/MIN-001|Minuta Kickoff]]
-
-=== end-multi-column
+> [!abstract]+ 🔬 Investigación y Entregables
+> - 🔍 [[02-Investigación/Contexto/Educación|Contexto EDU]]
+> - 🔍 [[02-Investigación/Contexto/Saberes Ancestrales|Contexto SAB]]
+> - 🔍 [[02-Investigación/Contexto/Salud Comunitaria|Contexto SAL]]
+> - 🗺️ [[02-Investigación/Contexto/Mapa de Territorios Indígenas|Mapa Territorios]]
+> - 📄 [[06-Entregables/Avance-1/Raíces Vivas – Sistema Integral de Apoyo a Comunidades Indígenas|Avance 1]]
+> - 📦 [[05-Sprints/Sprint-01/Sprint-01-Planning|Sprint 01]]
+> - 📦 [[05-Sprints/Sprint-02/Sprint-02-Planning|Sprint 02]]
+> - 📝 [[07-Reuniones/MIN-001|Minuta Kickoff]]
 
 ---
 
