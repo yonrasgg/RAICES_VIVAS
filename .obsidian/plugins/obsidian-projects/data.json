@@ -2,7 +2,13 @@
   "version": 2,
   "projects": [
     {
-      "fieldConfig": {},
+      "fieldConfig": {
+        "status": {
+          "options": [
+            "in progress"
+          ]
+        }
+      },
       "defaultName": "",
       "templates": [
         "99-Templates/"
@@ -40,7 +46,13 @@
           },
           "filter": {
             "conjunction": "and",
-            "conditions": []
+            "conditions": [
+              {
+                "field": "id",
+                "operator": "is-not-empty",
+                "enabled": true
+              }
+            ]
           },
           "colors": {
             "conditions": []
@@ -66,11 +78,21 @@
               "author",
               "created",
               "completed",
-              "due",
-              "id"
+              "due"
             ],
             "groupByField": "status",
-            "columnWidth": 20
+            "headerField": "id",
+            "columns": {
+              "done": {
+                "weight": 0
+              },
+              "todo": {
+                "weight": 1
+              },
+              "in progress": {
+                "weight": 2
+              }
+            }
           },
           "filter": {
             "conjunction": "and",
@@ -95,7 +117,8 @@
         },
         {
           "config": {
-            "interval": "month"
+            "interval": "month",
+            "dateField": "due"
           },
           "filter": {
             "conjunction": "and",
@@ -113,7 +136,8 @@
         },
         {
           "config": {
-            "fitStyle": "contain",
+            "coverField": "banner_src",
+            "fitStyle": "cover",
             "includeFields": [
               "assignee"
             ]
