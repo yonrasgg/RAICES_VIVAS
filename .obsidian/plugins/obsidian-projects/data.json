@@ -19,7 +19,25 @@
       "newNotesFolder": "",
       "views": [
         {
-          "config": {},
+          "config": {
+            "fieldConfig": {
+              "banner_src": {
+                "hide": true
+              },
+              "banner_src_x": {
+                "hide": true
+              },
+              "banner_src_y": {
+                "hide": true
+              },
+              "cssclass": {
+                "hide": true
+              },
+              "kanban-plugin": {
+                "hide": true
+              }
+            }
+          },
           "filter": {
             "conjunction": "and",
             "conditions": []
@@ -47,7 +65,12 @@
               "assignee",
               "actor",
               "author"
-            ]
+            ],
+            "columns": {
+              "No status": {
+                "weight": 0
+              }
+            }
           },
           "filter": {
             "conjunction": "and",
