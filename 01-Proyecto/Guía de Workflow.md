@@ -44,6 +44,76 @@ RAICES_VIVAS/
 
 > **Cada nota tiene un `type` en su frontmatter.** Esto es lo que hace funcionar Dataview, los dashboards y toda la automatización. Sin `type`, una nota es invisible para el sistema.
 
+### Ciclo de Vida del Proyecto
+
+El siguiente diagrama muestra cómo fluye la información a través de todo el sistema de gestión:
+
+```mermaid
+flowchart TD
+    subgraph GOBIERNO["🏛️ Gobierno del Proyecto"]
+        CH[Charter] --> ALC[Alcance]
+        ALC --> WBS[WBS]
+        EQ[Equipo & Roles] --> ALC
+        STK[Stakeholders] --> ALC
+    end
+
+    subgraph INVEST["🔍 Investigación"]
+        CTX[Contexto] --> ENT[Entrevistas]
+        CTX --> ENC[Encuestas]
+        CTX --> OBS[Observaciones]
+        FNT[Fuentes] --> CTX
+    end
+
+    subgraph REQS["📋 Requerimientos"]
+        RF[RF — Funcionales<br/>EDU · SAB · SAL]
+        RNF[RNF — No Funcionales]
+        RTM[RTM — Trazabilidad]
+        RF --> RTM
+        RNF --> RTM
+    end
+
+    subgraph SPRINTS["🏃 Sprints & Ejecución"]
+        BK[Backlog Kanban] --> SP[Sprint Planning]
+        SP --> TASKS[T-XXX Tareas<br/>Auto-ID · source · DoD]
+        TASKS -->|status: done| REV[Sprint Review]
+        REV -->|retro| SP
+        TASKS -->|blocked| RISK[Riesgos]
+    end
+
+    subgraph REUNIONES["👥 Reuniones"]
+        MIN[Minutas<br/>MIN-XXX] -->|Action Items| PROMO[📋 Promover<br/>Action Item]
+        PROMO -->|QuickAdd + Auto-ID| TASKS
+    end
+
+    subgraph ENTREGA["📦 Entregables"]
+        DOC[Documento Final]
+        PRES[Presentación]
+        QA[QA / Revisión Cruzada]
+    end
+
+    INVEST --> REQS
+    GOBIERNO --> REQS
+    REQS -->|requirement: RF-XXX| TASKS
+    TASKS -->|source: MIN-XXX| MIN
+    REV --> DOC
+    QA --> DOC
+    DOC --> PRES
+
+    style GOBIERNO fill:#1a1a2e,stroke:#5cf55f,color:#fff
+    style INVEST fill:#1a1a2e,stroke:#e8b931,color:#fff
+    style REQS fill:#1a1a2e,stroke:#3498db,color:#fff
+    style SPRINTS fill:#1a1a2e,stroke:#e74c3c,color:#fff
+    style REUNIONES fill:#1a1a2e,stroke:#9b59b6,color:#fff
+    style ENTREGA fill:#1a1a2e,stroke:#2ecc71,color:#fff
+```
+
+**Lectura del diagrama:**
+- El flujo va de **Gobierno** e **Investigación** → **Requerimientos** → **Tareas en Sprints**
+- Las **Reuniones** generan Action Items que se promueven a tareas formales con Auto-ID
+- Cada **Tarea** referencia su requerimiento (`requirement:`) y su minuta origen (`source:`)
+- Los **Sprint Reviews** retroalimentan la planificación del siguiente sprint
+- Todo converge en los **Entregables** tras pasar por QA
+
 ---
 
 ## 2. Flujo de Trabajo Diario
@@ -71,7 +141,7 @@ RAICES_VIVAS/
 1. Abre el Dashboard → localiza tu tarea (T-022, T-023 o T-024)
 2. Abre la tarea → lee la descripción y criterios
 3. Navega a `04-Arquitectura/Modelo de Datos.md` → trabaja allí
-4. Si haces un diagrama, usa Mermaid o Excalidraw
+4. Si haces un diagrama, usa Mermaid o Diagrams
 5. Al terminar, vuelve a la tarea → cambia `status: done` y `completed: 2026-03-XX`
 6. En el Kanban, mueve la tarea a "Completado"
 
@@ -96,6 +166,7 @@ Tienes 9 macros pre-configuradas:
 | **Nueva Entrevista** | Guía de entrevista | `02-Investigación/Entrevistas/` |
 | **Nuevo Sprint Planning** | Nota de planning de sprint | `05-Sprints/Sprint-XX/` |
 | **Nuevo Sprint Review** | Nota de review de sprint | `05-Sprints/Sprint-XX/` |
+| **📋 Promover Action Item** | Tarea formal desde action item de minuta | Te pregunta sprint + pre-rellena datos |
 
 **Uso:**
 1. `Ctrl+P` → Escribir "QuickAdd" → Enter
@@ -145,7 +216,10 @@ effort: Xh
 started: YYYY-MM-DD
 due: YYYY-MM-DD
 completed: YYYY-MM-DD
+source: MIN-XXX | ""          # ← Minuta que originó esta tarea (trazabilidad)
 ```
+
+> **Auto-ID:** El campo `id` ya no se ingresa manualmente. Al crear una tarea con QuickAdd, el template Templater calcula automáticamente el siguiente `T-XXX` consultando todas las tareas existentes via Dataview (`dv.pages`). El archivo se renombra automáticamente al ID generado.
 
 #### Requerimiento Funcional (`type: requirement/functional`)
 
@@ -421,7 +495,186 @@ Cada sprint tiene:
 
 ---
 
-## 8. Plugins Instalados (Referencia Completa)
+## 8. Promoción de Action Items → Tareas Formales
+
+### 8.1 El Problema que Resuelve
+
+En las reuniones surgen **Action Items** — cosas por hacer que se registran en la minuta (`MIN-XXX.md`). Pero sin un proceso de promoción, estos items:
+- Se pierden en la minuta y nadie les da seguimiento
+- No tienen ID, sprint, ni responsable formal
+- No aparecen en el Dashboard, Kanban, ni Checklist
+- No están vinculados a requerimientos
+
+### 8.2 Flujo de Promoción
+
+```mermaid
+sequenceDiagram
+    participant M as MIN-002.md
+    participant QA as QuickAdd
+    participant TP as Templater + Dataview
+    participant T as T-026.md
+    participant BK as Backlog.md
+
+    M->>M: Action Item registrado
+    Note over M: - [ ] Diseñar wireframe → @Elkin 📅 2026-03-10
+    M->>QA: Seleccionar línea → Ctrl+P → "📋 Promover"
+    QA->>TP: Ejecuta _template-tarea-from-minuta.md
+    TP->>TP: Auto-ID: dv.pages() → T-026
+    TP->>TP: Extrae: título, @Persona, 📅 fecha
+    TP->>TP: Detecta source: MIN-002
+    TP->>T: Crea T-026.md con frontmatter completo
+    Note over T: id: T-026, source: MIN-002<br/>assignee: Elkin, due: 2026-03-10
+    M->>M: Reemplazar línea manualmente
+    Note over M: - [ ] [[T-026｜Diseñar wireframe]] → @Elkin 📅 2026-03-10
+    T->>BK: Agregar al Kanban (manual)
+```
+
+### 8.3 Paso a Paso
+
+1. **Estás en la minuta** (ej: `MIN-002.md`)
+2. **Selecciona** la línea del action item:
+   ```
+   - [ ] Diseñar wireframe login → @Elkin 📅 2026-03-10
+   ```
+3. **`Ctrl+P`** → Escribir "Promover" → Seleccionar **"📋 Promover Action Item"**
+4. **El template extrae automáticamente:**
+   - Título: "Diseñar wireframe login"
+   - Responsable: Elkin (pre-seleccionado)
+   - Fecha límite: 2026-03-10
+   - Source: MIN-002 (detectado del archivo activo)
+5. **Confirma o ajusta** los campos en los prompts
+6. **Se crea** `T-026.md` con Auto-ID y frontmatter completo
+7. **Vuelve a la minuta** y reemplaza la línea por:
+   ```
+   - [ ] [[T-026|Diseñar wireframe login]] → @Elkin 📅 2026-03-10
+   ```
+   El `[[T-026|...]]` indica que este item ya fue promovido a tarea formal.
+
+### 8.4 Formato de Action Items en Minutas
+
+```markdown
+## Action Items
+
+<!-- Items pendientes de promoción -->
+- [ ] Descripción de la tarea → @Responsable 📅 YYYY-MM-DD
+
+<!-- Items ya promovidos a tarea formal -->
+- [ ] [[T-026|Descripción]] → @Responsable 📅 YYYY-MM-DD
+```
+
+**Regla visual:** Si la línea contiene `[[T-` ya fue promovida. Si no, está pendiente.
+
+### 8.5 Template Especializado vs Template General
+
+| Característica | `_template-tarea.md` | `_template-tarea-from-minuta.md` |
+|---------------|---------------------|----------------------------------|
+| **Uso** | Crear tarea nueva desde cero | Promover action item de minuta |
+| **Auto-ID** | ✅ | ✅ |
+| **Pre-relleno** | ❌ todo manual | ✅ extrae @Persona, 📅 fecha, source |
+| **Status inicial** | Pregunta | Siempre `todo` |
+| **Source** | Pregunta (puede quedar vacío) | Auto-detecta la minuta activa |
+| **QuickAdd** | "Nueva Tarea" | "📋 Promover Action Item" |
+
+---
+
+## 9. Auto-ID de Tareas
+
+### 9.1 Cómo Funciona
+
+Al crear una tarea (por cualquier método), el template Templater ejecuta:
+
+```javascript
+// Consulta TODAS las tareas existentes en 05-Sprints/
+const taskPages = dv.pages('"05-Sprints"').where(p => p.type === "task" && p.id);
+
+// Extrae el número más alto
+const ids = taskPages.map(p => parseInt(String(p.id).replace("T-", "")))
+                     .filter(n => !isNaN(n));
+const maxId = ids.length > 0 ? Math.max(...ids) : 0;
+
+// Genera el siguiente: T-026, T-027, etc.
+const nextId = `T-${String(maxId + 1).padStart(3, "0")}`;
+
+// Renombra el archivo automáticamente
+await tp.file.rename(nextId);
+```
+
+### 9.2 Garantías
+
+| Propiedad | Garantía |
+|-----------|----------|
+| **Unicidad** | Lee TODAS las tareas antes de generar — no hay duplicados |
+| **Consecutividad** | Siempre `max + 1` — sin huecos |
+| **Auto-rename** | El archivo se renombra a `T-XXX.md` automáticamente |
+| **Avance tag** | Se calcula `avance-N` desde el sprint seleccionado |
+
+### 9.3 Regla de Oro
+
+> **Nunca crear archivos `T-XXX.md` manualmente.** Siempre usar QuickAdd → "Nueva Tarea" o "📋 Promover Action Item". El Auto-ID garantiza que no haya colisiones.
+
+---
+
+## 10. Trazabilidad Bidireccional
+
+### 10.1 El Grafo de Conexiones
+
+Cada artefacto del proyecto está enlazado bidireccionalmente:
+
+```mermaid
+flowchart LR
+    RF[RF-EDU-01] <-->|requirement:| T[T-011]
+    T <-->|source:| MIN[MIN-001]
+    T -->|sprint:| SP[Sprint-01]
+    RF -->|module:| MOD[educacion]
+    RF <-->|RTM| RTM[_RTM.md]
+    T -->|assignee:| PERS[Geovanny]
+```
+
+### 10.2 Campos de Trazabilidad
+
+| Desde | Hacia | Campo / Mecanismo |
+|-------|-------|-------------------|
+| Tarea → Requerimiento | `requirement: RF-EDU-01` | Frontmatter + `[[RF-EDU-01]]` al final |
+| Tarea → Minuta | `source: MIN-001` | Frontmatter + `[[MIN-001]]` en Notas |
+| Requerimiento → Tareas | Dataview query automática | Al final de cada RF/RNF |
+| Minuta → Tarea | Wikilink post-promoción | `[[T-026\|Descripción]]` en Action Items |
+| RTM → Todo | Tabla centralizada | `03-Requerimientos/_RTM.md` |
+| Dashboard → Todo | Queries Dataview | `00-Dashboard/Home.md` |
+
+### 10.3 Verificación de Trazabilidad
+
+Para verificar que una tarea está completamente trazada, debe tener:
+- ✅ `requirement:` — vinculado a al menos un RF o RNF (o `N/A` si es administrativa)
+- ✅ `source:` — si nació de una reunión, debe referenciar la `MIN-XXX`
+- ✅ `sprint:` — asignada a un sprint o `backlog`
+- ✅ `assignee:` — responsable asignado
+- ✅ Al final del archivo: `[[RF-XXX]]` como wikilink para el graph view
+
+---
+
+## 11. Equipo y Liderazgo
+
+### 11.1 Estructura del Equipo
+
+| Integrante | Rol | Módulo Lead | Responsabilidad Clave |
+|-----------|-----|-------------|----------------------|
+| **Geovanny** | Project Lead / Arquitecto | EDU + Transversal | Coordinación general, arquitectura, vault, entregables |
+| **Elkin** | Líder de Investigación / Analista | SAB | Investigación, marco metodológico, decisiones técnicas SAB |
+| **Santiago** | Líder de QA / Analista | SAL | Control de calidad, instrumentos, decisiones técnicas SAL |
+
+### 11.2 Áreas de Decisión
+
+Cada líder tiene **autonomía para tomar decisiones técnicas** dentro de su módulo:
+
+- **Elkin (SAB):** Cómo se documentan saberes ancestrales, qué fuentes priorizar, diseño de RF-SAB
+- **Santiago (SAL):** Criterios de calidad, instrumentos de investigación, diseño de RF-SAL, revisión cruzada
+- **Geovanny (EDU + Transversal):** Arquitectura, tooling, integraciones, RF-EDU, governance
+
+Las **decisiones que afectan a más de un módulo** se toman en equipo y se documentan como ADR.
+
+---
+
+## 12. Plugins Instalados (Referencia Completa)
 
 ### Activos y Configurados
 
@@ -454,7 +707,7 @@ Cada sprint tiene:
 
 ### Plugins con Automatización — Referencia Detallada
 
-#### 8.1 Buttons — Acciones Rápidas
+#### 12.1 Buttons — Acciones Rápidas
 
 Crea botones clicables dentro de notas para ejecutar comandos, abrir notas o disparar templates.
 
@@ -487,7 +740,7 @@ color default
 
 ---
 
-#### 8.2 Meta Bind — Edición Inline de Frontmatter
+#### 12.2 Meta Bind — Edición Inline de Frontmatter
 
 Crea dropdowns, inputs y toggles que editan directamente los campos YAML de la nota desde el cuerpo. **Es el plugin más importante para productividad.**
 
@@ -523,7 +776,7 @@ Crea dropdowns, inputs y toggles que editan directamente los campos YAML de la n
 
 ---
 
-#### 8.3 Banners — Imágenes Hero
+#### 12.3 Banners — Imágenes Hero
 
 Agrega una imagen de banner (hero) en la parte superior de cualquier nota usando frontmatter.
 
@@ -544,7 +797,7 @@ banner_src_y: 0.40
 
 ---
 
-#### 8.4 Checklist — Panel de Pendientes
+#### 12.4 Checklist — Panel de Pendientes
 
 Muestra un panel lateral con todos los checkboxes sin marcar del vault, filtrados por tag o carpeta.
 
@@ -567,7 +820,7 @@ Esto crea una vista centralizada de TODOS los ítems pendientes en tareas del sp
 
 ---
 
-#### 8.5 Periodic Notes — Notas Semanales y Mensuales
+#### 12.5 Periodic Notes — Notas Semanales y Mensuales
 
 Extiende Daily Notes con creación de notas semanales y mensuales.
 
@@ -591,7 +844,7 @@ Extiende Daily Notes con creación de notas semanales y mensuales.
 
 ---
 
-#### 8.6 Multi-Column Markdown — Layouts en Columnas
+#### 12.6 Multi-Column Markdown — Layouts en Columnas
 
 Crea diseños de múltiples columnas dentro de una nota.
 
@@ -627,7 +880,7 @@ Contenido columna 3
 
 ---
 
-#### 8.7 Lazy Loading con Callouts Colapsables
+#### 12.7 Lazy Loading con Callouts Colapsables
 
 No es un plugin sino una técnica nativa de Obsidian para mejorar rendimiento.
 
@@ -655,9 +908,9 @@ No es un plugin sino una técnica nativa de Obsidian para mejorar rendimiento.
 
 ---
 
-## 9. Automatización y Productividad
+## 13. Automatización y Productividad
 
-### 9.1 Daily Notes Automatizadas
+### 13.1 Daily Notes Automatizadas
 
 **Configuración recomendada:**
 1. Settings → Core plugins → Daily Notes → Enable
@@ -667,7 +920,7 @@ No es un plugin sino una técnica nativa de Obsidian para mejorar rendimiento.
 
 Cada día al abrir el calendario, se crea una nota con la template de daily note que ya incluye secciones para tareas, log y bloqueos.
 
-### 9.2 Notas Semanales con Periodic Notes
+### 13.2 Notas Semanales con Periodic Notes
 
 1. Settings → Community Plugins → Periodic Notes → Enable Weekly Notes
 2. Folder: `Daily Notes/`
@@ -676,7 +929,7 @@ Cada día al abrir el calendario, se crea una nota con la template de daily note
 
 **Flujo:** Cada lunes → `Ctrl+P` → "Periodic Notes: Open weekly note" → Se crea nota de la semana con resumen automático.
 
-### 9.3 Actualización Rápida de Tareas con Meta Bind
+### 13.3 Actualización Rápida de Tareas con Meta Bind
 
 El flujo más rápido para actualizar el estado de una tarea:
 
@@ -689,7 +942,7 @@ El flujo más rápido para actualizar el estado de una tarea:
 
 **⚡ Esto reemplaza:** Abrir YAML → editar campo → guardar → cerrar vista source.
 
-### 9.4 Botones de Acción en Dashboard
+### 13.4 Botones de Acción en Dashboard
 
 El Dashboard Home tiene 7 botones precreados:
 - ➕ Nueva Tarea → ejecuta QuickAdd
@@ -699,9 +952,9 @@ El Dashboard Home tiene 7 botones precreados:
 - 🏗️ Nuevo ADR → crea decisión arquitectónica
 - 👥 Nueva Entrevista → crea entrevista
 
-**Para agregar más botones:** Editar `00-Dashboard/Home.md` y agregar bloques `button` con la sintaxis documentada en §8.1.
+**Para agregar más botones:** Editar `00-Dashboard/Home.md` y agregar bloques `button` con la sintaxis documentada en §12.1.
 
-### 9.5 Atajos de Teclado Recomendados
+### 13.5 Atajos de Teclado Recomendados
 
 | Atajo | Acción |
 |-------|--------|
@@ -715,7 +968,7 @@ El Dashboard Home tiene 7 botones precreados:
 | `Ctrl+P` → "Checklist" | Ver panel de pendientes |
 | `Ctrl+P` → "Periodic" | Abrir nota semanal/mensual |
 
-### 9.6 Tips de Productividad
+### 13.6 Tips de Productividad
 
 1. **Usar `[[` para enlazar todo** — notas, tareas, requerimientos. El graph view mostrará las conexiones.
 2. **Tags consistentes** — Usar siempre `#tarea`, `#requerimiento`, `#avance-1`, `#sprint-01`
@@ -729,7 +982,7 @@ El Dashboard Home tiene 7 botones precreados:
 
 ---
 
-## 10. Checklist: Lo que Cada Integrante Debe Hacer Primero
+## 14. Checklist: Lo que Cada Integrante Debe Hacer Primero
 
 ### Setup Inicial (una vez)
 
@@ -741,9 +994,9 @@ El Dashboard Home tiene 7 botones precreados:
 - [ ] Revisar esta Guía de Workflow completa
 - [ ] Probar crear una nota con QuickAdd (`Ctrl+P` → QuickAdd)
 - [ ] Verificar que todos los requerimientos muestran la sección 'Tareas Vinculadas' (Dataview)
-- [ ] Probar cambiar un estado de tarea con Meta Bind (ver §9.3)
-- [ ] Probar abrir el Checklist panel (ver §8.4)
-- [ ] Verificar que Periodic Notes está configurado (ver §9.2)
+- [ ] Probar cambiar un estado de tarea con Meta Bind (ver §13.3)
+- [ ] Probar abrir el Checklist panel (ver §12.4)
+- [ ] Verificar que Periodic Notes está configurado (ver §13.2)
 
 ### Rutina Semanal
 
@@ -767,7 +1020,7 @@ El Dashboard Home tiene 7 botones precreados:
 
 ---
 
-## 11. Resolución de Problemas Comunes
+## 15. Resolución de Problemas Comunes
 
 | Problema | Solución |
 |----------|----------|
@@ -788,7 +1041,7 @@ El Dashboard Home tiene 7 botones precreados:
 
 ---
 
-*Guía creada: 2026-02-27 · Última actualización: 2026-02-28*
-*Equipo: Geovanny, Elkin, Santiago*
-*Versión: 3.0 — Actualizada con 22 plugins activos, trazabilidad bidireccional, métricas dinámicas*
+*Guía creada: 2026-02-27 · Última actualización: 2026-03-01*
+*Equipo: Geovanny (Project Lead) · Elkin (Líder Investigación — SAB) · Santiago (Líder QA — SAL)*
+*Versión: 4.0 — Auto-ID de tareas, promoción de Action Items, trazabilidad bidireccional completa, diagrama de ciclo de vida*
 *Revisar y actualizar cada sprint*
