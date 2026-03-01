@@ -2,7 +2,7 @@
   "cssTheme": "Shiba Inu",
   "accentColor": "#5cf55f",
   "baseFontSizeAction": true,
-  "enabledCssSnippets": [],
+  "enabledCssSnippets": ["dashboard-hero"],
   "nativeMenus": false,
   "baseFontSize": 12,
   "textFontFamily": "Arial",
