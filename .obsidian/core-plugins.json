@@ -10,7 +10,7 @@
   "footnotes": true,
   "properties": true,
   "page-preview": true,
-  "daily-notes": true,
+  "daily-notes": false,
   "templates": true,
   "note-composer": true,
   "command-palette": true,
@@ -18,7 +18,7 @@
   "editor-status": true,
   "bookmarks": true,
   "markdown-importer": true,
-  "zk-prefixer": true,
+  "zk-prefixer": false,
   "random-note": false,
   "outline": true,
   "word-count": true,
@@ -27,7 +27,7 @@
   "workspaces": true,
   "file-recovery": true,
   "publish": true,
-  "sync": true,
+  "sync": false,
   "bases": true,
   "webviewer": true
 }

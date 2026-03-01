@@ -192,119 +192,559 @@ Tienes **12 macros** pre-configuradas:
 
 ---
 
-## 4. Esquema de Frontmatter (Metadatos)
+## 4. Esquema de Frontmatter — Referencia Definitiva
 
-### 4.1 ¿Qué es el frontmatter?
+### 4.1 ¿Qué es el frontmatter y por qué es crítico?
 
-Es el bloque YAML al inicio de cada nota, entre `---`. Dataview lo lee para generar tablas, gráficos y dashboards. **Es obligatorio mantenerlo correcto.**
+Es el bloque YAML al inicio de cada nota, entre `---`. **Es la base de datos del proyecto.** Dataview lee estos campos para generar:
 
-### 4.2 Campos por Tipo de Nota
+- **Dashboard KPIs** — progreso, horas, costos (Home.md)
+- **Métricas Lean Six Sigma** — throughput, velocity, cycle time (Métricas.md)
+- **Weekly Snapshots** — tareas completadas/pendientes por semana (Daily Notes/YYYY-WNN.md)
+- **RTM dinámica** — trazabilidad requerimiento → tarea → sprint
+- **Kanban board** — columnas del Backlog visual
+- **Tablas de riesgos y decisiones** — filtros por severidad, estado, módulo
 
-#### Tarea (`type: task`)
+> **Regla cardinal:** Si un campo está vacío, mal escrito o con un tipo incorrecto, la nota **desaparece** de los dashboards y cálculos. El frontmatter no es decorativo — es el combustible de toda la automatización.
 
-```yaml
-type: task
-id: T-XXX
-title: "Título descriptivo"
-status: todo | in-progress | review | done | blocked
-priority: critical | high | medium | low
-assignee: Geovanny | Elkin | Santiago | Equipo
-sprint: Sprint-01 | Sprint-02 | Sprint-03 | Sprint-04 | Sprint-05 | backlog
-phase: investigación | análisis | requerimientos | integración | diseño | implementación | testing | gestión
-module: educacion | saberes | salud | transversal | proyecto
-requirement: RF-XXX | N/A
-effort: Xh
-started: YYYY-MM-DD
-due: YYYY-MM-DD
-completed: YYYY-MM-DD
-source: MIN-XXX | ""          # ← Minuta que originó esta tarea (trazabilidad)
+### 4.2 Motor de Automatización — Cómo los Campos se Convierten en Datos
+
+```mermaid
+flowchart LR
+    FM["🏷️ Frontmatter YAML<br/>(type, status, effort...)"] -->|Dataview lee| DV["⚙️ Dataview Engine<br/>(dv.pages, WHERE, SORT)"]
+    DV -->|Genera| DASH["📊 Dashboard<br/>Home.md"]
+    DV -->|Genera| MET["📈 Métricas<br/>Métricas.md"]
+    DV -->|Genera| WK["📅 Weekly Note<br/>2026-W09.md"]
+    DV -->|Genera| RTM["🔗 RTM<br/>Trazabilidad"]
+    DV -->|Genera| RF_T["📋 Tareas Vinculadas<br/>(en cada RF/RNF)"]
+
+    style FM fill:#1a1a2e,stroke:#5cf55f,color:#fff
+    style DV fill:#1a1a2e,stroke:#e8b931,color:#fff
+    style DASH fill:#1a1a2e,stroke:#3498db,color:#fff
+    style MET fill:#1a1a2e,stroke:#3498db,color:#fff
+    style WK fill:#1a1a2e,stroke:#3498db,color:#fff
+    style RTM fill:#1a1a2e,stroke:#3498db,color:#fff
+    style RF_T fill:#1a1a2e,stroke:#3498db,color:#fff
 ```
 
-> **Auto-ID:** El campo `id` ya no se ingresa manualmente. Al crear una tarea con QuickAdd, el template Templater calcula automáticamente el siguiente `T-XXX` consultando todas las tareas existentes via Dataview (`dv.pages`). El archivo se renombra automáticamente al ID generado.
+**Cadena de dependencia:**
 
-#### Requerimiento Funcional (`type: requirement/functional`)
+| Dato que ves en el Dashboard | Campo(s) del frontmatter que lo alimentan | Tipo de nota |
+|-----|-----|-----|
+| KPI "Progreso del Sprint" | `type`, `status`, `sprint` | task |
+| KPI "Horas Estimadas / Reales" | `effort`, `effort_actual` | task |
+| KPI "Costo acumulado (₡)" | `effort_actual`, `assignee` (para calcular tarifa) | task |
+| Tabla "Tareas Pendientes" | `type`, `status`, `due`, `assignee`, `priority` | task |
+| Tabla "Riesgos Activos" | `type`, `status`, `severity` | risk |
+| Tabla "Decisiones" | `type`, `status`, `category`, `impact` | adr |
+| Weekly "Completadas esta semana" | `type`, `status`, `completed`, + `week_start`/`week_end` de la weekly note | task + weekly |
+| Weekly "Pendientes con fecha" | `type`, `status`, `due`, + `week_start`/`week_end` de la weekly note | task + weekly |
+| Weekly "Horas ejecutadas" | `effort_actual` (o fallback a `effort`) de tareas completadas en el rango | task |
+| Métricas "Velocity" | `effort`, `sprint`, `status` | task |
+| Métricas "Cycle Time" | `started`, `completed` | task |
+| Métricas "Colaboración" | `assignee`, `status` | task |
+| RTM | `type`, `id`, `module`, `requirement` | task + requirement |
+
+> **Implicación práctica:** Si un campo `effort_actual` queda vacío en una tarea `done`, la weekly note y el Dashboard mostrarán **0 horas** para esa tarea. Si `completed` no tiene fecha, la tarea **no aparecerá** en ninguna weekly note.
+
+### 4.3 Convención de Valores — Reglas Generales
+
+| Regla | Ejemplo correcto | Ejemplo incorrecto | Por qué |
+|-------|-----------------|-------------------|---------|
+| Strings con caracteres especiales van entre comillas | `title: "Diseño de API REST"` | `title: Diseño: API` | Los `:` rompen el YAML |
+| Horas siempre entre comillas | `effort: "8h"` | `effort: 8h` | Sin comillas, Dataview lo parsea como Duration (objeto), no string |
+| Fechas sin comillas, formato ISO | `due: 2026-03-14` | `due: "14/03/2026"` | Dataview necesita ISO para comparaciones con `date()` |
+| Listas con corchetes o guiones | `tags:\n  - tarea` | `tags: tarea` | Dataview espera arrays para campos multi-valor |
+| Campos vacíos: string vacío o nulo | `source: ""` o `completed:` | `source: null` | `null` literal puede causar errores en queries |
+| IDs siempre en formato estándar | `id: T-001` | `id: T001` o `id: 1` | Los queries filtran por patrón `T-XXX` |
+
+### 4.4 Campos por Tipo de Nota
+
+A continuación, cada tipo de nota con su esquema completo. Los campos marcados **🔴 REQUERIDO** son indispensables para que las automatizaciones funcionen. Los marcados **🟡 RECOMENDADO** mejoran la trazabilidad. Los marcados **⚪ OPCIONAL** son informativos.
+
+---
+
+#### 4.4.1 Tarea (`type: task`)
+
+**Ubicación:** `05-Sprints/Sprint-XX/T-XXX.md`
+**Creación:** QuickAdd → "Nueva Tarea" o "📋 Promover Action Item"
+**Template:** `99-Templates/_template-tarea.md`
 
 ```yaml
-type: requirement/functional
-id: RF-XXX-XX
-module: educacion | saberes | salud
-wbs: RV-X.X
-title: "Título"
-status: draft | approved | validated | deprecated
-priority: must | should | could | wont
-actor: [Actor1, Actor2]
-source: documental | entrevista | observación | encuesta
-owner: ""
-validation: "Método de validación"
+# ── Identidad ──────────────────────────────────────────────
+type: task                    # 🔴 REQUERIDO — Dataview filtra por este valor
+id: T-XXX                     # 🔴 REQUERIDO — Auto-generado. NUNCA editar manualmente
+title: "Título descriptivo"   # 🔴 REQUERIDO — Aparece en todas las tablas
+
+# ── Estado y Clasificación ─────────────────────────────────
+status: todo                  # 🔴 REQUERIDO — Dashboard, Kanban, Weekly, Métricas
+                              #   Valores: todo | in-progress | review | done | blocked
+priority: high                # 🔴 REQUERIDO — Ordenamiento en tablas, filtros
+                              #   Valores: critical | high | medium | low
+assignee: Geovanny            # 🔴 REQUERIDO — Cálculo de costos, filtro por persona
+                              #   Valores: Geovanny | Elkin | Santiago | Equipo
+sprint: Sprint-02             # 🔴 REQUERIDO — Agrupación por sprint, velocity
+                              #   Valores: Sprint-01..05 | backlog
+phase: diseño                 # 🟡 RECOMENDADO — Filtro "Progreso por Fase" en Métricas
+                              #   Valores: investigación | análisis | requerimientos |
+                              #            integración | diseño | implementación |
+                              #            testing | gestión
+module: educacion             # 🟡 RECOMENDADO — Filtro por módulo en Dashboard
+                              #   Valores: educacion | saberes | salud | transversal | proyecto
+
+# ── Esfuerzo y Costos ─────────────────────────────────────
+effort: "8h"                  # 🔴 REQUERIDO — Horas estimadas. SIEMPRE entre comillas
+                              #   → Dashboard: "Horas Estimadas"
+                              #   → Métricas: "Velocity", "Cycle Time"
+effort_actual: "10h"          # 🔴 REQUERIDO (al completar) — Horas reales invertidas
+                              #   → Dashboard: "Horas Reales", "Costo Real"
+                              #   → Weekly Note: "Horas ejecutadas esta semana"
+                              #   → Métricas: "Costo Real por Sprint"
+                              #   ⚠️ Dejar "" hasta completar la tarea
+
+# ── Fechas ─────────────────────────────────────────────────
+started: 2026-03-07           # 🟡 RECOMENDADO — Inicio real. Para Cycle Time
+due: 2026-03-14               # 🔴 REQUERIDO — Fecha límite
+                              #   → Weekly Note: "Pendientes con fecha esta semana"
+                              #   → Calendar plugin: marca el día
+                              #   → Dashboard: ordenamiento por deadline
+completed: 2026-03-13         # 🔴 REQUERIDO (al completar) — Fecha de cierre
+                              #   → Weekly Note: "Completadas esta semana" (filtra por rango)
+                              #   → Métricas: "Cycle Time" = completed - started
+                              #   ⚠️ Dejar vacío hasta cambiar status a done
+
+# ── Trazabilidad ──────────────────────────────────────────
+requirement: "RF-EDU-01"      # 🟡 RECOMENDADO — RF/RNF padre. "N/A" si administrativa
+                              #   → RTM dinámica, tabla "Tareas Vinculadas" en cada RF
+source: "MIN-001"             # 🟡 RECOMENDADO — Minuta que originó esta tarea
+                              #   → Trazabilidad bidireccional minuta ↔ tarea
+
+# ── Metadata ───────────────────────────────────────────────
+created: 2026-02-27           # ⚪ OPCIONAL — Fecha de creación de la nota
+updated: 2026-02-28           # ⚪ OPCIONAL — Última actualización manual
+tags:                         # 🟡 RECOMENDADO — Checklist plugin busca tag "tarea"
+  - tarea                     #   → Checklist panel lateral muestra DoD pendientes
+  - avance-2                  #   → Filtro por avance
 ```
 
-#### Requerimiento No Funcional (`type: requirement/non-functional`)
+> **Auto-ID:** Al crear con QuickAdd, Templater ejecuta `dv.pages('"05-Sprints"')` para encontrar el `T-XXX` más alto y calcula el siguiente. El archivo se renombra automáticamente. **Nunca crear T-XXX.md manualmente.**
+
+> **⚠️ Error frecuente — `effort` sin comillas:**
+> Si escribes `effort: 8h` (sin comillas), Dataview lo parsea como un objeto `Duration`, no como string. El dashboard mostrará `0h` porque `parseInt("8h")` falla sobre un Duration. **Siempre** escribir `effort: "8h"`.
+
+> **⚠️ Error frecuente — `completed` vacío en tarea `done`:**
+> Si cambias `status: done` pero no llenas `completed: YYYY-MM-DD`, la tarea NO aparecerá en ninguna weekly note y el cálculo de Cycle Time será imposible. **Siempre** llenar ambos campos juntos.
+
+**Checklist al completar una tarea:**
+1. ✅ `status: done`
+2. ✅ `completed: YYYY-MM-DD` (fecha real de terminación)
+3. ✅ `effort_actual: "Xh"` (horas reales invertidas)
+
+---
+
+#### 4.4.2 Requerimiento Funcional (`type: requirement/functional`)
+
+**Ubicación:** `03-Requerimientos/Funcionales/<MÓDULO>/RF-<MOD>-XX.md`
+**Creación:** QuickAdd → "Nuevo RF"
+**Template:** `99-Templates/_template-requerimiento-funcional.md`
 
 ```yaml
-type: requirement/non-functional
-id: RNF-XX
-category: conectividad | multilingüismo | rendimiento | seguridad | usabilidad | compatibilidad | gobernanza
-wbs: RV-4.X
-title: "Título"
-status: draft | approved | validated
-priority: must | should | could
-metric: "Métrica de verificación"
+# ── Identidad ──────────────────────────────────────────────
+type: requirement/functional  # 🔴 REQUERIDO — Distingue de RNF y otros tipos
+id: RF-EDU-01                 # 🔴 REQUERIDO — ID único del requerimiento
+module: educacion             # 🔴 REQUERIDO — Agrupación por módulo
+                              #   Valores: educacion | saberes | salud
+wbs: RV-1.1                   # 🟡 RECOMENDADO — Código en la WBS
+
+# ── Contenido ──────────────────────────────────────────────
+title: "Registro de docentes"  # 🔴 REQUERIDO — Título en tablas y RTM
+status: approved              # 🔴 REQUERIDO — Estado de aprobación
+                              #   Valores: draft | approved | validated | deprecated
+priority: must                # 🔴 REQUERIDO — MoSCoW → filtros en Dashboard
+                              #   Valores: must | should | could | wont
+actor: [Docente, Admin]       # 🟡 RECOMENDADO — Actores involucrados
+source: documental            # 🟡 RECOMENDADO — Origen del requermiento
+                              #   Valores: documental | entrevista | observación | encuesta
+validation: "Revisión con docentes"  # 🟡 RECOMENDADO — Método de validación
+
+# ── Metadata ───────────────────────────────────────────────
+created: 2026-02-25           # ⚪ OPCIONAL
+updated: 2026-02-27           # ⚪ OPCIONAL
+sprint: null                  # ⚪ OPCIONAL — Sprint donde se implementará
+tags:                         # 🟡 RECOMENDADO
+  - requerimiento
+  - funcional
+  - modulo/edu
+  - prioridad/must
 ```
 
-#### Reunión (`type: meeting`)
+> **Tareas Vinculadas (automático):** Cada RF tiene una query Dataview al final del archivo que lista todas las tareas cuyo campo `requirement:` coincide con el `id` del RF. Esta conexión es automática — solo hay que mantener el campo `requirement` correcto en las tareas.
+
+---
+
+#### 4.4.3 Requerimiento No Funcional (`type: requirement/non-functional`)
+
+**Ubicación:** `03-Requerimientos/No Funcionales/RNF-XX.md`
+**Creación:** QuickAdd → "Nuevo RNF"
+**Template:** `99-Templates/_template-requerimiento-nofuncional.md`
 
 ```yaml
-type: meeting
-title: "Título de la reunión"
-date: YYYY-MM-DD
-attendees: [Geovanny, Elkin, Santiago]
+# ── Identidad ──────────────────────────────────────────────
+type: requirement/non-functional  # 🔴 REQUERIDO
+id: RNF-01                        # 🔴 REQUERIDO
+category: conectividad            # 🔴 REQUERIDO — Clasificación del RNF
+                                  #   Valores: conectividad | multilingüismo | rendimiento |
+                                  #            seguridad | usabilidad | compatibilidad | gobernanza
+wbs: RV-4.1                       # 🟡 RECOMENDADO
+
+# ── Contenido ──────────────────────────────────────────────
+title: "Operación offline + sync" # 🔴 REQUERIDO
+status: approved                  # 🔴 REQUERIDO — draft | approved | validated
+priority: must                    # 🔴 REQUERIDO — must | should | could
+metric: "Permite registrar datos sin internet..."  # 🔴 REQUERIDO — Métrica verificable
+
+# ── Metadata ───────────────────────────────────────────────
+created: 2026-02-25              # ⚪ OPCIONAL
+updated: 2026-02-27              # ⚪ OPCIONAL
+tags:                            # 🟡 RECOMENDADO
+  - requerimiento
+  - no-funcional
+  - transversal
+  - prioridad/must
 ```
 
-#### Riesgo (`type: risk`)
+---
+
+#### 4.4.4 Reunión / Minuta (`type: meeting`)
+
+**Ubicación:** `07-Reuniones/MIN-XXX.md`
+**Creación:** QuickAdd → "Nueva Minuta"
+**Template:** `99-Templates/_template-minuta.md`
 
 ```yaml
-type: risk
-id: RSK-XXX                    # Auto-generado via dv.pages() + Templater
-title: "Descripción del riesgo"
-status: open | mitigating | mitigated | occurred | closed | accepted
-category: técnico | alcance | recurso | calendario | calidad | externo | cultural | comunicación
-probability: alta | media | baja
-impact: alto | medio | bajo
-severity: crítico | alto | medio | bajo    # Calculado automáticamente (prob × imp)
-strategy: mitigar | transferir | aceptar | evitar
-owner: Geovanny | Elkin | Santiago | Equipo
-module: educacion | saberes | salud | transversal | proyecto
-phase: investigación | análisis | ... | todas
-source: MIN-XXX | ""            # Minuta que originó este riesgo
-trigger: ""                     # Indicador de materialización inminente
-related_requirements: []        # RF/RNF afectados
-related_decisions: []           # ADRs vinculados
-review_date: YYYY-MM-DD         # Próxima fecha de revisión (auto: +14d)
+# ── Identidad ──────────────────────────────────────────────
+type: meeting                 # 🔴 REQUERIDO — Dataview filtra reuniones
+id: MIN-001                   # 🔴 REQUERIDO — ID único de la minuta
+
+# ── Contenido ──────────────────────────────────────────────
+title: "Kickoff — Definición del Proyecto"  # 🔴 REQUERIDO
+date: 2026-02-25              # 🔴 REQUERIDO — Fecha de la reunión
+                              #   → Weekly Note: "Reuniones esta semana" (filtra por rango)
+duration: "2h"                # 🟡 RECOMENDADO — Duración de la reunión
+attendees:                    # 🔴 REQUERIDO — Quiénes participaron
+  - Geovanny
+  - Elkin
+  - Santiago
+
+# ── Decisiones y Acciones (en frontmatter) ─────────────────
+decisions:                    # 🟡 RECOMENDADO — Lista de decisiones tomadas
+  - "Obsidian como sistema central"
+  - "Git + GitHub para versionado"
+risks:                        # 🟡 RECOMENDADO — Riesgos identificados
+  - "Dependencia en un solo integrante"
+action_items:                 # ⚪ OPCIONAL — Solo si se quieren listar en frontmatter
+  - "Configurar vault completo"
+
+# ── Metadata ───────────────────────────────────────────────
+tags:                         # 🟡 RECOMENDADO
+  - minuta
+  - reunion
+```
+
+> **Promoción:** Las decisiones, riesgos y action items de la minuta se promueven a notas formales (ADR, RSK, T-XXX) usando QuickAdd. Ver §8 para el flujo completo.
+
+---
+
+#### 4.4.5 Riesgo (`type: risk`)
+
+**Ubicación:** `01-Proyecto/Riesgos/RSK-XXX.md`
+**Creación:** QuickAdd → "Nuevo Riesgo" o "⚠️ Promover Riesgo"
+**Template:** `99-Templates/_template-riesgo.md`
+
+```yaml
+# ── Identidad ──────────────────────────────────────────────
+type: risk                    # 🔴 REQUERIDO
+id: RSK-001                   # 🔴 REQUERIDO — Auto-generado via dv.pages() + Templater
+title: "Dependencia en un solo integrante"  # 🔴 REQUERIDO
+
+# ── Evaluación ─────────────────────────────────────────────
+status: open                  # 🔴 REQUERIDO — Estado actual del riesgo
+                              #   Valores: open | mitigating | mitigated |
+                              #            occurred | closed | accepted
+                              #   → Dashboard: tabla "Riesgos Activos" (filtra open)
+                              #   → Weekly Note: "Riesgos Activos (snapshot)"
+category: recurso             # 🔴 REQUERIDO — Clasificación
+                              #   Valores: técnico | alcance | recurso | calendario |
+                              #            calidad | externo | cultural | comunicación
+probability: media            # 🔴 REQUERIDO — Probabilidad de ocurrencia
+                              #   Valores: alta | media | baja
+impact: alto                  # 🔴 REQUERIDO — Impacto si se materializa
+                              #   Valores: alto | medio | bajo
+severity: alto                # 🔴 REQUERIDO — Calculado: probabilidad × impacto
+                              #   Valores: crítico (≥6) | alto (≥3) | medio (≥2) | bajo (1)
+                              #   → Dashboard: ordenamiento de tabla de riesgos
+strategy: mitigar             # 🔴 REQUERIDO — Plan de respuesta
+                              #   Valores: mitigar | transferir | aceptar | evitar
+owner: "Equipo"               # 🔴 REQUERIDO — Responsable de monitoreo
+                              #   Valores: Geovanny | Elkin | Santiago | Equipo
+
+# ── Contexto ───────────────────────────────────────────────
+module: proyecto              # 🟡 RECOMENDADO — educacion | saberes | salud | transversal | proyecto
+phase: gestión                # 🟡 RECOMENDADO — Fase del proyecto donde aplica
+source: "MIN-001"             # 🟡 RECOMENDADO — Minuta de origen (trazabilidad)
+trigger: "Solo una persona sabe configurar el vault"  # 🟡 RECOMENDADO — Señal de alarma
+
+# ── Trazabilidad ──────────────────────────────────────────
+related_requirements: []      # 🟡 RECOMENDADO — RF/RNF afectados si se materializa
+related_decisions:            # 🟡 RECOMENDADO — ADRs que mitigan o se relacionan
+  - ADR-001
+  - ADR-006
+review_date: 2026-03-15       # 🔴 REQUERIDO — Próxima revisión (auto: +14d al crear)
+                              #   → Dashboard: filtro de riesgos con revisión vencida
 ```
 
 > **Auto-ID:** El campo `id` se calcula automáticamente (`RSK-XXX`). El archivo se renombra al ID.
-> **Severidad:** Se calcula automáticamente: `probabilidad × impacto` → crítico (≥6), alto (≥3), medio (≥2), bajo (1).
+> **Severidad automática:** Al crear con QuickAdd, se calcula `probabilidad × impacto`:
+> - alta × alto = crítico (9), alta × medio = alto (6), alta × bajo = medio (3)
+> - media × alto = alto (6), media × medio = alto (4), media × bajo = medio (2)
+> - baja × alto = alto (3), baja × medio = medio (2), baja × bajo = bajo (1)
 
-#### ADR (`type: adr`)
+---
+
+#### 4.4.6 Decisión Arquitectónica (`type: adr`)
+
+**Ubicación:** `01-Proyecto/Decisiones/ADR-XXX.md`
+**Creación:** QuickAdd → "Nuevo ADR" o "🏗️ Promover Decisión"
+**Template:** `99-Templates/_template-adr.md`
 
 ```yaml
-type: adr
-id: ADR-XXX                    # Auto-generado via dv.pages() + Templater
-title: "Decisión"
-status: proposed | accepted | deprecated | superseded
-category: arquitectura | tecnología | proceso | diseño | integración | seguridad | gobernanza | otro
-module: educacion | saberes | salud | transversal | proyecto
-impact: alto | medio | bajo
-deciders: [Geovanny, Elkin, Santiago]
-source: MIN-XXX | ""            # Minuta que originó esta decisión
-date: YYYY-MM-DD
-superseded_by: ""               # ID de ADR que reemplaza a este
-related_requirements: []        # RF/RNF afectados
-related_risks: []               # Riesgos vinculados
+# ── Identidad ──────────────────────────────────────────────
+type: adr                     # 🔴 REQUERIDO — Dataview filtra por "adr" (NO "decision")
+id: ADR-001                   # 🔴 REQUERIDO — Auto-generado via dv.pages() + Templater
+title: "Obsidian como sistema central"  # 🔴 REQUERIDO
+
+# ── Evaluación ─────────────────────────────────────────────
+status: accepted              # 🔴 REQUERIDO
+                              #   Valores: proposed | accepted | deprecated | superseded
+                              #   → Dashboard: KPI "ADRs", tabla de decisiones
+                              #   → Weekly Note: "ADR esta semana" (filtra por date)
+category: tecnología          # 🔴 REQUERIDO — Clasificación de la decisión
+                              #   Valores: arquitectura | tecnología | proceso | diseño |
+                              #            integración | seguridad | gobernanza | otro
+module: proyecto              # 🟡 RECOMENDADO — Módulo afectado
+impact: alto                  # 🔴 REQUERIDO — Nivel de impacto
+                              #   Valores: alto | medio | bajo
+deciders:                     # 🔴 REQUERIDO — Quiénes tomaron la decisión
+  - Geovanny
+  - Elkin
+  - Santiago
+
+# ── Contexto ───────────────────────────────────────────────
+source: "MIN-001"             # 🟡 RECOMENDADO — Minuta de origen
+date: 2026-02-25              # 🔴 REQUERIDO — Fecha de la decisión
+                              #   → Weekly Note: "ADR esta semana" (filtra por rango de fechas)
+superseded_by: ""             # ⚪ OPCIONAL — ID de ADR que reemplaza a este
+
+# ── Trazabilidad ──────────────────────────────────────────
+related_requirements: []      # 🟡 RECOMENDADO — RF/RNF que afecta
+related_risks:                # 🟡 RECOMENDADO — Riesgos que mitiga/introduce
+  - RSK-001
+  - RSK-003
 ```
 
 > **Auto-ID:** El campo `id` se calcula automáticamente (`ADR-XXX`). El archivo se renombra al ID.
 > **Superseded:** Cuando una decisión es reemplazada, se pone `status: superseded` y se llena `superseded_by: ADR-XXX`.
+> **⚠️ type = "adr", NO "decision":** Los queries de Dashboard y Weekly Notes filtran por `type === "adr"`. Si escribes `type: decision`, la nota será invisible para Dataview.
+
+---
+
+#### 4.4.7 Nota Semanal (`type: weekly`)
+
+**Ubicación:** `Daily Notes/YYYY-WNN.md` (ej: `2026-W09.md`)
+**Creación:** `Ctrl+P` → "Periodic Notes: Open weekly note" (o Calendar plugin)
+**Template:** `99-Templates/_template-weekly-note.md`
+
+```yaml
+# ── Identidad ──────────────────────────────────────────────
+type: weekly                  # 🔴 REQUERIDO — Identifica como nota semanal
+title: "Semana 09 — 2026"     # 🔴 REQUERIDO — Auto-generado por Templater
+
+# ── Rango de Fechas (CRÍTICO para scoping) ─────────────────
+sprint: Sprint-01             # 🟡 RECOMENDADO — Sprint activo esa semana
+week_start: 2026-02-23        # 🔴 REQUERIDO — Lunes de la semana (ISO)
+                              #   → Todas las queries Dataview usan date(this.week_start)
+                              #   → Sin este campo, las tablas muestran TODO el vault
+week_end: 2026-03-01          # 🔴 REQUERIDO — Domingo de la semana (ISO)
+                              #   → Todas las queries Dataview usan date(this.week_end)
+                              #   → Sin este campo, las tablas muestran TODO el vault
+
+# ── Metadata ───────────────────────────────────────────────
+created: 2026-02-22           # ⚪ OPCIONAL
+tags:                         # 🟡 RECOMENDADO
+  - weekly
+  - reporte
+```
+
+> **Cómo funcionan los queries scoped:** Cada sección de la weekly note filtra datos usando el rango `week_start` ↔ `week_end` del propio frontmatter:
+>
+> | Sección | Query | Campos de tarea requeridos |
+> |-----|-----|-----|
+> | ✅ Completadas esta semana | `completed >= date(this.week_start) AND completed <= date(this.week_end)` | `type`, `status: done`, `completed` |
+> | 🔄 En Progreso | `status = "in-progress" OR status = "review"` | `type`, `status` |
+> | 📋 Pendientes con fecha | `due >= date(this.week_start) AND due <= date(this.week_end) AND status = "todo"` | `type`, `status`, `due` |
+> | 🚧 Bloqueos | `status = "blocked"` | `type`, `status` |
+> | 📊 Métricas | DataviewJS calcula horas, ADRs, reuniones en el rango | `effort_actual`, `completed`, `date` (en ADRs/minutas) |
+> | ⚠️ Riesgos | `type = "risk" AND status = "open"` | `type`, `status` (en riesgos) |
+>
+> **Ejemplo práctico:** W09 (Feb 23 → Mar 1) muestra T-016 a T-020 como "completadas" porque sus campos `completed` caen entre `2026-02-23` y `2026-03-01`. Las tareas del Sprint-02 (due: Mar 7+) NO aparecen en "Pendientes" porque sus `due` son posteriores al `week_end`.
+
+---
+
+#### 4.4.8 Sprint Planning (`type: sprint-planning`)
+
+**Ubicación:** `05-Sprints/Sprint-XX/Sprint-XX-Planning.md`
+**Creación:** QuickAdd → "Sprint Planning"
+**Template:** `99-Templates/_template-sprint-planning.md`
+
+```yaml
+# ── Identidad ──────────────────────────────────────────────
+type: sprint-planning         # 🔴 REQUERIDO
+title: "Sprint 02 — Avance 2: Diseño y Arquitectura"  # 🔴 REQUERIDO
+sprint: Sprint-02             # 🔴 REQUERIDO — Vincula al sprint
+avance: Avance-2              # 🟡 RECOMENDADO — Avance académico asociado
+
+# ── Estado ─────────────────────────────────────────────────
+status: active                # 🔴 REQUERIDO — active | done
+                              #   Valores: active | done
+goal: "Completar diseño de arquitectura..."  # 🔴 REQUERIDO — Meta del sprint
+
+# ── Fechas ─────────────────────────────────────────────────
+started: 2026-03-03           # 🔴 REQUERIDO — Inicio del sprint
+due: 2026-03-22               # 🔴 REQUERIDO — Fin planificado
+completed: 2026-03-22         # 🔴 REQUERIDO (al cerrar) — Fin real
+team: [Geovanny, Elkin, Santiago]  # 🔴 REQUERIDO
+
+# ── Metadata ───────────────────────────────────────────────
+created: 2026-02-27           # ⚪ OPCIONAL
+updated: 2026-03-01           # ⚪ OPCIONAL
+tags:                         # 🟡 RECOMENDADO
+  - sprint
+  - planning
+  - avance-2
+banner_src: "08-Recursos/Imágenes/cover-sprints.png"  # ⚪ OPCIONAL — Banner decorativo
+banner_src_y: 0.42            # ⚪ OPCIONAL
+```
+
+---
+
+#### 4.4.9 Documento de Contexto (`type: context`)
+
+**Ubicación:** `02-Investigación/Contexto/*.md`
+**Creación:** Manual (no tiene macro QuickAdd)
+
+```yaml
+# ── Identidad ──────────────────────────────────────────────
+type: context                 # 🔴 REQUERIDO — Identifica como nota de contexto
+title: "Contexto — Educación en Territorios Indígenas"  # 🔴 REQUERIDO
+module: educacion             # 🔴 REQUERIDO — educacion | saberes | salud | transversal
+project: raices-vivas         # 🟡 RECOMENDADO
+status: draft                 # 🟡 RECOMENDADO — draft | review | final
+
+# ── Metadata ───────────────────────────────────────────────
+created: 2026-02-27           # ⚪ OPCIONAL
+updated: 2026-02-27           # ⚪ OPCIONAL
+tags:                         # 🟡 RECOMENDADO
+  - investigación
+  - contexto
+  - modulo/edu
+banner_src: "08-Recursos/Imágenes/cover-educacion.png"  # ⚪ OPCIONAL
+banner_src_y: 0.40            # ⚪ OPCIONAL
+```
+
+---
+
+#### 4.4.10 Documento de Proyecto (`type: document` / `type: guide`)
+
+**Ubicación:** `01-Proyecto/*.md`, `04-Arquitectura/*.md`
+**Creación:** Manual
+
+```yaml
+# ── Identidad ──────────────────────────────────────────────
+type: document                # 🔴 REQUERIDO — "document" o "guide" según naturaleza
+                              #   "document" = referencia estática (Charter, Alcance, Plan)
+                              #   "guide" = instrucciones procedurales (Onboarding, Workflow)
+title: "Plan de Gestión"      # 🔴 REQUERIDO
+project: raices-vivas         # 🟡 RECOMENDADO
+status: active                # 🟡 RECOMENDADO — draft | active | archived
+
+# ── Metadata ───────────────────────────────────────────────
+created: 2026-02-27           # ⚪ OPCIONAL
+updated: 2026-03-01           # ⚪ OPCIONAL
+tags:                         # 🟡 RECOMENDADO
+  - proyecto
+  - gestión
+```
+
+---
+
+#### 4.4.11 Nota Diaria (`type: daily-note`)
+
+**Ubicación:** `Daily Notes/YYYY-MM-DD.md`
+**Creación:** Calendar plugin (clic en día) o `Ctrl+P` → "Daily Notes: Open today's note"
+**Template:** `99-Templates/_template-daily-note.md`
+
+```yaml
+type: daily-note              # 🔴 REQUERIDO
+date: 2026-03-01              # 🔴 REQUERIDO — Fecha de la nota
+tags:                         # 🟡 RECOMENDADO
+  - daily
+```
+
+---
+
+#### 4.4.12 Entrevista (`type: entrevista`)
+
+**Ubicación:** `02-Investigación/Entrevistas/ENT-XXX.md`
+**Creación:** QuickAdd → "Entrevista"
+**Template:** `99-Templates/_template-entrevista.md`
+
+```yaml
+type: entrevista              # 🔴 REQUERIDO
+id: ENT-001                   # 🔴 REQUERIDO
+title: "Entrevista con líder comunitario Bribri"  # 🔴 REQUERIDO
+date: 2026-03-10              # 🔴 REQUERIDO
+tags:                         # 🟡 RECOMENDADO
+  - investigación
+  - entrevista
+```
+
+---
+
+### 4.5 Mapa Maestro: Campo → Automatización
+
+La siguiente tabla es la referencia definitiva de **qué campo alimenta qué automatización**. Si un campo falta, la automatización correspondiente mostrará datos incorrectos o vacíos.
+
+| Campo | Tipo de Nota | Lo Consume | Efecto si Falta |
+|-------|-------------|------------|-----------------|
+| `type` | TODAS | Todos los queries Dataview | La nota es **invisible** para todo el sistema |
+| `id` | task, risk, adr, meeting, req | Tablas, links, RTM | No se puede referenciar ni vincular |
+| `status` | task, risk, adr, req | Dashboard KPIs, Kanban, Weekly, Métricas | No aparece en tablas filtradas por estado |
+| `effort` | task | Dashboard "Horas Estimadas", Velocity | Horas estimadas = 0 |
+| `effort_actual` | task | Dashboard "Horas Reales", Weekly "Horas ejecutadas", Costo real | Costo real = 0, fallback a `effort` en Weekly |
+| `assignee` | task | Costo por persona (tarifa × horas), filtro por responsable | Tarifa = ₡5,000/h (fallback), no aparece en filtros |
+| `completed` | task | Weekly "Completadas esta semana", Cycle Time | Tarea done desaparece de weekly, Cycle Time imposible |
+| `due` | task | Weekly "Pendientes con fecha", Calendar, ordenamiento | No aparece en pendientes semanales ni en calendario |
+| `started` | task | Cycle Time (started → completed) | Cycle Time = 0 |
+| `sprint` | task, sprint-planning | Agrupación por sprint, Velocity | Tarea flotante sin sprint |
+| `priority` | task, req | Ordenamiento, filtros | Se ordena como si no tuviera prioridad |
+| `severity` | risk | Ordenamiento de riesgos | Riesgo sin clasificación de urgencia |
+| `review_date` | risk | Filtro de riesgos con revisión vencida | No se detecta cuándo revisar |
+| `date` | adr, meeting | Weekly "ADR esta semana", "Reuniones esta semana" | ADR/reunión no aparece en weekly notes |
+| `week_start` | weekly | TODAS las queries de la weekly note | Weekly muestra TODO el vault (sin filtro temporal) |
+| `week_end` | weekly | TODAS las queries de la weekly note | Weekly muestra TODO el vault (sin filtro temporal) |
+| `requirement` | task | RTM, tabla "Tareas Vinculadas" en RF/RNF | Tarea sin vínculo a requerimiento |
+| `source` | task, risk, adr | Trazabilidad a minuta de origen | Se pierde el historial de decisión |
+| `module` | task, req, context | Filtro por módulo, agrupación | No aparece en vistas filtradas por módulo |
 
 > 📌 **Trazabilidad bidireccional completa:** Cada nota de requerimiento (RF y RNF) incluye una query Dataview al final que lista automáticamente todas las tareas vinculadas. Cada nota de tarea tiene un campo `requirement:` que referencia al requerimiento asociado. Las decisiones y riesgos se interconectan entre sí y con los requerimientos que afectan.
 
@@ -456,12 +896,15 @@ El Linter limpia automáticamente el Markdown al guardar:
 
 | Tipo | Formato | Ejemplo |
 |------|---------|---------|
-| Tarea | `T-XXX` | T-001, T-025 |
+| Tarea | `T-XXX` | T-001, T-031 |
 | RF | `RF-MOD-XX` | RF-EDU-01, RF-SAB-03 |
 | RNF | `RNF-XX` | RNF-01, RNF-07 |
-| Riesgo | `RISK-XXX` | RISK-001 |
-| ADR | `ADR-XXX` | ADR-001 |
+| Riesgo | `RSK-XXX` | RSK-001, RSK-006 |
+| ADR | `ADR-XXX` | ADR-001, ADR-006 |
 | Sprint | `Sprint-XX` | Sprint-01, Sprint-02 |
+| Minuta | `MIN-XXX` | MIN-001 |
+| Entrevista | `ENT-XXX` | ENT-001 |
+| Weekly Note | `YYYY-WNN` | 2026-W09, 2026-W10 |
 
 ### 6.2 Estados de Tareas
 
@@ -1021,27 +1464,49 @@ Esto crea una vista centralizada de TODOS los ítems pendientes en tareas del sp
 
 ---
 
-#### 12.5 Periodic Notes — Notas Semanales y Mensuales
+#### 12.5 Periodic Notes — Notas Semanales con Scoped Queries
 
-Extiende Daily Notes con creación de notas semanales y mensuales.
+Extiende Daily Notes con creación de notas semanales automáticas que funcionan como **snapshots semanales del proyecto**.
 
-**Dónde se usa:** Resúmenes semanales de sprint, retrospectivas mensuales
+**Dónde se usa:** Resúmenes semanales de sprint, métricas por semana, seguimiento de riesgos.
 
-**Configuración recomendada (Settings → Periodic Notes):**
+**Configuración (Settings → Periodic Notes):**
 - Weekly: Folder = `Daily Notes/`, Format = `YYYY-[W]ww`
-- Monthly: Folder = `Daily Notes/`, Format = `YYYY-MM`
+- Template: `99-Templates/_template-weekly-note.md`
 
-**Template semanal sugerida:**
-```markdown
-# Semana {{date:ww}} — {{date:YYYY}}
+**Cómo funciona el template `_template-weekly-note.md`:**
 
-## Resumen
-- Tareas completadas: 
-- Tareas pendientes:
-- Bloqueos:
+El template usa Templater para calcular automáticamente las fechas de la semana:
 
-## Notas de la semana
+```javascript
+// Templater calcula lunes y domingo de la semana actual
+const monday = moment().startOf('isoWeek').format('YYYY-MM-DD');
+const sunday = moment().endOf('isoWeek').format('YYYY-MM-DD');
 ```
+
+Esto inyecta `week_start` y `week_end` en el frontmatter. Luego, **cada query Dataview** en la nota usa esas fechas como filtro:
+
+```sql
+-- Ejemplo: solo tareas completadas ESTA semana
+WHERE completed >= date(this.week_start) AND completed <= date(this.week_end)
+```
+
+**Resultado:** Cada weekly note es un snapshot aislado. W09 solo muestra datos de Feb 23–Mar 1. W10 solo muestra datos de Mar 2–8. No hay contaminación entre semanas.
+
+**Secciones de la weekly note:**
+
+| Sección | Qué muestra | Query scope |
+|---------|------------|-------------|
+| ✅ Completadas | Tareas con `completed` en el rango | `completed >= week_start AND <= week_end` |
+| 🔄 En Progreso | Tareas activas (snapshot global) | `status = "in-progress" OR "review"` |
+| 📋 Pendientes | Tareas con `due` en el rango | `due >= week_start AND due <= week_end AND status = "todo"` |
+| 🚧 Bloqueos | Tareas bloqueadas (snapshot global) | `status = "blocked"` |
+| 📊 Métricas | KPIs calculados: horas, ADRs, reuniones | DataviewJS con rango week_start ↔ week_end |
+| ⚠️ Riesgos | Riesgos abiertos (snapshot global) | `type = "risk" AND status = "open"` |
+
+> **⚠️ Campos críticos para que funcione:** `week_start` y `week_end` en el frontmatter de la weekly note, y `completed`/`due` en las tareas. Si faltan, las tablas muestran datos globales en vez de semanales. Ver §4.4.7 para el esquema completo.
+
+**Flujo:** Cada lunes → `Ctrl+P` → "Periodic Notes: Open weekly note" → Se crea `Daily Notes/YYYY-WNN.md` con el template.
 
 ---
 
