@@ -17,6 +17,7 @@ views:
       - status
       - updated
     sort: []
+    limit: 25
   - type: cards
     name: View
     order:

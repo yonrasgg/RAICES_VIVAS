@@ -39,6 +39,7 @@ phase: "<% phase %>"
 module: <% module_ %>
 requirement: "<% requirement %>"
 effort: "<% effort %>"
+effort_actual: ""
 started: <% started %>
 due: <% due %>
 completed: 

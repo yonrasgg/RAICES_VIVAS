@@ -148,15 +148,18 @@ const people = {};
 const totalTasks = tasks.length;
 for (const t of tasks) {
   const a = t.assignee || "Sin asignar";
-  if (!people[a]) people[a] = {total: 0, done: 0, inProgress: 0, todo: 0, hours: 0, doneHours: 0};
+  if (!people[a]) people[a] = {total: 0, done: 0, inProgress: 0, todo: 0, estH: 0, actH: 0, doneEstH: 0, doneActH: 0};
   people[a].total++;
-  const h = parseInt(String(t.effort)) || 0;
-  people[a].hours += h;
-  if (t.status === "done") { people[a].done++; people[a].doneHours += h; }
+  const est = parseInt(String(t.effort)) || 0;
+  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const real = act || est;
+  people[a].estH += est;
+  people[a].actH += real;
+  if (t.status === "done") { people[a].done++; people[a].doneEstH += est; people[a].doneActH += real; }
   else if (t.status === "in-progress") people[a].inProgress++;
   else people[a].todo++;
 }
-const headers = ["👤 Integrante", "Asignadas", "✅ Done", "🔄 Curso", "📋 Pend.", "% Colaboración", "⏱️ Horas (plan/done)", "% Eficiencia"];
+const headers = ["👤 Integrante", "Asignadas", "✅ Done", "🔄 Curso", "📋 Pend.", "% Colaboración", "⏱️ Est.", "⏱️ Real", "% Eficiencia"];
 const rows = [];
 for (const [person, d] of Object.entries(people).sort()) {
   const pctColab = totalTasks > 0 ? Math.round((d.total / totalTasks) * 100) : 0;
@@ -165,7 +168,8 @@ for (const [person, d] of Object.entries(people).sort()) {
   rows.push([
     person, d.total, d.done, d.inProgress, d.todo,
     `${bar} ${pctColab}%`,
-    `${d.hours}h / ${d.doneHours}h`,
+    `${d.estH}h`,
+    `${d.actH}h`,
     `${pctEfic}%`
   ]);
 }
@@ -275,7 +279,7 @@ const reworkRate = total > 0 ? ((review / total) * 100).toFixed(1) : 0; // % en 
 // Cycle time estimado (promedio horas por tarea completada)
 const doneTasks = tasks.where(t => t.status === "done" && t.effort);
 let totalEffort = 0;
-for (const t of doneTasks) totalEffort += parseInt(String(t.effort)) || 0;
+for (const t of doneTasks) totalEffort += t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : (parseInt(String(t.effort)) || 0);
 const avgCycleTime = doneTasks.length > 0 ? (totalEffort / doneTasks.length).toFixed(1) : "N/A";
 
 dv.table(
@@ -380,8 +384,10 @@ for (const t of tasks) {
   const s = String(t.sprint);
   if (!sprints[s]) sprints[s] = { planned: 0, done: 0, points: 0, donePoints: 0 };
   sprints[s].planned++;
-  const pts = parseInt(String(t.effort)) || 1;
-  sprints[s].points += pts;
+  const estPts = parseInt(String(t.effort)) || 1;
+  const actPts = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const pts = actPts || estPts;
+  sprints[s].points += estPts;
   if (t.status === "done") {
     sprints[s].done++;
     sprints[s].donePoints += pts;
@@ -475,21 +481,26 @@ const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.effort)
 const costos = {};
 for (const t of tasks) {
   const person = t.assignee || "Sin asignar";
-  const hours = parseInt(String(t.effort)) || 0;
+  const est = parseInt(String(t.effort)) || 0;
+  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const hours = act || est;
   const tarifa = tarifas[person] || 5000;
-  if (!costos[person]) costos[person] = { horas: 0, costo: 0 };
-  costos[person].horas += hours;
-  costos[person].costo += hours * tarifa;
+  if (!costos[person]) costos[person] = { estH: 0, actH: 0, estCost: 0, actCost: 0 };
+  costos[person].estH += est;
+  costos[person].actH += hours;
+  costos[person].estCost += est * tarifa;
+  costos[person].actCost += hours * tarifa;
 }
-let grandTotal = 0;
-const headers = ["👤 Integrante", "Horas", "Tarifa (₡/h)", "Costo (₡)", "Costo (USD)"];
+let grandEst = 0, grandAct = 0;
+const headers = ["👤 Integrante", "H. Est.", "H. Real", "Tarifa (₡/h)", "Costo Est. (₡)", "Costo Real (₡)", "Real (USD)"];
 const rows = [];
 for (const [person, data] of Object.entries(costos).sort()) {
   const tarifa = tarifas[person] || 5000;
-  grandTotal += data.costo;
-  rows.push([person, `${data.horas}h`, `₡${tarifa.toLocaleString()}`, `₡${data.costo.toLocaleString()}`, `$${Math.round(data.costo / 535).toLocaleString()}`]);
+  grandEst += data.estCost;
+  grandAct += data.actCost;
+  rows.push([person, `${data.estH}h`, `${data.actH}h`, `₡${tarifa.toLocaleString()}`, `₡${data.estCost.toLocaleString()}`, `₡${data.actCost.toLocaleString()}`, `$${Math.round(data.actCost / 535).toLocaleString()}`]);
 }
-rows.push(["**TOTAL**", "", "", `**₡${grandTotal.toLocaleString()}**`, `**$${Math.round(grandTotal/535).toLocaleString()}**`]);
+rows.push(["**TOTAL**", "", "", "", `**₡${grandEst.toLocaleString()}**`, `**₡${grandAct.toLocaleString()}**`, `**$${Math.round(grandAct/535).toLocaleString()}**`]);
 dv.table(headers, rows);
 dv.paragraph(`> 💰 Ver detalle completo: [[01-Proyecto/Finanzas|Gestión Financiera del Proyecto]]`);
 ```
