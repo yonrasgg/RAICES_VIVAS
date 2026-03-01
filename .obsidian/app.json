@@ -4,5 +4,9 @@
   "newLinkFormat": "absolute",
   "showUnsupportedFiles": true,
   "uriCallbacks": true,
-  "vimMode": false
+  "vimMode": false,
+  "propertiesInDocument": "hidden",
+  "showIndentGuide": true,
+  "rightToLeft": false,
+  "tabSize": 6
 }
