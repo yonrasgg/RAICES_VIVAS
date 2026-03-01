@@ -124,6 +124,14 @@ PALETTES = {
         "detail": (60, 30, 30),
         "text": (250, 240, 235),
     },
+    "rnf": {
+        "bg": (22, 25, 32),         # gris azulado oscuro
+        "primary": (120, 150, 190), # azul acero
+        "secondary": (170, 190, 210),# gris plata
+        "accent": (200, 170, 60),   # dorado sobrio
+        "detail": (40, 45, 55),
+        "text": (235, 238, 245),
+    },
 }
 
 
@@ -1248,6 +1256,109 @@ def cover_rf_sal(path):
     print(f"  ✓ {path}")
 
 
+def cover_rnf(path):
+    """RNF — Requerimientos No Funcionales, transversal, engranajes, escudos, candados."""
+    p = PALETTES["rnf"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (14, 16, 22))
+
+    # Grid de puntos (estructura, orden)
+    for x in range(0, WIDTH, 50):
+        for y in range(0, HEIGHT, 50):
+            draw.ellipse([x - 1, y - 1, x + 1, y + 1], fill=p["detail"])
+
+    # Engranajes (mecánica transversal)
+    gear_positions = [(220, 140, 50), (WIDTH - 220, 140, 45), (300, HEIGHT - 120, 40),
+                      (WIDTH - 300, HEIGHT - 120, 50), (WIDTH // 2 - 300, HEIGHT // 2, 35),
+                      (WIDTH // 2 + 300, HEIGHT // 2, 35)]
+    for cx, cy, size in gear_positions:
+        teeth = 10
+        for i in range(teeth):
+            angle = 2 * math.pi * i / teeth
+            x1 = cx + (size - 6) * math.cos(angle)
+            y1 = cy + (size - 6) * math.sin(angle)
+            x2 = cx + (size + 6) * math.cos(angle)
+            y2 = cy + (size + 6) * math.sin(angle)
+            draw.line([(x1, y1), (x2, y2)], fill=p["primary"], width=3)
+        draw_concentric_circles(draw, cx, cy, size, 3, p["primary"], 2)
+        draw.ellipse([cx - 5, cy - 5, cx + 5, cy + 5], fill=p["accent"])
+
+    # Candados (seguridad, restricciones)
+    for lx, ly in [(130, HEIGHT // 2), (WIDTH - 130, HEIGHT // 2)]:
+        draw.rectangle([lx - 15, ly - 5, lx + 15, ly + 20], outline=p["secondary"], width=2)
+        draw.arc([lx - 10, ly - 22, lx + 10, ly - 2], 180, 0, fill=p["secondary"], width=2)
+        draw.ellipse([lx - 3, ly + 3, lx + 3, ly + 9], fill=p["accent"])
+
+    # Hexágonos (estructura modular)
+    for _ in range(8):
+        hx = random.randint(80, WIDTH - 80)
+        hy = random.randint(50, HEIGHT - 50)
+        hr = random.randint(18, 30)
+        pts = [(hx + hr * math.cos(2 * math.pi * i / 6 - math.pi / 6),
+                hy + hr * math.sin(2 * math.pi * i / 6 - math.pi / 6)) for i in range(6)]
+        draw.polygon(pts, outline=random.choice([p["primary"], p["secondary"]]))
+
+    # Líneas horizontales (reglas, normas)
+    for ry in [HEIGHT // 4, 3 * HEIGHT // 4]:
+        draw.line([(80, ry), (WIDTH - 80, ry)], fill=p["detail"], width=1)
+        for x in range(100, WIDTH - 80, 80):
+            draw.line([(x, ry - 4), (x, ry + 4)], fill=p["secondary"], width=1)
+
+    # Rombos y bordes
+    draw_diamond_band(draw, 20, 10, 24, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 20, 10, 24, p["accent"])
+    draw_border_pattern(draw, p, "zigzag")
+
+    # --- Texto RNF grande centrado ---
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 120)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    label = "RNF"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    for off in range(8, 0, -2):
+        glow = tuple(max(0, min(255, c + 35 - off * 4)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow)
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=(0, 0, 0))
+    draw.text((tx, ty), label, font=big_font, fill=p["text"])
+
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    subtitle = "Requerimientos No Funcionales · Raíces Vivas"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sx = (WIDTH - (bbox2[2] - bbox2[0])) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=(0, 0, 0))
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
 # =====================================================
 # MAIN — Generar todos los covers
 # =====================================================
@@ -1274,6 +1385,7 @@ if __name__ == "__main__":
         "cover-rf-edu.png": cover_rf_edu,
         "cover-rf-sab.png": cover_rf_sab,
         "cover-rf-sal.png": cover_rf_sal,
+        "cover-rnf.png": cover_rnf,
     }
 
     print(f"\n🎨 Generando {len(covers)} covers culturales...\n")

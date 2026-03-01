@@ -522,7 +522,7 @@ Brecha educativa → necesidad de materiales bilingües → RV-1.2 → [[RF-EDU-
 | [[RNF-07]]           | RNF  | RV-4.3 | Transversal | Riesgo cultural por difusión                      | Gobernanza cultural                                   | Roles/permisos configurables por comunidad                    | Admin comunitario                     | M         | Configurable por admin local                 | Ética + entrevistas               | Validación comunitaria     |
 
 ---
-## ● Conclusiones y Recomendaciones
+## Conclusiones y Recomendaciones
 
 ### Conclusiones
 
@@ -551,4 +551,4 @@ Brecha educativa → necesidad de materiales bilingües → RV-1.2 → [[RF-EDU-
 ![[Raíces Vivas - Sistema Integral de Apoyo a Comunidades Indígenas.pdf]]
 
 ---
-[[Software Engineering Introduction]]
+
