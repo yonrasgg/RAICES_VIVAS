@@ -1,10 +1,13 @@
 {
   "cssTheme": "Shiba Inu",
-  "accentColor": "#5cf55f",
+  "accentColor": "#494ffd",
   "baseFontSizeAction": true,
-  "enabledCssSnippets": ["dashboard-hero"],
+  "enabledCssSnippets": [
+    "dashboard-hero"
+  ],
   "nativeMenus": false,
   "baseFontSize": 12,
   "textFontFamily": "Arial",
-  "interfaceFontFamily": "Ubuntu Mono"
+  "interfaceFontFamily": "Ubuntu Mono",
+  "theme": "obsidian"
 }

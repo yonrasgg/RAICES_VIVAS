@@ -8,5 +8,6 @@
   "propertiesInDocument": "visible",
   "showIndentGuide": true,
   "rightToLeft": false,
-  "tabSize": 6
+  "tabSize": 6,
+  "defaultViewMode": "preview"
 }
