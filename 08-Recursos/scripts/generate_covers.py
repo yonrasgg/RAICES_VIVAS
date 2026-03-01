@@ -156,6 +156,14 @@ PALETTES = {
         "detail": (35, 42, 60),
         "text": (245, 242, 250),
     },
+    "weekly": {
+        "bg": (20, 30, 35),         # verde azulado oscuro
+        "primary": (90, 190, 160),  # jade semanal
+        "secondary": (130, 160, 220),# azul planeación
+        "accent": (245, 200, 70),   # oro resumen
+        "detail": (38, 50, 48),
+        "text": (240, 245, 242),
+    },
 }
 
 
@@ -1732,6 +1740,123 @@ def cover_daily(path):
     print(f"  ✓ {path}")
 
 
+def cover_weekly(path):
+    """Weekly Notes — calendario semanal, barras de sprint, reloj, fases lunares."""
+    p = PALETTES["weekly"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (12, 18, 22))
+
+    # Grid sutil
+    for x in range(0, WIDTH, 55):
+        draw.line([(x, 0), (x, HEIGHT)], fill=p["detail"], width=1)
+    for y in range(0, HEIGHT, 55):
+        draw.line([(0, y), (WIDTH, y)], fill=p["detail"], width=1)
+
+    # Bloques de 7 días (calendario semanal)
+    block_w = 80
+    block_h = 70
+    start_x = (WIDTH - 7 * (block_w + 10)) // 2
+    block_y = HEIGHT // 2 - block_h // 2
+    days = ["L", "M", "X", "J", "V", "S", "D"]
+    for i in range(7):
+        bx = start_x + i * (block_w + 10)
+        c_outline = p["accent"] if i < 5 else p["secondary"]
+        draw.rounded_rectangle([bx, block_y, bx + block_w, block_y + block_h],
+                               radius=6, outline=c_outline, width=2)
+        # Barra de progreso dentro del bloque
+        bar_y = block_y + block_h - 14
+        bar_fill = random.uniform(0.2, 1.0)
+        draw.rectangle([bx + 6, bar_y, bx + 6 + int((block_w - 12) * bar_fill), bar_y + 6],
+                       fill=p["primary"])
+
+    # Flechas de avance entre días
+    for i in range(6):
+        ax = start_x + (i + 1) * (block_w + 10) - 8
+        ay = block_y + block_h // 2
+        draw.polygon([(ax, ay - 5), (ax + 8, ay), (ax, ay + 5)], fill=p["accent"])
+
+    # Barras de sprint (arriba)
+    for si, sy in enumerate([60, 90]):
+        bar_x = 200
+        bar_w = WIDTH - 400
+        draw.rectangle([bar_x, sy, bar_x + bar_w, sy + 8], outline=p["detail"], width=1)
+        fill_pct = random.uniform(0.3, 0.8)
+        c = p["primary"] if si == 0 else p["secondary"]
+        draw.rectangle([bar_x, sy, bar_x + int(bar_w * fill_pct), sy + 8], fill=c)
+        # Marcadores
+        for mx in range(bar_x, bar_x + bar_w, bar_w // 4):
+            draw.line([(mx, sy - 3), (mx, sy + 11)], fill=p["detail"], width=1)
+
+    # Fases lunares (paso del tiempo)
+    moon_y = HEIGHT - 80
+    moon_phases = [0.0, 0.25, 0.5, 0.75, 1.0, 0.75, 0.5]
+    for i, phase in enumerate(moon_phases):
+        mx = start_x + i * (block_w + 10) + block_w // 2
+        r = 12
+        draw.ellipse([mx - r, moon_y - r, mx + r, moon_y + r], outline=p["secondary"], width=1)
+        if phase > 0:
+            fill_w = int(r * 2 * phase)
+            draw.ellipse([mx - r, moon_y - r, mx - r + fill_w, moon_y + r], fill=p["accent"])
+
+    # Círculos concéntricos decorativos
+    draw_concentric_circles(draw, 100, 140, 40, 4, p["primary"], 2)
+    draw_concentric_circles(draw, WIDTH - 100, 140, 40, 4, p["primary"], 2)
+
+    # Rombos y bordes
+    draw_diamond_band(draw, 18, 10, 22, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 18, 10, 22, p["accent"])
+    draw_border_pattern(draw, p, "diamonds")
+
+    # --- Texto Weekly Notes grande centrado ---
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 85)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    label = "Weekly Notes"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    for off in range(8, 0, -2):
+        glow = tuple(max(0, min(255, c + 40 - off * 4)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow)
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=(0, 0, 0))
+    draw.text((tx, ty), label, font=big_font, fill=p["text"])
+
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    subtitle = "Resumen Semanal · Raíces Vivas"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sx = (WIDTH - (bbox2[2] - bbox2[0])) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=(0, 0, 0))
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
 # =====================================================
 # MAIN — Generar todos los covers
 # =====================================================
@@ -1762,6 +1887,7 @@ if __name__ == "__main__":
         "cover-tareas.png": cover_tareas,
         "cover-reuniones.png": cover_reuniones,
         "cover-daily.png": cover_daily,
+        "cover-weekly.png": cover_weekly,
     }
 
     print(f"\n🎨 Generando {len(covers)} covers culturales...\n")

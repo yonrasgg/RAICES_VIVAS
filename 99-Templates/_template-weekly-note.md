@@ -6,27 +6,25 @@ const monday = m.clone().startOf('isoWeek').format('YYYY-MM-DD');
 const sunday = m.clone().endOf('isoWeek').format('YYYY-MM-DD');
 const weekNum = m.isoWeek().toString().padStart(2, '0');
 const year = m.isoWeekYear();
-tpl.weekStart = monday;
-tpl.weekEnd = sunday;
-tpl.weekNum = weekNum;
-tpl.year = year;
 -%>
 ---
+banner_src: "08-Recursos/Imágenes/cover-weekly.png"
+banner_src_y: 0.42
 type: weekly
-title: "Semana <% tpl.weekNum %> — <% tpl.year %>"
+title: "Semana <% weekNum %> — <% year %>"
 sprint: ""
-week_start: <% tpl.weekStart %>
-week_end: <% tpl.weekEnd %>
+week_start: <% monday %>
+week_end: <% sunday %>
 created: <% tp.date.now("YYYY-MM-DD") %>
 tags:
   - weekly
   - reporte
 ---
 
-# 📅 Semana <% tpl.weekNum %> — <% tpl.year %>
+# 📅 Semana <% weekNum %> — <% year %>
 
 > Resumen semanal del equipo Raíces Vivas.
-> **Período:** <% tpl.weekStart %> → <% tpl.weekEnd %>
+> **Período:** <% monday %> → <% sunday %>
 
 ---
 

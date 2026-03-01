@@ -33,10 +33,6 @@
     {
       "folder": "01-Proyecto/Decisiones",
       "template": "99-Templates/_template-adr"
-    },
-    {
-      "folder": "Daily Notes",
-      "template": "99-Templates/_template-daily-note"
     }
   ],
   "enable_file_templates": false,
