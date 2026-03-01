@@ -4,7 +4,7 @@ title: "Guía de Workflow — Vault Raíces Vivas"
 project: raices-vivas
 status: active
 created: 2026-02-27
-updated: 2026-02-27
+updated: 2026-02-28
 tags:
   - proyecto
   - guía
@@ -728,14 +728,15 @@ El Dashboard Home tiene 7 botones precreados:
 ### Setup Inicial (una vez)
 
 - [ ] Clonar/sincronizar el vault en tu máquina
-- [ ] Abrir en Obsidian → verificar que los 37 plugins están activos
+- [ ] Abrir en Obsidian → verificar que los 22 plugins están activos
 - [ ] Verificar tema: Shiba Inu con accent `#5cf55f`
 - [ ] Verificar CSS snippet `dashboard-hero.css` habilitado
 - [ ] Verificar que el Dashboard (Home) abre automáticamente con banner
 - [ ] Revisar esta Guía de Workflow completa
 - [ ] Probar crear una nota con QuickAdd (`Ctrl+P` → QuickAdd)
+- [ ] Verificar que todos los requerimientos muestran la sección 'Tareas Vinculadas' (Dataview)
 - [ ] Probar cambiar un estado de tarea con Meta Bind (ver §9.3)
-- [ ] Probar abrir el Checklist panel (ver §8.6)
+- [ ] Probar abrir el Checklist panel (ver §8.4)
 - [ ] Verificar que Periodic Notes está configurado (ver §9.2)
 
 ### Rutina Semanal
@@ -773,18 +774,15 @@ El Dashboard Home tiene 7 botones precreados:
 | Nota no aparece en queries | Verificar que el campo `type` existe y es correcto |
 | Meta Bind no muestra dropdown | Verificar que el plugin está habilitado y la sintaxis es exacta |
 | Meta Bind cambia valor pero Dashboard no refleja | Forzar refresh Dataview (`Ctrl+P` → "Force Refresh") |
-| Banner no aparece en nota | Verificar `banner:` en frontmatter con ruta correcta al .png |
+| Banner no aparece en nota | Verificar `banner_src:` en frontmatter con ruta correcta al .png |
 | Banners muestra imagen cortada | Ajustar `banner_y:` (0.0=top, 0.5=centro, 1.0=bottom) |
-| Tracker chart vacío | Verificar que el campo `searchTarget` existe en las notas objetivo |
 | Checklist panel vacío | Verificar configuración de carpeta/tags en Settings → Checklist |
-| Leaflet mapa no carga | Verificar conexión a internet (tiles se descargan online) |
 | Multi-Column no renderiza | Verificar que el ID sea único y la sintaxis exacta |
 | Buttons no ejecuta acción | Verificar nombre del comando exacto (`Ctrl+P` → buscar) |
-| Reminder no notifica | Settings → Reminder → verificar que escanea `due:` en frontmatter |
 
 ---
 
-*Guía creada: 2026-02-27 · Última actualización: 2026-02-27*
+*Guía creada: 2026-02-27 · Última actualización: 2026-02-28*
 *Equipo: Geovanny, Elkin, Santiago*
-*Versión: 2.0 — Actualizada con 37 plugins integrados*
+*Versión: 3.0 — Actualizada con 22 plugins activos, trazabilidad bidireccional, métricas dinámicas*
 *Revisar y actualizar cada sprint*
