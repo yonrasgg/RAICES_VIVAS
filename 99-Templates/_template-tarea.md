@@ -36,7 +36,6 @@ tags:
 
 ## Criterios de Aceptación (DoD)
 
-#todo
 - [ ] Criterio 1
 - [ ] Criterio 2
 

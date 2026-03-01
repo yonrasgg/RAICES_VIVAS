@@ -1,8 +1,16 @@
 {
-  "tagName": "#todo",
-  "includeFiles": "05-Sprints/**",
-  "showCompleted": false,
+  "todoPageName": "tarea",
+  "showChecked": false,
+  "showAllTodos": true,
+  "showOnlyActiveFile": false,
   "autoRefresh": true,
+  "subGroups": false,
   "groupBy": "page",
-  "sortDirection": "new->old"
+  "sortDirectionItems": "new->old",
+  "sortDirectionGroups": "new->old",
+  "sortDirectionSubGroups": "new->old",
+  "includeFiles": "05-Sprints/**",
+  "lookAndFeel": "classic",
+  "_collapsedSections": [],
+  "_hiddenTags": []
 }

@@ -553,19 +553,15 @@ Muestra un panel lateral con todos los checkboxes sin marcar del vault, filtrado
 **Cómo activar:** `Ctrl+P` → "Checklist: Show Checklist"
 
 **Configuración recomendada (Settings → Checklist):**
+- Tag name: `tarea` (sin `#` — coincide con el tag `tarea` del frontmatter YAML)
 - Include files from: `05-Sprints/**`
-- Tag name: `#todo`
 - Show completed: off
+- Show all todos in file: on
 
-> **Importante:** El plugin busca el tag `#todo` **inline en el cuerpo del archivo**, no en el frontmatter YAML. El tag debe estar en su propia línea justo antes del bloque de checkboxes (mismo bloque Markdown). Formato correcto:
-> ```
-> ## Criterios de Aceptación (DoD)
-> 
-> #todo
-> - [ ] Criterio 1
-> - [ ] Criterio 2
-> ```
-> El template `_template-tarea.md` ya lo incluye automáticamente.
+> **Clave técnica:** El plugin busca archivos que contengan el tag `tarea` (en frontmatter YAML o inline). El nombre interno de la propiedad en `data.json` es `todoPageName` (NO `tagName`). Cuando el tag coincide con el frontmatter, el plugin parsea **todos** los checkboxes del archivo. No se necesitan tags inline adicionales.
+>
+> **Propiedades válidas** del `data.json`:
+> `todoPageName`, `showChecked`, `showAllTodos`, `showOnlyActiveFile`, `autoRefresh`, `subGroups`, `groupBy`, `sortDirectionItems`, `sortDirectionGroups`, `sortDirectionSubGroups`, `includeFiles`, `lookAndFeel`.
 
 Esto crea una vista centralizada de TODOS los ítems pendientes en tareas del sprint actual.
 
