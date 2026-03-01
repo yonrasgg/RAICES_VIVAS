@@ -1,5 +1,5 @@
 {
-  "tagName": "#tarea",
+  "tagName": "#todo",
   "includeFiles": "05-Sprints",
   "showCompleted": false,
   "autoRefresh": true,
