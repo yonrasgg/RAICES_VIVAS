@@ -13,12 +13,12 @@ kanban-plugin: basic
 - [ ] [[05-Sprints/Sprint-02/T-022|T-022: Modelo ER EDU]] #high @Elkin 📅 2026-03-14
 - [ ] [[05-Sprints/Sprint-02/T-023|T-023: Modelo ER SAB]] #high @Santiago 📅 2026-03-14
 - [ ] [[05-Sprints/Sprint-02/T-024|T-024: Modelo ER SAL]] #high @Geovanny 📅 2026-03-14
-- [ ] Elaborar wireframes módulo EDU @Geovanny 📅 2026-03-18
-- [ ] Elaborar wireframes módulo SAB @Elkin 📅 2026-03-20
-- [ ] Elaborar wireframes módulo SAL @Santiago 📅 2026-03-22
-- [ ] Preparar instrumentos de validación @Santiago 📅 2026-03-22
-- [ ] Planificar entrevistas de validación @Elkin 📅 2026-03-22
-- [ ] Documentar criterios de gobernanza cultural (ADR) @Equipo
+- [ ] [[05-Sprints/Sprint-02/T-026|T-026: Wireframes módulo EDU]] #high @Geovanny 📅 2026-03-18
+- [ ] [[05-Sprints/Sprint-02/T-027|T-027: Wireframes módulo SAB]] #high @Elkin 📅 2026-03-20
+- [ ] [[05-Sprints/Sprint-02/T-028|T-028: Wireframes módulo SAL]] #high @Santiago 📅 2026-03-22
+- [ ] [[05-Sprints/Sprint-02/T-029|T-029: Instrumentos de validación]] #medium @Santiago 📅 2026-03-22
+- [ ] [[05-Sprints/Sprint-02/T-030|T-030: Planificar entrevistas]] #medium @Elkin 📅 2026-03-22
+- [ ] [[05-Sprints/Sprint-02/T-031|T-031: Gobernanza cultural (ADR)]] #medium @Equipo 📅 2026-03-15
 
 ## 🔄 En Progreso
 

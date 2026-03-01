@@ -51,13 +51,14 @@ gantt
     T-024 Modelo ER SAL (Geo)          :        t24, 2026-03-03, 2026-03-14
 
     section 🎨 Prototipos
-    Wireframes EDU (Geo)               :        p1, 2026-03-10, 2026-03-18
-    Wireframes SAB (Elk)               :        p2, 2026-03-12, 2026-03-20
-    Wireframes SAL (San)               :        p3, 2026-03-14, 2026-03-22
+    T-026 Wireframes EDU (Geo)         :        t26, 2026-03-10, 2026-03-18
+    T-027 Wireframes SAB (Elk)         :        t27, 2026-03-12, 2026-03-20
+    T-028 Wireframes SAL (San)         :        t28, 2026-03-14, 2026-03-22
 
     section ✅ Validación
-    Preparar instrumentos (San)        :        v1, 2026-03-18, 2026-03-22
-    Validación con usuarios (Elk)      :        v2, 2026-03-23, 2026-03-30
+    T-029 Instrumentos (San)           :        t29, 2026-03-18, 2026-03-22
+    T-030 Entrevistas (Elk)            :        t30, 2026-03-23, 2026-03-30
+    T-031 Gobernanza cultural (Eq)     :        t31, 2026-03-01, 2026-03-15
     Ajustes post-validación (Equipo)   :        v3, 2026-03-28, 2026-04-01
     ENTREGA AVANCE 2                   :milestone, m2, 2026-04-01, 0d
 ```
@@ -94,10 +95,11 @@ SORT assignee ASC
 
 | Integrante | Tareas Asignadas | Horas Estimadas |
 |-----------|-----------------|-----------------|
-| Geovanny | [[T-021]], [[T-024]], + wireframes, + compilación | ~24h |
-| Elkin | [[T-022]], + wireframes, + validación usuarios | ~20h |
-| Santiago | [[T-023]], + wireframes, + instrumentos | ~20h |
-| Equipo | [[T-025]], ajustes post-validación | ~8h |
+| Geovanny | [[T-021]], [[T-024]], [[T-026]] | ~24h |
+| Elkin | [[T-022]], [[T-027]], [[T-030]] | ~20h |
+| Santiago | [[T-023]], [[T-028]], [[T-029]] | ~20h |
+| Equipo | [[T-025]], [[T-031]] | ~12h |
+| **Total** | **11 tareas** | **~76h** |
 
 ## Entregables Esperados
 

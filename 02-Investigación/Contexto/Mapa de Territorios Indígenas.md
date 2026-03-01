@@ -1,6 +1,8 @@
 ---
-type: contexto
+type: context
 title: Mapa de Territorios Indígenas de Costa Rica
+project: raices-vivas
+status: draft
 module: transversal
 created: 2026-02-27
 updated: 2026-02-27
