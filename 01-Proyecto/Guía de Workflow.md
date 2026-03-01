@@ -83,7 +83,7 @@ RAICES_VIVAS/
 
 **Atajo:** `Ctrl+P` → escribe "QuickAdd"
 
-Tienes 7 macros pre-configuradas:
+Tienes 9 macros pre-configuradas:
 
 | Macro | Qué Crea | Dónde |
 |-------|----------|-------|
@@ -94,6 +94,8 @@ Tienes 7 macros pre-configuradas:
 | **Nuevo ADR** | Architecture Decision Record | `01-Proyecto/Decisiones/` |
 | **Nuevo Riesgo** | Entrada de riesgo | `01-Proyecto/Riesgos/` |
 | **Nueva Entrevista** | Guía de entrevista | `02-Investigación/Entrevistas/` |
+| **Nuevo Sprint Planning** | Nota de planning de sprint | `05-Sprints/Sprint-XX/` |
+| **Nuevo Sprint Review** | Nota de review de sprint | `05-Sprints/Sprint-XX/` |
 
 **Uso:**
 1. `Ctrl+P` → Escribir "QuickAdd" → Enter
@@ -130,16 +132,16 @@ Es el bloque YAML al inicio de cada nota, entre `---`. Dataview lo lee para gene
 
 ```yaml
 type: task
-id: "T-XXX"
+id: T-XXX
 title: "Título descriptivo"
 status: todo | in-progress | review | done | blocked
 priority: critical | high | medium | low
-assignee: "Geovanny" | "Elkin" | "Santiago" | "Equipo"
-sprint: "Sprint-01" | "Sprint-02" | "backlog"
+assignee: Geovanny | Elkin | Santiago | Equipo
+sprint: Sprint-01 | Sprint-02 | Sprint-03 | Sprint-04 | Sprint-05 | backlog
 phase: investigación | análisis | requerimientos | integración | diseño | implementación | testing | gestión
 module: educacion | saberes | salud | transversal | proyecto
-requirement: "RF-XXX" | "N/A"
-effort: "Xh"
+requirement: RF-XXX | N/A
+effort: Xh
 started: YYYY-MM-DD
 due: YYYY-MM-DD
 completed: YYYY-MM-DD
@@ -157,6 +159,7 @@ status: draft | approved | validated | deprecated
 priority: must | should | could | wont
 actor: [Actor1, Actor2]
 source: documental | entrevista | observación | encuesta
+owner: ""
 validation: "Método de validación"
 ```
 
@@ -186,12 +189,12 @@ attendees: [Geovanny, Elkin, Santiago]
 
 ```yaml
 type: risk
-id: "RISK-XXX"
+id: RISK-XXX
 title: "Descripción del riesgo"
 status: open | mitigated | closed
 probability: alta | media | baja
 impact: alto | medio | bajo
-owner: "Responsable"
+owner: Responsable
 ```
 
 #### ADR (`type: adr`)
@@ -204,6 +207,8 @@ status: proposed | accepted | deprecated
 date: YYYY-MM-DD
 deciders: [Nombres]
 ```
+
+> 📌 **Trazabilidad bidireccional:** Cada nota de requerimiento (RF y RNF) incluye una query Dataview al final que lista automáticamente todas las tareas vinculadas. Cada nota de tarea tiene un campo `requirement:` que referencia al requerimiento asociado.
 
 ---
 
@@ -306,7 +311,12 @@ series:
 - `Git: Pull` — Descargar cambios del equipo
 - `Git: Open diff view` — Ver qué cambió
 
-> ⚠️ **Para trabajar en equipo:** Inicialicen un repo Git compartido (GitHub/GitLab). Cada integrante clona el vault y trabaja en su máquina. Los conflicts se resuelven con merge.
+> ✅ **Configuración actual del equipo:**
+> - **Repo:** `github.com/yonrasgg/RAICES_VIVAS` (privado)
+> - **Auto commit-and-sync:** cada 10 min
+> - **Split timers:** ON → push cada 10 min, pull cada 10 min
+> - **Credentials:** Almacenadas con `git credential.helper store` + PAT de GitHub
+> - **Cada integrante** clona el repo, abre como vault en Obsidian, instala el plugin Git con la misma config
 
 ### 5.7 Tasks — Gestión de Tareas Inline
 
@@ -419,40 +429,26 @@ Cada sprint tiene:
 |--------|---------|-------------------|
 | **Dataview** | Consultas SQL sobre notas | Dashboards, tablas, métricas dinámicas |
 | **Templater** | Templates con lógica JS | Creación automatizada de notas |
-| **QuickAdd** | Macros y comandos rápidos | 7 macros para crear notas |
+| **QuickAdd** | Macros y comandos rápidos | 9 macros para crear notas y sprint docs |
 | **Kanban** | Tablero visual | Backlog y gestión de tareas |
 | **Homepage** | Página de inicio | Dashboard automático al abrir |
-| **Git** | Control de versiones | Auto-save cada 10 min, push/pull |
-| **Linter** | Formato automático | Limpieza de Markdown al guardar |
+| **Git** | Control de versiones | Auto commit/push/pull cada 10 min |
+| **Linter** | Formato y YAML sort | Limpieza de Markdown, orden de claves YAML |
 | **Calendar** | Vista calendario | Daily notes y navegación temporal |
 | **Charts** | Gráficos Chart.js | Visualizaciones en dashboards |
 | **Mermaid Tools** | Diagramas Mermaid | Gantt, ER, flowcharts, WBS mindmap |
 | **Multi-Column** | Layout multi-columna | KPIs lado a lado, navegación en columnas |
-| **Excalidraw** | Pizarra de dibujo | Diagramas, wireframes, C4 |
 | **Table Editor** | Edición de tablas | Tablas Markdown más fáciles |
 | **Tasks** | Tareas inline avanzadas | Checkboxes con fechas y prioridades |
 | **Tag Wrangler** | Gestión de tags | Renombrar, fusionar tags |
 | **Folder Notes** | Notas de carpeta | README automático por carpeta |
-| **Breadcrumbs** | Navegación jerárquica | Migas de pan en notas |
-| **PlantUML** | Diagramas PlantUML | UML avanzado |
-| **Kroki** | Diagramas remotos | PlantUML, D2, etc. vía Kroki API |
-| **Spreadsheets** | Hojas de cálculo | Datos tabulares editables |
-| **Banners** | Imágenes hero en notas | Banner en dashboards y sprint planning |
+| **Banners** | Imágenes hero en notas | Banner en dashboards con campo `banner_src` |
 | **Buttons** | Botones clicables | Acciones rápidas en Dashboard |
 | **Meta Bind** | Editors inline de frontmatter | Cambiar status/priority sin editar YAML |
-| **Tracker** | Gráficos de seguimiento | Métricas over time en Dashboard |
-| **Reminder** | Recordatorios de tareas | Alertas de fechas límite |
 | **Checklist** | Agregador de checklists | Panel lateral de items pendientes |
 | **Periodic Notes** | Notas semanales/mensuales | Resúmenes de sprint por semana |
-| **Mind Map** | Vista mindmap de notas | Visualizar WBS como mapa mental |
-| **Leaflet** | Mapas interactivos | Mapa de territorios indígenas |
-| **Make.md** | Gestión avanzada de archivos | Navegación mejorada del vault |
-| **Pretty Properties** | Propiedades visuales | Frontmatter más legible |
-| **LaTeX Suite** | Atajos LaTeX | Fórmulas en documentos técnicos |
 | **Auto Link Title** | Títulos de links | Auto-fetch de títulos web |
 | **Highlightr** | Resaltado avanzado | Hallazgos clave en investigación |
-| **File Explorer Note Count** | Conteo de notas | Notas por carpeta en sidebar |
-| **Plugin Update Tracker** | Actualizaciones | Notificaciones de updates |
 
 ---
 
@@ -533,7 +529,7 @@ Agrega una imagen de banner (hero) en la parte superior de cualquier nota usando
 
 **Dónde se usa:** Dashboard Home, Roadmap, Métricas
 
-> ⚠️ **Importante:** Usamos el campo personalizado `banner_src` (no `banner`) para evitar que otros plugins (make.md, Pretty Properties) rendericen la imagen por duplicado. El plugin Banners está configurado con `frontmatterField: "banner_src"`.
+> ⚠️ **Importante:** Usamos el campo personalizado `banner_src` (no `banner`) para evitar que otros plugins rendericen la imagen por duplicado. El plugin Banners está configurado con `frontmatterField: "banner_src"`.
 
 **Configuración en frontmatter:**
 ```yaml
@@ -548,48 +544,7 @@ banner_src_y: 0.40
 
 ---
 
-#### 8.4 Tracker — Métricas de Seguimiento
-
-Genera gráficos de línea, barras o resumen a partir de datos de frontmatter recopilados en el tiempo.
-
-**Dónde se usa:** Dashboard Métricas
-
-**Ejemplo — Rastrear tareas completadas por fecha:**
-````
-```tracker
-searchType: frontmatter
-searchTarget: completed
-folder: 05-Sprints
-datasetName: Tareas completadas
-line:
-    title: Burndown
-    yAxisLabel: Tareas
-    lineColor: green
-```
-````
-
-**Nota:** Tracker funciona mejor con datos que cambian over time (daily notes, logs). Para métricas de snapshot, DataviewJS es más flexible.
-
----
-
-#### 8.5 Reminder — Alertas de Fechas Límite
-
-Agrega notificaciones emergentes cuando una tarea se acerca a su fecha límite.
-
-**Dónde se usa:** Todas las tareas con campo `due`
-
-**Sintaxis en tareas inline:**
-```
-- [ ] Entregar modelo ER 📅 2026-03-14 ⏰ 2026-03-12
-```
-
-**Configuración automática:** El plugin Reminder escanea automáticamente campos de fecha en las tareas y muestra notificaciones. Funciona con el plugin Tasks.
-
-**Para tareas de frontmatter:** Reminder puede detectar el campo `due:` en el YAML y generar alertas si se configura correctamente en Settings → Reminder.
-
----
-
-#### 8.6 Checklist — Panel de Pendientes
+#### 8.4 Checklist — Panel de Pendientes
 
 Muestra un panel lateral con todos los checkboxes sin marcar del vault, filtrados por tag o carpeta.
 
@@ -606,7 +561,7 @@ Esto crea una vista centralizada de TODOS los ítems pendientes en tareas del sp
 
 ---
 
-#### 8.7 Periodic Notes — Notas Semanales y Mensuales
+#### 8.5 Periodic Notes — Notas Semanales y Mensuales
 
 Extiende Daily Notes con creación de notas semanales y mensuales.
 
@@ -630,49 +585,7 @@ Extiende Daily Notes con creación de notas semanales y mensuales.
 
 ---
 
-#### 8.8 Mind Map — Visualización de WBS
-
-Convierte cualquier nota con headings en un mapa mental interactivo.
-
-**Dónde se usa:** `04-Arquitectura/WBS.md`, estructura de requerimientos
-
-**Cómo usar:**
-1. Abre la nota (ej: WBS.md)
-2. `Ctrl+P` → "Mind Map: Open as Mind Map"
-3. La nota se renderiza como un mapa mental interactivo basado en los headings (`##`, `###`, etc.)
-
-**Mejor con notas que tienen estructura jerárquica:** WBS, plan de gestión, desglose de módulos.
-
----
-
-#### 8.9 Leaflet — Mapas de Territorios
-
-Crea mapas interactivos dentro de notas usando coordenadas GPS.
-
-**Dónde se usa:** `02-Investigación/Contexto/` — Mapa de territorios indígenas de Costa Rica
-
-**Sintaxis básica:**
-````
-```leaflet
-id: mapa-territorios
-lat: 9.7489
-long: -83.7534
-height: 400px
-minZoom: 7
-maxZoom: 12
-defaultZoom: 8
-marker: default, 9.6, -83.5, Territorio Bribri
-marker: default, 9.8, -83.3, Territorio Cabécar
-marker: default, 10.65, -84.78, Territorio Maleku
-marker: default, 9.0, -83.3, Territorio Boruca
-```
-````
-
-**Uso:** Documentar la ubicación geográfica de los territorios indígenas mencionados en los antecedentes del proyecto. Facilita comprender las barreras geográficas de acceso a salud y educación.
-
----
-
-#### 8.10 Multi-Column Markdown — Layouts en Columnas
+#### 8.6 Multi-Column Markdown — Layouts en Columnas
 
 Crea diseños de múltiples columnas dentro de una nota.
 
@@ -708,7 +621,7 @@ Contenido columna 3
 
 ---
 
-#### 8.11 Lazy Loading con Callouts Colapsables
+#### 8.7 Lazy Loading con Callouts Colapsables
 
 No es un plugin sino una técnica nativa de Obsidian para mejorar rendimiento.
 
