@@ -196,6 +196,28 @@
         "direction": "vertical",
         "focus": true
       }
+    },
+    {
+      "id": "qa-promote",
+      "name": "📋 Promover Action Item",
+      "type": "Template",
+      "command": true,
+      "templatePath": "99-Templates/_template-tarea-from-minuta.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{VALUE}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": ["05-Sprints/Sprint-01", "05-Sprints/Sprint-02", "05-Sprints/Sprint-03", "05-Sprints/Sprint-04", "05-Sprints/Sprint-05"],
+        "chooseWhenCreatingNote": true,
+        "createInSameFolderAsActiveFile": false
+      },
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      }
     }
   ],
   "inputPrompt": "single-line",

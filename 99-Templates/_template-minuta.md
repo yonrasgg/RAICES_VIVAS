@@ -42,6 +42,10 @@ tags:
 
 ## Action Items
 
+> **Formato:** `- [ ] Descripción de la tarea → @Responsable 📅 YYYY-MM-DD`
+> **Promover a tarea formal:** Seleccionar la línea → `Ctrl+P` → `📋 Promover Action Item`
+> Cuando se promueve, reemplazar la línea por: `- [ ] [[T-XXX|Descripción]] → @Responsable 📅 YYYY-MM-DD`
+
 - [ ] Tarea → @Responsable 📅 YYYY-MM-DD
 - [ ] Tarea → @Responsable 📅 YYYY-MM-DD
 

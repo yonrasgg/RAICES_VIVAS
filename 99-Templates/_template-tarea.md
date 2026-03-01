@@ -1,25 +1,55 @@
+<%*
+// ── Auto-ID: calcula el siguiente T-XXX consecutivo ──
+const taskPages = dv.pages('"05-Sprints"').where(p => p.type === "task" && p.id);
+const ids = taskPages.map(p => parseInt(String(p.id).replace("T-", ""))).filter(n => !isNaN(n));
+const maxId = ids.length > 0 ? Math.max(...ids) : 0;
+const nextId = `T-${String(maxId + 1).padStart(3, "0")}`;
+
+// ── Prompts del usuario ──
+const title = await tp.system.prompt("Título de la tarea");
+const status = await tp.system.suggester(["todo", "in-progress", "review", "done", "blocked"], ["todo", "in-progress", "review", "done", "blocked"]);
+const priority = await tp.system.suggester(["critical", "high", "medium", "low"], ["critical", "high", "medium", "low"]);
+const assignee = await tp.system.suggester(["Geovanny", "Elkin", "Santiago", "Equipo"], ["Geovanny", "Elkin", "Santiago", "Equipo"]);
+const sprint = await tp.system.suggester(["Sprint-01", "Sprint-02", "Sprint-03", "Sprint-04", "Sprint-05", "backlog"], ["Sprint-01", "Sprint-02", "Sprint-03", "Sprint-04", "Sprint-05", "backlog"]);
+const phase = await tp.system.suggester(["investigación", "análisis", "requerimientos", "integración", "diseño", "implementación", "testing", "gestión"], ["investigación", "análisis", "requerimientos", "integración", "diseño", "implementación", "testing", "gestión"]);
+const module_ = await tp.system.suggester(["educacion", "saberes", "salud", "transversal", "proyecto"], ["educacion", "saberes", "salud", "transversal", "proyecto"]);
+const requirement = await tp.system.prompt("Requerimiento padre (ej: RF-EDU-01 o N/A)", "N/A");
+const effort = await tp.system.prompt("Esfuerzo estimado (ej: 4h, 8h)");
+const started = await tp.system.prompt("Fecha inicio (YYYY-MM-DD o vacío)", "");
+const due = await tp.system.prompt("Fecha límite (YYYY-MM-DD)");
+const source = await tp.system.prompt("Minuta origen (ej: MIN-001 o vacío)", "");
+const today = tp.date.now("YYYY-MM-DD");
+
+// ── Determinar tag de avance según sprint ──
+const sprintNum = sprint.replace("Sprint-0", "").replace("Sprint-", "");
+const avanceTag = sprint === "backlog" ? "" : `\n  - avance-${sprintNum}`;
+
+// ── Renombrar archivo al ID ──
+await tp.file.rename(nextId);
+-%>
 ---
 type: task
-id: <% tp.system.prompt("ID de tarea (ej: T-021)") %>
-title: "<% tp.system.prompt("Título de la tarea") %>"
-status: <% tp.system.suggester(["todo", "in-progress", "review", "done", "blocked"], ["todo", "in-progress", "review", "done", "blocked"]) %>
-priority: <% tp.system.suggester(["critical", "high", "medium", "low"], ["critical", "high", "medium", "low"]) %>
-assignee: <% tp.system.suggester(["Geovanny", "Elkin", "Santiago", "Equipo"], ["Geovanny", "Elkin", "Santiago", "Equipo"]) %>
-sprint: <% tp.system.suggester(["Sprint-01", "Sprint-02", "Sprint-03", "Sprint-04", "Sprint-05", "backlog"], ["Sprint-01", "Sprint-02", "Sprint-03", "Sprint-04", "Sprint-05", "backlog"]) %>
-phase: <% tp.system.suggester(["investigación", "análisis", "requerimientos", "integración", "diseño", "implementación", "testing", "gestión"], ["investigación", "análisis", "requerimientos", "integración", "diseño", "implementación", "testing", "gestión"]) %>
-module: <% tp.system.suggester(["educacion", "saberes", "salud", "transversal", "proyecto"], ["educacion", "saberes", "salud", "transversal", "proyecto"]) %>
-requirement: <% tp.system.prompt("Requerimiento padre (ej: RF-EDU-01 o N/A)") %>
-effort: <% tp.system.prompt("Esfuerzo estimado (ej: 4h, 8h)") %>
-started: <% tp.system.prompt("Fecha inicio (YYYY-MM-DD o vacío)", "") %>
-due: <% tp.system.prompt("Fecha límite (YYYY-MM-DD)") %>
+id: <% nextId %>
+title: "<% title %>"
+status: <% status %>
+priority: <% priority %>
+assignee: "<% assignee %>"
+sprint: "<% sprint %>"
+phase: "<% phase %>"
+module: <% module_ %>
+requirement: "<% requirement %>"
+effort: "<% effort %>"
+started: <% started %>
+due: <% due %>
 completed: 
-created: <% tp.date.now("YYYY-MM-DD") %>
-updated: <% tp.date.now("YYYY-MM-DD") %>
+source: "<% source %>"
+created: <% today %>
+updated: <% today %>
 tags:
-  - tarea
+  - tarea<% avanceTag %>
 ---
 
-# <% tp.frontmatter.id %>: <% tp.frontmatter.title %>
+# <% nextId %>: <% title %>
 
 ## Control Rápido
 
@@ -51,7 +81,8 @@ tags:
 ## Notas
 
 > Observaciones, bloqueos, hallazgos.
+<% source ? `\n> 📋 Originada en [[${source}]]` : "" %>
 
 ## Requerimiento Relacionado
 
-[[<% tp.frontmatter.requirement %>]]
+[[<% requirement %>]]
