@@ -664,6 +664,59 @@ def cover_roadmap(path):
     print(f"  ✓ {path}")
 
 
+def cover_proyecto(path):
+    """Gestión de Proyecto — estructura, engranajes, red conectada."""
+    p = PALETTES["proyecto"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (10, 14, 25))
+
+    # Red de conexiones (gestión, trazabilidad)
+    nodes = [(random.randint(60, WIDTH - 60), random.randint(40, HEIGHT - 40)) for _ in range(25)]
+    for i, n1 in enumerate(nodes):
+        for n2 in nodes[i + 1:]:
+            dist = math.sqrt((n1[0] - n2[0]) ** 2 + (n1[1] - n2[1]) ** 2)
+            if dist < 280:
+                draw.line([n1, n2], fill=(*p["detail"],)[:3], width=1)
+    for nx, ny in nodes:
+        r = random.randint(4, 9)
+        c = random.choice([p["primary"], p["secondary"], p["accent"]])
+        draw.ellipse([nx - r, ny - r, nx + r, ny + r], fill=c, outline=p["detail"])
+
+    # Engranajes (mecanismo de gestión)
+    for cx, cy, size in [(300, 150, 45), (WIDTH - 350, HEIGHT - 150, 55), (WIDTH // 2 - 200, HEIGHT - 100, 35)]:
+        teeth = 8
+        for i in range(teeth):
+            angle = 2 * math.pi * i / teeth
+            x1 = cx + (size - 8) * math.cos(angle)
+            y1 = cy + (size - 8) * math.sin(angle)
+            x2 = cx + (size + 8) * math.cos(angle)
+            y2 = cy + (size + 8) * math.sin(angle)
+            draw.line([(x1, y1), (x2, y2)], fill=p["primary"], width=4)
+        draw_concentric_circles(draw, cx, cy, size, 4, p["primary"], 2)
+        draw.ellipse([cx - 6, cy - 6, cx + 6, cy + 6], fill=p["accent"])
+
+    # Hexágonos (estructura, organización)
+    for _ in range(8):
+        hx = random.randint(80, WIDTH - 80)
+        hy = random.randint(60, HEIGHT - 60)
+        hr = random.randint(18, 35)
+        pts = [(hx + hr * math.cos(2 * math.pi * i / 6 - math.pi / 6),
+                hy + hr * math.sin(2 * math.pi * i / 6 - math.pi / 6)) for i in range(6)]
+        draw.polygon(pts, outline=random.choice([p["secondary"], p["accent"]]))
+
+    # Rombos decorativos (estilo Bribri)
+    draw_diamond_band(draw, 30, 18, 15, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 30, 18, 15, p["accent"])
+
+    # Zigzag borders
+    draw_border_pattern(draw, p, "zigzag")
+
+    add_text_overlay(img, "Gestión de Proyecto", "Planificación · Equipo · Gobernanza", p)
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
 # =====================================================
 # MAIN — Generar todos los covers
 # =====================================================
@@ -684,6 +737,7 @@ if __name__ == "__main__":
         "cover-investigacion.png": cover_investigacion,
         "cover-metricas.png": cover_metricas,
         "cover-roadmap.png": cover_roadmap,
+        "cover-proyecto.png": cover_proyecto,
     }
 
     print(f"\n🎨 Generando {len(covers)} covers culturales...\n")

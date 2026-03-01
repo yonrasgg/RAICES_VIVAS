@@ -8,7 +8,7 @@ updated: 2026-02-27
 tags:
   - proyecto
   - charter
-banner_src: "08-Recursos/Imágenes/cover-dashboard.png"
+banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
 banner_src_y: 0.40
 ---
 

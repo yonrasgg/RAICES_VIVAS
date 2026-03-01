@@ -5,6 +5,8 @@ project: raices-vivas
 status: active
 created: 2026-02-27
 updated: 2026-02-28
+banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
+banner_src_y: 0.42
 tags:
   - proyecto
   - guia
