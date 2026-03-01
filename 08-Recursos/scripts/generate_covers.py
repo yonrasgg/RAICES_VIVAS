@@ -108,6 +108,14 @@ PALETTES = {
         "detail": (35, 42, 60),
         "text": (240, 242, 248),
     },
+    "adr": {
+        "bg": (22, 18, 38),         # índigo profundo
+        "primary": (140, 100, 210), # púrpura medio
+        "secondary": (100, 160, 220),# azul acero
+        "accent": (230, 185, 65),   # oro decisión
+        "detail": (45, 38, 65),
+        "text": (242, 238, 250),
+    },
 }
 
 
@@ -717,6 +725,138 @@ def cover_proyecto(path):
     print(f"  ✓ {path}")
 
 
+def cover_adr(path):
+    """ADR — Decisiones arquitectónicas, balanza, documentos, gobernanza."""
+    p = PALETTES["adr"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (12, 10, 25))
+
+    # --- Fondo: red de nodos de decisión (grafo de dependencias) ---
+    nodes = [(random.randint(40, WIDTH - 40), random.randint(30, HEIGHT - 30)) for _ in range(30)]
+    for i, n1 in enumerate(nodes):
+        for n2 in nodes[i + 1:]:
+            dist = math.sqrt((n1[0] - n2[0]) ** 2 + (n1[1] - n2[1]) ** 2)
+            if dist < 250:
+                draw.line([n1, n2], fill=p["detail"], width=1)
+    for nx, ny in nodes:
+        r = random.randint(3, 7)
+        c = random.choice([p["primary"], p["secondary"]])
+        draw.ellipse([nx - r, ny - r, nx + r, ny + r], fill=c)
+
+    # --- Balanza de decisión (centro simbólico) ---
+    bcx, bcy = WIDTH // 2, HEIGHT // 2 - 10
+    # Pilar central
+    draw.line([(bcx, bcy - 80), (bcx, bcy + 90)], fill=p["accent"], width=4)
+    # Brazo horizontal
+    draw.line([(bcx - 180, bcy - 60), (bcx + 180, bcy - 60)], fill=p["accent"], width=3)
+    # Platillos
+    for side in (-1, 1):
+        px = bcx + side * 180
+        py = bcy - 60
+        # Cadenas
+        draw.line([(px, py), (px - 30, py + 50)], fill=p["secondary"], width=2)
+        draw.line([(px, py), (px + 30, py + 50)], fill=p["secondary"], width=2)
+        # Platillo (arco)
+        draw.arc([px - 40, py + 40, px + 40, py + 70], 0, 180, fill=p["accent"], width=3)
+    # Fulcro (triángulo)
+    draw.polygon([(bcx - 12, bcy - 75), (bcx + 12, bcy - 75), (bcx, bcy - 95)], fill=p["accent"])
+
+    # --- Pergaminos / documentos en ambos lados ---
+    for sx in [150, WIDTH - 150]:
+        sy = HEIGHT // 2 - 40
+        rw, rh = 55, 80
+        draw.rounded_rectangle([sx - rw, sy - rh, sx + rw, sy + rh],
+                               radius=8, outline=p["secondary"], width=2)
+        # Líneas de texto simuladas
+        for li in range(6):
+            ly = sy - rh + 20 + li * 12
+            lw = rw - 10 - random.randint(0, 15)
+            draw.line([(sx - rw + 12, ly), (sx - rw + 12 + lw * 1.5, ly)],
+                      fill=(*p["secondary"], 120)[:3], width=1)
+
+    # --- Sellos / estampas (autenticidad) en las esquinas ---
+    for cx_s, cy_s in [(120, HEIGHT - 80), (WIDTH - 120, HEIGHT - 80)]:
+        draw_concentric_circles(draw, cx_s, cy_s, 25, 4, p["accent"], 2)
+        draw.ellipse([cx_s - 5, cy_s - 5, cx_s + 5, cy_s + 5], fill=p["accent"])
+
+    # --- Hexágonos decorativos (gobernanza estructurada) ---
+    for _ in range(6):
+        hx = random.randint(60, WIDTH - 60)
+        hy = random.randint(50, HEIGHT - 50)
+        hr = random.randint(15, 28)
+        pts = [(hx + hr * math.cos(2 * math.pi * i / 6 - math.pi / 6),
+                hy + hr * math.sin(2 * math.pi * i / 6 - math.pi / 6)) for i in range(6)]
+        draw.polygon(pts, outline=random.choice([p["primary"], p["secondary"]]))
+
+    # --- Rombos Bribri (marco cultural) ---
+    draw_diamond_band(draw, 25, 14, 18, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 25, 14, 18, p["accent"])
+
+    # --- Bordes zigzag ---
+    draw_border_pattern(draw, p, "zigzag")
+
+    # --- Texto ADR grande centrado ---
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = None
+    sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 120)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    text_color = p["text"]
+    shadow = (0, 0, 0)
+
+    # "ADR" grande
+    label = "ADR"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    # Resplandor detrás del texto
+    for off in range(8, 0, -2):
+        glow_alpha = 50 - off * 5
+        glow_color = tuple(max(0, min(255, c + glow_alpha)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow_color)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow_color)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow_color)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow_color)
+    # Sombra
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=shadow)
+    # Texto principal
+    draw.text((tx, ty), label, font=big_font, fill=text_color)
+
+    # Línea decorativa bajo "ADR"
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    # Subtítulo
+    subtitle = "Decisiones Arquitectónicas · Raíces Vivas"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sw = bbox2[2] - bbox2[0]
+    sx = (WIDTH - sw) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=shadow)
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
 # =====================================================
 # MAIN — Generar todos los covers
 # =====================================================
@@ -738,6 +878,7 @@ if __name__ == "__main__":
         "cover-metricas.png": cover_metricas,
         "cover-roadmap.png": cover_roadmap,
         "cover-proyecto.png": cover_proyecto,
+        "cover-adr.png": cover_adr,
     }
 
     print(f"\n🎨 Generando {len(covers)} covers culturales...\n")
