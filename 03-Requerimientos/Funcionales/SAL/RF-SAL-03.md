@@ -46,7 +46,7 @@ El sistema debe permitir programar citas indicando fecha, tipo de atención, lug
 - **Problema:** Dificultad para coordinar atención
 - **Necesidad:** Gestión de citas comunitarias
 - **WBS:** [[WBS#RV-3.2]]
-- **Módulo:** Salud Comunitaria (SAL)
+- **Módulo:** [[Salud Comunitaria]] (SAL)
 - **Fuente:** Observación
 
 ## Tareas Vinculadas

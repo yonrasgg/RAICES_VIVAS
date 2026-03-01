@@ -28,13 +28,13 @@ tags:
 | MVP | Minimum Viable Product (Producto Mínimo Viable) |
 | RF | Requerimiento Funcional |
 | RNF | Requerimiento No Funcional |
-| RTM | Requirements Traceability Matrix (Matriz de Trazabilidad) |
+| [[_RTM|RTM]] | Requirements Traceability Matrix (Matriz de Trazabilidad) |
 | SAB | Módulo de Saberes Ancestrales |
 | SAL | Módulo de Salud Comunitaria |
 | TIC | Tecnologías de Información y Comunicación |
 | UI | User Interface (Interfaz de Usuario) |
 | UX | User Experience (Experiencia de Usuario) |
-| WBS | Work Breakdown Structure (Estructura de Desglose del Trabajo) |
+| [[WBS]] | Work Breakdown Structure (Estructura de Desglose del Trabajo) |
 
 ## Términos del Dominio
 

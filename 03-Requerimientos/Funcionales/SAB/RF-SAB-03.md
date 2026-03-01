@@ -46,7 +46,7 @@ El sistema debe permitir buscar saberes por categoría, territorio, idioma y for
 - **Problema:** Búsqueda ineficiente / pérdida de tiempo
 - **Necesidad:** Acceso rápido a saberes autorizados
 - **WBS:** [[WBS#RV-2.2]]
-- **Módulo:** Saberes Ancestrales (SAB)
+- **Módulo:** [[Saberes Ancestrales]] (SAB)
 - **Fuente:** Observación contextual
 
 ## Tareas Vinculadas

@@ -46,7 +46,7 @@ El sistema debe permitir registrar campañas preventivas (vacunación, tamizaje,
 - **Problema:** Campañas preventivas mal coordinadas
 - **Necesidad:** Registrar brigadas/campañas
 - **WBS:** [[WBS#RV-3.2]]
-- **Módulo:** Salud Comunitaria (SAL)
+- **Módulo:** [[Salud Comunitaria]] (SAL)
 - **Fuente:** Documentación institucional
 
 ## Tareas Vinculadas

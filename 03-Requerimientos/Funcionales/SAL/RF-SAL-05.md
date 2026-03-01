@@ -47,7 +47,7 @@ El sistema debe generar alertas para seguimiento de pacientes con enfermedades c
 - **Problema:** Pérdida de seguimiento en crónicos
 - **Necesidad:** Alertas de seguimiento
 - **WBS:** [[WBS#RV-3.3]]
-- **Módulo:** Salud Comunitaria (SAL)
+- **Módulo:** [[Salud Comunitaria]] (SAL)
 - **Fuente:** Entrevistas
 
 ## Tareas Vinculadas

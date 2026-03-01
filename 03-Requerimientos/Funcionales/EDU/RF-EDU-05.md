@@ -47,7 +47,7 @@ El sistema debe permitir generar ejercicios de práctica alineados con contenido
 - **Problema:** Dificultad con pruebas estandarizadas
 - **Necesidad:** Práctica guiada y contextualizada
 - **WBS:** [[WBS#RV-1.3]]
-- **Módulo:** Educación (EDU)
+- **Módulo:** [[Educación]] (EDU)
 - **Fuente:** Entrevistas + análisis de pruebas
 
 ## Tareas Vinculadas

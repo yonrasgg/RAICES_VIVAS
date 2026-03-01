@@ -47,7 +47,7 @@ El sistema debe permitir registrar un historial médico básico por paciente: co
 - **Problema:** Falta de historial accesible
 - **Necesidad:** Continuidad de atención
 - **WBS:** [[WBS#RV-3.1]]
-- **Módulo:** Salud Comunitaria (SAL)
+- **Módulo:** [[Salud Comunitaria]] (SAL)
 - **Fuente:** Entrevistas
 
 ## Tareas Vinculadas

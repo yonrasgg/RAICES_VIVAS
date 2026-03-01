@@ -46,7 +46,7 @@ El sistema debe registrar confirmación de consentimiento del portador del saber
 - **Problema:** Documentar sin consentimiento es riesgoso
 - **Necesidad:** Consentimiento trazable
 - **WBS:** [[WBS#RV-2.3]]
-- **Módulo:** Saberes Ancestrales (SAB)
+- **Módulo:** [[Saberes Ancestrales]] (SAB)
 - **Fuente:** Entrevistas + ética cultural
 
 ## Tareas Vinculadas

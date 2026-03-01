@@ -48,7 +48,7 @@ El sistema debe permitir registrar docentes comunitarios con datos básicos (nom
 - **Problema:** Brecha de apoyo educativo intercultural
 - **Necesidad:** Identificar perfiles docentes
 - **WBS:** [[WBS#RV-1.1]]
-- **Módulo:** Educación (EDU)
+- **Módulo:** [[Educación]] (EDU)
 - **Fuente:** Entrevista + revisión MEP
 
 ## Tareas Vinculadas

@@ -47,7 +47,7 @@ El sistema debe permitir almacenar materiales educativos en formatos texto, audi
 - **Problema:** Escasez de materiales pertinentes y bilingües
 - **Necesidad:** Acceso a materiales educativos bilingües
 - **WBS:** [[WBS#RV-1.2]]
-- **Módulo:** Educación (EDU)
+- **Módulo:** [[Educación]] (EDU)
 - **Fuente:** Revisión documental + entrevistas
 
 ## Tareas Vinculadas

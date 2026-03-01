@@ -47,7 +47,7 @@ El sistema debe permitir registrar pacientes con un ID interno, nombre, edad, te
 - **Problema:** Fragmentación de información básica
 - **Necesidad:** Registro mínimo para continuidad
 - **WBS:** [[WBS#RV-3.1]]
-- **Módulo:** Salud Comunitaria (SAL)
+- **Módulo:** [[Salud Comunitaria]] (SAL)
 - **Fuente:** Entrevista + documentación salud
 
 ## Tareas Vinculadas

@@ -46,7 +46,7 @@ El sistema debe mostrar un resumen de progreso por estudiante (porcentaje de aci
 - **Problema:** Falta de retroalimentación temprana
 - **Necesidad:** Medir progreso básico por tema
 - **WBS:** [[WBS#RV-1.3]]
-- **Módulo:** Educación (EDU)
+- **Módulo:** [[Educación]] (EDU)
 - **Fuente:** Encuesta/entrevistas
 
 ## Tareas Vinculadas

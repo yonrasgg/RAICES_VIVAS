@@ -47,7 +47,7 @@ El sistema debe permitir registrar estudiantes con datos mínimos (nombre, nivel
 - **Problema:** Falta de seguimiento básico por estudiante
 - **Necesidad:** Identificar perfiles estudiantiles por nivel/idioma
 - **WBS:** [[WBS#RV-1.1]]
-- **Módulo:** Educación (EDU)
+- **Módulo:** [[Educación]] (EDU)
 - **Fuente:** Entrevista/observación
 
 ## Tareas Vinculadas

@@ -217,7 +217,7 @@ Dado el contexto indígena, se incorporan criterios mínimos para no vulnerar id
 ---
 ## Requerimientos Funcionales y No Funcionales
 
-### 1) WBS / EDT de Alto Nivel (orientada a requerimientos)
+### 1) [[WBS]] / EDT de Alto Nivel (orientada a requerimientos)
 
 **RV-1. Módulo Educativo (EDU)**
 
@@ -248,7 +248,7 @@ Dado el contexto indígena, se incorporan criterios mínimos para no vulnerar id
 * RV-4.4 Rendimiento y compatibilidad de dispositivo
 
 ---
-### 2) WBS Dictionary (Paquetes de trabajo y su alcance)
+### 2) [[WBS]] Dictionary (Paquetes de trabajo y su alcance)
 
 A continuación, cada paquete de trabajo (WBS) define su propósito y genera requerimientos trazables.
 
@@ -261,7 +261,7 @@ A continuación, cada paquete de trabajo (WBS) define su propósito y genera req
 **Entregable:** Registro de perfiles educativos.
 **Fuera de alcance:** Gestión de nómina, pagos, escalafón.
 
-**RF-EDU-01 (RV-1.1): Registro de docentes comunitarios**
+**[[RF-EDU-01]] (RV-1.1): Registro de docentes comunitarios**
 El sistema debe permitir registrar docentes comunitarios con datos básicos (nombre, territorio, rol, contacto) e indicar su lengua indígena dominante y nivel académico.
 **Criterios de aceptación:**
 
@@ -269,7 +269,7 @@ El sistema debe permitir registrar docentes comunitarios con datos básicos (nom
 * Campo “lengua dominante” es obligatorio.
 * Validación mínima: nombre + territorio + rol.
 
-RF-EDU-02 (RV-1.1) - Registro básico de estudiantes
+[[RF-EDU-02]] (RV-1.1) - Registro básico de estudiantes
 El sistema debe permitir registrar estudiantes con datos mínimos (nombre, nivel educativo, lengua principal, centro educativo/territorio) para asociarles materiales y prácticas.
 **Criterios de aceptación:**
 
@@ -283,14 +283,14 @@ El sistema debe permitir registrar estudiantes con datos mínimos (nombre, nivel
 **Entregable:** Repositorio educativo bilingüe.
 **Fuera de alcance:** Contenido certificado por MEP (se almacena, no se “emite” certificación).
 
-**RF-EDU-03 (RV-1.2): Carga de materiales educativos**
+**[[RF-EDU-03]] (RV-1.2): Carga de materiales educativos**
 El sistema debe permitir almacenar materiales educativos en formatos texto, audio y video, asociándolos a idioma (español/lengua indígena), tema y nivel académico.
 **Criterios de aceptación:**
 
 * Un material tiene: título, idioma, nivel, tema, formato.
 * Búsqueda por idioma + nivel.
 
-**RF-EDU-04 (RV-1.2): Organización por asignatura y competencias**
+**[[RF-EDU-04]] (RV-1.2): Organización por asignatura y competencias**
 El sistema debe permitir clasificar materiales por asignatura (ej. Matemática, Español, Ciencias) y por competencia/habilidad.
 **Criterios de aceptación:**
 
@@ -303,14 +303,14 @@ El sistema debe permitir clasificar materiales por asignatura (ej. Matemática, 
 **Entregable:** Banco de práctica y seguimiento básico.
 **Fuera de alcance:** Calificación oficial o emisión de notas formales.
 
-**RF-EDU-05 (RV-1.3): Generación de ejercicios de práctica**
+**[[RF-EDU-05]] (RV-1.3): Generación de ejercicios de práctica**
 El sistema debe permitir generar ejercicios de práctica alineados con contenidos de evaluación nacional (por ejemplo, estructuras tipo ítem), asociados a tema y nivel.
 **Criterios de aceptación:**
 
 * Se generan ejercicios por filtro: nivel + tema.
 * Registro de intentos por estudiante (correcto/incorrecto).
 
-**RF-EDU-06 (RV-1.3): Seguimiento de progreso básico**
+**[[RF-EDU-06]] (RV-1.3): Seguimiento de progreso básico**
 El sistema debe mostrar un resumen de progreso por estudiante (porcentaje de aciertos por tema en un período).
 **Criterios de aceptación:**
 
@@ -325,7 +325,7 @@ El sistema debe mostrar un resumen de progreso por estudiante (porcentaje de aci
 **Entregable:** Registro de saberes con metadatos.
 **Fuera de alcance:** Publicación abierta automática.
 
-**RF-SAB-01 (RV-2.1): Registro de saberes**
+**[[RF-SAB-01]] (RV-2.1): Registro de saberes**
 El sistema debe permitir registrar saberes ancestrales mediante texto, audio o video, incluyendo descripción, origen (territorio) y contexto (uso/propósito).
 **Criterios de aceptación:**
 
@@ -338,13 +338,13 @@ El sistema debe permitir registrar saberes ancestrales mediante texto, audio o v
 **Entregable:** Catálogo y motor de búsqueda básico.
 **Fuera de alcance:** Indexación avanzada con IA (en esta fase).
 
-**RF-SAB-02 (RV-2.2): Clasificación por categoría**
+**[[RF-SAB-02]] (RV-2.2): Clasificación por categoría**
 El sistema debe clasificar los conocimientos por categorías definidas (ej. agricultura, medicina tradicional, alimentación, conservación, ritualidad).
 **Criterios de aceptación:**
 
 * Categorías configurables por administrador comunitario.
 
-**RF-SAB-03 (RV-2.2): Búsqueda por filtros**
+**[[RF-SAB-03]] (RV-2.2): Búsqueda por filtros**
 El sistema debe permitir buscar saberes por categoría, territorio, idioma y formato.
 **Criterios de aceptación:**
 
@@ -357,14 +357,14 @@ El sistema debe permitir buscar saberes por categoría, territorio, idioma y for
 **Entregable:** Modelo de roles y permisos.
 **Fuera de alcance:** Integración con sistemas externos de identidad estatal.
 
-**RF-SAB-04 (RV-2.3): Restricción de acceso por autorización comunitaria**
+**[[RF-SAB-04]] (RV-2.3): Restricción de acceso por autorización comunitaria**
 El sistema debe permitir restringir el acceso a contenidos según nivel de autorización comunitaria (público, comunitario, restringido, ceremonial/sensible).
 **Criterios de aceptación:**
 
 * Cada contenido tiene un nivel de acceso obligatorio.
 * Roles definidos pueden consultar según permiso.
 
-**RF-SAB-05 (RV-2.3): Registro de consentimiento**
+**[[RF-SAB-05]] (RV-2.3): Registro de consentimiento**
 El sistema debe registrar la confirmación de consentimiento comunitario o del portador del conocimiento al momento de documentar un saber (fecha, responsable, nivel de acceso).
 **Criterios de aceptación:**
 
@@ -379,14 +379,14 @@ El sistema debe registrar la confirmación de consentimiento comunitario o del p
 **Entregable:** Perfil de paciente e historial básico.
 **Fuera de alcance:** Expediente clínico completo tipo hospitalario.
 
-**RF-SAL-01 (RV-3.1): Registro de pacientes**
+**[[RF-SAL-01]] (RV-3.1): Registro de pacientes**
 El sistema debe permitir registrar pacientes con información básica (identificación interna, nombre, edad, territorio, contacto) y datos relevantes mínimos.
 **Criterios de aceptación:**
 
 * Identificador interno único.
 * Campos sensibles con control de acceso.
 
-**RF-SAL-02 (RV-3.1): Historial médico básico**
+**[[RF-SAL-02]] (RV-3.1): Historial médico básico**
 El sistema debe permitir registrar un historial básico (condiciones crónicas, alergias, medicación esencial, notas de visita).
 **Criterios de aceptación:**
 
@@ -400,13 +400,13 @@ El sistema debe permitir registrar un historial básico (condiciones crónicas, 
 **Entregable:** Agenda comunitaria.
 **Fuera de alcance:** Sistema de referencia hospitalaria nacional.
 
-**RF-SAL-03 (RV-3.2): Programación de citas**
+**[[RF-SAL-03]] (RV-3.2): Programación de citas**
 El sistema debe permitir programar citas médicas comunitarias indicando fecha, tipo (control/consulta/campaña), lugar y responsable.
 **Criterios de aceptación:**
 
 * No permite solapamiento por responsable en misma franja.
 
-**RF-SAL-04 (RV-3.2): Gestión de brigadas/campañas**
+**[[RF-SAL-04]] (RV-3.2): Gestión de brigadas/campañas**
 El sistema debe permitir registrar campañas preventivas (vacunación, tamizaje, charlas) y asociar población objetivo.
 **Criterios de aceptación:**
 
@@ -419,7 +419,7 @@ El sistema debe permitir registrar campañas preventivas (vacunación, tamizaje,
 **Entregable:** Alertas configurables.
 **Fuera de alcance:** Diagnóstico automatizado.
 
-**RF-SAL-05 (RV-3.3): Alertas de seguimiento**
+**[[RF-SAL-05]] (RV-3.3): Alertas de seguimiento**
 El sistema debe generar alertas para seguimiento de enfermedades crónicas según periodicidad definida (ej. mensual/trimestral).
 **Criterios de aceptación:**
 
@@ -431,46 +431,46 @@ El sistema debe generar alertas para seguimiento de enfermedades crónicas segú
 
 #### RV-4. Requerimientos Transversales
 
-**RNF-01 (RV-4.1): Operación offline + sincronización**
+**[[RNF-01]] (RV-4.1): Operación offline + sincronización**
 El sistema debe operar en modo offline y sincronizar datos automáticamente cuando se detecte conectividad.
 **Métrica/verificación:**
 
 * Permite registrar datos sin internet.
 * Sincroniza y resuelve conflictos básicos (última edición o prioridad por rol).
 
-**RNF-02 (RV-4.2): Multilingüismo**
+**[[RNF-02]] (RV-4.2): Multilingüismo**
 El sistema debe soportar contenido multilingüe (español y al menos una lengua indígena seleccionable), tanto en UI como en contenidos etiquetados.
 **Métrica/verificación:**
 
 * UI con selector de idioma.
 * Contenido etiquetado por idioma.
 
-**RNF-03 (RV-4.4): Rendimiento**
+**[[RNF-03]] (RV-4.4): Rendimiento**
 El tiempo de respuesta no debe superar **3 segundos** para búsquedas y consultas comunes en condiciones normales.
 **Métrica/verificación:**
 
 * Prueba con dataset representativo (ej. 200 contenidos + 300 registros).
 
-**RNF-04 (RV-4.3): Confidencialidad y privacidad en salud**
+**[[RNF-04]] (RV-4.3): Confidencialidad y privacidad en salud**
 El sistema debe garantizar confidencialidad de datos médicos mediante control de acceso por roles y registro de accesos (auditoría mínima).
 **Métrica/verificación:**
 
 * Un usuario sin rol de salud no puede ver historial.
 * Se registra quién consultó, qué y cuándo.
 
-**RNF-05 (RV-4.2): Usabilidad en alfabetización digital básica**
+**[[RNF-05]] (RV-4.2): Usabilidad en alfabetización digital básica**
 La interfaz debe ser usable para usuarios con alfabetización digital básica, minimizando campos obligatorios y manteniendo flujos guiados.
 **Métrica/verificación:**
 
 * Registrar una cita o un material en ≤ 2 minutos con un formulario de ≤ 6 campos obligatorios.
 
-**RNF-06 (RV-4.4): Compatibilidad de dispositivo**
+**[[RNF-06]] (RV-4.4): Compatibilidad de dispositivo**
 El sistema debe funcionar en dispositivos de gama media o baja (Android común y navegadores modernos), evitando dependencias pesadas.
 **Métrica/verificación:**
 
 * Carga inicial razonable y sin requerir hardware especializado.
 
-**RNF-07 (RV-4.3): Gobernanza cultural y control comunitario**
+**[[RNF-07]] (RV-4.3): Gobernanza cultural y control comunitario**
 El sistema debe permitir que la comunidad defina niveles de acceso y roles para contenidos culturales, evitando exposición no autorizada.
 **Métrica/verificación:**
 
@@ -484,9 +484,9 @@ Para cada requerimiento (RF/RNF) se mantiene trazabilidad:
 **Problema → Necesidad → WBS → Requerimiento → Criterio de aceptación**
 
 Ejemplo:
-Brecha educativa → necesidad de materiales bilingües → RV-1.2 → RF-EDU-03 → criterios de aceptación.
+Brecha educativa → necesidad de materiales bilingües → RV-1.2 → [[RF-EDU-03]] → criterios de aceptación.
 
-#### Matriz de Trazabilidad de Requerimientos (RTM) – Raíces Vivas
+#### Matriz de Trazabilidad de Requerimientos ([[_RTM|RTM]]) – Raíces Vivas
 
 **Leyenda de prioridad (MoSCoW):**
 
@@ -497,29 +497,29 @@ Brecha educativa → necesidad de materiales bilingües → RV-1.2 → RF-EDU-03
 
 | ID Requerimiento | Tipo | WBS    | Módulo      | Problema de origen                                | Necesidad (priorizada)                                | Descripción resumida                                          | Actor principal                       | Prioridad | Criterio de aceptación (medible)             | Fuente/Evidencia                  | Validación prevista        |
 | ---------------- | ---- | ------ | ----------- | ------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------- | --------- | -------------------------------------------- | --------------------------------- | -------------------------- |
-| RF-EDU-01        | RF   | RV-1.1 | Educación   | Brecha de apoyo educativo intercultural           | Identificar perfiles docentes para personalizar apoyo | Registro de docentes con lengua dominante y rol               | Docente / Admin                       | M         | Lengua obligatoria + CRUD completo           | Entrevista + revisión MEP         | Revisión con docentes      |
-| RF-EDU-02        | RF   | RV-1.1 | Educación   | Falta de seguimiento básico por estudiante        | Identificar perfiles estudiantiles por nivel/idioma   | Registro mínimo de estudiantes                                | Docente                               | S         | Registro con ≥4 campos obligatorios          | Entrevista/observación            | Revisión con docentes      |
-| RF-EDU-03        | RF   | RV-1.2 | Educación   | Escasez de materiales pertinentes y bilingües     | Acceso a materiales educativos bilingües              | Cargar materiales (texto/audio/video) por idioma y nivel      | Docente/Estudiante                    | M         | Material incluye idioma+nivel+tema           | Revisión documental + entrevistas | Prueba con usuarios        |
-| RF-EDU-04        | RF   | RV-1.2 | Educación   | Desalineación curricular y dificultad de búsqueda | Organización clara por asignatura y competencia       | Clasificar materiales por asignatura/competencia              | Docente                               | S         | 2 niveles de clasificación mínimo            | Entrevista                        | Taller de validación       |
-| RF-EDU-05        | RF   | RV-1.3 | Educación   | Dificultad con pruebas estandarizadas             | Práctica guiada y contextualizada                     | Generar ejercicios por nivel+tema                             | Estudiante/Docente                    | S         | Ejercicios filtrables + registro de intentos | Entrevistas + análisis de pruebas | Validación con estudiantes |
-| RF-EDU-06        | RF   | RV-1.3 | Educación   | Falta de retroalimentación temprana               | Medir progreso básico por tema                        | Resumen de aciertos por tema y período                        | Docente                               | C         | Reporte semanal/mensual                      | Encuesta/entrevistas              | Revisión con docentes      |
-| RF-SAB-01        | RF   | RV-2.1 | Saberes     | Riesgo de pérdida cultural (oralidad)             | Documentar saberes con contexto                       | Registro multiformato con territorio y contexto               | Portador de saber / Admin comunitario | M         | Título+categoría+formato+territorio+acceso   | Entrevistas + fuentes culturales  | Validación comunitaria     |
-| RF-SAB-02        | RF   | RV-2.2 | Saberes     | Conocimiento disperso y difícil de recuperar      | Catalogación por categorías locales                   | Clasificación por categorías configurables                    | Admin comunitario                     | S         | Categorías editables por admin               | Entrevistas                       | Revisión con líderes       |
-| RF-SAB-03        | RF   | RV-2.2 | Saberes     | Búsqueda ineficiente / pérdida de tiempo          | Acceso rápido a saberes autorizados                   | Buscar por categoría/territorio/idioma/formato                | Usuario autorizado                    | S         | Resultados en <3s (condiciones normales)     | Observación contextual            | Prueba controlada          |
-| RF-SAB-04        | RF   | RV-2.3 | Saberes     | Riesgo de exposición/apropiación cultural         | Control comunitario del acceso                        | Acceso por niveles (público/comunitario/restringido/sensible) | Admin comunitario                     | M         | Nivel de acceso obligatorio + roles          | Entrevistas + ética               | Validación comunitaria     |
-| RF-SAB-05        | RF   | RV-2.3 | Saberes     | Documentar sin consentimiento es riesgoso         | Consentimiento trazable                               | Registrar consentimiento y responsable                        | Admin comunitario                     | M         | No queda “activo” sin consentimiento         | Entrevistas                       | Revisión de proceso        |
-| RF-SAL-01        | RF   | RV-3.1 | Salud       | Fragmentación de información básica               | Registro mínimo para continuidad                      | Registro de paciente con ID interno único                     | Personal salud                        | M         | ID único + control de acceso                 | Entrevistas + doc salud           | Validación con brigada     |
-| RF-SAL-02        | RF   | RV-3.1 | Salud       | Falta de historial accesible                      | Continuidad de atención                               | Historial básico (crónicos/alergias/medicación/notas)         | Personal salud                        | M         | Vista cronológica por fecha                  | Entrevistas                       | Validación con salud       |
-| RF-SAL-03        | RF   | RV-3.2 | Salud       | Dificultad para coordinar atención                | Gestión de citas comunitarias                         | Programar citas con responsable y lugar                       | Personal salud                        | S         | Sin solapamientos por responsable            | Observación                       | Prueba con agenda          |
-| RF-SAL-04        | RF   | RV-3.2 | Salud       | Campañas preventivas mal coordinadas              | Registrar brigadas/campañas                           | Registro de campañas y población objetivo                     | Personal salud                        | C         | Lista de participantes + estado              | Doc. institucional                | Validación con salud       |
-| RF-SAL-05        | RF   | RV-3.3 | Salud       | Pérdida de seguimiento en crónicos                | Alertas de seguimiento                                | Alertas por periodicidad configurable                         | Personal salud                        | S         | Regla configurable + panel de alertas        | Entrevistas                       | Prueba con casos           |
-| RNF-01           | RNF  | RV-4.1 | Transversal | Conectividad limitada / intermitente              | Operación offline y sincronización                    | Offline + sync automática                                     | Todos                                 | M         | Registra sin internet + sincroniza           | Contexto territorial              | Prueba de campo            |
-| RNF-02           | RNF  | RV-4.2 | Transversal | Multilingüismo / barrera cultural                 | UI y contenidos multilingües                          | UI con selector + contenido etiquetado                        | Todos                                 | M         | Selector idioma + etiquetas                  | Entrevistas                       | Validación usuarios        |
-| RNF-03           | RNF  | RV-4.4 | Transversal | Baja tolerancia a lentitud                        | Rendimiento aceptable                                 | Respuesta <3s en consultas comunes                            | Todos                                 | S         | Prueba de rendimiento simple                 | Buenas prácticas                  | Test técnico               |
-| RNF-04           | RNF  | RV-4.3 | Transversal | Datos médicos sensibles                           | Privacidad y control por roles                        | Acceso por roles + auditoría mínima                           | Salud/Admin                           | M         | Bloqueo por rol + log accesos                | Ética + normativa                 | Revisión con salud         |
-| RNF-05           | RNF  | RV-4.2 | Transversal | Alfabetización digital básica                     | Usabilidad simplificada                               | Flujos guiados, pocos campos obligatorios                     | Todos                                 | S         | Acción clave ≤2 min, ≤6 campos oblig.        | Observación                       | Prueba con usuarios        |
-| RNF-06           | RNF  | RV-4.4 | Transversal | Dispositivos de gama baja                         | Compatibilidad y ligereza                             | Funciona en Android/Browser comunes                           | Todos                                 | S         | Sin hardware especial                        | Contexto                          | Test de compatibilidad     |
-| RNF-07           | RNF  | RV-4.3 | Transversal | Riesgo cultural por difusión                      | Gobernanza cultural                                   | Roles/permisos configurables por comunidad                    | Admin comunitario                     | M         | Configurable por admin local                 | Ética + entrevistas               | Validación comunitaria     |
+| [[RF-EDU-01]]        | RF   | RV-1.1 | Educación   | Brecha de apoyo educativo intercultural           | Identificar perfiles docentes para personalizar apoyo | Registro de docentes con lengua dominante y rol               | Docente / Admin                       | M         | Lengua obligatoria + CRUD completo           | Entrevista + revisión MEP         | Revisión con docentes      |
+| [[RF-EDU-02]]        | RF   | RV-1.1 | Educación   | Falta de seguimiento básico por estudiante        | Identificar perfiles estudiantiles por nivel/idioma   | Registro mínimo de estudiantes                                | Docente                               | S         | Registro con ≥4 campos obligatorios          | Entrevista/observación            | Revisión con docentes      |
+| [[RF-EDU-03]]        | RF   | RV-1.2 | Educación   | Escasez de materiales pertinentes y bilingües     | Acceso a materiales educativos bilingües              | Cargar materiales (texto/audio/video) por idioma y nivel      | Docente/Estudiante                    | M         | Material incluye idioma+nivel+tema           | Revisión documental + entrevistas | Prueba con usuarios        |
+| [[RF-EDU-04]]        | RF   | RV-1.2 | Educación   | Desalineación curricular y dificultad de búsqueda | Organización clara por asignatura y competencia       | Clasificar materiales por asignatura/competencia              | Docente                               | S         | 2 niveles de clasificación mínimo            | Entrevista                        | Taller de validación       |
+| [[RF-EDU-05]]        | RF   | RV-1.3 | Educación   | Dificultad con pruebas estandarizadas             | Práctica guiada y contextualizada                     | Generar ejercicios por nivel+tema                             | Estudiante/Docente                    | S         | Ejercicios filtrables + registro de intentos | Entrevistas + análisis de pruebas | Validación con estudiantes |
+| [[RF-EDU-06]]        | RF   | RV-1.3 | Educación   | Falta de retroalimentación temprana               | Medir progreso básico por tema                        | Resumen de aciertos por tema y período                        | Docente                               | C         | Reporte semanal/mensual                      | Encuesta/entrevistas              | Revisión con docentes      |
+| [[RF-SAB-01]]        | RF   | RV-2.1 | Saberes     | Riesgo de pérdida cultural (oralidad)             | Documentar saberes con contexto                       | Registro multiformato con territorio y contexto               | Portador de saber / Admin comunitario | M         | Título+categoría+formato+territorio+acceso   | Entrevistas + fuentes culturales  | Validación comunitaria     |
+| [[RF-SAB-02]]        | RF   | RV-2.2 | Saberes     | Conocimiento disperso y difícil de recuperar      | Catalogación por categorías locales                   | Clasificación por categorías configurables                    | Admin comunitario                     | S         | Categorías editables por admin               | Entrevistas                       | Revisión con líderes       |
+| [[RF-SAB-03]]        | RF   | RV-2.2 | Saberes     | Búsqueda ineficiente / pérdida de tiempo          | Acceso rápido a saberes autorizados                   | Buscar por categoría/territorio/idioma/formato                | Usuario autorizado                    | S         | Resultados en <3s (condiciones normales)     | Observación contextual            | Prueba controlada          |
+| [[RF-SAB-04]]        | RF   | RV-2.3 | Saberes     | Riesgo de exposición/apropiación cultural         | Control comunitario del acceso                        | Acceso por niveles (público/comunitario/restringido/sensible) | Admin comunitario                     | M         | Nivel de acceso obligatorio + roles          | Entrevistas + ética               | Validación comunitaria     |
+| [[RF-SAB-05]]        | RF   | RV-2.3 | Saberes     | Documentar sin consentimiento es riesgoso         | Consentimiento trazable                               | Registrar consentimiento y responsable                        | Admin comunitario                     | M         | No queda “activo” sin consentimiento         | Entrevistas                       | Revisión de proceso        |
+| [[RF-SAL-01]]        | RF   | RV-3.1 | Salud       | Fragmentación de información básica               | Registro mínimo para continuidad                      | Registro de paciente con ID interno único                     | Personal salud                        | M         | ID único + control de acceso                 | Entrevistas + doc salud           | Validación con brigada     |
+| [[RF-SAL-02]]        | RF   | RV-3.1 | Salud       | Falta de historial accesible                      | Continuidad de atención                               | Historial básico (crónicos/alergias/medicación/notas)         | Personal salud                        | M         | Vista cronológica por fecha                  | Entrevistas                       | Validación con salud       |
+| [[RF-SAL-03]]        | RF   | RV-3.2 | Salud       | Dificultad para coordinar atención                | Gestión de citas comunitarias                         | Programar citas con responsable y lugar                       | Personal salud                        | S         | Sin solapamientos por responsable            | Observación                       | Prueba con agenda          |
+| [[RF-SAL-04]]        | RF   | RV-3.2 | Salud       | Campañas preventivas mal coordinadas              | Registrar brigadas/campañas                           | Registro de campañas y población objetivo                     | Personal salud                        | C         | Lista de participantes + estado              | Doc. institucional                | Validación con salud       |
+| [[RF-SAL-05]]        | RF   | RV-3.3 | Salud       | Pérdida de seguimiento en crónicos                | Alertas de seguimiento                                | Alertas por periodicidad configurable                         | Personal salud                        | S         | Regla configurable + panel de alertas        | Entrevistas                       | Prueba con casos           |
+| [[RNF-01]]           | RNF  | RV-4.1 | Transversal | Conectividad limitada / intermitente              | Operación offline y sincronización                    | Offline + sync automática                                     | Todos                                 | M         | Registra sin internet + sincroniza           | Contexto territorial              | Prueba de campo            |
+| [[RNF-02]]           | RNF  | RV-4.2 | Transversal | Multilingüismo / barrera cultural                 | UI y contenidos multilingües                          | UI con selector + contenido etiquetado                        | Todos                                 | M         | Selector idioma + etiquetas                  | Entrevistas                       | Validación usuarios        |
+| [[RNF-03]]           | RNF  | RV-4.4 | Transversal | Baja tolerancia a lentitud                        | Rendimiento aceptable                                 | Respuesta <3s en consultas comunes                            | Todos                                 | S         | Prueba de rendimiento simple                 | Buenas prácticas                  | Test técnico               |
+| [[RNF-04]]           | RNF  | RV-4.3 | Transversal | Datos médicos sensibles                           | Privacidad y control por roles                        | Acceso por roles + auditoría mínima                           | Salud/Admin                           | M         | Bloqueo por rol + log accesos                | Ética + normativa                 | Revisión con salud         |
+| [[RNF-05]]           | RNF  | RV-4.2 | Transversal | Alfabetización digital básica                     | Usabilidad simplificada                               | Flujos guiados, pocos campos obligatorios                     | Todos                                 | S         | Acción clave ≤2 min, ≤6 campos oblig.        | Observación                       | Prueba con usuarios        |
+| [[RNF-06]]           | RNF  | RV-4.4 | Transversal | Dispositivos de gama baja                         | Compatibilidad y ligereza                             | Funciona en Android/Browser comunes                           | Todos                                 | S         | Sin hardware especial                        | Contexto                          | Test de compatibilidad     |
+| [[RNF-07]]           | RNF  | RV-4.3 | Transversal | Riesgo cultural por difusión                      | Gobernanza cultural                                   | Roles/permisos configurables por comunidad                    | Admin comunitario                     | M         | Configurable por admin local                 | Ética + entrevistas               | Validación comunitaria     |
 
 ---
 ## ● Conclusiones y Recomendaciones

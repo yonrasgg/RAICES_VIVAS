@@ -25,7 +25,7 @@ El vault de Obsidian funciona como un **sistema de gestión de proyecto integrad
 
 ```
 RAICES_VIVAS/
-├── 00-Dashboard/          ← Centro de control ([[00-Dashboard/[[00-Dashboard/[[00-Dashboard/[[00-Dashboard/[[00-Dashboard/Home|Home]]|Home]]|Home]]|Home]]|Home]], Roadmap, Métricas)
+├── 00-Dashboard/          ← Centro de control (Home, Roadmap, Métricas)
 ├── 01-Proyecto/           ← Gobierno: Charter, Alcance, Equipo, Riesgos, ADRs
 ├── 02-Investigación/      ← Contexto, entrevistas, encuestas, fuentes
 ├── 03-Requerimientos/     ← RF (EDU/SAB/SAL), RNF, RTM

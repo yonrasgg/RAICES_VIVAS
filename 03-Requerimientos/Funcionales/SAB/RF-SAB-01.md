@@ -46,7 +46,7 @@ El sistema debe permitir registrar saberes ancestrales en formato texto, audio o
 - **Problema:** Riesgo de pérdida cultural (oralidad)
 - **Necesidad:** Documentar saberes con contexto
 - **WBS:** [[WBS#RV-2.1]]
-- **Módulo:** Saberes Ancestrales (SAB)
+- **Módulo:** [[Saberes Ancestrales]] (SAB)
 - **Fuente:** Entrevistas + fuentes culturales
 
 ## Tareas Vinculadas

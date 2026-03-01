@@ -46,7 +46,7 @@ El sistema debe permitir clasificar saberes por categorías definidas localmente
 - **Problema:** Conocimiento disperso y difícil de recuperar
 - **Necesidad:** Catalogación por categorías locales
 - **WBS:** [[WBS#RV-2.2]]
-- **Módulo:** Saberes Ancestrales (SAB)
+- **Módulo:** [[Saberes Ancestrales]] (SAB)
 - **Fuente:** Entrevistas
 
 ## Tareas Vinculadas

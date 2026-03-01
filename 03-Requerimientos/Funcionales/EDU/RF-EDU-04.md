@@ -46,7 +46,7 @@ El sistema debe permitir clasificar materiales por asignatura (ej. Matemática, 
 - **Problema:** Desalineación curricular y dificultad de búsqueda
 - **Necesidad:** Organización clara por asignatura y competencia
 - **WBS:** [[WBS#RV-1.2]]
-- **Módulo:** Educación (EDU)
+- **Módulo:** [[Educación]] (EDU)
 - **Fuente:** Entrevista
 
 ## Tareas Vinculadas

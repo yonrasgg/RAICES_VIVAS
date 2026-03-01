@@ -47,7 +47,7 @@ El sistema debe restringir el acceso a contenidos según nivel de autorización 
 - **Problema:** Riesgo de exposición/apropiación cultural
 - **Necesidad:** Control comunitario del acceso
 - **WBS:** [[WBS#RV-2.3]]
-- **Módulo:** Saberes Ancestrales (SAB)
+- **Módulo:** [[Saberes Ancestrales]] (SAB)
 - **Fuente:** Entrevistas + ética cultural
 
 ## Tareas Vinculadas

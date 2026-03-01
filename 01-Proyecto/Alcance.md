@@ -21,7 +21,7 @@ banner_src_y: 0.42
 |------|----------|
 | **Análisis** | Contexto sociocultural, actores, necesidades |
 | **Requerimientos** | 16 RF + 7 RNF definidos y priorizados (MoSCoW) |
-| **Arquitectura** | WBS, diagramas de contexto, modelo de datos conceptual |
+| **Arquitectura** | [[WBS]], diagramas de contexto, [[Modelo de Datos|modelo de datos]] conceptual |
 | **Validación** | Entrevistas, encuestas, observación con usuarios potenciales |
 | **Diseño (Avance 2)** | Prototipos UI, modelo ER detallado, stack tecnológico |
 | **Implementación (futuro)** | Módulo piloto MVP |
@@ -39,7 +39,7 @@ banner_src_y: 0.42
 ## Criterios de Éxito
 
 1. ✅ Requerimientos definidos con criterios medibles y verificables
-2. ✅ Trazabilidad completa: Problema → Necesidad → WBS → RF/RNF → Criterio de aceptación
+2. ✅ Trazabilidad completa: Problema → Necesidad → [[WBS]] → RF/RNF → Criterio de aceptación
 3. ⬜ Validación con al menos 2-3 usuarios reales
 4. ⬜ Diseño de arquitectura modular y escalable
 5. ⬜ Prototipo funcional de al menos 1 módulo

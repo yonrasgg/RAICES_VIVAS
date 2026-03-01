@@ -26,7 +26,7 @@ banner_src_y: 0.45
 
 ### Geovanny — Project Lead / Arquitecto
 - Coordinación general del proyecto y vault
-- Diseño de WBS, RTM y arquitectura
+- Diseño de [[WBS]], [[_RTM|RTM]] y arquitectura
 - Lead de módulo Educativo (EDU)
 - Gestión de configuración (Git, vault)
 - Compilación de entregables finales

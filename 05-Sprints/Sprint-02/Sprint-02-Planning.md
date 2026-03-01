@@ -94,10 +94,10 @@ SORT assignee ASC
 
 | Integrante | Tareas Asignadas | Horas Estimadas |
 |-----------|-----------------|-----------------|
-| Geovanny | T-021, T-024, + wireframes, + compilación | ~24h |
-| Elkin | T-022, + wireframes, + validación usuarios | ~20h |
-| Santiago | T-023, + wireframes, + instrumentos | ~20h |
-| Equipo | T-025, ajustes post-validación | ~8h |
+| Geovanny | [[T-021]], [[T-024]], + wireframes, + compilación | ~24h |
+| Elkin | [[T-022]], + wireframes, + validación usuarios | ~20h |
+| Santiago | [[T-023]], + wireframes, + instrumentos | ~20h |
+| Equipo | [[T-025]], ajustes post-validación | ~8h |
 
 ## Entregables Esperados
 
