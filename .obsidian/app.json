@@ -5,7 +5,7 @@
   "showUnsupportedFiles": true,
   "uriCallbacks": true,
   "vimMode": false,
-  "propertiesInDocument": "hidden",
+  "propertiesInDocument": "visible",
   "showIndentGuide": true,
   "rightToLeft": false,
   "tabSize": 6

@@ -2,7 +2,9 @@
   "cssTheme": "Shiba Inu",
   "accentColor": "#5cf55f",
   "baseFontSizeAction": true,
-  "enabledCssSnippets": [
-    "dashboard-hero"
-  ]
+  "enabledCssSnippets": [],
+  "nativeMenus": false,
+  "baseFontSize": 12,
+  "textFontFamily": "Arial",
+  "interfaceFontFamily": "Ubuntu Mono"
 }
