@@ -5,7 +5,7 @@ title: "<% tp.system.prompt("Título de la tarea") %>"
 status: <% tp.system.suggester(["todo", "in-progress", "review", "done", "blocked"], ["todo", "in-progress", "review", "done", "blocked"]) %>
 priority: <% tp.system.suggester(["critical", "high", "medium", "low"], ["critical", "high", "medium", "low"]) %>
 assignee: <% tp.system.suggester(["Geovanny", "Elkin", "Santiago", "Equipo"], ["Geovanny", "Elkin", "Santiago", "Equipo"]) %>
-sprint: <% tp.system.suggester(["Sprint-01", "Sprint-02", "Sprint-03", "backlog"], ["Sprint-01", "Sprint-02", "Sprint-03", "backlog"]) %>
+sprint: <% tp.system.suggester(["Sprint-01", "Sprint-02", "Sprint-03", "Sprint-04", "Sprint-05", "backlog"], ["Sprint-01", "Sprint-02", "Sprint-03", "Sprint-04", "Sprint-05", "backlog"]) %>
 phase: <% tp.system.suggester(["investigación", "análisis", "requerimientos", "integración", "diseño", "implementación", "testing", "gestión"], ["investigación", "análisis", "requerimientos", "integración", "diseño", "implementación", "testing", "gestión"]) %>
 module: <% tp.system.suggester(["educacion", "saberes", "salud", "transversal", "proyecto"], ["educacion", "saberes", "salud", "transversal", "proyecto"]) %>
 requirement: <% tp.system.prompt("Requerimiento padre (ej: RF-EDU-01 o N/A)") %>
@@ -28,7 +28,7 @@ tags:
 | **Estado** | `INPUT[suggester(option(todo), option(in-progress), option(review), option(done), option(blocked)):status]` |
 | **Prioridad** | `INPUT[suggester(option(critical), option(high), option(medium), option(low)):priority]` |
 | **Responsable** | `INPUT[suggester(option(Geovanny), option(Elkin), option(Santiago), option(Equipo)):assignee]` |
-| **Sprint** | `INPUT[suggester(option(Sprint-01), option(Sprint-02), option(Sprint-03), option(backlog)):sprint]` |
+| **Sprint** | `INPUT[suggester(option(Sprint-01), option(Sprint-02), option(Sprint-03), option(Sprint-04), option(Sprint-05), option(backlog)):sprint]` |
 
 ## Descripción
 

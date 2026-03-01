@@ -1,14 +1,14 @@
 ---
 type: weekly
-title: "Semana {{date:ww}} — {{date:YYYY}}"
+title: "Semana <% tp.date.now('ww') %> — <% tp.date.now('YYYY') %>"
 sprint: ""
-created: "{{date:YYYY-MM-DD}}"
+created: <% tp.date.now("YYYY-MM-DD") %>
 tags:
   - weekly
   - reporte
 ---
 
-# 📅 Semana {{date:ww}} — {{date:YYYY}}
+# 📅 Semana <% tp.date.now('ww') %> — <% tp.date.now('YYYY') %>
 
 > Resumen semanal del equipo Raíces Vivas.
 
@@ -25,7 +25,7 @@ tags:
 ```dataview
 TABLE assignee AS "Responsable", completed AS "Completada"
 FROM "05-Sprints"
-WHERE type = "tarea" AND completed >= date("{{monday:YYYY-MM-DD}}") AND completed <= date("{{date:YYYY-MM-DD}}")
+WHERE type = "task" AND completed >= date("{{monday:YYYY-MM-DD}}") AND completed <= date("{{date:YYYY-MM-DD}}")
 SORT completed ASC
 ```
 
@@ -36,7 +36,7 @@ SORT completed ASC
 ```dataview
 TABLE assignee AS "Responsable", due AS "Fecha límite"
 FROM "05-Sprints"
-WHERE type = "tarea" AND status = "in-progress"
+WHERE type = "task" AND status = "in-progress"
 SORT due ASC
 ```
 

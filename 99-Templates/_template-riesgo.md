@@ -15,6 +15,15 @@ tags:
 
 # RISK-<% tp.frontmatter.id %>: <% tp.frontmatter.title %>
 
+## Control Rápido
+
+| Campo | Valor |
+|-------|-------|
+| **Estado** | `INPUT[suggester(option(open), option(mitigating), option(closed), option(accepted)):status]` |
+| **Probabilidad** | `INPUT[suggester(option(alta), option(media), option(baja)):probability]` |
+| **Impacto** | `INPUT[suggester(option(alto), option(medio), option(bajo)):impact]` |
+| **Responsable** | `INPUT[suggester(option(Geovanny), option(Elkin), option(Santiago), option(Equipo)):owner]` |
+
 ## Descripción
 
 > ¿Qué podría salir mal?

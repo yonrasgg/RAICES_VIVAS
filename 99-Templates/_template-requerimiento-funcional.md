@@ -8,6 +8,7 @@ status: draft
 priority: <% tp.system.suggester(["must", "should", "could", "wont"], ["must", "should", "could", "wont"]) %>
 actor: []
 source: <% tp.system.suggester(["entrevista", "encuesta", "observacion", "documental"], ["entrevista", "encuesta", "observacion", "documental"]) %>
+owner: ""
 validation: ""
 created: <% tp.date.now("YYYY-MM-DD") %>
 updated: <% tp.date.now("YYYY-MM-DD") %>
@@ -18,6 +19,13 @@ tags:
 ---
 
 # <% tp.frontmatter.id %>: <% tp.frontmatter.title %>
+
+## Control Rápido
+
+| Campo | Valor |
+|-------|-------|
+| **Estado** | `INPUT[suggester(option(draft), option(review), option(approved), option(implemented), option(tested)):status]` |
+| **Prioridad** | `INPUT[suggester(option(must), option(should), option(could), option(wont)):priority]` |
 
 ## Descripción
 

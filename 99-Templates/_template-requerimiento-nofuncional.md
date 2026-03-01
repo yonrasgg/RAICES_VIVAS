@@ -17,6 +17,13 @@ tags:
 
 # <% tp.frontmatter.id %>: <% tp.frontmatter.title %>
 
+## Control Rápido
+
+| Campo | Valor |
+|-------|-------|
+| **Estado** | `INPUT[suggester(option(draft), option(review), option(approved), option(implemented), option(tested)):status]` |
+| **Prioridad** | `INPUT[suggester(option(must), option(should), option(could), option(wont)):priority]` |
+
 ## Descripción
 
 > Describir la restricción o cualidad que debe cumplir el sistema.

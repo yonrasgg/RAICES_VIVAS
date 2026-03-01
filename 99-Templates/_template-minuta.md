@@ -1,7 +1,9 @@
 ---
+id: MIN-<% tp.system.prompt("Número (ej: 001)") %>
 type: meeting
 title: "<% tp.system.prompt("Título de la reunión") %>"
 date: <% tp.date.now("YYYY-MM-DD") %>
+duration: ""
 attendees: []
 decisions: []
 action-items: []
