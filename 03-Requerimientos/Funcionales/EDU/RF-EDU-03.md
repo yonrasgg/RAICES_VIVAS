@@ -1,4 +1,6 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-rf-edu.png"
+banner_src_y: 0.42
 id: RF-EDU-03
 type: requirement/functional
 module: educacion

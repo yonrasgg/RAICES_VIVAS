@@ -1,24 +1,37 @@
+<%*
+// Capturar módulo primero para usarlo en banner_src
+const rfModule = await tp.system.suggester(["educacion", "saberes", "salud"], ["educacion", "saberes", "salud"], false, "Módulo");
+const rfBanner = rfModule === "educacion" ? "08-Recursos/Imágenes/cover-rf-edu.png" : rfModule === "saberes" ? "08-Recursos/Imágenes/cover-rf-sab.png" : "08-Recursos/Imágenes/cover-rf-sal.png";
+const rfId = await tp.system.prompt("ID del requerimiento (ej: RF-EDU-07)");
+const rfWbs = await tp.system.prompt("Código WBS (ej: RV-1.2)");
+const rfTitle = await tp.system.prompt("Título del requerimiento");
+const rfPriority = await tp.system.suggester(["must", "should", "could", "wont"], ["must", "should", "could", "wont"], false, "Prioridad");
+const rfSource = await tp.system.suggester(["entrevista", "encuesta", "observacion", "documental"], ["entrevista", "encuesta", "observacion", "documental"], false, "Fuente");
+const rfToday = tp.date.now("YYYY-MM-DD");
+-%>
 ---
-id: <% tp.system.prompt("ID del requerimiento (ej: RF-EDU-07)") %>
+banner_src: "<% rfBanner %>"
+banner_src_y: 0.42
+id: <% rfId %>
 type: requirement/functional
-module: <% tp.system.suggester(["educacion", "saberes", "salud"], ["educacion", "saberes", "salud"]) %>
-wbs: <% tp.system.prompt("Código WBS (ej: RV-1.2)") %>
-title: "<% tp.system.prompt("Título del requerimiento") %>"
+module: <% rfModule %>
+wbs: <% rfWbs %>
+title: "<% rfTitle %>"
 status: draft
-priority: <% tp.system.suggester(["must", "should", "could", "wont"], ["must", "should", "could", "wont"]) %>
+priority: <% rfPriority %>
 actor: []
-source: <% tp.system.suggester(["entrevista", "encuesta", "observacion", "documental"], ["entrevista", "encuesta", "observacion", "documental"]) %>
+source: <% rfSource %>
 owner: ""
 validation: ""
-created: <% tp.date.now("YYYY-MM-DD") %>
-updated: <% tp.date.now("YYYY-MM-DD") %>
+created: <% rfToday %>
+updated: <% rfToday %>
 sprint: null
 tags:
   - requerimiento
   - funcional
 ---
 
-# <% tp.frontmatter.id %>: <% tp.frontmatter.title %>
+# <% rfId %>: <% rfTitle %>
 
 ## Control Rápido
 
@@ -53,8 +66,8 @@ tags:
 
 - **Problema:** 
 - **Necesidad:** 
-- **WBS:** [[WBS#<% tp.frontmatter.wbs %>]]
-- **Módulo:** <% tp.frontmatter.module %>
+- **WBS:** [[WBS#<% rfWbs %>]]
+- **Módulo:** <% rfModule %>
 
 ## Historial de Cambios
 

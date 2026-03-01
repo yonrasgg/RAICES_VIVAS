@@ -1,4 +1,6 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-rf-sal.png"
+banner_src_y: 0.42
 id: RF-SAL-05
 type: requirement/functional
 module: salud

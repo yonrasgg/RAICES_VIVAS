@@ -993,6 +993,261 @@ def cover_riesgos(path):
     print(f"  ✓ {path}")
 
 
+def cover_rf_edu(path):
+    """RF Educación — hojas, sol, libros, texto Educación centrado."""
+    p = PALETTES["educacion"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (15, 35, 30))
+
+    # Hojas esparcidas (naturaleza, conocimiento vivo)
+    for _ in range(25):
+        cx = random.randint(0, WIDTH)
+        cy = random.randint(0, HEIGHT)
+        size = random.randint(12, 35)
+        angle = random.uniform(0, 2 * math.pi)
+        c = random.choice([p["primary"], p["secondary"], p["detail"]])
+        draw_leaf_pattern(draw, cx, cy, size, c, angle)
+
+    # Sol de conocimiento
+    draw_sun_symbol(draw, WIDTH - 180, 100, 30, 10, p["accent"])
+    draw_sun_symbol(draw, 180, HEIGHT - 100, 22, 8, p["accent"])
+
+    # Libros estilizados (ambos lados)
+    for bx in [200, WIDTH - 200]:
+        by = HEIGHT // 2 - 20
+        for i in range(5):
+            c = random.choice([p["primary"], p["secondary"], p["detail"]])
+            draw.rectangle([bx - 30, by - 50 + i * 12, bx + 30, by - 42 + i * 12], fill=c, outline=p["accent"])
+
+    # Triángulos (pirámides de conocimiento)
+    draw_triangles_row(draw, HEIGHT - 60, 30, 25, p["secondary"])
+    draw_triangles_row(draw, 0, 25, 30, p["detail"], True)
+
+    # Rombos Bribri
+    draw_diamond_band(draw, 20, 12, 22, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 20, 12, 22, p["accent"])
+
+    draw_border_pattern(draw, p, "diamonds")
+
+    # --- Texto grande centrado ---
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 100)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    label = "Educación"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    for off in range(8, 0, -2):
+        glow = tuple(max(0, min(255, c + 40 - off * 4)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow)
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=(0, 0, 0))
+    draw.text((tx, ty), label, font=big_font, fill=p["text"])
+
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    subtitle = "Requerimientos Funcionales · Módulo EDU"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sx = (WIDTH - (bbox2[2] - bbox2[0])) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=(0, 0, 0))
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
+def cover_rf_sab(path):
+    """RF Saberes Ancestrales — espirales, terracota, fuego, texto centrado."""
+    p = PALETTES["saberes"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (35, 18, 12))
+
+    # Espirales concéntricos (sabiduría ancestral)
+    for cx, cy in [(180, 150), (WIDTH - 180, HEIGHT - 150), (WIDTH // 4, HEIGHT - 100), (3 * WIDTH // 4, 100)]:
+        draw_concentric_circles(draw, cx, cy, random.randint(35, 60), 5, p["primary"], 2)
+
+    # Pirámides escalonadas (conocimiento acumulado)
+    draw_stepped_pyramid(draw, 300, HEIGHT - 40, 5, 120, 18, p["detail"])
+    draw_stepped_pyramid(draw, WIDTH - 300, HEIGHT - 40, 5, 120, 18, p["detail"])
+
+    # Máscaras estilizadas (Boruca) — círculos + triángulos
+    for mx, my in [(130, HEIGHT // 2), (WIDTH - 130, HEIGHT // 2)]:
+        draw.ellipse([mx - 25, my - 30, mx + 25, my + 20], outline=p["secondary"], width=2)
+        draw.polygon([(mx - 8, my - 10), (mx + 8, my - 10), (mx, my + 5)], fill=p["accent"])
+        draw.ellipse([mx - 15, my - 18, mx - 7, my - 10], fill=p["secondary"])
+        draw.ellipse([mx + 7, my - 18, mx + 15, my - 10], fill=p["secondary"])
+
+    # Zigzag (patrones textiles)
+    draw_zigzag_line(draw, HEIGHT // 4, 12, 20, p["secondary"], 2)
+    draw_zigzag_line(draw, 3 * HEIGHT // 4, 12, 20, p["secondary"], 2)
+
+    # Rombos
+    draw_diamond_band(draw, 20, 14, 18, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 20, 14, 18, p["accent"])
+
+    draw_border_pattern(draw, p, "zigzag")
+
+    # --- Texto grande centrado ---
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 72)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    label = "Saberes Ancestrales"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    for off in range(8, 0, -2):
+        glow = tuple(max(0, min(255, c + 40 - off * 4)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow)
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=(0, 0, 0))
+    draw.text((tx, ty), label, font=big_font, fill=p["text"])
+
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    subtitle = "Requerimientos Funcionales · Módulo SAB"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sx = (WIDTH - (bbox2[2] - bbox2[0])) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=(0, 0, 0))
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
+def cover_rf_sal(path):
+    """RF Salud — agua, ondas, turquesa, cruces, texto Salud centrado."""
+    p = PALETTES["salud"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (12, 22, 38))
+
+    # Ondas de agua (vida, salud)
+    draw_wave_band(draw, HEIGHT // 4 - 20, 10, p["primary"], 2, 5)
+    draw_wave_band(draw, 3 * HEIGHT // 4, 10, p["primary"], 2, 5)
+
+    # Cruces de salud estilizadas
+    for cx, cy in [(200, 130), (WIDTH - 200, 130), (250, HEIGHT - 110), (WIDTH - 250, HEIGHT - 110)]:
+        cw, ch = 8, 22
+        draw.rectangle([cx - cw, cy - ch, cx + cw, cy + ch], fill=p["secondary"])
+        draw.rectangle([cx - ch, cy - cw, cx + ch, cy + cw], fill=p["secondary"])
+
+    # Círculos concéntricos (energía vital)
+    draw_concentric_circles(draw, 140, HEIGHT // 2, 50, 5, p["secondary"], 2)
+    draw_concentric_circles(draw, WIDTH - 140, HEIGHT // 2, 50, 5, p["secondary"], 2)
+
+    # Hojas medicinales
+    for _ in range(15):
+        lx = random.randint(0, WIDTH)
+        ly = random.randint(0, HEIGHT)
+        size = random.randint(10, 25)
+        angle = random.uniform(0, 2 * math.pi)
+        c = random.choice([p["primary"], p["secondary"], p["detail"]])
+        draw_leaf_pattern(draw, lx, ly, size, c, angle)
+
+    # Montañas (Talamanca — plantas medicinales)
+    draw_mountain_range(draw, HEIGHT - 50, 8, p["detail"], p["detail"])
+
+    # Rombos
+    draw_diamond_band(draw, 20, 12, 22, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 20, 12, 22, p["accent"])
+
+    draw_border_pattern(draw, p, "waves")
+
+    # --- Texto grande centrado ---
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 110)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    label = "Salud"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    for off in range(8, 0, -2):
+        glow = tuple(max(0, min(255, c + 40 - off * 4)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow)
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=(0, 0, 0))
+    draw.text((tx, ty), label, font=big_font, fill=p["text"])
+
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    subtitle = "Requerimientos Funcionales · Módulo SAL"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sx = (WIDTH - (bbox2[2] - bbox2[0])) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=(0, 0, 0))
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
 # =====================================================
 # MAIN — Generar todos los covers
 # =====================================================
@@ -1016,6 +1271,9 @@ if __name__ == "__main__":
         "cover-proyecto.png": cover_proyecto,
         "cover-adr.png": cover_adr,
         "cover-riesgos.png": cover_riesgos,
+        "cover-rf-edu.png": cover_rf_edu,
+        "cover-rf-sab.png": cover_rf_sab,
+        "cover-rf-sal.png": cover_rf_sal,
     }
 
     print(f"\n🎨 Generando {len(covers)} covers culturales...\n")
