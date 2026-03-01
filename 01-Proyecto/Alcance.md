@@ -17,14 +17,14 @@ banner_src_y: 0.42
 
 ### Dentro del Alcance
 
-| Área | Incluido |
-|------|----------|
-| **Análisis** | Contexto sociocultural, actores, necesidades |
-| **Requerimientos** | 16 RF + 7 RNF definidos y priorizados (MoSCoW) |
-| **Arquitectura** | [[WBS]], diagramas de contexto, [[Modelo de Datos|modelo de datos]] conceptual |
-| **Validación** | Entrevistas, encuestas, observación con usuarios potenciales |
-| **Diseño (Avance 2)** | Prototipos UI, modelo ER detallado, stack tecnológico |
-| **Implementación (futuro)** | Módulo piloto MVP |
+| Área                        | Incluido                                                                      |
+| --------------------------- | ----------------------------------------------------------------------------- |
+| **Análisis**                | Contexto sociocultural, actores, necesidades                                  |
+| **Requerimientos**          | 16 RF + 7 RNF definidos y priorizados (MoSCoW)                                |
+| **Arquitectura**            | [[WBS]], diagramas de contexto, [[Modelo de Datosmodelo de datos]] conceptual |
+| **Validación**              | Entrevistas, encuestas, observación con usuarios potenciales                  |
+| **Diseño (Avance 2)**       | Prototipos UI, modelo ER detallado, stack tecnológico                         |
+| **Implementación (futuro)** | Módulo piloto MVP                                                             |
 
 ### Fuera del Alcance
 
