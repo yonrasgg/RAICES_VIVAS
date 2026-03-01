@@ -1,3 +1,6 @@
+---
+author:
+---
 <%*
 // Capturar módulo primero para usarlo en banner_src
 const rfModule = await tp.system.suggester(["educacion", "saberes", "salud"], ["educacion", "saberes", "salud"], false, "Módulo");
