@@ -180,14 +180,14 @@ color purple
 ```button
 name 📦 Backlog
 type link
-action [[05-Sprints/Backlog]]
+action obsidian://open?vault=RAICES_VIVAS&file=05-Sprints%2FBacklog
 color default
 ```
 
 ```button
 name 💰 Finanzas
 type link
-action [[01-Proyecto/Finanzas]]
+action obsidian://open?vault=RAICES_VIVAS&file=01-Proyecto%2FFinanzas
 color green
 ```
 
@@ -277,38 +277,51 @@ dv.table(headers, rows);
 
 ## 🗺️ Navegación del Proyecto
 
-> [!tip]+ 📁 Gobierno y Gestión
-> - 👥 [[01-Proyecto/Equipo|Equipo]]
-> - 📜 [[01-Proyecto/Charter|Charter]]
-> - 🎯 [[01-Proyecto/Alcance|Alcance]]
-> - 👤 [[01-Proyecto/Stakeholders|Stakeholders]]
-> - 📖 [[01-Proyecto/Glosario|Glosario]]
-> - 📋 [[01-Proyecto/Plan de Gestión|Plan de Gestión]]
-> - 📕 [[01-Proyecto/Guía de Workflow|Guía de Workflow]]
-> - 🚀 [[01-Proyecto/Onboarding|Onboarding]]
-> - 💰 [[01-Proyecto/Finanzas|Finanzas]]
-> - 🗂️ [[01-Proyecto/Decisiones/|Decisiones (ADR)]]
-> - ⚠️ [[01-Proyecto/Riesgos/|Riesgos (RSK)]]
+=== start-multi-column: nav-panel
+```column-settings
+number of columns: 3
+border: off
+shadow: off
+```
 
-> [!example]+ 📐 Técnico y Arquitectura
-> - 📐 [[03-Requerimientos/_RTM|RTM — Trazabilidad]]
-> - 🏗️ [[04-Arquitectura/WBS|WBS]]
-> - 🏗️ [[04-Arquitectura/Visión General|Arquitectura General]]
-> - 🏗️ [[04-Arquitectura/Modelo de Datos|Modelo de Datos]]
-> - 💻 [[04-Arquitectura/Stack Tecnológico|Stack Tecnológico]]
-> - 📊 [[00-Dashboard/Roadmap|Roadmap / Gantt]]
-> - 📈 [[00-Dashboard/Métricas|Métricas de Avance]]
-> - ✅ [[09-QA/README|QA — Calidad]]
+### 📁 Gobierno y Gestión
+- 👥 [[01-Proyecto/Equipo|Equipo]]
+- 📜 [[01-Proyecto/Charter|Charter]]
+- 🎯 [[01-Proyecto/Alcance|Alcance]]
+- 👤 [[01-Proyecto/Stakeholders|Stakeholders]]
+- 📖 [[01-Proyecto/Glosario|Glosario]]
+- 📋 [[01-Proyecto/Plan de Gestión|Plan de Gestión]]
+- 📕 [[01-Proyecto/Guía de Workflow|Guía de Workflow]]
+- 🚀 [[01-Proyecto/Onboarding|Onboarding]]
+- 💰 [[01-Proyecto/Finanzas|Finanzas]]
+- 🗂️ [[01-Proyecto/Decisiones/|Decisiones (ADR)]]
+- ⚠️ [[01-Proyecto/Riesgos/|Riesgos (RSK)]]
 
-> [!abstract]+ 🔬 Investigación y Entregables
-> - 🔍 [[02-Investigación/Contexto/Educación|Contexto EDU]]
-> - 🔍 [[02-Investigación/Contexto/Saberes Ancestrales|Contexto SAB]]
-> - 🔍 [[02-Investigación/Contexto/Salud Comunitaria|Contexto SAL]]
-> - 🗺️ [[02-Investigación/Contexto/Mapa de Territorios Indígenas|Mapa Territorios]]
-> - 📄 [[06-Entregables/Avance-1/Raíces Vivas – Sistema Integral de Apoyo a Comunidades Indígenas|Avance 1]]
-> - 📦 [[05-Sprints/Sprint-01/Sprint-01-Planning|Sprint 01]]
-> - 📦 [[05-Sprints/Sprint-02/Sprint-02-Planning|Sprint 02]]
-> - 📝 [[07-Reuniones/MIN-001|Minuta Kickoff]]
+=== end-column ===
+
+### 📐 Técnico y Arquitectura
+- 📐 [[03-Requerimientos/_RTM|RTM — Trazabilidad]]
+- 🏗️ [[04-Arquitectura/WBS|WBS]]
+- 🏗️ [[04-Arquitectura/Visión General|Arquitectura General]]
+- 🏗️ [[04-Arquitectura/Modelo de Datos|Modelo de Datos]]
+- 💻 [[04-Arquitectura/Stack Tecnológico|Stack Tecnológico]]
+- 📊 [[00-Dashboard/Roadmap|Roadmap / Gantt]]
+- 📈 [[00-Dashboard/Métricas|Métricas de Avance]]
+- ✅ [[09-QA/README|QA — Calidad]]
+
+=== end-column ===
+
+### 🔬 Investigación y Entregables
+- 🔍 [[02-Investigación/Contexto/Educación|Contexto EDU]]
+- 🔍 [[02-Investigación/Contexto/Saberes Ancestrales|Contexto SAB]]
+- 🔍 [[02-Investigación/Contexto/Salud Comunitaria|Contexto SAL]]
+- 🗺️ [[02-Investigación/Contexto/Mapa de Territorios Indígenas|Mapa Territorios]]
+- 📄 [[06-Entregables/Avance-1/Raíces Vivas – Sistema Integral de Apoyo a Comunidades Indígenas|Avance 1]]
+- 📦 [[05-Sprints/Sprint-01/Sprint-01-Planning|Sprint 01]]
+- 📦 [[05-Sprints/Sprint-02/Sprint-02-Planning|Sprint 02]]
+- 📝 [[07-Reuniones/MIN-001|Minuta Kickoff]]
+
+=== end-multi-column
 
 ---
 
