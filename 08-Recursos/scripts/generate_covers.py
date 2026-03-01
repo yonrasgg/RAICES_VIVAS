@@ -140,6 +140,22 @@ PALETTES = {
         "detail": (30, 48, 38),
         "text": (240, 248, 242),
     },
+    "reuniones": {
+        "bg": (28, 22, 38),         # púrpura noche
+        "primary": (160, 120, 200), # lavanda
+        "secondary": (120, 180, 200),# azul conversación
+        "accent": (240, 190, 60),   # dorado consenso
+        "detail": (48, 38, 58),
+        "text": (242, 238, 248),
+    },
+    "daily": {
+        "bg": (18, 25, 40),         # azul medianoche
+        "primary": (80, 170, 230),  # azul cielo
+        "secondary": (255, 170, 80),# naranja amanecer
+        "accent": (255, 220, 90),   # sol dorado
+        "detail": (35, 42, 60),
+        "text": (245, 242, 250),
+    },
 }
 
 
@@ -1478,6 +1494,244 @@ def cover_tareas(path):
     print(f"  ✓ {path}")
 
 
+def cover_reuniones(path):
+    """Reuniones — mesa redonda, burbujas diálogo, conexiones, reloj."""
+    p = PALETTES["reuniones"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (18, 14, 25))
+
+    # Red de conexiones (colaboración)
+    nodes = [(random.randint(50, WIDTH - 50), random.randint(40, HEIGHT - 40)) for _ in range(20)]
+    for i, n1 in enumerate(nodes):
+        for n2 in nodes[i + 1:]:
+            dist = math.sqrt((n1[0] - n2[0]) ** 2 + (n1[1] - n2[1]) ** 2)
+            if dist < 300:
+                draw.line([n1, n2], fill=p["detail"], width=1)
+    for nx, ny in nodes:
+        r = random.randint(4, 8)
+        c = random.choice([p["primary"], p["secondary"]])
+        draw.ellipse([nx - r, ny - r, nx + r, ny + r], fill=c)
+
+    # Mesa redonda central
+    mcx, mcy = WIDTH // 2, HEIGHT // 2
+    draw.ellipse([mcx - 100, mcy - 40, mcx + 100, mcy + 40], outline=p["accent"], width=2)
+    # Sillas alrededor
+    for i in range(6):
+        angle = 2 * math.pi * i / 6
+        sx = mcx + int(130 * math.cos(angle))
+        sy = mcy + int(55 * math.sin(angle))
+        draw.ellipse([sx - 8, sy - 8, sx + 8, sy + 8], fill=p["primary"], outline=p["accent"])
+
+    # Burbujas de diálogo
+    bubbles = [(180, 100, 45, 30), (WIDTH - 180, 100, 50, 28),
+               (250, HEIGHT - 100, 40, 25), (WIDTH - 250, HEIGHT - 100, 48, 30)]
+    for bx, by, bw, bh in bubbles:
+        draw.rounded_rectangle([bx - bw, by - bh, bx + bw, by + bh],
+                               radius=12, outline=p["secondary"], width=2)
+        # Líneas de texto simuladas
+        for li in range(3):
+            lw = bw - 8 - random.randint(0, 12)
+            ly = by - bh + 12 + li * 10
+            draw.line([(bx - bw + 10, ly), (bx - bw + 10 + lw, ly)],
+                      fill=(*p["secondary"][:2], p["secondary"][2] // 2), width=1)
+        # Cola de la burbuja
+        draw.polygon([(bx - 10, by + bh), (bx + 5, by + bh), (bx - 15, by + bh + 12)],
+                     fill=p["bg"], outline=p["secondary"])
+
+    # Reloj (tiempo de reunión)
+    clx, cly = 100, HEIGHT // 2
+    draw.ellipse([clx - 22, cly - 22, clx + 22, cly + 22], outline=p["accent"], width=2)
+    draw.line([(clx, cly), (clx, cly - 14)], fill=p["accent"], width=2)
+    draw.line([(clx, cly), (clx + 10, cly + 4)], fill=p["accent"], width=2)
+    draw.ellipse([clx - 2, cly - 2, clx + 2, cly + 2], fill=p["accent"])
+    # Reloj derecho
+    clx2 = WIDTH - 100
+    draw.ellipse([clx2 - 22, cly - 22, clx2 + 22, cly + 22], outline=p["accent"], width=2)
+    draw.line([(clx2, cly), (clx2 - 8, cly - 12)], fill=p["accent"], width=2)
+    draw.line([(clx2, cly), (clx2 + 12, cly)], fill=p["accent"], width=2)
+    draw.ellipse([clx2 - 2, cly - 2, clx2 + 2, cly + 2], fill=p["accent"])
+
+    # Rombos y bordes
+    draw_diamond_band(draw, 20, 12, 20, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 20, 12, 20, p["accent"])
+    draw_border_pattern(draw, p, "diamonds")
+
+    # --- Texto Reuniones grande centrado ---
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 100)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    label = "Reuniones"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    for off in range(8, 0, -2):
+        glow = tuple(max(0, min(255, c + 40 - off * 4)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow)
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=(0, 0, 0))
+    draw.text((tx, ty), label, font=big_font, fill=p["text"])
+
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    subtitle = "Minutas · Raíces Vivas"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sx = (WIDTH - (bbox2[2] - bbox2[0])) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=(0, 0, 0))
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
+def cover_daily(path):
+    """Daily Notes — sol naciente, calendario, lápiz, líneas de agenda."""
+    p = PALETTES["daily"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (10, 15, 28))
+
+    # Horizonte con sol naciente
+    horizon_y = HEIGHT // 2 + 60
+    # Rayos de sol
+    sun_cx, sun_cy = WIDTH // 2, horizon_y
+    for i in range(24):
+        angle = math.pi + math.pi * i / 23
+        length = random.randint(120, 280)
+        x2 = sun_cx + int(length * math.cos(angle))
+        y2 = sun_cy + int(length * math.sin(angle))
+        draw.line([(sun_cx, sun_cy), (x2, y2)], fill=p["detail"], width=1)
+    # Semi-círculo del sol
+    draw.arc([sun_cx - 50, sun_cy - 50, sun_cx + 50, sun_cy + 50], 180, 0,
+             fill=p["accent"], width=3)
+    draw.arc([sun_cx - 35, sun_cy - 35, sun_cx + 35, sun_cy + 35], 180, 0,
+             fill=p["secondary"], width=2)
+
+    # Hojas de calendario (ambos lados)
+    for cx, cy in [(200, 150), (WIDTH - 200, 150)]:
+        cw, ch = 50, 60
+        draw.rounded_rectangle([cx - cw, cy - ch, cx + cw, cy + ch],
+                               radius=6, outline=p["primary"], width=2)
+        # Franja superior del calendario
+        draw.rectangle([cx - cw, cy - ch, cx + cw, cy - ch + 16], fill=p["primary"])
+        # Grid de días
+        for row in range(4):
+            for col in range(5):
+                dx = cx - cw + 12 + col * 18
+                dy = cy - ch + 24 + row * 14
+                draw.rectangle([dx, dy, dx + 8, dy + 6], fill=p["detail"])
+        # Día resaltado
+        hd_col = random.randint(0, 4)
+        hd_row = random.randint(0, 3)
+        dx = cx - cw + 12 + hd_col * 18
+        dy = cy - ch + 24 + hd_row * 14
+        draw.rectangle([dx, dy, dx + 8, dy + 6], fill=p["accent"])
+
+    # Lápiz estilizado
+    for px, py, angle in [(300, HEIGHT - 100, -0.3), (WIDTH - 300, HEIGHT - 100, 0.3)]:
+        pen_len = 60
+        cos_a, sin_a = math.cos(angle), math.sin(angle)
+        x1 = px - pen_len * cos_a
+        y1 = py - pen_len * sin_a
+        x2 = px + pen_len * cos_a
+        y2 = py + pen_len * sin_a
+        draw.line([(x1, y1), (x2, y2)], fill=p["secondary"], width=4)
+        # Punta
+        draw.polygon([
+            (x2, y2),
+            (x2 + 8 * cos_a - 4 * sin_a, y2 + 8 * sin_a + 4 * cos_a),
+            (x2 + 12 * cos_a, y2 + 12 * sin_a),
+            (x2 + 8 * cos_a + 4 * sin_a, y2 + 8 * sin_a - 4 * cos_a),
+        ], fill=p["accent"])
+
+    # Líneas de agenda (cuaderno)
+    for ly in range(HEIGHT // 4, 3 * HEIGHT // 4, 20):
+        draw.line([(WIDTH // 2 - 200, ly), (WIDTH // 2 + 200, ly)],
+                  fill=p["detail"], width=1)
+
+    # Puntos de bullet journal
+    for _ in range(15):
+        bx = random.randint(100, WIDTH - 100)
+        by = random.randint(40, HEIGHT - 40)
+        draw.ellipse([bx - 3, by - 3, bx + 3, by + 3],
+                     fill=random.choice([p["primary"], p["secondary"]]))
+
+    # Rombos y bordes
+    draw_diamond_band(draw, 18, 10, 22, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 18, 10, 22, p["accent"])
+    draw_border_pattern(draw, p, "waves")
+
+    # --- Texto Daily Notes grande centrado ---
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 90)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    label = "Daily Notes"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    for off in range(8, 0, -2):
+        glow = tuple(max(0, min(255, c + 40 - off * 4)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow)
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=(0, 0, 0))
+    draw.text((tx, ty), label, font=big_font, fill=p["text"])
+
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    subtitle = "Notas Diarias · Raíces Vivas"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sx = (WIDTH - (bbox2[2] - bbox2[0])) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=(0, 0, 0))
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
 # =====================================================
 # MAIN — Generar todos los covers
 # =====================================================
@@ -1506,6 +1760,8 @@ if __name__ == "__main__":
         "cover-rf-sal.png": cover_rf_sal,
         "cover-rnf.png": cover_rnf,
         "cover-tareas.png": cover_tareas,
+        "cover-reuniones.png": cover_reuniones,
+        "cover-daily.png": cover_daily,
     }
 
     print(f"\n🎨 Generando {len(covers)} covers culturales...\n")
