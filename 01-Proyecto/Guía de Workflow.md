@@ -554,8 +554,10 @@ Muestra un panel lateral con todos los checkboxes sin marcar del vault, filtrado
 
 **Configuración recomendada (Settings → Checklist):**
 - Include files from: `05-Sprints/`
-- Tags to include: `#tarea`
+- Tag name: `#todo`
 - Show completed: off
+
+> **Importante:** El plugin busca el tag `#todo` **inline en el cuerpo del archivo**, no en el frontmatter YAML. Por eso cada archivo de tarea debe incluir `#todo` en el heading `## Criterios de Aceptación (DoD) #todo`. El template `_template-tarea.md` ya lo incluye automáticamente.
 
 Esto crea una vista centralizada de TODOS los ítems pendientes en tareas del sprint actual.
 
