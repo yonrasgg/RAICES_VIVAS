@@ -108,6 +108,20 @@ action QuickAdd: Run QuickAdd
 color blue
 ```
 
+```button
+name 📋 Nuevo RF
+type command
+action QuickAdd: Run QuickAdd
+color cyan
+```
+
+```button
+name 📋 Promover Action Item
+type command
+action QuickAdd: Run QuickAdd
+color blue
+```
+
 === end-column ===
 
 ```button
@@ -117,10 +131,38 @@ action QuickAdd: Run QuickAdd
 color green
 ```
 
+```button
+name 🔒 Nuevo RNF
+type command
+action QuickAdd: Run QuickAdd
+color cyan
+```
+
+```button
+name 🏗️ Promover Decisión
+type command
+action QuickAdd: Run QuickAdd
+color purple
+```
+
 === end-column ===
 
 ```button
 name ⚠️ Nuevo Riesgo
+type command
+action QuickAdd: Run QuickAdd
+color yellow
+```
+
+```button
+name 🎤 Entrevista
+type command
+action QuickAdd: Run QuickAdd
+color orange
+```
+
+```button
+name ⚠️ Promover Riesgo
 type command
 action QuickAdd: Run QuickAdd
 color yellow
@@ -135,84 +177,12 @@ action QuickAdd: Run QuickAdd
 color purple
 ```
 
-=== end-multi-column
-
-=== start-multi-column: quick-actions-row2
-```column-settings
-number of columns: 4
-border: off
-shadow: off
-```
-
-```button
-name 📋 Nuevo RF
-type command
-action QuickAdd: Run QuickAdd
-color cyan
-```
-
-=== end-column ===
-
-```button
-name 🔒 Nuevo RNF
-type command
-action QuickAdd: Run QuickAdd
-color cyan
-```
-
-=== end-column ===
-
-```button
-name 🎤 Entrevista
-type command
-action QuickAdd: Run QuickAdd
-color orange
-```
-
-=== end-column ===
-
 ```button
 name 📦 Backlog
 type link
 action [[05-Sprints/Backlog]]
 color default
 ```
-
-=== end-multi-column
-
-=== start-multi-column: quick-actions-row3
-```column-settings
-number of columns: 4
-border: off
-shadow: off
-```
-
-```button
-name 📋 Promover Action Item
-type command
-action QuickAdd: Run QuickAdd
-color blue
-```
-
-=== end-column ===
-
-```button
-name 🏗️ Promover Decisión
-type command
-action QuickAdd: Run QuickAdd
-color purple
-```
-
-=== end-column ===
-
-```button
-name ⚠️ Promover Riesgo
-type command
-action QuickAdd: Run QuickAdd
-color yellow
-```
-
-=== end-column ===
 
 ```button
 name 💰 Finanzas
