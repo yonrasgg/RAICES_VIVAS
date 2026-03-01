@@ -100,6 +100,14 @@ PALETTES = {
         "detail": (50, 35, 25),
         "text": (245, 240, 230),
     },
+    "proyecto": {
+        "bg": (18, 22, 35),         # azul noche profundo
+        "primary": (92, 160, 220),  # azul cobalto
+        "secondary": (140, 200, 180),# jade suave
+        "accent": (230, 180, 60),   # oro cálido
+        "detail": (35, 42, 60),
+        "text": (240, 242, 248),
+    },
 }
 
 
