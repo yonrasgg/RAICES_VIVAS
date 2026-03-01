@@ -2,9 +2,9 @@
 type: proposal
 title: "Propuesta de Gestión del Proyecto Raíces Vivas en Obsidian"
 project: raices-vivas
-status: draft
+status: active
 created: 2025-02-25
-updated: 2025-02-25
+updated: 2026-03-01
 author: Equipo Raíces Vivas
 tags:
   - meta
@@ -24,45 +24,50 @@ tags:
 
 | Plugin | Propósito | Por qué |
 |--------|-----------|---------|
-| **Dataview** | Queries, tablas dinámicas, dashboards | Es el "SQL de Obsidian". Permite consultar frontmatter para generar tablas de requerimientos, estados de tareas, matrices de trazabilidad dinámicas |
-| **Templater** | Templates avanzados con lógica | Permite templates con fecha automática, prompts interactivos, snippets. Superior al template core de Obsidian |
-| **Tasks** | Gestión de tareas tipo Jira | Checkboxes con fechas, prioridades, recurrencia, queries globales. Permite `- [ ] Tarea X #modulo/edu 📅 2025-03-01` |
-| **Kanban** | Tableros Kanban (como Trello/Jira boards) | Visualización de flujo de trabajo: Backlog → En Progreso → Review → Done |
-| **Calendar** | Vista calendario con notas diarias | Integra con Daily Notes y Tasks para ver timeline del proyecto |
-| **Excalidraw** | Diagramas libres, wireframes, mapas | Diagramas de arquitectura, wireframes de UI, mapas de actores, flujos de proceso |
-| **Mermaid (built-in)** | Diagramas como código | Obsidian ya soporta Mermaid nativo. Sirve para: diagramas de flujo, secuencia, clases, ER, Gantt |
+| **Dataview** | Queries, tablas dinámicas, dashboards | Es el "SQL de Obsidian". Consulta frontmatter para generar RTM, KPIs, métricas en tiempo real |
+| **Templater** | Templates con lógica JavaScript | Prompts interactivos, Auto-ID de tareas (`dv.pages`), auto-rename de archivos, cálculo de tags |
+| **QuickAdd** | 10 macros de creación rápida | Crear tareas, minutas, RF, RNF, riesgos, ADRs, sprint plannings/reviews, y promover action items |
+| **Tasks** | Checkboxes con metadata (emoji format) | `📅` due, `✅` done, `❌` cancelled, `⏫` priority. Statuses custom: `[/]` In Progress, `[-]` Cancelled |
+| **Kanban** | Tableros Kanban (Backlog) | Visualización: Backlog → In Progress → Review → Done |
+| **Calendar** | Vista calendario | Integra con Daily Notes y Tasks para ver timeline con `due:` |
+| **Periodic Notes** | Weekly notes automáticas | Genera `Daily Notes/YYYY-WNN.md` con template pre-configurado |
 
-### 1.2 Plugins de Productividad y Datos
-
-| Plugin | Propósito | Por qué |
-|--------|-----------|---------|
-| **DB Folder** | Carpetas como bases de datos | Convierte carpetas en tablas tipo Notion/Airtable. Ideal para gestionar requerimientos como registros de BD |
-| **Metadata Menu** | Edición visual de frontmatter | Permite editar propiedades con dropdowns, tags predefinidos, tipos de dato. Reduce errores en frontmatter |
-| **Projects** (by Marcus Olsson) | Gestión de proyectos tipo tabla/board/calendar | Vista unificada de notas como proyecto. Alternativa a Notion databases |
-| **Obsidian Charts** | Gráficos y visualizaciones | Gráficos de barras, pie, línea. Para burndown charts, distribución de requerimientos, etc. |
-| **Advanced Tables** | Edición de tablas Markdown mejorada | Formateo automático, ordenamiento, fórmulas básicas en tablas. Esencial para matrices grandes como la RTM |
-| **Spreadsheets** (CSV plugin) | Hojas de cálculo embebidas | Embeber y editar CSVs directamente. Útil para matrices de datos, presupuestos, inventarios |
-
-### 1.3 Plugins de Organización y Navegación
+### 1.2 Plugins de QA y Formato
 
 | Plugin | Propósito | Por qué |
 |--------|-----------|---------|
-| **Tag Wrangler** | Gestión avanzada de tags | Renombrar, fusionar, organizar tags jerárquicos (`#modulo/edu`, `#modulo/sab`) |
-| **Breadcrumbs** | Navegación jerárquica entre notas | Crear relaciones padre-hijo entre documentos (WBS → Requerimientos → Criterios) |
-| **Obsidian Git** | Control de versiones con Git | Backup automático, historial de cambios, colaboración en tiempo real entre los 3 integrantes vía GitHub |
-| **Homepage** | Dashboard de inicio | Página de aterrizaje del proyecto con links rápidos a todo |
-| **Folder Notes** | Nota índice por carpeta | Cada carpeta tiene una nota `README` automática que describe su contenido |
-| **Linter** | Formateo consistente de Markdown | Asegura consistencia en frontmatter, headings, espaciado |
-| **QuickAdd** | Creación rápida con templates | Macro para crear un nuevo requerimiento, tarea, o nota con un solo comando |
+| **Linter** | Formato consistente automático | YAML sort, heading gaps, trailing spaces. Se ejecuta al guardar |
+| **Advanced Tables** | Edición de tablas Markdown | Tabulación inteligente, ordenamiento. Esencial para RTM y matrices grandes |
+| **Highlightr** | Resaltado de texto con colores | Markup visual para destacar hallazgos o notas importantes |
+| **Latex Suite** | Snippets matemáticos | Atajos para notación durante la redacción académica |
 
-### 1.4 Plugins para Diagramas y Modelado
+### 1.3 Plugins de Visualización
 
-| Plugin               | Propósito                      | Por qué                                                                               |
-| -------------------- | ------------------------------ | ------------------------------------------------------------------------------------- |
-| **Excalidraw**       | Diagramas visuales libre forma | Wireframes, mapas mentales, diagramas de arquitectura dibujados                       |
-| **Mermaid (nativo)** | Diagramas como código          | ER diagrams, flowcharts, sequence diagrams, class diagrams, Gantt                     |
-| **PlantUML**         | UML profesional                | Para diagramas de casos de uso, clases, componentes. Requiere servidor local o plugin |
-| **Kroki**            | Multi-formato de diagramas     | Soporta D2, PlantUML, Mermaid, etc. desde un solo plugin                              |
+| Plugin | Propósito | Por qué |
+|--------|-----------|---------|
+| **Mermaid Tools** | Diagramas como código + toolbar | Flowcharts, secuencia, Gantt, C4, ERD. Plugin agrega toolbar de edición visual |
+| **Charts** | Gráficas de datos | Burndown charts, distribución de requerimientos, progreso por sprint |
+| **Multi-Column Markdown** | Layouts multi-columna | Dashboards con múltiples paneles lado a lado |
+| **Banners** | Imágenes de cabecera | Decoración visual de notas principales |
+
+### 1.4 Plugins de Metadata y Navegación
+
+| Plugin | Propósito | Por qué |
+|--------|-----------|---------|
+| **Meta Bind** | Edición inline del frontmatter | Suggesters embebidos en tablas "Control Rápido" para cambiar estado/prioridad sin abrir YAML |
+| **Folder Notes** | Nota índice por carpeta | Cada carpeta tiene una nota descripción accesible al hacer click |
+| **Homepage** | Página de inicio automática | `Home.md` se abre al iniciar Obsidian. Punto de entrada obligatorio |
+| **Checklist** | Panel lateral de DoD pendientes | Muestra todos los checkboxes pendientes de archivos con tag `tarea` en `05-Sprints/` |
+| **Projects** | Vista portafolio con filtros | Tabla/board/calendar de notas. Alternativa visual a Dataview |
+
+### 1.5 Plugins de Colaboración
+
+| Plugin | Propósito | Por qué |
+|--------|-----------|---------|
+| **Git** (obsidian-git) | Control de versiones | Auto-commit cada 10 min, push/pull. GitHub como fuente de verdad |
+| **Auto Link Title** | Títulos automáticos en URLs | Al pegar una URL, inserta el título de la página como texto del link |
+
+> **Total: 22 plugins activos.** Cada uno cumple una función específica y no redundante.
 
 ---
 
@@ -72,103 +77,95 @@ tags:
 RAICES_VIVAS/                          ← Vault root
 │
 ├── 00-Dashboard/                      ← Página de inicio y dashboards
-│   ├── [[00-Dashboard/Home|[[00-Dashboard/Home|Home]]]].md                        ← Dashboard principal del proyecto
-│   ├── Roadmap.md                     ← Timeline y milestones
-│   └── Burndown.md                    ← Métricas de avance
+│   ├── Home.md                        ← Dashboard principal (KPIs, queries Dataview)
+│   ├── Métricas.md                    ← Métricas de avance detalladas
+│   └── Roadmap.md                     ← Timeline y milestones
 │
 ├── 01-Proyecto/                       ← Gobierno del proyecto
 │   ├── Charter.md                     ← Acta de constitución
 │   ├── Alcance.md                     ← Scope statement
-│   ├── Plan de Gestión.md             ← Plan de proyecto
+│   ├── Plan de Gestión.md             ← Plan de proyecto (este documento)
+│   ├── Propuesta de Gestión.md        ← Fundamentación técnica de tooling
+│   ├── Guía de Workflow.md            ← Guía operativa completa v4.0
+│   ├── Equipo.md                      ← Roles y responsabilidades
 │   ├── Stakeholders.md                ← Registro de interesados
-│   ├── Riesgos.md                     ← Registro de riesgos
+│   ├── Onboarding.md                  ← Guía de incorporación
 │   ├── Glosario.md                    ← Términos y acrónimos
-│   └── Decisiones/                    ← ADRs (Architecture Decision Records)
-│       └── ADR-001-stack-tecnologico.md
+│   ├── Decisiones/                    ← ADRs (Architecture Decision Records)
+│   └── Riesgos/                       ← Registro de riesgos (1 nota = 1 riesgo)
 │
 ├── 02-Investigación/                  ← Fase de descubrimiento
-│   ├── Contexto/                      ← Análisis del entorno
+│   ├── Contexto/                      ← Análisis del entorno (4 documentos)
 │   │   ├── Educación.md
 │   │   ├── Saberes Ancestrales.md
-│   │   └── Salud Comunitaria.md
+│   │   ├── Salud Comunitaria.md
+│   │   └── Mapa de Territorios Indígenas.md
 │   ├── Entrevistas/                   ← Resultados de educción
-│   │   ├── ENT-001-docente-bribri.md
-│   │   └── _template-entrevista.md
 │   ├── Encuestas/                     ← Instrumentos y resultados
 │   ├── Observaciones/                 ← Notas de campo
 │   └── Fuentes/                       ← Referencias bibliográficas
-│       └── Referencias.md
 │
 ├── 03-Requerimientos/                 ← Especificaciones del sistema
-│   ├── _RTM.md                        ← Matriz de trazabilidad (Dataview)
+│   ├── _RTM.md                        ← Matriz de trazabilidad (Dataview automática)
 │   ├── Funcionales/                   ← RF por módulo
-│   │   ├── EDU/                       ← Módulo Educativo
-│   │   │   ├── RF-EDU-01.md
-│   │   │   ├── RF-EDU-02.md
-│   │   │   └── ...
-│   │   ├── SAB/                       ← Módulo Saberes Ancestrales
-│   │   │   ├── RF-SAB-01.md
-│   │   │   └── ...
-│   │   └── SAL/                       ← Módulo Salud
-│   │       ├── RF-SAL-01.md
-│   │       └── ...
-│   └── No Funcionales/                ← RNF transversales
-│       ├── RNF-01-offline.md
-│       └── ...
+│   │   ├── EDU/ (RF-EDU-01..06)       ← Módulo Educativo (6 RF)
+│   │   ├── SAB/ (RF-SAB-01..05)       ← Módulo Saberes (5 RF)
+│   │   └── SAL/ (RF-SAL-01..05)       ← Módulo Salud (5 RF)
+│   └── No Funcionales/ (RNF-01..07)   ← 7 RNF transversales
 │
 ├── 04-Arquitectura/                   ← Diseño técnico
 │   ├── Visión General.md              ← Arquitectura de alto nivel
-│   ├── Diagramas/                     ← Excalidraw, Mermaid, PlantUML
-│   │   ├── diagrama-contexto.excalidraw
-│   │   ├── diagrama-modulos.md        ← Mermaid embebido
-│   │   ├── modelo-datos.md            ← ER diagram
-│   │   └── diagrama-despliegue.md
 │   ├── WBS.md                         ← Work Breakdown Structure
 │   ├── Modelo de Datos.md             ← Entidades, atributos, relaciones
-│   └── Stack Tecnológico.md           ← Decisiones de tecnología
+│   ├── Stack Tecnológico.md           ← Decisiones de tecnología
+│   ├── Diagramas/                     ← Mermaid embebido
+│   └── Prototipos/                    ← Wireframes y mockups
 │
-├── 05-Sprints/                        ← Gestión iterativa (tipo Jira)
-│   ├── Backlog.md                     ← Product Backlog (Kanban)
-│   ├── Sprint-01/
-│   │   ├── Sprint Planning.md
-│   │   ├── Sprint Review.md
-│   │   └── Sprint Retro.md
-│   └── Sprint-02/
-│       └── ...
+├── 05-Sprints/                        ← Gestión iterativa
+│   ├── Backlog.md                     ← Product Backlog (Kanban plugin)
+│   ├── Sprint-01/ (T-001..T-020)      ← 20 tareas completadas
+│   │   ├── Sprint-01-Planning.md
+│   │   └── T-001.md .. T-020.md       ← Auto-ID, frontmatter completo
+│   ├── Sprint-02/ (T-021..T-025)      ← 5 tareas en progreso
+│   │   ├── Sprint-02-Planning.md
+│   │   └── T-021.md .. T-025.md
+│   ├── Sprint-03/ → Sprint-05/        ← Planificados
 │
-├── 06-Entregables/                    ← Documentos de entrega del curso
-│   ├── Avance 1 - Raíces Vivas – Sistema Integral de Apoyo a Comunidades Indígenas.md
-│   ├── Avance 2.md
+├── 06-Entregables/                    ← Documentos de entrega
+│   ├── Avance-1/                      ← Entrega 1 completada
+│   ├── Avance-2/                      ← Entrega 2 en progreso
 │   └── Presentaciones/
 │
 ├── 07-Reuniones/                      ← Minutas y acuerdos
-│   ├── 2025-02-25-kickoff.md
-│   └── _template-minuta.md
+│   └── MIN-001.md                     ← Action Items → promovibles a tareas
 │
 ├── 08-Recursos/                       ← Archivos de soporte
 │   ├── PDFs/                          ← Documentos fuente
-│   │   ├── C1-2026-Consigna avance 1 del proyecto.docx.pdf
-│   │   └── Raíces Vivas - Sistema Integral de Apoyo a Comunidades Indígenas.pdf
 │   ├── Imágenes/
-│   └── Datos/                         ← CSVs, datasets de prueba
+│   ├── Datos/                         ← Datasets
+│   └── scripts/                       ← Scripts de automatización
 │
-├── 99-Templates/                      ← Plantillas del vault
+├── 09-QA/                             ← Control de calidad
+│   └── README.md
+│
+├── 99-Templates/                      ← 11 plantillas del vault
+│   ├── _template-tarea.md             ← Con Auto-ID + source + avance tag
+│   ├── _template-tarea-from-minuta.md ← Promoción de action items
 │   ├── _template-requerimiento-funcional.md
 │   ├── _template-requerimiento-nofuncional.md
-│   ├── _template-entrevista.md
-│   ├── _template-minuta.md
+│   ├── _template-minuta.md            ← Con guía de promoción
 │   ├── _template-sprint-planning.md
 │   ├── _template-sprint-review.md
+│   ├── _template-entrevista.md
 │   ├── _template-adr.md
+│   ├── _template-riesgo.md
 │   ├── _template-daily-note.md
-│   ├── _template-tarea.md
-│   └── _template-riesgo.md
+│   └── _template-weekly-note.md
 │
-├── Daily Notes/                       ← Notas diarias del proyecto
-│   └── 2025-02-25.md
+├── Daily Notes/                       ← Weekly notes automáticas
+│   └── 2026-W09.md
 │
-├── RAICES VIVAS.md                    ← (legacy - mover a 08-Recursos)
-└── .obsidian/                         ← Config del vault
+└── .obsidian/                         ← Config del vault (22 plugins)
 ```
 
 ### Por qué esta estructura
@@ -203,8 +200,8 @@ priority: must             # must | should | could | wont (MoSCoW)
 actor: [Docente, Admin]
 source: entrevista         # entrevista | encuesta | observacion | documental
 validation: "Revisión con docentes"
-created: 2025-02-25
-updated: 2025-02-25
+created: 2026-02-25
+updated: 2026-02-25
 sprint: null
 tags:
   - requerimiento
@@ -226,8 +223,8 @@ title: "Operación offline + sincronización"
 status: draft
 priority: must
 metric: "Permite registrar datos sin internet. Sincroniza al detectar conectividad."
-created: 2025-02-25
-updated: 2025-02-25
+created: 2026-02-25
+updated: 2026-02-25
 tags:
   - requerimiento
   - no-funcional
@@ -273,8 +270,8 @@ tags:
 ---
 type: meeting
 title: "Kickoff del proyecto"
-date: 2025-02-25
-attendees: [Geovanny, Colaborador1]
+date: 2026-02-25
+attendees: [Geovanny, Elkin, Santiago]
 decisions: []
 action-items: []
 tags:
@@ -291,8 +288,8 @@ type: adr
 id: ADR-001
 title: "Selección de stack tecnológico"
 status: proposed           # proposed | accepted | deprecated | superseded
-date: 2025-02-25
-deciders: [Equipo]
+date: 2026-02-25
+deciders: [Geovanny, Elkin, Santiago]
 tags:
   - adr
   - arquitectura
@@ -301,49 +298,33 @@ tags:
 
 ---
 
-## 4. Sistema de Tags (Taxonomía Jerárquica)
+## 4. Sistema de Tags (Plano — YAML Frontmatter)
+
+El proyecto usa **tags planos** en el campo `tags:` del frontmatter YAML. No se usan tags jerárquicos (`#tipo/x`) ni inline (`#todo`).
 
 ```
-Tags del proyecto:
-├── #modulo/edu              ← Módulo Educativo
-├── #modulo/sab              ← Módulo Saberes Ancestrales
-├── #modulo/sal              ← Módulo Salud
-├── #modulo/transversal      ← Requerimientos cross-cutting
-│
-├── #tipo/requerimiento      ← Requerimientos
-├── #tipo/tarea              ← Tareas
-├── #tipo/decision           ← Decisiones
-├── #tipo/investigacion      ← Material de investigación
-├── #tipo/entrega            ← Entregables del curso
-├── #tipo/reunion            ← Minutas
-├── #tipo/riesgo             ← Riesgos identificados
-│
-├── #prioridad/must          ← MoSCoW: Crítico
-├── #prioridad/should        ← MoSCoW: Importante
-├── #prioridad/could         ← MoSCoW: Deseable
-├── #prioridad/wont          ← MoSCoW: Fuera de alcance
-│
-├── #estado/draft            ← Borrador
-├── #estado/review           ← En revisión
-├── #estado/approved         ← Aprobado
-├── #estado/done             ← Completado
-│
-├── #sprint/01               ← Sprint 1
-├── #sprint/02               ← Sprint 2
-├── #sprint/backlog          ← Backlog
-│
-├── #fase/descubrimiento     ← AS-IS
-├── #fase/definicion         ← Priorización
-├── #fase/especificacion     ← TO-BE
-├── #fase/validacion         ← Feedback
-│
-├── #actor/docente           ← Actores del sistema
-├── #actor/estudiante
-├── #actor/admin-comunitario
-├── #actor/personal-salud
-├── #actor/portador-saber
-└── #actor/lider-comunal
+Tags activos del proyecto:
+├── tarea                    ← Toda nota en 05-Sprints/ tipo task
+├── requerimiento            ← RF y RNF
+├── funcional                ← Subtipo de requerimiento
+├── no-funcional             ← Subtipo de requerimiento
+├── reunión                  ← Minutas en 07-Reuniones/
+├── decisión                 ← ADRs en 01-Proyecto/Decisiones/
+├── sprint                   ← Sprint plannings y reviews
+├── planificación            ← Notas de planning
+├── adr                      ← Architecture Decision Records
+├── arquitectura             ← Notas de diseño técnico
+├── meta                     ← Notas sobre el proyecto mismo
+├── avance-1                 ← Tareas asociadas al Avance 1
+├── avance-2                 ← Tareas asociadas al Avance 2
+├── riesgo                   ← Registro de riesgos
+├── modulo/edu               ← Módulo Educativo (solo en RF)
+├── modulo/sab               ← Módulo Saberes (solo en RF)
+├── modulo/sal               ← Módulo Salud (solo en RF)
+└── prioridad/must|should|could|wont  ← MoSCoW (solo en RF/RNF)
 ```
+
+> **Regla:** Los tags de módulo y prioridad (`modulo/edu`, `prioridad/must`) se usan únicamente en requerimientos. Las tareas usan `tarea` + `avance-N`. Las minutas usan `reunión`. El campo `tags:` es la única fuente de verdad — nunca se usan tags inline como `#todo`.
 
 ---
 
@@ -415,113 +396,61 @@ SORT date DESC
 
 ---
 
-## 6. Templates (Ejemplos Clave)
+## 6. Templates (Referencia)
 
-### 6.1 Template: Requerimiento Funcional
+> **Fuente de verdad:** Las plantillas actuales se mantienen en `99-Templates/`. Los ejemplos a continuación son representativos — consultar los archivos originales para la versión vigente.
 
-```markdown
+### 6.1 Template: Requerimiento Funcional (`_template-requerimiento-funcional.md`)
+
+```yaml
 ---
-id: null
+id: RF-XXX-NN         # Módulo + secuencial
 type: requirement/functional
-module: null
+module: null           # educacion | saberes | salud
 wbs: null
-title: "null"
+title: ""
 status: draft
-priority: null
+priority: null         # must | should | could | wont
 actor: []
-source: null
+source: null           # entrevista | encuesta | observacion | documental
 validation: ""
-created: 2026-02-27
-updated: 2026-02-27
+created: <% tp.date.now("YYYY-MM-DD") %>
+updated: <% tp.date.now("YYYY-MM-DD") %>
 sprint: null
 tags:
   - requerimiento
   - funcional
 ---
-
-# undefined: Propuesta de Gestión del Proyecto Raíces Vivas en Obsidian
-
-## Descripción
-> [Describir qué debe hacer el sistema]
-
-## Problema de Origen
-> [¿Qué problema resuelve?]
-
-## Necesidad Identificada
-> [¿Qué necesidad del usuario atiende?]
-
-## Criterios de Aceptación
-- [ ] Criterio 1
-- [ ] Criterio 2
-- [ ] Criterio 3
-
-## Notas de Validación
-> [Resultados de validación con usuarios]
-
-## Trazabilidad
-- **Problema:** 
-- **Necesidad:** 
-- **WBS:** [[]]
-- **Módulo:** 
-
-## Historial de Cambios
-| Fecha | Cambio | Autor |
-|-------|--------|-------|
-| 2026-02-27 | Creación inicial | |
 ```
 
-### 6.2 Template: Minuta de Reunión
+Secciones principales: Descripción, Problema de Origen, Necesidad Identificada, Criterios de Aceptación, Notas de Validación, Trazabilidad, Historial de Cambios.
 
-```markdown
+### 6.2 Template: Minuta de Reunión (`_template-minuta.md`)
+
+```yaml
 ---
 type: meeting
-title: "null"
-date: 2026-02-27
+title: ""
+date: <% tp.date.now("YYYY-MM-DD") %>
 attendees: []
 decisions: []
 action-items: []
 tags:
   - reunión
 ---
-
-# Minuta: Propuesta de Gestión del Proyecto Raíces Vivas en Obsidian
-
-**Fecha:** 2026-02-27
-**Hora:** 
-**Duración:** 
-**Asistentes:** 
-
-## Agenda
-1. 
-2. 
-3. 
-
-## Discusión
-### Tema 1
-
-
-### Tema 2
-
-
-## Decisiones Tomadas
-- [ ] Decisión 1
-
-## Action Items
-- [ ] Tarea → @Responsable 📅 YYYY-MM-DD
-- [ ] Tarea → @Responsable 📅 YYYY-MM-DD
-
-## Próxima Reunión
-**Fecha:** 
-**Temas pendientes:**
 ```
 
-### 6.3 Template: Sprint Planning
+Secciones principales: Agenda, Discusión, Decisiones Tomadas, Action Items (con formato `- [ ] Tarea → @Responsable 📅 YYYY-MM-DD`), Próxima Reunión.
 
-```markdown
+> **Promoción:** Los Action Items se pueden promover a tareas formales con `Ctrl+P → "📋 Promover Action Item"`.
+
+### 6.3 Template: Sprint Planning (`_template-sprint-planning.md`)
+
+```yaml
 ---
 type: sprint-planning
 sprint: null
-start: 2026-02-27
+start: <% tp.date.now("YYYY-MM-DD") %>
 end: 
 goal: ""
 status: active
@@ -529,79 +458,57 @@ tags:
   - sprint
   - planificación
 ---
-
-# Sprint undefined - Planning
-
-**Período:** undefined → 
-**Objetivo del Sprint:** 
-
-## Compromisos del Sprint
-
-### Must (Críticos)
-- [ ] 
-
-### Should (Importantes)
-- [ ] 
-
-### Could (Si hay tiempo)
-- [ ] 
-
-## Capacidad del Equipo
-| Miembro | Disponibilidad | Foco |
-|---------|---------------|------|
-|         |               |      |
-
-## Riesgos del Sprint
-- 
-
-## Definition of Done
-- [ ] Requerimiento documentado con criterios de aceptación
-- [ ] Validado con al menos 1 usuario/stakeholder
-- [ ] Frontmatter completo y consistente
-- [ ] Links de trazabilidad actualizados
 ```
 
-### 6.4 Template: ADR (Architecture Decision Record)
+Secciones principales: Compromisos (Must/Should/Could), Capacidad del Equipo, Riesgos del Sprint, Definition of Done.
 
-```markdown
+### 6.4 Template: Tarea (`_template-tarea.md`)
+
+```yaml
+---
+type: task
+id: T-XXX              # Auto-generado via dv.pages() + Templater
+title: ""
+status: todo           # todo | in-progress | review | done | blocked
+priority: medium       # critical | high | medium | low
+assignee: ""
+sprint: Sprint-NN
+phase: ""              # investigación | análisis | diseño | implementación | testing | gestión
+module: ""             # educacion | saberes | salud | transversal | proyecto
+requirement: ""
+effort: ""
+started:
+due:
+completed:
+source: ""             # Minuta origen (trazabilidad bidireccional)
+created: <% tp.date.now("YYYY-MM-DD") %>
+updated: <% tp.date.now("YYYY-MM-DD") %>
+tags:
+  - tarea
+  - avance-N           # Calculado automáticamente desde el sprint
+---
+```
+
+> **Auto-ID:** Al crear con QuickAdd, Templater calcula `max(T-XXX) + 1` y renombra el archivo.
+> **Source:** Cuando nace de una minuta, `source: "MIN-XXX"` registra el origen.
+
+### 6.5 Template: ADR (`_template-adr.md`)
+
+```yaml
 ---
 type: adr
-id: ADR-null
-title: "null"
-status: proposed
-date: 2026-02-27
-deciders: []
+id: ADR-NNN
+title: ""
+status: proposed           # proposed | accepted | deprecated | superseded
+date: <% tp.date.now("YYYY-MM-DD") %>
+deciders: [Geovanny, Elkin, Santiago]
 tags:
   - adr
   - arquitectura
 ---
-
-# ADR-undefined: Propuesta de Gestión del Proyecto Raíces Vivas en Obsidian
-
-## Estado
-draft
-
-## Contexto
-> ¿Cuál es el problema o la decisión que necesitamos tomar?
-
-## Opciones Consideradas
-1. **Opción A:** 
-2. **Opción B:** 
-3. **Opción C:** 
-
-## Decisión
-> ¿Qué decidimos y por qué?
-
-## Consecuencias
-### Positivas
-- 
-
-### Negativas/Riesgos
-- 
-
-## Referencias
-- 
 ```
+
+Secciones principales: Estado, Contexto, Opciones Consideradas, Decisión, Consecuencias (Positivas/Negativas), Referencias.
 
 ---
 
@@ -638,10 +545,10 @@ Cada directorio principal tiene un `_index.md` o nota MOC que sirve como tabla d
 
 ## 8. Integración con Calendario
 
-### 8.1 Daily Notes
-- Usar plugin **Calendar** + **Daily Notes** (core)
-- Carpeta: `Daily Notes/YYYY-MM-DD.md`
-- Template daily note con sección de progreso del proyecto
+### 8.1 Periodic Notes (Weekly)
+- Plugins: **Calendar** + **Periodic Notes**
+- Carpeta: `Daily Notes/YYYY-WXX.md` (notas semanales, no diarias)
+- Template: `99-Templates/_template-weekly-note.md`
 
 ### 8.2 Milestones en el calendario
 - Usar frontmatter `due:` en tareas
@@ -667,24 +574,24 @@ gantt
     dateFormat YYYY-MM-DD
     
     section Avance 1
-    Análisis de contexto          :done,    a1, 2025-02-01, 2025-02-25
-    Educción de requerimientos    :done,    a2, 2025-02-10, 2025-02-25
-    Especificación RF/RNF         :done,    a3, 2025-02-15, 2025-02-25
-    Entrega Avance 1              :milestone, m1, 2025-02-25, 0d
+    Análisis de contexto          :done,    a1, 2026-02-01, 2026-02-25
+    Educción de requerimientos    :done,    a2, 2026-02-10, 2026-02-25
+    Especificación RF/RNF         :done,    a3, 2026-02-15, 2026-02-25
+    Entrega Avance 1              :milestone, m1, 2026-02-25, 0d
     
     section Avance 2
-    Diseño de arquitectura        :active,  b1, 2025-02-26, 2025-03-15
-    Modelo de datos               :         b2, 2025-03-01, 2025-03-15
-    Prototipos UI                 :         b3, 2025-03-10, 2025-03-25
-    Validación con usuarios       :         b4, 2025-03-20, 2025-04-01
-    Entrega Avance 2              :milestone, m2, 2025-04-01, 0d
+    Diseño de arquitectura        :active,  b1, 2026-02-26, 2026-03-15
+    Modelo de datos               :         b2, 2026-03-01, 2026-03-15
+    Prototipos UI                 :         b3, 2026-03-10, 2026-03-25
+    Validación con usuarios       :         b4, 2026-03-20, 2026-04-01
+    Entrega Avance 2              :milestone, m2, 2026-04-01, 0d
     
     section Implementación
-    Sprint 1 - Módulo piloto      :         c1, 2025-04-01, 2025-04-15
-    Sprint 2 - Core features      :         c2, 2025-04-15, 2025-04-30
-    Sprint 3 - Integración        :         c3, 2025-05-01, 2025-05-15
-    Testing y refinamiento        :         c4, 2025-05-15, 2025-05-30
-    Entrega Final                 :milestone, m3, 2025-05-30, 0d
+    Sprint 1 - Módulo piloto      :         c1, 2026-04-01, 2026-04-15
+    Sprint 2 - Core features      :         c2, 2026-04-15, 2026-04-30
+    Sprint 3 - Integración        :         c3, 2026-05-01, 2026-05-15
+    Testing y refinamiento        :         c4, 2026-05-15, 2026-05-30
+    Entrega Final                 :milestone, m3, 2026-05-30, 0d
 ```
 ````
 
@@ -758,7 +665,7 @@ Integrante 3 (github.dev)        → edita directamente en navegador ↑
 4. **Branches opcionales** para cambios grandes (ej: reestructurar sección)
 5. **Conflictos**: Git avisa explícitamente — resolver juntos, nunca sobrescribir
 
-### 9.3 Integración con GitHub Projects (Futuro)
+### 9.3 Integración con GitHub Projects (Oportunidad Futura)
 
 ```
 Obsidian Vault (Documentación)     ←→     GitHub Repo (Código + Issues)
@@ -804,7 +711,7 @@ Obsidian Vault (Documentación)     ←→     GitHub Repo (Código + Issues)
 3. Mover tareas en Kanban (Backlog → In Progress → Review → Done)
 4. Sprint Review → documentar qué se completó
 5. Sprint Retro → lecciones aprendidas
-6. Actualizar Roadmap y Burndown
+6. Actualizar Roadmap y Métricas
 ```
 
 ### Flujo para nuevo requerimiento
