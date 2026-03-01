@@ -6,8 +6,9 @@
     "dashboard-hero"
   ],
   "nativeMenus": false,
-  "baseFontSize": 12,
+  "baseFontSize": 18,
   "textFontFamily": "Arial",
   "interfaceFontFamily": "Ubuntu Mono",
-  "theme": "obsidian"
+  "theme": "obsidian",
+  "showViewHeader": true
 }

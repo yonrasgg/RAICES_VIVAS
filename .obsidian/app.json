@@ -9,5 +9,6 @@
   "showIndentGuide": true,
   "rightToLeft": false,
   "tabSize": 6,
-  "defaultViewMode": "preview"
+  "defaultViewMode": "preview",
+  "showInlineTitle": false
 }

@@ -3,9 +3,9 @@
   "search": "",
   "showTags": true,
   "showAttachments": true,
-  "hideUnresolved": false,
+  "hideUnresolved": true,
   "showOrphans": false,
-  "collapse-color-groups": true,
+  "collapse-color-groups": false,
   "colorGroups": [
     {
       "query": "tag:#sprint  ",
@@ -27,11 +27,18 @@
         "a": 1,
         "rgb": 11657298
       }
+    },
+    {
+      "query": "tag:#reunión  ",
+      "color": {
+        "a": 1,
+        "rgb": 988887
+      }
     }
   ],
   "collapse-display": true,
   "showArrow": false,
-  "textFadeMultiplier": -0.9,
+  "textFadeMultiplier": 0,
   "nodeSizeMultiplier": 1.14041305297311,
   "lineSizeMultiplier": 1.06183939601922,
   "collapse-forces": true,
@@ -39,6 +46,6 @@
   "repelStrength": 8.07886691208585,
   "linkStrength": 0.415985524427529,
   "linkDistance": 231,
-  "scale": 0.5396170846225745,
+  "scale": 0.8094256269338618,
   "close": true
 }

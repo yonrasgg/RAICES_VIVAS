@@ -7,7 +7,7 @@ banner_src_y: 0.42
 cssclass: dashboard
 tags:
   - dashboard
-  - métricas
+  - metricas
   - lean-six-sigma
 ---
 
