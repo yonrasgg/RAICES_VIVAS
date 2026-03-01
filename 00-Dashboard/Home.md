@@ -8,6 +8,7 @@ banner_src_y: 0.38
 tags:
   - dashboard
   - home
+banner_src_x: 0.47714
 ---
 # 🎛️ Raíces Vivas — Centro de Control
 
