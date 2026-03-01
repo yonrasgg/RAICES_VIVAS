@@ -38,7 +38,7 @@ Cada líder tiene autonomía para tomar decisiones técnicas dentro de su módul
 |--------|--------|
 | **Dataview** | Queries dinámicos, RTM, métricas, KPIs en Dashboard |
 | **Templater** | Templates interactivos con prompts y lógica JavaScript |
-| **QuickAdd** | 10 macros: crear tareas, minutas, RF, RNF, riesgos, ADRs, promover action items |
+| **QuickAdd** | 12 macros: crear tareas, minutas, RF, RNF, riesgos, ADRs, promover action items + decisiones + riesgos |
 | **Tasks** | Emoji format para fechas/prioridades, estados custom (`[/]` In Progress, `[-]` Cancelled) |
 | **Kanban** | Backlog board con columnas por estado |
 | **Calendar** | Vista mensual de tareas con fecha `due:` |
@@ -79,8 +79,12 @@ Cada líder tiene autonomía para tomar decisiones técnicas dentro de su módul
 
 | Sistema | Descripción |
 |---------|------------|
-| **Auto-ID** | Al crear una tarea, Templater + Dataview calcula automáticamente `T-XXX` (nunca manual) |
+| **Auto-ID Tareas** | Al crear una tarea, Templater + Dataview calcula automáticamente `T-XXX` (nunca manual) |
+| **Auto-ID Decisiones** | Al crear un ADR, Templater + Dataview calcula automáticamente `ADR-XXX` (nunca manual) |
+| **Auto-ID Riesgos** | Al crear un riesgo, Templater + Dataview calcula automáticamente `RSK-XXX` con severidad automática |
 | **Promoción de Action Items** | Los action items de minutas se promueven a tareas formales con un comando QuickAdd |
+| **Promoción de Decisiones** | Las decisiones de minutas se promueven a ADRs formales con trazabilidad bidireccional |
+| **Promoción de Riesgos** | Los riesgos de minutas se promueven a notas formales con severidad calculada |
 | **Trazabilidad bidireccional** | Cada tarea referencia su requerimiento (`requirement:`) y su minuta origen (`source:`) |
 | **RTM dinámica** | Dataview genera la matriz de trazabilidad automáticamente |
 | **Dashboard KPIs** | Home.md muestra métricas en tiempo real via Dataview |
@@ -111,7 +115,19 @@ Cada líder tiene autonomía para tomar decisiones técnicas dentro de su módul
 
 ## Gestión de Riesgos
 
-Ver [[01-Proyecto/Riesgos/]] — cada riesgo es una nota independiente con seguimiento.
+Ver [[01-Proyecto/Riesgos/]] — cada riesgo es una nota independiente (`RSK-XXX`) con:
+- Severidad calculada automáticamente (probabilidad × impacto)
+- Plan de respuesta (preventivo + contingencia)
+- Trazabilidad a RF/RNF y ADRs afectados
+- Fecha de revisión automática (cada 14 días)
+
+## Gestión de Decisiones
+
+Ver [[01-Proyecto/Decisiones/]] — cada decisión es un ADR formal (`ADR-XXX`) con:
+- Contexto, opciones consideradas, y justificación
+- Trazabilidad a RF/RNF y riesgos relacionados
+- Estados: `proposed` → `accepted` → `deprecated`/`superseded`
+- Origen rastreable (minuta fuente via `source:`)
 
 ## Roadmap
 
@@ -119,7 +135,7 @@ Ver [[00-Dashboard/Roadmap]] para el timeline completo del proyecto.
 
 ## Referencias
 
-- [[01-Proyecto/Guía de Workflow|Guía de Workflow v4.0]] — Documentación detallada de todos los flujos, plugins, diagramas y convenciones
+- [[01-Proyecto/Guía de Workflow|Guía de Workflow v5.0]] — Documentación detallada de todos los flujos, plugins, diagramas y convenciones
 - [[01-Proyecto/Propuesta de Gestión|Propuesta de Gestión]] — Fundamentación técnica de las decisiones de tooling
 - [[01-Proyecto/Charter|Charter]] — Alcance y objetivos del proyecto
 - [[01-Proyecto/Equipo|Equipo]] — Roles y responsabilidades detalladas

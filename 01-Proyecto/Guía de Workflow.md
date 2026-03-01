@@ -10,7 +10,6 @@ tags:
   - guia
   - workflow
 ---
-
 # 📕 Guía de Workflow — Vault Raíces Vivas
 
 > Esta guía explica **cómo funciona el vault**, **en qué orden trabajar**, **qué herramientas usar** y **cómo automatizar** la gestión del proyecto. Es el manual operativo del equipo.
@@ -653,6 +652,11 @@ flowchart LR
     RF -->|module:| MOD[educacion]
     RF <-->|RTM| RTM[_RTM.md]
     T -->|assignee:| PERS[Geovanny]
+    ADR[ADR-001] <-->|related_requirements| RF
+    ADR <-->|related_risks| RSK[RSK-001]
+    RSK <-->|related_requirements| RF
+    ADR -->|source:| MIN
+    RSK -->|source:| MIN
 ```
 
 ### 10.2 Campos de Trazabilidad
@@ -663,17 +667,38 @@ flowchart LR
 | Tarea → Minuta | `source: MIN-001` | Frontmatter + `[[MIN-001]]` en Notas |
 | Requerimiento → Tareas | Dataview query automática | Al final de cada RF/RNF |
 | Minuta → Tarea | Wikilink post-promoción | `[[T-026\|Descripción]]` en Action Items |
+| Minuta → Decisión | Wikilink post-promoción | `[[ADR-001\|Descripción]]` en Decisiones |
+| Minuta → Riesgo | Wikilink post-promoción | `[[RSK-001\|Descripción]]` en Riesgos |
+| ADR → Requerimientos | `related_requirements:` | Frontmatter + wikilinks en cuerpo |
+| ADR → Riesgos | `related_risks:` | Frontmatter + wikilinks en cuerpo |
+| Riesgo → Requerimientos | `related_requirements:` | Frontmatter + wikilinks en cuerpo |
+| Riesgo → Decisiones | `related_decisions:` | Frontmatter + wikilinks en cuerpo |
 | RTM → Todo | Tabla centralizada | `03-Requerimientos/_RTM.md` |
 | Dashboard → Todo | Queries Dataview | `00-Dashboard/Home.md` |
 
 ### 10.3 Verificación de Trazabilidad
 
-Para verificar que una tarea está completamente trazada, debe tener:
+Para verificar que un artefacto está completamente trazado:
+
+**Tarea:**
 - ✅ `requirement:` — vinculado a al menos un RF o RNF (o `N/A` si es administrativa)
 - ✅ `source:` — si nació de una reunión, debe referenciar la `MIN-XXX`
 - ✅ `sprint:` — asignada a un sprint o `backlog`
 - ✅ `assignee:` — responsable asignado
 - ✅ Al final del archivo: `[[RF-XXX]]` como wikilink para el graph view
+
+**Decisión (ADR):**
+- ✅ `source:` — si nació de una reunión, debe referenciar la `MIN-XXX`
+- ✅ `related_requirements:` — RF/RNF que esta decisión afecta
+- ✅ `related_risks:` — riesgos que esta decisión mitiga o introduce
+- ✅ `deciders:` — quiénes tomaron la decisión
+
+**Riesgo:**
+- ✅ `source:` — si nació de una reunión, debe referenciar la `MIN-XXX`
+- ✅ `related_requirements:` — RF/RNF que podrían verse afectados
+- ✅ `related_decisions:` — ADRs que mitigan este riesgo
+- ✅ `owner:` — responsable de monitoreo
+- ✅ `review_date:` — próxima fecha de revisión
 
 ---
 
@@ -699,7 +724,158 @@ Las **decisiones que afectan a más de un módulo** se toman en equipo y se docu
 
 ---
 
-## 12. Plugins Instalados (Referencia Completa)
+## 12. Gestión de Decisiones (ADRs)
+
+### 12.1 ¿Qué es un ADR?
+
+Un **Architecture Decision Record** documenta una decisión técnica o de proceso significativa, su contexto, las opciones consideradas, y las consecuencias. No se limita a arquitectura — cualquier decisión que afecte el rumbo del proyecto se registra como ADR.
+
+### 12.2 ¿Cuándo Crear un ADR?
+
+| Situación | ¿ADR? | Ejemplo |
+|-----------|-------|---------|
+| Cambio de stack tecnológico | ✅ Sí | "Usar Flutter en vez de React Native" |
+| Decisión de diseño cross-módulo | ✅ Sí | "Centralizar autenticación en API Gateway" |
+| Elección de metodología | ✅ Sí | "Adoptar MoSCoW para priorización" |
+| Corrección de bug específico | ❌ No | Fix minor en template |
+| Cambio cosmético | ❌ No | Renombrar un campo |
+
+**Regla de oro:** Si la decisión podría cuestionarse en 3 meses, documéntala como ADR.
+
+### 12.3 Flujo de Creación
+
+```mermaid
+flowchart TD
+    A[Se identifica decisión] --> B{¿Origen?}
+    B -->|Reunión| C[📝 Anotar en Decisiones Tomadas de la minuta]
+    B -->|Trabajo individual| D[Ctrl+P → 🏗️ Nuevo ADR]
+    C --> E[Seleccionar línea → Ctrl+P → 🏗️ Promover Decisión]
+    D --> F[Template con Auto-ID ADR-XXX]
+    E --> F
+    F --> G[Llenar Contexto + Opciones + Decisión]
+    G --> H[Vincular RF/RNF + Riesgos relacionados]
+    H --> I[Cambiar status a accepted]
+    I --> J[Reemplazar línea en minuta por wikilink]
+```
+
+### 12.4 Estados del Ciclo de Vida
+
+| Estado | Significado | Cuándo |
+|--------|------------|--------|
+| `proposed` | Propuesta, pendiente de discusión | Recién creado |
+| `accepted` | Aprobado por el equipo | Después de consensus |
+| `deprecated` | Ya no aplica (obsoleto) | Cambió el contexto |
+| `superseded` | Reemplazado por otro ADR | Llenar `superseded_by: ADR-XXX` |
+
+### 12.5 Estadísticas desde Dashboard
+
+```dataviewjs
+// Ejemplo de query para Home.md
+const adrs = dv.pages('"01-Proyecto/Decisiones"').where(p => p.type === "adr");
+dv.table(["ID", "Título", "Estado", "Categoría", "Impacto", "Fecha"],
+  adrs.sort(p => p.id, "asc").map(p => [
+    p.file.link, p.title, p.status, p.category, p.impact, p.date
+  ])
+);
+```
+
+**Métricas disponibles:**
+- Total de ADRs por estado (`proposed`, `accepted`, `deprecated`, `superseded`)
+- ADRs por categoría (arquitectura, proceso, tecnología, etc.)
+- ADRs por módulo afectado
+- ADRs por nivel de impacto
+
+---
+
+## 13. Gestión de Riesgos
+
+### 13.1 Metodología
+
+El proyecto usa una **gestión de riesgos proactiva** basada en:
+- **Identificación continua** — en cada reunión y sprint review
+- **Evaluación cuantitativa** — probabilidad × impacto = severidad
+- **Respuesta documentada** — plan preventivo y de contingencia
+- **Monitoreo periódico** — review_date auto-calculada cada 14 días
+
+### 13.2 Matriz de Severidad (Automática)
+
+La severidad se calcula automáticamente al crear el riesgo:
+
+| | Impacto Bajo (1) | Impacto Medio (2) | Impacto Alto (3) |
+|---|---|---|---|
+| **Prob. Alta (3)** | medio (3) | **alto (6)** | **🔴 crítico (9)** |
+| **Prob. Media (2)** | medio (2) | **alto (4)** | **alto (6)** |
+| **Prob. Baja (1)** | bajo (1) | medio (2) | alto (3) |
+
+> La fórmula en el template: `severidad = prob × imp` → crítico (≥6), alto (≥3), medio (≥2), bajo (1)
+
+### 13.3 Flujo de Creación
+
+```mermaid
+flowchart TD
+    A[Se identifica riesgo] --> B{¿Origen?}
+    B -->|Reunión| C[📝 Anotar en Riesgos Identificados de la minuta]
+    B -->|Trabajo individual| D[Ctrl+P → ⚠️ Nuevo Riesgo]
+    C --> E[Seleccionar línea → Ctrl+P → ⚠️ Promover Riesgo]
+    D --> F[Template con Auto-ID RSK-XXX]
+    E --> F
+    F --> G[Llenar Descripción + Causa Raíz + Plan de Respuesta]
+    G --> H[Vincular RF/RNF + ADRs relacionados]
+    H --> I[Reemplazar línea en minuta por wikilink]
+```
+
+### 13.4 Estados del Ciclo de Vida
+
+| Estado | Significado | Cuándo |
+|--------|------------|--------|
+| `open` | Identificado, en monitoreo | Recién creado |
+| `mitigating` | Acciones preventivas en curso | Se están ejecutando acciones |
+| `mitigated` | Riesgo reducido a nivel aceptable | Acciones completadas |
+| `occurred` | El riesgo se materializó | Ejecutar plan de contingencia |
+| `closed` | Ya no es relevante | Condiciones cambiaron |
+| `accepted` | Se acepta el riesgo sin acción | Costo de mitigación > impacto |
+
+### 13.5 Estrategias de Respuesta
+
+| Estrategia | Cuándo Usar | Ejemplo |
+|-----------|------------|---------|
+| **Mitigar** | Se puede reducir probabilidad o impacto | "Agregar tests unitarios para reducir bugs" |
+| **Transferir** | Otro equipo/herramienta puede absorberlo | "Usar servicio cloud con SLA de 99.9%" |
+| **Aceptar** | Impacto bajo o costo de mitigación alto | "Aceptar que habrá 5% de datos incompletos" |
+| **Evitar** | Eliminar la causa raíz por completo | "No implementar feature de alta complejidad" |
+
+### 13.6 Estadísticas desde Dashboard
+
+```dataviewjs
+// Ejemplo de query para Home.md
+const risks = dv.pages('"01-Proyecto/Riesgos"').where(p => p.type === "risk");
+dv.table(["ID", "Título", "Severidad", "Estado", "Owner", "Revisión"],
+  risks.sort(p => p.severity === "crítico" ? 0 : p.severity === "alto" ? 1 : p.severity === "medio" ? 2 : 3)
+    .map(p => [
+      p.file.link, p.title, p.severity, p.status, p.owner, p.review_date
+    ])
+);
+```
+
+**Métricas disponibles:**
+- Riesgos abiertos por severidad (heat map)
+- Distribución por categoría (técnico, alcance, recurso, etc.)
+- Riesgos por módulo afectado
+- Riesgos vencidos de revisión (`review_date < today`)
+- Tendencia: riesgos abiertos vs cerrados por sprint
+
+### 13.7 Revisión Periódica
+
+Cada **Sprint Review** debe incluir:
+1. Revisar riesgos con `review_date` vencida
+2. Re-evaluar probabilidad e impacto
+3. Actualizar tabla de Seguimiento en cada RSK
+4. Cerrar riesgos que ya no aplican
+5. Identificar nuevos riesgos del sprint
+
+---
+
+## 14. Plugins Instalados (Referencia Completa)
 
 ### Activos y Configurados
 
@@ -707,7 +883,7 @@ Las **decisiones que afectan a más de un módulo** se toman en equipo y se docu
 |--------|---------|-------------------|
 | **Dataview** | Consultas SQL sobre notas | Dashboards, tablas, métricas dinámicas |
 | **Templater** | Templates con lógica JS | Creación automatizada de notas |
-| **QuickAdd** | Macros y comandos rápidos | 9 macros para crear notas y sprint docs |
+| **QuickAdd** | Macros y comandos rápidos | 12 macros para crear notas, promover decisiones y riesgos |
 | **Kanban** | Tablero visual | Backlog y gestión de tareas |
 | **Homepage** | Página de inicio | Dashboard automático al abrir |
 | **Git** | Control de versiones | Auto commit/push/pull cada 10 min |
@@ -933,9 +1109,9 @@ No es un plugin sino una técnica nativa de Obsidian para mejorar rendimiento.
 
 ---
 
-## 13. Automatización y Productividad
+## 15. Automatización y Productividad
 
-### 13.1 Daily Notes Automatizadas
+### 15.1 Daily Notes Automatizadas
 
 **Configuración recomendada:**
 1. Settings → Core plugins → Daily Notes → Enable
@@ -945,7 +1121,7 @@ No es un plugin sino una técnica nativa de Obsidian para mejorar rendimiento.
 
 Cada día al abrir el calendario, se crea una nota con la template de daily note que ya incluye secciones para tareas, log y bloqueos.
 
-### 13.2 Notas Semanales con Periodic Notes
+### 15.2 Notas Semanales con Periodic Notes
 
 1. Settings → Community Plugins → Periodic Notes → Enable Weekly Notes
 2. Folder: `Daily Notes/`
@@ -954,7 +1130,7 @@ Cada día al abrir el calendario, se crea una nota con la template de daily note
 
 **Flujo:** Cada lunes → `Ctrl+P` → "Periodic Notes: Open weekly note" → Se crea nota de la semana con resumen automático.
 
-### 13.3 Actualización Rápida de Tareas con Meta Bind
+### 15.3 Actualización Rápida de Tareas con Meta Bind
 
 El flujo más rápido para actualizar el estado de una tarea:
 
@@ -967,7 +1143,7 @@ El flujo más rápido para actualizar el estado de una tarea:
 
 **⚡ Esto reemplaza:** Abrir YAML → editar campo → guardar → cerrar vista source.
 
-### 13.4 Botones de Acción en Dashboard
+### 15.4 Botones de Acción en Dashboard
 
 El Dashboard Home tiene 7 botones precreados:
 - ➕ Nueva Tarea → ejecuta QuickAdd
@@ -977,9 +1153,9 @@ El Dashboard Home tiene 7 botones precreados:
 - 🏗️ Nuevo ADR → crea decisión arquitectónica
 - 👥 Nueva Entrevista → crea entrevista
 
-**Para agregar más botones:** Editar `00-Dashboard/Home.md` y agregar bloques `button` con la sintaxis documentada en §12.1.
+**Para agregar más botones:** Editar `00-Dashboard/Home.md` y agregar bloques `button` con la sintaxis documentada en §14.1.
 
-### 13.5 Atajos de Teclado Recomendados
+### 15.5 Atajos de Teclado Recomendados
 
 | Atajo | Acción |
 |-------|--------|
@@ -993,7 +1169,7 @@ El Dashboard Home tiene 7 botones precreados:
 | `Ctrl+P` → "Checklist" | Ver panel de pendientes |
 | `Ctrl+P` → "Periodic" | Abrir nota semanal/mensual |
 
-### 13.6 Tips de Productividad
+### 15.6 Tips de Productividad
 
 1. **Usar `[[` para enlazar todo** — notas, tareas, requerimientos. El graph view mostrará las conexiones.
 2. **Tags consistentes** — Usar siempre `#tarea`, `#requerimiento`, `#avance-1`, `#sprint-01`
@@ -1007,7 +1183,7 @@ El Dashboard Home tiene 7 botones precreados:
 
 ---
 
-## 14. Checklist: Lo que Cada Integrante Debe Hacer Primero
+## 16. Checklist: Lo que Cada Integrante Debe Hacer Primero
 
 ### Setup Inicial (una vez)
 
@@ -1019,8 +1195,8 @@ El Dashboard Home tiene 7 botones precreados:
 - [ ] Revisar esta Guía de Workflow completa
 - [ ] Probar crear una nota con QuickAdd (`Ctrl+P` → QuickAdd)
 - [ ] Verificar que todos los requerimientos muestran la sección 'Tareas Vinculadas' (Dataview)
-- [ ] Probar cambiar un estado de tarea con Meta Bind (ver §13.3)
-- [ ] Probar abrir el Checklist panel (ver §12.4)
+- [ ] Probar cambiar un estado de tarea con Meta Bind (ver §15.3)
+- [ ] Probar abrir el Checklist panel (ver §14.4)
 - [ ] Verificar que Periodic Notes está configurado (ver §13.2)
 
 ### Rutina Semanal
@@ -1045,7 +1221,7 @@ El Dashboard Home tiene 7 botones precreados:
 
 ---
 
-## 15. Resolución de Problemas Comunes
+## 17. Resolución de Problemas Comunes
 
 | Problema | Solución |
 |----------|----------|
