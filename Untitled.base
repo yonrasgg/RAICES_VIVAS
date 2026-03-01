@@ -1,0 +1,7 @@
+views:
+  - type: table
+    name: Table
+  - type: cards
+    name: View
+    image: file.file
+    imageAspectRatio: 0.6
