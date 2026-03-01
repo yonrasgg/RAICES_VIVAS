@@ -9,7 +9,6 @@ tags:
 banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
 banner_src_y: 0.40
 ---
-
 # Stack Tecnológico — Raíces Vivas
 
 > **Estado:** Pendiente de decisión formal. Ver [[01-Proyecto/Decisiones/ADR-001-stack-tecnologico]] cuando se cree.
