@@ -13,11 +13,11 @@ banner_src_x: 0.47714
 # 🎛️ Raíces Vivas — Centro de Control
 
 > **Sistema Integral de Apoyo a Comunidades Indígenas**
-> 🌿 Equipo: **Geovanny** · **Elkin** · **Santiago**
+> 🌿 Equipo: **Geovanny** (Lead/Arquitecto) · **Elkin** (Líder Investigación) · **Santiago** (Líder QA)
 
 ---
 
-## 📊 Indicadores Clave
+## 📊 Indicadores Clave (KPIs)
 
 === start-multi-column: kpi-panel
 ```column-settings
@@ -26,7 +26,7 @@ border: off
 shadow: off
 ```
 
-> [!abstract]+ 🎯 Progreso
+> [!abstract]+ 🎯 Progreso General
 > ```dataviewjs
 > const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
 > const done = tasks.where(t => t.status === "done").length;
@@ -41,11 +41,21 @@ shadow: off
 
 > [!tip]+ ✅ Sprint Actual
 > ```dataviewjs
-> const tasks = dv.pages('"05-Sprints/Sprint-01"').where(t => t.type === "task");
-> const done = tasks.where(t => t.status === "done").length;
-> const total = tasks.length;
-> dv.paragraph(`**${done}/${total}** completadas`);
-> dv.paragraph(`Sprint-01 · Avance 1`);
+> const sprints = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.sprint);
+> const groups = {};
+> for (const t of sprints) {
+>   const s = String(t.sprint);
+>   if (!groups[s]) groups[s] = { active: 0, done: 0, total: 0 };
+>   groups[s].total++;
+>   if (t.status === "done") groups[s].done++;
+>   else groups[s].active++;
+> }
+> const sorted = Object.keys(groups).sort();
+> let current = sorted[sorted.length - 1] || "N/A";
+> for (const s of sorted) { if (groups[s].active > 0) { current = s; break; } }
+> const g = groups[current] || { done: 0, total: 0 };
+> dv.paragraph(`**${g.done}/${g.total}** completadas`);
+> dv.paragraph(`${current}`);
 > ```
 
 === end-column ===
@@ -60,10 +70,77 @@ shadow: off
 
 === end-column ===
 
-> [!warning]+ ⚠️ Riesgos
+> [!warning]+ ⚠️ Riesgos Abiertos
 > ```dataviewjs
-> const risks = dv.pages('"01-Proyecto/Riesgos"').where(r => r.type === "risk" && r.status === "open");
-> dv.paragraph(risks.length > 0 ? `**${risks.length}** abierto(s)` : `✅ Bajo control`);
+> const risks = dv.pages('"01-Proyecto/Riesgos"').where(r => r.type === "risk");
+> const open = risks.where(r => r.status === "open").length;
+> const total = risks.length;
+> dv.paragraph(open > 0 ? `**${open}** abierto(s) / ${total}` : `✅ Bajo control`);
+> ```
+
+=== end-multi-column
+
+=== start-multi-column: kpi-panel-row2
+```column-settings
+number of columns: 4
+border: off
+shadow: off
+```
+
+> [!example]+ 🏗️ Decisiones (ADR)
+> ```dataviewjs
+> const adrs = dv.pages('"01-Proyecto/Decisiones"').where(d => d.type === "decision");
+> const accepted = adrs.where(d => d.status === "accepted").length;
+> const proposed = adrs.where(d => d.status === "proposed").length;
+> dv.paragraph(`**${accepted}** aceptadas`);
+> dv.paragraph(`**${proposed}** propuestas · ${adrs.length} total`);
+> ```
+
+=== end-column ===
+
+> [!quote]+ ⏱️ Horas Invertidas
+> ```dataviewjs
+> const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.effort);
+> let totalHours = 0;
+> let doneHours = 0;
+> for (const t of tasks) {
+>   const h = parseInt(String(t.effort)) || 0;
+>   totalHours += h;
+>   if (t.status === "done") doneHours += h;
+> }
+> dv.paragraph(`**${doneHours}h** completadas`);
+> dv.paragraph(`${totalHours}h planificadas`);
+> ```
+
+=== end-column ===
+
+> [!success]+ 🎯 Calidad (LSS)
+> ```dataviewjs
+> const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+> const total = tasks.length;
+> const done = tasks.where(t => t.status === "done").length;
+> const blocked = tasks.where(t => t.status === "blocked").length;
+> const defectRate = total > 0 ? Math.round((blocked / total) * 100) : 0;
+> const throughput = done;
+> dv.paragraph(`Defectos: **${defectRate}%**`);
+> dv.paragraph(`Throughput: **${throughput}** tareas`);
+> ```
+
+=== end-column ===
+
+> [!bug]+ 💰 Finanzas
+> ```dataviewjs
+> const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.effort);
+> const tarifas = { "Geovanny": 7500, "Elkin": 6000, "Santiago": 6000 };
+> let totalCost = 0;
+> for (const t of tasks) {
+>   const h = parseInt(String(t.effort)) || 0;
+>   const person = t.assignee || "";
+>   const tarifa = tarifas[person] || 5000;
+>   totalCost += h * tarifa;
+> }
+> dv.paragraph(`₡${totalCost.toLocaleString()}`);
+> dv.paragraph(`~$${Math.round(totalCost / 535).toLocaleString()} USD`);
 > ```
 
 === end-multi-column
@@ -71,6 +148,8 @@ shadow: off
 ---
 
 ## 🚀 Acciones Rápidas
+
+> **Cómo usar:** Haz clic en cualquier botón → se abre el menú QuickAdd → selecciona la opción correspondiente y completa los campos solicitados.
 
 === start-multi-column: quick-actions
 ```column-settings
@@ -107,7 +186,7 @@ color yellow
 === end-column ===
 
 ```button
-name 📐 Nuevo ADR
+name 🏗️ Nuevo ADR
 type command
 action QuickAdd: Run QuickAdd
 color purple
@@ -158,6 +237,162 @@ color default
 
 === end-multi-column
 
+=== start-multi-column: quick-actions-row3
+```column-settings
+number of columns: 4
+border: off
+shadow: off
+```
+
+```button
+name 📋 Promover Action Item
+type command
+action QuickAdd: Run QuickAdd
+color blue
+```
+
+=== end-column ===
+
+```button
+name 🏗️ Promover Decisión
+type command
+action QuickAdd: Run QuickAdd
+color purple
+```
+
+=== end-column ===
+
+```button
+name ⚠️ Promover Riesgo
+type command
+action QuickAdd: Run QuickAdd
+color yellow
+```
+
+=== end-column ===
+
+```button
+name 💰 Finanzas
+type link
+action [[01-Proyecto/Finanzas]]
+color green
+```
+
+=== end-multi-column
+
+> **12 macros disponibles en QuickAdd:** Nueva Tarea · Nueva Minuta · Nuevo RF · Nuevo RNF · Nuevo Riesgo · Nuevo ADR · Entrevista · Sprint Planning · Sprint Review · 📋 Promover Action Item · 🏗️ Promover Decisión · ⚠️ Promover Riesgo
+
+---
+
+## 📈 Colaboración del Equipo
+
+```dataviewjs
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const people = {};
+let total = 0;
+for (const t of tasks) {
+  const a = t.assignee || "Sin asignar";
+  people[a] = (people[a] || 0) + 1;
+  total++;
+}
+const labels = Object.keys(people).sort();
+const data = labels.map(l => people[l]);
+
+const chartData = {
+  type: "pie",
+  data: {
+    labels: labels,
+    datasets: [{
+      label: "Tareas asignadas",
+      data: data,
+      backgroundColor: ["#5cf55f", "#36a2eb", "#ff6384", "#ffce56", "#9966ff"]
+    }]
+  },
+  options: {
+    plugins: {
+      title: { display: true, text: "Distribución de Tareas por Integrante" },
+      legend: { position: "bottom" }
+    }
+  }
+};
+
+dv.paragraph("```chart\n" + JSON.stringify(chartData, null, 2) + "\n```");
+```
+
+```chart
+type: pie
+labels: [Geovanny, Elkin, Santiago]
+series:
+  - title: Tareas Asignadas
+    data: [8, 6, 6]
+width: 50%
+labelColors: true
+```
+
+> *Los datos del gráfico estático son referencia; la tabla dinámica abajo se actualiza en tiempo real.*
+
+```dataviewjs
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const people = {};
+const total = tasks.length;
+for (const t of tasks) {
+  const a = t.assignee || "Sin asignar";
+  if (!people[a]) people[a] = { total: 0, done: 0, inProgress: 0, todo: 0, hours: 0 };
+  people[a].total++;
+  const h = parseInt(String(t.effort)) || 0;
+  people[a].hours += h;
+  if (t.status === "done") people[a].done++;
+  else if (t.status === "in-progress") people[a].inProgress++;
+  else people[a].todo++;
+}
+const headers = ["👤 Integrante", "Asignadas", "✅ Done", "🔄 En curso", "📋 Pendiente", "% Colaboración", "⏱️ Horas"];
+const rows = [];
+for (const [person, d] of Object.entries(people).sort()) {
+  const pct = total > 0 ? Math.round((d.total / total) * 100) : 0;
+  const bar = "█".repeat(Math.round(pct / 5)) + "░".repeat(20 - Math.round(pct / 5));
+  rows.push([person, d.total, d.done, d.inProgress, d.todo, `${bar} ${pct}%`, `${d.hours}h`]);
+}
+dv.table(headers, rows);
+```
+
+---
+
+## 📊 Estado de Tareas
+
+```chart
+type: bar
+labels: [Done, In Progress, Todo, Blocked, Review]
+series:
+  - title: Cantidad
+    data: [15, 3, 5, 0, 2]
+width: 70%
+labelColors: true
+fill: true
+beginAtZero: true
+```
+
+> *Gráfico de referencia. La tabla dinámica Dataview abajo muestra datos en tiempo real.*
+
+```dataviewjs
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const statuses = {};
+for (const t of tasks) {
+  const s = t.status || "desconocido";
+  statuses[s] = (statuses[s] || 0) + 1;
+}
+const icons = {"done": "✅", "todo": "📋", "in-progress": "🔄", "review": "👀", "blocked": "🚫"};
+const total = tasks.length;
+const headers = ["Estado", "Cantidad", "Porcentaje", "Barra"];
+const rows = [];
+for (const [status, count] of Object.entries(statuses).sort()) {
+  const icon = icons[status] || "❓";
+  const pct = Math.round((count/total)*100);
+  const bar = "█".repeat(Math.round(pct/5)) + "░".repeat(20 - Math.round(pct/5));
+  rows.push([`${icon} ${status}`, count, `${pct}%`, bar]);
+}
+dv.table(headers, rows);
+```
+
 ---
 
 ## 🗺️ Navegación del Proyecto
@@ -169,7 +404,7 @@ border: off
 shadow: off
 ```
 
-### 📁 Gobierno
+### 📁 Gobierno y Gestión
 - 👥 [[01-Proyecto/Equipo|Equipo]]
 - 📜 [[01-Proyecto/Charter|Charter]]
 - 🎯 [[01-Proyecto/Alcance|Alcance]]
@@ -177,27 +412,34 @@ shadow: off
 - 📖 [[01-Proyecto/Glosario|Glosario]]
 - 📋 [[01-Proyecto/Plan de Gestión|Plan de Gestión]]
 - 📕 [[01-Proyecto/Guía de Workflow|Guía de Workflow]]
+- 🚀 [[01-Proyecto/Onboarding|Onboarding]]
+- 💰 [[01-Proyecto/Finanzas|Finanzas]]
+- 🗂️ [[01-Proyecto/Decisiones/|Decisiones (ADR)]]
+- ⚠️ [[01-Proyecto/Riesgos/|Riesgos (RSK)]]
 
 === end-column ===
 
-### 📐 Técnico
-- 📐 [[03-Requerimientos/_RTM|RTM]]
+### 📐 Técnico y Arquitectura
+- 📐 [[03-Requerimientos/_RTM|RTM — Trazabilidad]]
 - 🏗️ [[04-Arquitectura/WBS|WBS]]
-- 🏗️ [[04-Arquitectura/Visión General|Arquitectura]]
+- 🏗️ [[04-Arquitectura/Visión General|Arquitectura General]]
 - 🏗️ [[04-Arquitectura/Modelo de Datos|Modelo de Datos]]
-- 💻 [[04-Arquitectura/Stack Tecnológico|Stack]]
+- 💻 [[04-Arquitectura/Stack Tecnológico|Stack Tecnológico]]
 - 📊 [[00-Dashboard/Roadmap|Roadmap / Gantt]]
-- 📈 [[00-Dashboard/Métricas|Métricas]]
+- 📈 [[00-Dashboard/Métricas|Métricas de Avance]]
+- ✅ [[09-QA/README|QA — Calidad]]
 
 === end-column ===
 
-### 🔬 Investigación
+### 🔬 Investigación y Entregables
 - 🔍 [[02-Investigación/Contexto/Educación|Contexto EDU]]
 - 🔍 [[02-Investigación/Contexto/Saberes Ancestrales|Contexto SAB]]
 - 🔍 [[02-Investigación/Contexto/Salud Comunitaria|Contexto SAL]]
+- 🗺️ [[02-Investigación/Contexto/Mapa de Territorios Indígenas|Mapa Territorios]]
 - 📄 [[06-Entregables/Avance-1/Raíces Vivas – Sistema Integral de Apoyo a Comunidades Indígenas|Avance 1]]
 - 📦 [[05-Sprints/Sprint-01/Sprint-01-Planning|Sprint 01]]
 - 📦 [[05-Sprints/Sprint-02/Sprint-02-Planning|Sprint 02]]
+- 📝 [[07-Reuniones/MIN-001|Minuta Kickoff]]
 
 === end-multi-column
 
@@ -238,7 +480,7 @@ gantt
 
 ---
 
-## 🏃 Tareas Pendientes
+## 🏃 Tareas Pendientes (Top 10)
 
 ```dataview
 TABLE WITHOUT ID
@@ -251,22 +493,40 @@ TABLE WITHOUT ID
 FROM "05-Sprints"
 WHERE type = "task" AND status != "done"
 SORT priority ASC, due ASC
+LIMIT 10
 ```
 
 ---
 
-## 👤 Carga por Integrante
+## ⚠️ Riesgos Activos
 
 ```dataview
 TABLE WITHOUT ID
-  assignee as "Responsable",
-  length(rows) as "Total",
-  length(filter(rows, (r) => r.status = "done")) as "✅",
-  length(filter(rows, (r) => r.status = "todo" OR r.status = "in-progress")) as "🔄"
-FROM "05-Sprints"
-WHERE type = "task"
-GROUP BY assignee
-SORT assignee ASC
+  id as "ID",
+  title as "Riesgo",
+  probability as "Prob.",
+  impact as "Impacto",
+  severity as "Severidad",
+  owner as "Responsable",
+  status as "Estado"
+FROM "01-Proyecto/Riesgos"
+WHERE type = "risk"
+SORT severity DESC
+```
+
+---
+
+## 🏗️ Decisiones Arquitectónicas (ADR)
+
+```dataview
+TABLE WITHOUT ID
+  id as "ID",
+  title as "Decisión",
+  status as "Estado",
+  date as "Fecha"
+FROM "01-Proyecto/Decisiones"
+WHERE type = "decision"
+SORT id ASC
 ```
 
 ---
@@ -326,44 +586,31 @@ SORT assignee ASC
 
 ---
 
-> [!note]- 📈 Esfuerzo por Responsable (expandir)
+> [!note]- 💰 Resumen Financiero (expandir)
 >
 > ```dataviewjs
+> const tarifas = { "Geovanny": 7500, "Elkin": 6000, "Santiago": 6000 };
 > const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.effort);
-> const people = {};
+> const costos = {};
 > for (const t of tasks) {
->   const a = t.assignee || "Sin asignar";
+>   const person = t.assignee || "Sin asignar";
 >   const hours = parseInt(String(t.effort)) || 0;
->   if (!people[a]) people[a] = {total: 0, done: 0};
->   people[a].total += hours;
->   if (t.status === "done") people[a].done += hours;
+>   const tarifa = tarifas[person] || 5000;
+>   if (!costos[person]) costos[person] = { horas: 0, costo: 0 };
+>   costos[person].horas += hours;
+>   costos[person].costo += hours * tarifa;
 > }
-> const headers = ["Responsable", "Horas Total", "Horas Done", "Pendiente"];
+> let grandTotal = 0;
+> const headers = ["👤 Integrante", "Horas", "Costo (₡)", "Costo (USD)"];
 > const rows = [];
-> for (const [person, data] of Object.entries(people).sort()) {
->   rows.push([person, `${data.total}h`, `${data.done}h`, `${data.total - data.done}h`]);
+> for (const [person, data] of Object.entries(costos).sort()) {
+>   grandTotal += data.costo;
+>   rows.push([person, `${data.horas}h`, `₡${data.costo.toLocaleString()}`, `$${Math.round(data.costo / 535).toLocaleString()}`]);
 > }
+> rows.push(["**TOTAL**", "", `**₡${grandTotal.toLocaleString()}**`, `**$${Math.round(grandTotal / 535).toLocaleString()}**`]);
 > dv.table(headers, rows);
+> dv.paragraph(`> Ver detalle completo en [[01-Proyecto/Finanzas|Gestión Financiera]]`);
 > ```
-
----
-
-## ⚠️ Riesgos
-
-```dataview
-TABLE WITHOUT ID
-  id as "ID",
-  title as "Riesgo",
-  probability as "Prob.",
-  impact as "Impacto",
-  owner as "Responsable",
-  status as "Estado"
-FROM "01-Proyecto/Riesgos"
-WHERE type = "risk"
-SORT impact DESC
-```
-
-> *Si la tabla está vacía, no hay riesgos registrados. Usa el botón ⚠️ Nuevo Riesgo.*
 
 ---
 
@@ -396,7 +643,7 @@ SORT impact DESC
 > LIMIT 5
 > ```
 >
-> *Usa el botón 📝 Nueva Minuta para documentar reuniones.*
+> *Para documentar reuniones: `Ctrl+P` → QuickAdd → selecciona "Nueva Minuta"*
 
 ---
 
@@ -422,5 +669,5 @@ SORT impact DESC
 
 ---
 
-*Dashboard dinámico · Banners + Buttons + Multi-Column + Dataview + Mermaid*
-*Última configuración: 2026-02-27*
+*Dashboard dinámico · Banners + Buttons + Multi-Column + Dataview + Charts + Mermaid*
+*Última configuración: 2026-03-01*
