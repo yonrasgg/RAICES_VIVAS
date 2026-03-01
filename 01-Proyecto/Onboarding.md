@@ -405,22 +405,18 @@ El frontmatter (bloque YAML entre `---` al inicio de cada nota) es la **base de 
 
 ### 10.2 Diagrama: Cómo Fluyen los Datos
 
-```
-┌─────────────────┐     ┌───────────────────┐     ┌──────────────────┐
-│  Tú editas el   │     │   Dataview lee     │     │  Dashboard muestra│
-│  frontmatter    │────▶│   los campos       │────▶│  tablas y KPIs   │
-│  (type, status, │     │   (dv.pages,       │     │  automáticamente │
-│   effort, etc.) │     │    WHERE, SORT)    │     │                  │
-└─────────────────┘     └───────────────────┘     └──────────────────┘
-        │                                                  │
-        │  Al completar tarea:                             │
-        │  1. status: done                                 │
-        │  2. completed: YYYY-MM-DD      ┌─────────────────┤
-        │  3. effort_actual: "Xh"        │                 │
-        └────────────────────────────────▶│  Weekly Note    │
-                                          │  (snapshot de   │
-                                          │   esa semana)   │
-                                          └─────────────────┘
+```mermaid
+flowchart LR
+    FM["🏷️ Tú editas el frontmatter<br/>(type, status, effort,<br/>completed, due...)"] -->|Dataview lee<br/>los campos| DV["⚙️ Dataview Engine<br/>(dv.pages, WHERE, SORT)"]
+    DV -->|Genera tablas<br/>y KPIs| DASH["📊 Dashboard<br/>Home.md · Métricas.md"]
+    DV -->|Filtra por<br/>week_start ↔ week_end| WK["📅 Weekly Note<br/>(snapshot de esa semana)"]
+
+    FM -->|Al completar tarea:<br/>1. status: done<br/>2. completed: YYYY-MM-DD<br/>3. effort_actual: Xh| WK
+
+    style FM fill:#1a1a2e,stroke:#5cf55f,color:#fff
+    style DV fill:#1a1a2e,stroke:#e8b931,color:#fff
+    style DASH fill:#1a1a2e,stroke:#3498db,color:#fff
+    style WK fill:#1a1a2e,stroke:#e06c75,color:#fff
 ```
 
 > 📌 **Para la referencia completa de los 12 tipos de nota, todos los campos, y el mapa exacto de qué campo alimenta qué automatización:** [[Guía de Workflow#4. Esquema de Frontmatter — Referencia Definitiva|Guía de Workflow §4]].
