@@ -42,8 +42,8 @@ tags:
 
 ## Action Items
 
-- [ ] 📅 YYYY-MM-DD Tarea → @Responsable
-- [ ] 📅 YYYY-MM-DD Tarea → @Responsable
+- [ ] Tarea → @Responsable 📅 YYYY-MM-DD
+- [ ] Tarea → @Responsable 📅 YYYY-MM-DD
 
 ## Próxima Reunión
 

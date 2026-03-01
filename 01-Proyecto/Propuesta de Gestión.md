@@ -26,7 +26,7 @@ tags:
 |--------|-----------|---------|
 | **Dataview** | Queries, tablas dinámicas, dashboards | Es el "SQL de Obsidian". Permite consultar frontmatter para generar tablas de requerimientos, estados de tareas, matrices de trazabilidad dinámicas |
 | **Templater** | Templates avanzados con lógica | Permite templates con fecha automática, prompts interactivos, snippets. Superior al template core de Obsidian |
-| **Tasks** | Gestión de tareas tipo Jira | Checkboxes con fechas, prioridades, recurrencia, queries globales. Permite `- [ ] 📅 2025-03-01 Tarea X #modulo/edu` |
+| **Tasks** | Gestión de tareas tipo Jira | Checkboxes con fechas, prioridades, recurrencia, queries globales. Permite `- [ ] Tarea X #modulo/edu 📅 2025-03-01` |
 | **Kanban** | Tableros Kanban (como Trello/Jira boards) | Visualización de flujo de trabajo: Backlog → En Progreso → Review → Done |
 | **Calendar** | Vista calendario con notas diarias | Integra con Daily Notes y Tasks para ver timeline del proyecto |
 | **Excalidraw** | Diagramas libres, wireframes, mapas | Diagramas de arquitectura, wireframes de UI, mapas de actores, flujos de proceso |
@@ -498,8 +498,8 @@ tags:
 - [ ] Decisión 1
 
 ## Action Items
-- [ ] 📅 YYYY-MM-DD Tarea → @Responsable
-- [ ] 📅 YYYY-MM-DD Tarea → @Responsable
+- [ ] Tarea → @Responsable 📅 YYYY-MM-DD
+- [ ] Tarea → @Responsable 📅 YYYY-MM-DD
 
 ## Próxima Reunión
 **Fecha:** 

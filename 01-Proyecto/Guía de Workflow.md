@@ -7,7 +7,7 @@ created: 2026-02-27
 updated: 2026-02-28
 tags:
   - proyecto
-  - guía
+  - guia
   - workflow
 ---
 
