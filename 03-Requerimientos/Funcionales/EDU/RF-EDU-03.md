@@ -50,6 +50,19 @@ El sistema debe permitir almacenar materiales educativos en formatos texto, audi
 - **Módulo:** Educación (EDU)
 - **Fuente:** Revisión documental + entrevistas
 
+## Tareas Vinculadas
+
+```dataview
+TABLE
+  status as "Estado",
+  assignee as "Responsable",
+  sprint as "Sprint",
+  priority as "Prioridad"
+FROM "05-Sprints"
+WHERE type = "task" AND requirement = this.file.name
+SORT sprint ASC, priority ASC
+```
+
 ## Historial de Cambios
 
 | Fecha | Cambio | Autor |

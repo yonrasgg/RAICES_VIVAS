@@ -32,9 +32,26 @@ dv.table(
     ["📋 Requerimientos funcionales", `${rf}`],
     ["🔒 Requerimientos no funcionales", `${rnf}`],
     ["📦 Total requerimientos", `${rf + rnf}`],
-    ["🏃 Sprint actual", "Sprint-01 (completado)"],
   ]
 );
+
+// Sprint actual — dinámico
+const sprintPages = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.sprint);
+const sprintGroups = {};
+for (const t of sprintPages) {
+  const s = String(t.sprint);
+  if (!sprintGroups[s]) sprintGroups[s] = { active: 0, total: 0 };
+  sprintGroups[s].total++;
+  if (t.status !== "done") sprintGroups[s].active++;
+}
+const sortedSprints = Object.entries(sprintGroups).sort((a, b) => a[0].localeCompare(b[0]));
+let currentSprint = sortedSprints.length ? sortedSprints[sortedSprints.length - 1][0] : "N/A";
+let label = "";
+for (const [name, data] of sortedSprints) {
+  if (data.active > 0) { currentSprint = name; label = "en curso"; break; }
+  label = "completado";
+}
+dv.paragraph(`> **🏃 Sprint actual:** ${currentSprint} (${label})`);
 ```
 
 ---
@@ -202,10 +219,25 @@ SORT priority ASC
 
 ## Velocidad por Sprint
 
-| Sprint | Tareas Plan. | Tareas Done | Velocidad | Días |
-|--------|-------------|-------------|-----------|------|
-| Sprint-01 | 20 | 20 | 100% | 23 |
-| Sprint-02 | 5 | 0 | 0% | (en curso) |
+```dataviewjs
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.sprint);
+const sprints = {};
+for (const t of tasks) {
+  const s = String(t.sprint);
+  if (!sprints[s]) sprints[s] = { planned: 0, done: 0, points: 0 };
+  sprints[s].planned++;
+  if (t.status === "done") sprints[s].done++;
+  sprints[s].points += parseInt(String(t.effort)) || 1;
+}
+const headers = ["Sprint", "Planificadas", "Completadas", "% Completado", "Story Points"];
+const rows = Object.entries(sprints)
+  .sort((a, b) => a[0].localeCompare(b[0]))
+  .map(([name, d]) => {
+    const pct = d.planned > 0 ? Math.round((d.done / d.planned) * 100) : 0;
+    return [name, d.planned, d.done, `${pct}%`, d.points];
+  });
+dv.table(headers, rows);
+```
 
 ---
 

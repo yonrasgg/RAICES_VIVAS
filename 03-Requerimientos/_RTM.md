@@ -68,3 +68,20 @@ SORT wbs ASC
 | `approved` | Aprobado y listo para diseño/implementación |
 | `implemented` | Implementado en código |
 | `tested` | Verificado con pruebas |
+
+## Cobertura de Tareas por Requerimiento
+
+```dataviewjs
+const tasks = dv.pages('"05-Sprints"').where(p => p.type === "task");
+const reqs = dv.pages('"03-Requerimientos"').where(p => p.type && p.type.startsWith("requirement"));
+
+const rows = reqs.map(req => {
+  const linkedTasks = tasks.where(t => t.requirement === req.file.name);
+  const total = linkedTasks.length;
+  const done = linkedTasks.where(t => t.status === "done").length;
+  const coverage = total > 0 ? `${done}/${total}` : "⚠️ Sin tareas";
+  return [req.file.link, req.module || req.category || "—", req.status, coverage];
+});
+
+dv.table(["Requerimiento", "Módulo", "Estado", "Cobertura"], rows);
+```

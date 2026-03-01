@@ -44,6 +44,19 @@ La gobernanza cultural es un derecho reconocido de los pueblos indígenas. Un si
 - **WBS:** [[WBS#RV-4.3]]
 - **Categoría:** Gobernanza
 
+## Tareas Vinculadas
+
+```dataview
+TABLE
+  status as "Estado",
+  assignee as "Responsable",
+  sprint as "Sprint",
+  priority as "Prioridad"
+FROM "05-Sprints"
+WHERE type = "task" AND requirement = this.file.name
+SORT sprint ASC, priority ASC
+```
+
 ## Historial de Cambios
 
 | Fecha | Cambio | Autor |

@@ -49,6 +49,19 @@ El sistema debe permitir registrar campañas preventivas (vacunación, tamizaje,
 - **Módulo:** Salud Comunitaria (SAL)
 - **Fuente:** Documentación institucional
 
+## Tareas Vinculadas
+
+```dataview
+TABLE
+  status as "Estado",
+  assignee as "Responsable",
+  sprint as "Sprint",
+  priority as "Prioridad"
+FROM "05-Sprints"
+WHERE type = "task" AND requirement = this.file.name
+SORT sprint ASC, priority ASC
+```
+
 ## Historial de Cambios
 
 | Fecha | Cambio | Autor |

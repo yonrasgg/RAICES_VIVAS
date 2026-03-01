@@ -49,6 +49,19 @@ El sistema debe registrar confirmación de consentimiento del portador del saber
 - **Módulo:** Saberes Ancestrales (SAB)
 - **Fuente:** Entrevistas + ética cultural
 
+## Tareas Vinculadas
+
+```dataview
+TABLE
+  status as "Estado",
+  assignee as "Responsable",
+  sprint as "Sprint",
+  priority as "Prioridad"
+FROM "05-Sprints"
+WHERE type = "task" AND requirement = this.file.name
+SORT sprint ASC, priority ASC
+```
+
 ## Historial de Cambios
 
 | Fecha | Cambio | Autor |
