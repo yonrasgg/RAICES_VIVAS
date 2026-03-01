@@ -1,7 +1,27 @@
 views:
   - type: table
     name: Table
+    order:
+      - file.name
+      - file.ctime
+      - file.ext
+      - file.folder
+      - assignee
+      - author
+      - created
+      - completed
+      - date
+      - due
+      - id
+      - started
+      - status
+      - updated
+    sort: []
   - type: cards
     name: View
+    order:
+      - file.name
+      - tags
+      - file.mtime
     image: file.file
     imageAspectRatio: 0.6

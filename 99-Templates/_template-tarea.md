@@ -34,8 +34,9 @@ tags:
 
 > ¿Qué se debe hacer concretamente?
 
-## Criterios de Aceptación (DoD) #todo
+## Criterios de Aceptación (DoD)
 
+#todo
 - [ ] Criterio 1
 - [ ] Criterio 2
 
