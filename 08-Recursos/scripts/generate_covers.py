@@ -116,6 +116,14 @@ PALETTES = {
         "detail": (45, 38, 65),
         "text": (242, 238, 250),
     },
+    "riesgos": {
+        "bg": (38, 15, 15),         # rojo oscuro profundo
+        "primary": (210, 65, 50),   # rojo alerta
+        "secondary": (220, 140, 45),# ámbar advertencia
+        "accent": (240, 200, 60),   # amarillo señal
+        "detail": (60, 30, 30),
+        "text": (250, 240, 235),
+    },
 }
 
 
@@ -857,6 +865,134 @@ def cover_adr(path):
     print(f"  ✓ {path}")
 
 
+def cover_riesgos(path):
+    """Riesgos — señales de advertencia, escudo, relámpagos, triángulos alerta."""
+    p = PALETTES["riesgos"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (25, 8, 8))
+
+    # --- Grietas / fracturas (riesgo latente) ---
+    for _ in range(12):
+        x = random.randint(0, WIDTH)
+        y = random.randint(0, HEIGHT)
+        pts = [(x, y)]
+        for _ in range(random.randint(4, 8)):
+            x += random.randint(-40, 40)
+            y += random.randint(-30, 30)
+            pts.append((x, y))
+        c = random.choice([p["detail"], (*p["primary"][:2], p["primary"][2] // 2)])
+        for i in range(len(pts) - 1):
+            draw.line([pts[i], pts[i + 1]], fill=c, width=1)
+
+    # --- Triángulos de advertencia esparcidos ---
+    for _ in range(10):
+        cx = random.randint(60, WIDTH - 60)
+        cy = random.randint(50, HEIGHT - 50)
+        sz = random.randint(18, 35)
+        tri = [(cx, cy - sz), (cx - sz, cy + sz // 2), (cx + sz, cy + sz // 2)]
+        c = random.choice([p["secondary"], p["accent"]])
+        draw.polygon(tri, outline=c, width=2)
+        # Signo de exclamación dentro
+        draw.line([(cx, cy - sz // 2 + 4), (cx, cy + sz // 4 - 2)], fill=c, width=2)
+        draw.ellipse([cx - 2, cy + sz // 4 + 1, cx + 2, cy + sz // 4 + 5], fill=c)
+
+    # --- Escudo protector central ---
+    scx, scy = WIDTH // 2, HEIGHT // 2 - 10
+    sw, sh = 90, 110
+    shield_pts = [
+        (scx, scy - sh),          # punta superior
+        (scx + sw, scy - sh // 2), # hombro derecho
+        (scx + sw, scy + sh // 4), # costado derecho
+        (scx, scy + sh),           # punta inferior
+        (scx - sw, scy + sh // 4), # costado izquierdo
+        (scx - sw, scy - sh // 2), # hombro izquierdo
+    ]
+    draw.polygon(shield_pts, outline=p["accent"], width=3)
+    # Cruz interior del escudo
+    draw.line([(scx - sw + 15, scy), (scx + sw - 15, scy)], fill=p["secondary"], width=2)
+    draw.line([(scx, scy - sh + 20), (scx, scy + sh - 20)], fill=p["secondary"], width=2)
+
+    # --- Relámpagos (amenaza) ---
+    for bx, by in [(250, 120), (WIDTH - 250, 120), (350, HEIGHT - 100), (WIDTH - 350, HEIGHT - 100)]:
+        bolt = [
+            (bx, by), (bx - 8, by + 25), (bx + 5, by + 22),
+            (bx - 12, by + 50), (bx + 18, by + 20), (bx + 8, by + 24), (bx + 3, by)
+        ]
+        draw.polygon(bolt, fill=p["accent"])
+
+    # --- Ondas de impacto (círculos parciales) ---
+    for cx, cy in [(150, HEIGHT // 2), (WIDTH - 150, HEIGHT // 2)]:
+        for r in range(20, 80, 15):
+            draw.arc([cx - r, cy - r, cx + r, cy + r], 200, 340, fill=p["primary"], width=2)
+
+    # --- Rombos Bribri (marco cultural) ---
+    draw_diamond_band(draw, 22, 12, 20, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 22, 12, 20, p["accent"])
+
+    # --- Bordes triangulares ---
+    draw_border_pattern(draw, p, "triangles")
+
+    # --- Texto RSK grande centrado ---
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = None
+    sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 120)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    text_color = p["text"]
+    shadow = (0, 0, 0)
+
+    # "RSK" grande
+    label = "RSK"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    # Resplandor rojo detrás del texto
+    for off in range(8, 0, -2):
+        glow_color = tuple(max(0, min(255, c + 30 - off * 3)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow_color)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow_color)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow_color)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow_color)
+    # Sombra
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=shadow)
+    # Texto principal
+    draw.text((tx, ty), label, font=big_font, fill=text_color)
+
+    # Línea decorativa
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    # Subtítulo
+    subtitle = "Gestión de Riesgos · Raíces Vivas"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sw2 = bbox2[2] - bbox2[0]
+    sx = (WIDTH - sw2) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=shadow)
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
 # =====================================================
 # MAIN — Generar todos los covers
 # =====================================================
@@ -879,6 +1015,7 @@ if __name__ == "__main__":
         "cover-roadmap.png": cover_roadmap,
         "cover-proyecto.png": cover_proyecto,
         "cover-adr.png": cover_adr,
+        "cover-riesgos.png": cover_riesgos,
     }
 
     print(f"\n🎨 Generando {len(covers)} covers culturales...\n")
