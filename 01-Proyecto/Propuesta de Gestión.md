@@ -236,27 +236,36 @@ tags:
 ---
 ```
 
-### 3.3 Frontmatter para Tareas (tipo Jira)
+### 3.3 Frontmatter para Tareas
 
 ```yaml
 ---
 type: task
-id: TASK-001
-title: "Crear modelo ER del módulo educativo"
-status: todo               # todo | in-progress | review | done | blocked
-priority: high             # critical | high | medium | low
-assignee: "Geovanny"
-sprint: Sprint-01
-module: educacion
-requirement: RF-EDU-01     # Link al requerimiento padre
-due: 2025-03-15
-created: 2025-02-25
+id: T-026                     # Auto-generado via dv.pages() + Templater (NUNCA manual)
+title: "Diseñar wireframe login"
+status: todo                  # todo | in-progress | review | done | blocked
+priority: high                # critical | high | medium | low
+assignee: "Elkin"
+sprint: Sprint-02
+phase: diseño                 # investigación | análisis | requerimientos | integración | diseño | implementación | testing | gestión
+module: saberes               # educacion | saberes | salud | transversal | proyecto
+requirement: "RF-SAB-01"      # Link al requerimiento padre
+effort: "4h"
+started: 2026-03-01
+due: 2026-03-10
+completed:
+source: "MIN-002"             # Minuta que originó esta tarea (trazabilidad bidireccional)
+created: 2026-03-01
+updated: 2026-03-01
 tags:
   - tarea
-  - modulo/edu
-  - sprint/01
+  - avance-2                  # Calculado automáticamente desde el sprint
 ---
 ```
+
+> **Auto-ID:** El campo `id` se calcula automáticamente al crear la tarea. Templater ejecuta `dv.pages('"05-Sprints"')` para encontrar el máximo ID existente y asignar `max + 1`. El archivo se renombra automáticamente a `T-XXX.md`.
+>
+> **Source:** Cuando una tarea nace de un Action Item de una minuta, el campo `source` registra la minuta origen para trazabilidad bidireccional.
 
 ### 3.4 Frontmatter para Minutas de Reunión
 
@@ -700,17 +709,17 @@ gantt
 | **Offline** | Funciona 100% offline, sync cuando quieras | Requiere conexión para sync |
 | **Costo** | Gratis (repos privados ilimitados) | Gratis hasta 15 GB |
 
-### 9.2 Configuración del Equipo (3 Integrantes)
+### 9.2 Configuración del Equipo
 
-**Herramientas por integrante:**
+**Equipo actual:**
 
-| Integrante | Herramienta principal | Herramienta de sync | Nivel técnico |
-|---|---|---|---|
-| Integrante 1 (técnico) | VS Code + Obsidian | Git CLI / Obsidian Git | Avanzado |
-| Integrante 2 | Obsidian | Plugin **Obsidian Git** (auto-sync) | Intermedio |
-| Integrante 3 (menos técnico) | Obsidian / **github.dev** (tecla `.` en el repo) | GitHub Desktop / navegador | Básico |
+| Integrante | Rol | Módulo | Herramienta principal | Sync |
+|---|---|---|---|---|
+| **Geovanny** | Project Lead / Arquitecto | EDU + Transversal | VS Code + Obsidian | Git CLI / Obsidian Git |
+| **Elkin** | Líder de Investigación / Analista | SAB | Obsidian | Plugin Obsidian Git (auto-sync) |
+| **Santiago** | Líder de QA / Analista | SAL | Obsidian | Plugin Obsidian Git (auto-sync) |
 
-> **Tip:** Cualquier integrante puede editar desde el navegador presionando `.` en el repo de GitHub — abre VS Code completo sin instalar nada.
+> **Liderazgo distribuido:** Cada integrante es líder de su área y tiene autonomía para tomar decisiones técnicas dentro de su módulo. Las decisiones transversales se toman en equipo y se documentan como ADR.
 
 **Flujo de sincronización:**
 ```
@@ -810,22 +819,26 @@ Obsidian Vault (Documentación)     ←→     GitHub Repo (Código + Issues)
 
 ---
 
-## 11. Orden de Implementación Sugerido
+## 11. Estado de Implementación (Completado)
 
-| Paso | Acción | Tiempo estimado |
-|------|--------|-----------------|
-| 1 | Instalar plugins esenciales (Dataview, Templater, Tasks, Kanban, Calendar, Excalidraw, Advanced Tables) | 15 min |
-| 2 | Crear estructura de directorios | 10 min |
-| 3 | Crear templates en `99-Templates/` | 30 min |
-| 4 | Configurar Templater (folder de templates, QuickAdd) | 15 min |
-| 5 | Migrar contenido actual del Avance 1 a la estructura (requerimientos individuales) | 1-2 hrs |
-| 6 | Crear `Home.md` con dashboards Dataview | 30 min |
-| 7 | Crear `_RTM.md` con query de trazabilidad | 15 min |
-| 8 | Configurar Kanban board para Backlog | 15 min |
-| 9 | Configurar Obsidian Git (si se decide) | 15 min |
-| 10 | Crear primer diagrama de arquitectura (Mermaid/Excalidraw) | 30 min |
+> **Setup completado el 2026-02-28.** Todos los pasos se ejecutaron exitosamente.
 
-**Total estimado de setup: ~3-4 horas**
+| Paso | Acción | Estado |
+|------|--------|--------|
+| 1 | Instalar 22 plugins activos | ✅ Completado |
+| 2 | Crear estructura de 10 directorios | ✅ Completado |
+| 3 | Crear 11 templates en `99-Templates/` | ✅ Completado |
+| 4 | Configurar Templater + QuickAdd (10 macros) | ✅ Completado |
+| 5 | Migrar contenido del Avance 1 (20 tareas + 16 RF + 7 RNF) | ✅ Completado |
+| 6 | Crear `Home.md` con dashboards Dataview | ✅ Completado |
+| 7 | Crear `_RTM.md` con query dinámico | ✅ Completado |
+| 8 | Configurar Kanban board (Backlog.md) | ✅ Completado |
+| 9 | Configurar Obsidian Git (auto-commit 10 min, push/pull) | ✅ Completado |
+| 10 | Crear diagramas de arquitectura (Mermaid) | ✅ Completado |
+| 11 | Implementar Auto-ID de tareas (Templater + Dataview) | ✅ Completado |
+| 12 | Implementar promoción de Action Items (QuickAdd macro) | ✅ Completado |
+| 13 | Configurar Checklist plugin (DoD tracking) | ✅ Completado |
+| 14 | Configurar trazabilidad bidireccional (campo `source`) | ✅ Completado |
 
 ---
 
@@ -833,18 +846,19 @@ Obsidian Vault (Documentación)     ←→     GitHub Repo (Código + Issues)
 
 | Aspecto | Decisión |
 |---------|----------|
-| **IDE de documentación** | Obsidian con plugins profesionales |
+| **IDE de documentación** | Obsidian con 22 plugins profesionales |
 | **Esquema de datos** | Frontmatter YAML estricto + Dataview queries |
-| **Templates** | Templater con prompts interactivos |
-| **Diagramas** | Mermaid (código) + Excalidraw (visual) + PlantUML (UML) |
-| **Tareas** | Tasks plugin + Kanban boards |
+| **Templates** | Templater con prompts interactivos + Auto-ID via Dataview |
+| **Diagramas** | Mermaid (código) + Charts (métricas) |
+| **Tareas** | Tasks plugin (emoji format) + Kanban boards + Auto-ID (`T-XXX`) |
 | **Queries** | Dataview (SQL-like sobre Markdown) |
-| **Calendario** | Calendar plugin + Daily Notes |
-| **Trazabilidad** | Frontmatter → Dataview → RTM dinámica |
-| **Tags** | Jerárquicos: `#modulo/`, `#prioridad/`, `#estado/`, `#sprint/` |
-| **Versiones** | GitHub repo privado + plugin Obsidian Git |
-| **Gestión (ahora)** | Kanban + Tasks en Obsidian |
-| **Gestión (futuro)** | GitHub Projects + Milestones integrado |
-| **Colaboración** | GitHub (3 integrantes: Obsidian Git + github.dev) |
+| **Calendario** | Calendar plugin + Periodic Notes (Weekly) |
+| **Trazabilidad** | Frontmatter (`requirement:`, `source:`) → Dataview → RTM dinámica |
+| **Tags** | Flat: `tarea`, `requerimiento`, `avance-N` |
+| **Versiones** | GitHub repo privado + plugin Obsidian Git (auto-commit 10 min) |
+| **Gestión** | Kanban + Tasks + Checklist panel + Dashboard Dataview con KPIs |
+| **Promoción** | Action Items de minutas → Tareas formales via QuickAdd macro |
+| **Equipo** | 3 integrantes con liderazgo distribuido por módulo (EDU/SAB/SAL) |
+| **Colaboración** | GitHub (Obsidian Git auto-sync para todos) |
 
-> **Filosofía:** Cada nota es un nodo de conocimiento con metadata estructurada. Dataview convierte el vault en una base de datos viva. Los links crean la red de trazabilidad. Los templates garantizan consistencia. Los plugins añaden las vistas (tabla, kanban, calendario, gráfico) que transforman Markdown plano en un sistema de gestión profesional.
+> **Filosofía:** Cada nota es un nodo de conocimiento con metadata estructurada. Dataview convierte el vault en una base de datos viva. Los links crean la red de trazabilidad bidireccional. Los templates con Auto-ID garantizan consistencia. La promoción de Action Items cierra el gap entre reuniones y ejecución. Los plugins añaden las vistas (tabla, kanban, calendario, checklist, gráfico) que transforman Markdown plano en un sistema de gestión profesional.
