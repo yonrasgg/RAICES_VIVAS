@@ -129,6 +129,53 @@ Ver [[01-Proyecto/Decisiones/]] — cada decisión es un ADR formal (`ADR-XXX`) 
 - Estados: `proposed` → `accepted` → `deprecated`/`superseded`
 - Origen rastreable (minuta fuente via `source:`)
 
+## Gestión Financiera
+
+Ver [[01-Proyecto/Finanzas|Gestión Financiera]] para el detalle completo. Resumen:
+
+### Costos de Recursos Humanos
+
+| Integrante | Rol | Tarifa / Hora (₡) | Dedicación Semanal |
+|-----------|-----|-------------------|-------------------|
+| **Geovanny** | Project Lead / Arquitecto | ₡7,500 | 12–15 h/semana |
+| **Elkin** | Líder Investigación / Analista | ₡6,000 | 8–10 h/semana |
+| **Santiago** | Líder QA / Analista | ₡6,000 | 8–10 h/semana |
+
+### Herramientas (Costo Cero)
+
+El stack completo opera con **software libre y tiers gratuitos**: Obsidian, GitHub Free, Git, VS Code, Node.js, Python, Mermaid, Draw.io. Ver [[01-Proyecto/Decisiones/ADR-001|ADR-001]].
+
+### Costos Administrativos y Gubernamentales (Fase de Implementación)
+
+| Concepto | Costo Estimado (₡) | Observación |
+|----------|---------------------|-------------|
+| Registro de marca (RNPI) | ₡150,000 | Por clase, Registro Nacional |
+| Publicación en La Gaceta | ₡30,000 | Edicto obligatorio |
+| Constitución de Asociación | ₡180,000 | Personería + libros legales |
+| Certificación MEIC (PYME) | ₡0 | Trámite gratuito en línea |
+
+### Marco Legal para Territorios Indígenas
+
+El proyecto opera dentro del marco de:
+- **Ley Indígena N° 6172** — Derechos de pueblos originarios
+- **Convenio 169 OIT** — Consulta previa, libre e informada
+- **Ley de Biodiversidad N° 7788** — Protección de conocimientos tradicionales
+- **CONAI** — Ente coordinador entre Estado y 24 territorios indígenas
+
+### Métricas de Calidad (Lean Six Sigma)
+
+El proyecto incorpora métricas alineadas con el framework **DMAIC** (Define, Measure, Analyze, Improve, Control):
+
+| Métrica | Descripción | Meta |
+|---------|------------|------|
+| **Throughput** | Tareas completadas por sprint | ≥ 80% |
+| **WIP** | Trabajo en progreso simultáneo | ≤ 5 |
+| **Defect Rate** | % tareas bloqueadas | < 5% |
+| **First Pass Yield** | % completadas sin retrabajo | > 90% |
+| **Cycle Time** | Horas promedio por tarea | < 4h |
+
+Ver [[00-Dashboard/Métricas|Métricas de Avance]] para el dashboard completo con gráficos.
+
 ## Roadmap
 
 Ver [[00-Dashboard/Roadmap]] para el timeline completo del proyecto.

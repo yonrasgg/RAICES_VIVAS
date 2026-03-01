@@ -1242,7 +1242,75 @@ El Dashboard Home tiene 7 botones precreados:
 
 ---
 
+## 18. Gestión Financiera
+
+El proyecto cuenta con un documento de gestión financiera completo. Ver [[01-Proyecto/Finanzas|Gestión Financiera — Raíces Vivas]].
+
+### 18.1 Resumen de Costos
+
+| Categoría | Descripción | Estado |
+|-----------|------------|--------|
+| **Recursos Humanos** | Tarifas por hora × horas invertidas (Dataview dinámico) | ✅ Activo |
+| **Herramientas** | Stack 100% gratuito (Obsidian, GitHub, Git, VS Code) | ✅ Costo cero |
+| **Administrativo / Legal** | Registro de marca, constitución de asociación, MEIC | ⏳ Fase implementación |
+| **Gubernamental** | Plan de gestión de marca, consulta previa CONAI | ⏳ Fase implementación |
+
+### 18.2 Cómo Registrar Costos
+
+Las horas trabajadas se rastrean automáticamente via el campo `effort:` en cada tarea:
+
+1. Al crear una tarea (`Ctrl+P` → QuickAdd → Nueva Tarea), el prompt pide **Esfuerzo (horas)**
+2. Al completar la tarea, el campo `effort:` ya contiene el dato
+3. Los dashboards [[00-Dashboard/Home|Home]] y [[00-Dashboard/Métricas|Métricas]] calculan costos automáticamente:
+   - Horas × Tarifa/hora = **Costo por integrante**
+   - Sumatorias por sprint, por módulo, y total del proyecto
+4. La sección financiera de [[01-Proyecto/Finanzas|Finanzas]] muestra:
+   - Costo acumulado por integrante (dinámico)
+   - Horas por sprint (matiz cruzada)
+   - Presupuesto estimado por fase
+   - Gráfico de distribución de costos (bar + doughnut)
+
+### 18.3 Tarifas de Referencia
+
+| Integrante | Tarifa (₡/h) | Tarifa (USD/h) |
+|-----------|--------------|----------------|
+| Geovanny | ₡7,500 | ~$14 |
+| Elkin | ₡6,000 | ~$11 |
+| Santiago | ₡6,000 | ~$11 |
+
+> Tipo de cambio referencial: ₡535/USD (BCCR, marzo 2026)
+
+### 18.4 Marco Legal — Territorios Indígenas
+
+Para proyectos que trabajan con comunidades indígenas de Costa Rica:
+
+| Aspecto | Ley/Convenio | Implicación |
+|---------|-------------|-------------|
+| Consulta previa | Convenio 169 OIT | Obligatoria antes de implementar en territorios |
+| Saberes ancestrales | Ley 7788 Biodiversidad | No patentables; protección de conocimientos |
+| Gobernanza territorial | Ley 6172 Indígena | ADIs como estructura reconocida |
+| Coordinación estatal | Ley 5251 CONAI | Ente rector para asuntos indígenas |
+
+Ver detalle completo en [[01-Proyecto/Finanzas#5. Marco Legal para Territorios Indígenas|Finanzas §5]].
+
+### 18.5 Métricas de Calidad (Lean Six Sigma)
+
+El dashboard [[00-Dashboard/Métricas|Métricas]] incorpora indicadores alineados con **DMAIC**:
+
+| Métrica LSS | Qué Mide | Meta | Dónde se Ve |
+|-------------|----------|------|-------------|
+| Throughput | Tareas completadas | ≥ 80% por sprint | Métricas §7.1 |
+| WIP | Trabajo simultáneo | ≤ 5 tareas | Métricas §7.1 |
+| Defect Rate | % bloqueadas | < 5% | Métricas §7.1 |
+| First Pass Yield | % sin retrabajo | > 90% | Métricas §7.1 |
+| Cycle Time | Horas promedio/tarea | < 4h | Métricas §7.1 |
+| Velocity | Story points/sprint | Tendencia creciente | Métricas §8 |
+
+Los gráficos de colaboración (pie, bar) y velocidad (line) se actualizan en cada sprint. Ver [[00-Dashboard/Métricas#3. Colaboración del Equipo|Métricas §3]] y [[00-Dashboard/Métricas#8. Velocidad por Sprint|Métricas §8]].
+
+---
+
 *Guía creada: 2026-02-27 · Última actualización: 2026-03-01*
 *Equipo: Geovanny (Project Lead) · Elkin (Líder Investigación — SAB) · Santiago (Líder QA — SAL)*
-*Versión: 5.0 — Auto-ID de tareas/decisiones/riesgos, promoción de Action Items + Decisiones + Riesgos, trazabilidad bidireccional completa, gestión de decisiones y riesgos*
+*Versión: 6.0 — Agrega §18 Gestión Financiera (costos, marco legal CR, Lean Six Sigma). Dashboard y Métricas con Charts (pie, bar, line, doughnut, polarArea). Onboarding expandido con instrucciones paso a paso para todas las operaciones.*
 *Revisar y actualizar cada sprint*

@@ -1,215 +1,413 @@
 ---
 type: guide
-title: Onboarding — Raíces Vivas
+title: "Guía de Onboarding — Raíces Vivas"
 project: raices-vivas
+status: active
 created: 2026-02-28
-updated: 2026-02-28
+updated: 2026-03-01
 tags:
   - guia
   - onboarding
 ---
 
-# 🚀 Onboarding — Raíces Vivas
+# 🚀 Guía de Onboarding — Raíces Vivas
 
-> Guía para nuevos integrantes del equipo. Sigue estos pasos para tener tu entorno listo en menos de 15 minutos.
+> **Objetivo:** Que cualquier integrante del equipo pueda operar el vault de forma autónoma siguiendo estas instrucciones paso a paso. Cada operación incluye las **teclas exactas**, **opciones a seleccionar** y **campos a completar**.
 
 ---
 
 ## 1. Requisitos Previos
 
-| Herramienta | Versión mínima | Descarga |
-|-------------|---------------|----------|
-| **Git** | 2.30+ | [git-scm.com](https://git-scm.com/) |
-| **Obsidian** | 1.4+ | [obsidian.md](https://obsidian.md/) |
-| **Cuenta GitHub** | — | [github.com](https://github.com/) |
+| Requisito | Dónde obtenerlo |
+|-----------|-----------------|
+| **Git** (≥ 2.39) | https://git-scm.com/downloads |
+| **Obsidian** (≥ 1.5) | https://obsidian.md/download |
+| **Cuenta GitHub** | https://github.com (con acceso al repo) |
+| **Personal Access Token (PAT)** | GitHub → Settings → Developer Settings → Tokens |
 
-### Verificar Git instalado
-```bash
-git --version
-# Debe mostrar: git version 2.x.x
-```
+### 1.1 Crear Personal Access Token (PAT) en GitHub
 
-### Configurar identidad Git
-```bash
-git config --global user.name "Tu Nombre"
-git config --global user.email "tu-email@ejemplo.com"
-```
+1. Abre https://github.com/settings/tokens
+2. Clic en **"Generate new token"** → selecciona **"Generate new token (classic)"**
+3. En **Note** escribe: `Obsidian RAICES_VIVAS`
+4. En **Expiration** selecciona: `90 days` (o `No expiration` si prefieres)
+5. Marca los scopes:
+   - ✅ `repo` (acceso completo a repositorios privados)
+6. Clic en **"Generate token"**
+7. **COPIA EL TOKEN INMEDIATAMENTE** — no se muestra de nuevo
+8. Guárdalo en un lugar seguro (gestor de contraseñas o archivo local)
 
 ---
 
 ## 2. Clonar el Repositorio
 
+Abre una **terminal** (Terminal en Linux/Mac, Git Bash en Windows):
+
 ```bash
-# En la carpeta donde quieras el vault
+cd ~/Documents
 git clone https://github.com/yonrasgg/RAICES_VIVAS.git
 ```
 
-Esto creará la carpeta `RAICES_VIVAS/` con todo el contenido del vault.
+Si pide usuario y contraseña:
+- **Username:** tu usuario de GitHub
+- **Password:** pega tu **PAT** (NO tu contraseña de GitHub)
 
----
-
-## 3. Configurar Git Credentials
-
-Para que el push/pull funcione automáticamente sin pedir contraseña cada vez:
-
-### 3.1 Generar un Personal Access Token (PAT)
-1. Ve a: **https://github.com/settings/tokens**
-2. Clic en **"Generate new token (classic)"**
-3. **Note:** `obsidian-raices-vivas`
-4. **Expiration:** 90 days (o "No expiration")
-5. **Scopes:** marca solo ✅ `repo`
-6. Clic **"Generate token"**
-7. **Copia el token** (empieza con `ghp_...`) — no lo podrás ver de nuevo
-
-### 3.2 Guardar credenciales
+Para que no vuelva a pedir credenciales:
 ```bash
 git config --global credential.helper store
-cd RAICES_VIVAS
-git push
-# Username: tu-usuario-github
-# Password: pega aquí el PAT (no tu contraseña de GitHub)
 ```
 
-Las credenciales quedan guardadas permanentemente. No te volverá a pedir.
-
 ---
 
-## 4. Abrir como Vault en Obsidian
+## 3. Abrir el Vault en Obsidian
 
 1. Abre **Obsidian**
-2. Clic en **"Abrir carpeta como vault"** (Open folder as vault)
-3. Selecciona la carpeta `RAICES_VIVAS/`
-4. Obsidian detectará los plugins automáticamente
+2. En la pantalla de inicio, clic en **"Open folder as vault"** (Abrir carpeta como vault)
+3. Navega hasta: `~/Documents/RAICES_VIVAS`
+4. Clic en **"Abrir"** / **"Open"**
+5. Si aparece un aviso sobre **"Trust author and enable plugins"**:
+   - Clic en **"Trust author and enable plugins"** ✅
+   - Esto activa los 22 plugins que el proyecto necesita
 
-### ⚠️ Mensaje de "Trust author"
-Obsidian preguntará si confías en los plugins del vault. Clic en **"Trust author and enable plugins"**.
-
-Los 22 plugins ya están configurados y sincronizados desde el repositorio. No necesitas instalar nada manualmente.
-
----
-
-## 5. Configurar Plugin Git en Obsidian
-
-1. `Ctrl+,` → **Community Plugins** → busca **Git** → clic en ⚙️ (Settings)
-2. Configura estos valores:
-
-| Opción | Valor |
-|--------|-------|
-| **Auto commit-and-sync interval (minutes)** | `10` |
-| **Split timers for automatic commit and sync** | ✅ ON |
-| **Auto push interval (minutes)** | `10` |
-| **Auto pull interval (minutes)** | `10` |
-| **Commit message on auto commit-and-sync** | `vault backup: {{date}}` |
-| **Auto commit-and-sync only staged files** | OFF |
-
-3. Verifica en la **barra de estado** (abajo) que aparezca `main ✓`
-
-### Probar la sincronización
-- `Ctrl+P` → **"Git: Pull"** → no debería dar error
-- `Ctrl+P` → **"Git: Push"** → no debería dar error
+> ⚠️ **IMPORTANTE:** Si no confías en los plugins, el Dashboard, las métricas, los templates y las automatizaciones **NO funcionarán**.
 
 ---
 
-## 6. Estructura del Vault
+## 4. Configurar el Plugin Git (obsidian-git)
+
+El plugin ya viene configurado en el vault. Verifica que funciona:
+
+1. Presiona `Ctrl+P` (o `Cmd+P` en Mac) para abrir la **Paleta de Comandos**
+2. Escribe: `Git: Pull`
+3. Selecciona **"Obsidian Git: Pull"** presionando `Enter`
+4. Debe aparecer una notificación: *"Pull successful"* o *"Already up to date"*
+
+### Configuración automática (ya incluida):
+
+| Parámetro | Valor | Qué hace |
+|-----------|-------|----------|
+| Auto pull interval | 10 min | Trae cambios del repo cada 10 minutos |
+| Auto commit interval | 10 min | Commitea cambios locales cada 10 minutos |
+| Auto push interval | 10 min | Sube cambios al repo cada 10 minutos |
+| Commit message | `vault backup: {{date}}` | Mensaje automático con fecha |
+| Pull on startup | ✅ Activado | Trae cambios al abrir Obsidian |
+| Push on backup | ✅ Activado | Sube al hacer commit |
+
+### Si el auto-sync NO funciona:
+
+1. `Ctrl+P` → escribe `Git: Open source control view` → `Enter`
+2. Revisa si hay errores en rojo
+3. Si dice "Authentication failed": repite el paso de PAT (Sección 1.1)
+4. Si dice "Git is not ready": cierra y reabre Obsidian
+
+---
+
+## 5. Estructura del Vault
 
 ```
 RAICES_VIVAS/
-├── 00-Dashboard/        ← Dashboards con métricas y KPIs
-├── 01-Proyecto/         ← Charter, Workflow Guide, Gestión
-├── 02-Investigación/    ← Contexto, fuentes, hallazgos
-├── 03-Requerimientos/   ← RF (funcionales) + RNF (no funcionales) + RTM
-├── 04-Arquitectura/     ← Diagramas, ADRs, visión técnica
-├── 05-Sprints/          ← Tareas organizadas por sprint
-├── 06-Entregables/      ← Documentos de entrega por avance
-├── 07-Reuniones/        ← Minutas de reuniones
-├── 08-Recursos/         ← Imágenes, referencias, glosario
-├── 09-QA/               ← Control de calidad
-├── 99-Templates/        ← Plantillas para crear notas nuevas
-└── Daily Notes/         ← Notas diarias automáticas
+├── 00-Dashboard/         ← Home.md (se abre al iniciar), Métricas, Roadmap
+├── 01-Proyecto/          ← Charter, Equipo, Plan, Workflow, Finanzas, ADRs, Riesgos
+├── 02-Investigación/     ← Contextos (EDU, SAB, SAL), Entrevistas, Fuentes
+├── 03-Requerimientos/    ← RTM, RF (EDU/SAB/SAL), RNF
+├── 04-Arquitectura/      ← WBS, Stack, Modelo de Datos, Diagramas, Prototipos
+├── 05-Sprints/           ← Backlog, Sprint-01..05, Tareas (T-001..T-XXX)
+├── 06-Entregables/       ← Avance-1, Avance-2, Presentaciones
+├── 07-Reuniones/         ← Minutas (MIN-001..MIN-XXX)
+├── 08-Recursos/          ← Imágenes, PDFs, Datos, Scripts
+├── 09-QA/                ← Control de calidad
+├── 99-Templates/         ← 11 templates (NUNCA editar directamente)
+└── Daily Notes/          ← Notas semanales automáticas
 ```
+
+---
+
+## 6. Operaciones Diarias — Paso a Paso
+
+### 6.1 Crear una Nueva Tarea
+
+**Cuándo usar:** Cuando se necesita registrar trabajo nuevo para un sprint.
+
+1. Presiona `Ctrl+P` para abrir la Paleta de Comandos
+2. Escribe: `QuickAdd`
+3. Selecciona: **"QuickAdd: Run QuickAdd"** → presiona `Enter`
+4. Aparece una lista de 12 macros → selecciona: **"Nueva Tarea"** → `Enter`
+5. Aparecen prompts secuenciales — completa cada uno:
+
+| Prompt | Qué escribir | Ejemplo |
+|--------|-------------|---------|
+| **Título** | Nombre descriptivo de la tarea | `Diseñar modelo ER del módulo EDU` |
+| **Assignee (responsable)** | Nombre del integrante | `Geovanny` |
+| **Sprint** | Número de sprint | `Sprint-02` |
+| **Módulo** | EDU, SAB, SAL o Transversal | `EDU` |
+| **Prioridad** | must, should, could | `must` |
+| **Fase** | investigación, análisis, diseño, etc. | `diseño` |
+| **Esfuerzo (horas)** | Estimación en horas | `4` |
+| **Requerimiento relacionado** | ID del RF/RNF | `RF-EDU-01` |
+
+6. Se crea automáticamente el archivo con ID `T-XXX` (calculado por Templater)
+7. La tarea se ubica en `05-Sprints/Sprint-XX/T-XXX.md`
+8. **Verificación:** Abre la tarea y confirma que el frontmatter se llenó correctamente
+
+### 6.2 Cambiar el Estado de una Tarea
+
+**Cuándo usar:** Al empezar, completar, o bloquear una tarea.
+
+**Opción A — Editar frontmatter directamente:**
+1. Abre la tarea (ej: `T-015.md`)
+2. Clic en el campo `status:` en el frontmatter (zona gris superior)
+3. Cambia el valor. Valores válidos:
+   - `todo` → Pendiente
+   - `in-progress` → En progreso
+   - `review` → En revisión
+   - `done` → Completada
+   - `blocked` → Bloqueada
+4. Si cambias a `done`, agrega también: `completed: 2026-03-01` (fecha actual)
+
+**Opción B — Usar Meta Bind (si la nota tiene controles interactivos):**
+1. Abre la tarea
+2. Busca la sección **"Control Rápido"** (tabla con dropdowns)
+3. Haz clic en el dropdown de **Estado**
+4. Selecciona el nuevo estado de la lista
+5. El frontmatter se actualiza automáticamente
+
+**Opción C — Desde el Kanban (Backlog):**
+1. Abre [[05-Sprints/Backlog|Backlog]]
+2. Arrastra la tarjeta de una columna a otra (Todo → In Progress → Done)
+3. El estado se sincroniza automáticamente
+
+### 6.3 Crear una Nueva Minuta
+
+**Cuándo usar:** Para documentar cada reunión del equipo.
+
+1. `Ctrl+P` → `QuickAdd` → `Enter`
+2. Selecciona: **"Nueva Minuta"** → `Enter`
+3. Completa:
+   - **Título:** nombre de la reunión (ej: `Revisión Sprint 01`)
+   - **Fecha:** formato YYYY-MM-DD (ej: `2026-03-01`)
+   - **Asistentes:** nombres separados por coma (ej: `Geovanny, Elkin, Santiago`)
+4. Se crea `07-Reuniones/MIN-XXX.md` con template completo
+5. **Dentro de la minuta**, completa estas secciones:
+   - **Agenda:** temas a discutir
+   - **Decisiones:** escribe cada decisión tomada
+   - **Riesgos Identificados:** cualquier riesgo nuevo
+   - **Action Items:** checklist de tareas que salieron de la reunión
+
+### 6.4 Promover un Action Item a Tarea Formal
+
+**Cuándo usar:** Después de una reunión, para convertir action items en tareas rastreables.
+
+1. `Ctrl+P` → `QuickAdd` → `Enter`
+2. Selecciona: **"📋 Promover Action Item"** → `Enter`
+3. Completa:
+   - **Título:** el texto del action item
+   - **Minuta origen:** ID de la minuta (ej: `MIN-001`)
+   - **Responsable:** quién lo ejecutará
+   - **Sprint:** en qué sprint se trabajará
+4. Se crea una nueva tarea `T-XXX.md` con campo `source: "MIN-001"`
+5. **Trazabilidad:** La tarea referencia la minuta de origen
+
+### 6.5 Promover una Decisión a ADR Formal
+
+**Cuándo usar:** Cuando una decisión importante de reunión necesita documentación formal.
+
+1. `Ctrl+P` → `QuickAdd` → `Enter`
+2. Selecciona: **"🏗️ Promover Decisión"** → `Enter`
+3. Completa:
+   - **Título:** la decisión (ej: `Usar PostgreSQL como base de datos`)
+   - **Minuta origen:** ID de la minuta (ej: `MIN-001`)
+   - **Estado:** `proposed` o `accepted`
+4. Se crea `01-Proyecto/Decisiones/ADR-XXX.md` con ID automático
+5. **Dentro del ADR**, completa: Contexto, Opciones, Justificación, Consecuencias
+
+### 6.6 Promover un Riesgo a Nota Formal
+
+**Cuándo usar:** Cuando se identifica un riesgo en reunión que necesita seguimiento.
+
+1. `Ctrl+P` → `QuickAdd` → `Enter`
+2. Selecciona: **"⚠️ Promover Riesgo"** → `Enter`
+3. Completa:
+   - **Título:** descripción del riesgo
+   - **Minuta origen:** ID de la minuta
+   - **Probabilidad:** 1 (baja) a 5 (muy alta)
+   - **Impacto:** 1 (bajo) a 5 (muy alto)
+   - **Responsable (owner):** quién lo monitorea
+4. La **severidad se calcula automáticamente** (prob × impacto)
+5. Se crea `01-Proyecto/Riesgos/RSK-XXX.md` con plan de respuesta vacío para completar
+
+### 6.7 Crear un Requerimiento Funcional
+
+1. `Ctrl+P` → `QuickAdd` → `Enter`
+2. Selecciona: **"Nuevo RF"** → `Enter`
+3. Completa:
+   - **Módulo:** `EDU`, `SAB` o `SAL`
+   - **Título:** nombre del requerimiento
+   - **Prioridad MoSCoW:** `must`, `should`, `could`, `wont`
+   - **Stakeholder:** quién lo necesita
+4. Se crea en `03-Requerimientos/Funcionales/<MÓDULO>/RF-<MOD>-XX.md`
+
+### 6.8 Crear un Requerimiento No Funcional
+
+1. `Ctrl+P` → `QuickAdd` → `Enter`
+2. Selecciona: **"Nuevo RNF"** → `Enter`
+3. Completa:
+   - **Título:** nombre del requisito
+   - **Categoría:** rendimiento, seguridad, usabilidad, etc.
+   - **Prioridad MoSCoW:** `must`, `should`, `could`, `wont`
+4. Se crea en `03-Requerimientos/No Funcionales/RNF-XX.md`
+
+### 6.9 Registrar una Entrevista
+
+1. `Ctrl+P` → `QuickAdd` → `Enter`
+2. Selecciona: **"Entrevista"** → `Enter`
+3. Completa los campos solicitados (participante, fecha, contexto)
+4. Se crea en `02-Investigación/Entrevistas/`
+
+### 6.10 Sprint Planning / Sprint Review
+
+**Sprint Planning:**
+1. `Ctrl+P` → `QuickAdd` → **"Sprint Planning"** → `Enter`
+2. Completa: número de sprint, fechas, metas
+3. Se crea en `05-Sprints/Sprint-XX/Sprint-XX-Planning.md`
+
+**Sprint Review:**
+1. `Ctrl+P` → `QuickAdd` → **"Sprint Review"** → `Enter`
+2. Completa: número de sprint, logros, obstáculos
+3. Se crea en `05-Sprints/Sprint-XX/Sprint-XX-Review.md`
 
 ---
 
 ## 7. Flujo de Trabajo Diario
 
 ### Al iniciar sesión
-1. Abre Obsidian — el plugin Git hace **auto-pull** automáticamente
-2. Ve al **Dashboard** ([[00-Dashboard/Home|Home]]) para ver el estado del proyecto
-3. Revisa tus **tareas pendientes** en el tablero Kanban o en la Daily Note
 
-### Para crear notas nuevas
-- `Ctrl+P` → **"QuickAdd"** → selecciona el tipo:
-  - 📋 Nueva Tarea
-  - 📐 Nuevo Requerimiento Funcional
-  - 📐 Nuevo Requerimiento No Funcional
-  - ⚠️ Nuevo Riesgo
-  - 📝 Nueva Minuta
-  - 🚀 Nuevo Sprint Planning
-  - 📋 Nuevo Sprint Review
+1. **Abre Obsidian** — el plugin Git hace **auto-pull** automáticamente al iniciar
+2. **Espera 5 segundos** para que Obsidian cargue todos los plugins
+3. El **Dashboard** ([[00-Dashboard/Home|Home]]) se abre automáticamente (plugin Homepage)
+4. **Revisa:**
+   - 📊 KPIs en la parte superior (progreso, sprint actual, riesgos)
+   - 🏃 Tareas pendientes (tabla dinámica)
+   - ⚠️ Riesgos activos
+5. **Planifica tu trabajo:** revisa las tareas asignadas a ti
 
-### Para editar una nota existente
-- Usa **Meta Bind** (los controles interactivos que aparecen en las notas) para cambiar estado, prioridad, sprint, etc.
-- Los cambios en el frontmatter se reflejan automáticamente en los dashboards
+### Durante el trabajo
+
+1. **Abre tu tarea actual** desde el Dashboard o desde el Backlog
+2. **Cambia el estado** a `in-progress` (ver 6.2)
+3. **Trabaja en la tarea** — edita los archivos necesarios
+4. **Al terminar**, cambia el estado a `done` y agrega `completed: YYYY-MM-DD`
+5. Los cambios se **sincronizan automáticamente** cada 10 minutos
 
 ### Al terminar sesión
-- No necesitas hacer nada — el auto-sync guarda y sube cada 10 minutos
-- Si quieres forzar un sync: `Ctrl+P` → **"Git: Commit all changes"** → **"Git: Push"**
+
+- **No necesitas hacer nada** — el auto-sync guarda y sube cada 10 min
+- **Para forzar un sync inmediato:**
+  1. `Ctrl+P` → escribe: `Git: Commit all changes` → `Enter`
+  2. `Ctrl+P` → escribe: `Git: Push` → `Enter`
+  3. Debe aparecer: *"Push successful"*
 
 ---
 
 ## 8. Comandos Git Útiles desde Obsidian
 
-| Comando (Ctrl+P) | Qué hace |
-|-------------------|----------|
-| **Git: Pull** | Trae cambios del repo |
-| **Git: Push** | Sube tus cambios |
-| **Git: Commit all changes** | Commitea todo sin esperar auto-sync |
-| **Git: Open source control view** | Panel de cambios (tipo VS Code) |
-| **Git: View file history** | Historial de un archivo específico |
+| Acción | Teclas | Comando a seleccionar |
+|--------|--------|----------------------|
+| Abrir paleta de comandos | `Ctrl+P` | — |
+| Traer cambios del repo | `Ctrl+P` → escribe `Git Pull` | **Obsidian Git: Pull** |
+| Subir tus cambios | `Ctrl+P` → escribe `Git Push` | **Obsidian Git: Push** |
+| Commitear todo ahora | `Ctrl+P` → escribe `Git Commit` | **Obsidian Git: Commit all changes** |
+| Ver panel de cambios | `Ctrl+P` → escribe `Git Source` | **Obsidian Git: Open source control view** |
+| Ver historial de archivo | `Ctrl+P` → escribe `Git History` | **Obsidian Git: View file history** |
+| Abrir QuickAdd | `Ctrl+P` → escribe `QuickAdd` | **QuickAdd: Run QuickAdd** |
 
 ---
 
-## 9. Reglas de Colaboración
+## 9. Reglas de Colaboración (No Negociables)
 
-1. **No editar el mismo archivo simultáneamente** — coordinar por chat
-2. **Los dashboards y queries se actualizan solos** — no editar valores hardcodeados
-3. **Usar QuickAdd para crear notas** — garantiza frontmatter correcto
-4. **Si hay conflicto de merge** — Git avisa explícitamente, resolver juntos
-5. **No borrar archivos sin avisar** — especialmente templates y configs
-
----
-
-## 10. ¿Problemas?
-
-| Problema | Solución |
-|----------|----------|
-| "Git is not ready" en Obsidian | Cerrar y reabrir Obsidian |
-| Push pide usuario/contraseña | `git config --global credential.helper store` + hacer push manual |
-| Plugins no cargan | `Ctrl+P` → "Reload app without saving" |
-| Conflicto de merge | `git pull --rebase` desde terminal, o pedir ayuda al equipo |
-| Banner no aparece | Verificar campo `banner_src:` en frontmatter con ruta correcta |
+| # | Regla | Por qué |
+|---|-------|---------|
+| 1 | **No editar el mismo archivo simultáneamente** | Evita conflictos de merge |
+| 2 | **Coordinar por chat antes de editar archivos compartidos** | Reducir colisiones |
+| 3 | **Usar QuickAdd para crear notas** | Garantiza frontmatter correcto y Auto-ID |
+| 4 | **No editar dashboards ni queries manualmente** | Se actualizan solos vía Dataview |
+| 5 | **No borrar archivos sin avisar al equipo** | Especialmente templates y configs |
+| 6 | **Si hay conflicto de merge** → avisar al equipo inmediatamente | No resolver solo si no estás seguro |
+| 7 | **Mantener el campo `status:` actualizado** en tus tareas | Dashboards dependen de este campo |
+| 8 | **Siempre usar las convenciones de frontmatter** | Ver [[Guía de Workflow]] §4 |
 
 ---
 
-## 11. Editar desde el Navegador (Sin instalar nada)
+## 10. Resolución de Problemas Comunes
 
-Si no puedes instalar Obsidian en alguna máquina:
+| Problema | Causa probable | Solución paso a paso |
+|----------|----------------|---------------------|
+| "Git is not ready" | Plugin no inicializó bien | 1. Cierra Obsidian completamente. 2. Reabre Obsidian. 3. Espera 10 seg. |
+| Push pide usuario/contraseña | Credenciales no guardadas | 1. Abre terminal. 2. Ejecuta: `git config --global credential.helper store`. 3. Haz `git push` manual una vez. 4. Ingresa usuario + PAT. |
+| Plugins no cargan | Cache corrupto | 1. `Ctrl+P` → `Reload app without saving` → `Enter`. 2. Si persiste: cierra, borra `.obsidian/workspace.json`, reabre. |
+| Conflicto de merge | Dos personas editaron el mismo archivo | 1. `Ctrl+P` → `Git: Pull` (intenta auto-merge). 2. Si falla: abrir terminal → `git pull --rebase`. 3. Si hay conflicto: buscar `<<<<<<<` en el archivo → resolver → commit. |
+| Banner no aparece | Campo `banner_src:` incorrecto | 1. Abrir frontmatter. 2. Verificar que la ruta del archivo existe en `08-Recursos/Imágenes/`. |
+| Dashboard vacío | Dataview no ha indexado | 1. `Ctrl+P` → `Dataview: Force refresh all views` → `Enter`. 2. Espera 5 seg. |
+| QuickAdd no muestra macros | Plugin no cargó correctamente | 1. `Ctrl+P` → `Reload app without saving`. 2. Verificar: Settings → Community Plugins → QuickAdd está habilitado (toggle azul). |
+| Tarea no aparece en Dashboard | Frontmatter incorrecto | 1. Abrir la tarea. 2. Verificar que tiene `type: task`. 3. Verificar `status:` tiene un valor válido. |
+| Checklist panel vacío | Tag incorrecto | 1. Verificar que las tareas tienen `tags: tarea` en frontmatter. 2. Verificar que están en `05-Sprints/`. |
 
-1. Ve a **https://github.com/yonrasgg/RAICES_VIVAS**
-2. Presiona la tecla **`.`** (punto)
-3. Se abre **VS Code web** — puedes editar cualquier archivo
-4. Los cambios se commitean directamente al repo
+---
+
+## 11. Editar desde el Navegador (Emergencia)
+
+Si **no puedes instalar Obsidian** en alguna máquina (computadora de la universidad, etc.):
+
+1. Abre el navegador web
+2. Ve a **https://github.com/yonrasgg/RAICES_VIVAS**
+3. Presiona la tecla **`.`** (punto) en tu teclado
+4. Se abre **VS Code Web** — puedes editar cualquier archivo Markdown
+5. Los cambios se commitean directamente al repo
+6. ⚠️ **Limitación:** No tendrás Dataview, QuickAdd ni templates — solo edición básica
 
 ---
 
 ## 12. Contacto del Equipo
 
-| Integrante | Rol |
-|------------|-----|
-| **Geovanny** | Project Lead / Arquitecto |
-| **Elkin** | Líder de Investigación / Analista — SAB |
-| **Santiago** | Líder de QA / Analista — SAL |
+| Integrante | Rol | Módulo | Contacto |
+|------------|-----|--------|----------|
+| **Geovanny** | Project Lead / Arquitecto | EDU + Transversal | GitHub: @yonrasgg |
+| **Elkin** | Líder de Investigación / Analista | SAB | Coordinar por chat grupal |
+| **Santiago** | Líder de QA / Analista | SAL | Coordinar por chat grupal |
 
 ---
 
-> 📌 **¿Dudas sobre el workflow?** Consulta [[Guía de Workflow]] para la referencia completa de convenciones, plugins y flujos.
+## 13. Tabla de Atajos Esenciales
+
+| Atajo | Acción | Cuándo usar |
+|-------|--------|-------------|
+| `Ctrl+P` | Paleta de comandos | Para CUALQUIER comando |
+| `Ctrl+O` | Abrir archivo rápido | Buscar cualquier nota por nombre |
+| `Ctrl+E` | Alternar edición/vista | Ver el Markdown renderizado |
+| `Ctrl+N` | Nueva nota vacía | Solo para notas temporales (preferir QuickAdd) |
+| `Ctrl+Shift+F` | Buscar en todo el vault | Encontrar texto en cualquier archivo |
+| `Ctrl+Click` | Abrir link en nueva pestaña | Navegar sin perder la nota actual |
+| `Alt+←` / `Alt+→` | Navegar atrás/adelante | Como un navegador web |
+| `Ctrl+,` | Abrir configuración | Ajustar plugins y opciones |
+
+---
+
+## 14. Resumen de Macros QuickAdd Disponibles
+
+| # | Macro | Qué crea | Dónde se guarda |
+|---|-------|---------|-----------------|
+| 1 | **Nueva Tarea** | Tarea `T-XXX.md` con auto-ID | `05-Sprints/Sprint-XX/` |
+| 2 | **Nuevo RF** | Requerimiento funcional | `03-Requerimientos/Funcionales/<MOD>/` |
+| 3 | **Nuevo RNF** | Requerimiento no funcional | `03-Requerimientos/No Funcionales/` |
+| 4 | **Nueva Minuta** | Minuta de reunión `MIN-XXX.md` | `07-Reuniones/` |
+| 5 | **Nuevo ADR** | Decisión arquitectónica `ADR-XXX.md` | `01-Proyecto/Decisiones/` |
+| 6 | **Nuevo Riesgo** | Riesgo formal `RSK-XXX.md` | `01-Proyecto/Riesgos/` |
+| 7 | **Entrevista** | Nota de entrevista | `02-Investigación/Entrevistas/` |
+| 8 | **Sprint Planning** | Planificación de sprint | `05-Sprints/Sprint-XX/` |
+| 9 | **Sprint Review** | Revisión de sprint | `05-Sprints/Sprint-XX/` |
+| 10 | **📋 Promover Action Item** | Tarea desde action item de minuta | `05-Sprints/Sprint-XX/` |
+| 11 | **🏗️ Promover Decisión** | ADR desde decisión de minuta | `01-Proyecto/Decisiones/` |
+| 12 | **⚠️ Promover Riesgo** | Riesgo desde minuta | `01-Proyecto/Riesgos/` |
+
+---
+
+> 📌 **¿Dudas sobre convenciones avanzadas?** Consulta [[Guía de Workflow]] para la referencia completa de frontmatter, tags, emojis, diagramas y flujos detallados.
