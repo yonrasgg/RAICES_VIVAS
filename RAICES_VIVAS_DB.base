@@ -22,12 +22,10 @@ views:
     sort: []
     limit: 25
   - type: cards
-    name: View
+    name: Galery
     order:
       - file.name
       - tags
       - file.mtime
     image: banner_src
     imageAspectRatio: 0.6
-  - type: table
-    name: View 2

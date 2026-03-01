@@ -86,6 +86,8 @@ const today = tp.date.now("YYYY-MM-DD");
 await tp.file.rename(nextId);
 -%>
 ---
+banner_src: "08-Recursos/Imágenes/cover-riesgos.png"
+banner_src_y: 0.42
 type: risk
 id: <% nextId %>
 title: "<% title %>"

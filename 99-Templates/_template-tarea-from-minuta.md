@@ -74,6 +74,8 @@ const avanceTag = sprint === "backlog" ? "" : `\n  - avance-${sprintNum}`;
 await tp.file.rename(nextId);
 -%>
 ---
+banner_src: "08-Recursos/Imágenes/cover-tareas.png"
+banner_src_y: 0.42
 type: task
 id: <% nextId %>
 title: "<% title %>"
