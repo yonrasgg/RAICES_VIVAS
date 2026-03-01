@@ -1,4 +1,5 @@
 {
+  "tagName": "#tarea",
   "includeFiles": "05-Sprints",
   "showCompleted": false,
   "autoRefresh": true,
