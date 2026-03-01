@@ -1,0 +1,26 @@
+{
+  "weekly": {
+    "format": "YYYY-[W]ww",
+    "template": "99-Templates/_template-weekly-note.md",
+    "folder": "Daily Notes",
+    "enabled": true
+  },
+  "monthly": {
+    "format": "YYYY-MM",
+    "template": "",
+    "folder": "Daily Notes",
+    "enabled": false
+  },
+  "quarterly": {
+    "format": "",
+    "template": "",
+    "folder": "",
+    "enabled": false
+  },
+  "yearly": {
+    "format": "",
+    "template": "",
+    "folder": "",
+    "enabled": false
+  }
+}

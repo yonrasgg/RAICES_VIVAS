@@ -1,0 +1,7 @@
+{
+  "includeFiles": "05-Sprints",
+  "showCompleted": false,
+  "autoRefresh": true,
+  "groupBy": "page",
+  "sortDirection": "new->old"
+}

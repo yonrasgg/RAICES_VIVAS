@@ -1,7 +1,6 @@
 # Obsidian - archivos de workspace (cambian constantemente, no necesitan sync)
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
-.obsidian/plugins/*/data.json
 
 # Trash de Obsidian
 .trash/
