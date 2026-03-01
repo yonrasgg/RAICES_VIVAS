@@ -337,7 +337,97 @@ RAICES_VIVAS/
 
 ---
 
-## 10. Resolución de Problemas Comunes
+## 10. Frontmatter — El Motor de Automatización del Vault
+
+El frontmatter (bloque YAML entre `---` al inicio de cada nota) es la **base de datos del proyecto**. Los dashboards, métricas, weekly notes y tablas automáticas leen estos campos via Dataview. Si un campo está vacío o incorrecto, la nota **desaparece** del sistema.
+
+> 📌 **Referencia completa:** [[Guía de Workflow]] §4 contiene los 12 esquemas detallados con campos REQUERIDO/RECOMENDADO/OPCIONAL y el mapa campo→automatización. Esta sección es un resumen rápido.
+
+### 10.1 Tarjeta de Referencia Rápida por Tipo de Nota
+
+#### Tarea (`type: task`) — La más importante
+
+| Campo | Ejemplo | ¿Cuándo llenarlo? | Si falta... |
+|-------|---------|-------------------|-------------|
+| `type: task` | — | Al crear (automático) | ❌ Invisible para TODO el sistema |
+| `id: T-XXX` | `T-026` | Al crear (auto-ID) | ❌ No se puede referenciar |
+| `status` | `todo`, `in-progress`, `done` | **Cada vez que cambia** | ❌ No aparece en Dashboard ni Kanban |
+| `priority` | `high`, `medium`, `low` | Al crear | ⚠️ Sin ordenamiento correcto |
+| `assignee` | `Geovanny` | Al crear | ❌ Costo = ₡0, sin filtro por persona |
+| `effort: "8h"` | `"4h"` | Al crear (estimación) | ⚠️ Horas estimadas = 0 |
+| `effort_actual: "10h"` | `"6h"` | **Al completar la tarea** | ❌ Horas reales = 0, costo = 0 |
+| `due` | `2026-03-14` | Al crear | ❌ No aparece en weekly "Pendientes" ni Calendar |
+| `completed` | `2026-03-13` | **Al cambiar a `done`** | ❌ No aparece en weekly "Completadas" |
+| `sprint` | `Sprint-02` | Al crear | ⚠️ Tarea sin sprint = flotante |
+
+> **⚠️ Error #1 más común:** Cambiar `status: done` pero olvidar llenar `completed: YYYY-MM-DD` y `effort_actual: "Xh"`. Esto hace que la tarea no aparezca en la weekly note y el costo se calcule como ₡0.
+
+> **⚠️ Error #2 más común:** Escribir `effort: 8h` sin comillas. Dataview lo interpreta como Duration (objeto), no string. **Siempre** usar `effort: "8h"` con comillas.
+
+**Checklist al completar una tarea:**
+1. ✅ `status: done`
+2. ✅ `completed: 2026-03-01` (fecha real)
+3. ✅ `effort_actual: "Xh"` (horas reales)
+
+#### Riesgo (`type: risk`)
+
+| Campo | Lo que alimenta | Si falta... |
+|-------|----------------|-------------|
+| `type: risk` | Tabla de riesgos en Dashboard y Weekly | ❌ Invisible |
+| `status: open` | Filtro "Riesgos Activos" | ❌ No aparece como activo |
+| `severity` | Ordenamiento por urgencia | ⚠️ Sin clasificación |
+| `review_date` | Alertas de revisión vencida | ⚠️ No se sabe cuándo revisar |
+
+#### ADR (`type: adr`)
+
+| Campo | Lo que alimenta | Si falta... |
+|-------|----------------|-------------|
+| `type: adr` | KPI "ADRs" en Dashboard (⚠️ NO usar `type: decision`) | ❌ Invisible |
+| `date` | Weekly Note "ADR esta semana" | ❌ No aparece en weekly |
+| `status` | Conteo por estado en Métricas | ⚠️ Sin clasificación |
+
+#### Weekly Note (`type: weekly`)
+
+| Campo | Lo que alimenta | Si falta... |
+|-------|----------------|-------------|
+| `week_start: 2026-02-23` | TODAS las queries de la weekly note | ❌ Muestra TODO el vault |
+| `week_end: 2026-03-01` | TODAS las queries de la weekly note | ❌ Muestra TODO el vault |
+
+> Las weekly notes se crean automáticamente con Periodic Notes. El template calcula `week_start` y `week_end` usando Templater. **No hay que llenar estos campos manualmente.**
+
+#### Reunión (`type: meeting`)
+
+| Campo | Lo que alimenta | Si falta... |
+|-------|----------------|-------------|
+| `type: meeting` | Conteo de reuniones en Weekly y Métricas | ❌ Invisible |
+| `date` | Weekly "Reuniones esta semana" | ❌ No aparece en weekly |
+| `id: MIN-XXX` | Trazabilidad (`source:` en tareas/ADRs/riesgos) | ⚠️ Sin vínculo |
+
+### 10.2 Diagrama: Cómo Fluyen los Datos
+
+```
+┌─────────────────┐     ┌───────────────────┐     ┌──────────────────┐
+│  Tú editas el   │     │   Dataview lee     │     │  Dashboard muestra│
+│  frontmatter    │────▶│   los campos       │────▶│  tablas y KPIs   │
+│  (type, status, │     │   (dv.pages,       │     │  automáticamente │
+│   effort, etc.) │     │    WHERE, SORT)    │     │                  │
+└─────────────────┘     └───────────────────┘     └──────────────────┘
+        │                                                  │
+        │  Al completar tarea:                             │
+        │  1. status: done                                 │
+        │  2. completed: YYYY-MM-DD      ┌─────────────────┤
+        │  3. effort_actual: "Xh"        │                 │
+        └────────────────────────────────▶│  Weekly Note    │
+                                          │  (snapshot de   │
+                                          │   esa semana)   │
+                                          └─────────────────┘
+```
+
+> 📌 **Para la referencia completa de los 12 tipos de nota, todos los campos, y el mapa exacto de qué campo alimenta qué automatización:** [[Guía de Workflow#4. Esquema de Frontmatter — Referencia Definitiva|Guía de Workflow §4]].
+
+---
+
+## 11. Resolución de Problemas Comunes
 
 | Problema | Causa probable | Solución paso a paso |
 |----------|----------------|---------------------|
@@ -353,7 +443,7 @@ RAICES_VIVAS/
 
 ---
 
-## 11. Editar desde el Navegador (Emergencia)
+## 12. Editar desde el Navegador (Emergencia)
 
 Si **no puedes instalar Obsidian** en alguna máquina (computadora de la universidad, etc.):
 
@@ -366,7 +456,7 @@ Si **no puedes instalar Obsidian** en alguna máquina (computadora de la univers
 
 ---
 
-## 12. Contacto del Equipo
+## 13. Contacto del Equipo
 
 | Integrante | Rol | Módulo | Contacto |
 |------------|-----|--------|----------|
@@ -376,7 +466,7 @@ Si **no puedes instalar Obsidian** en alguna máquina (computadora de la univers
 
 ---
 
-## 13. Tabla de Atajos Esenciales
+## 14. Tabla de Atajos Esenciales
 
 | Atajo | Acción | Cuándo usar |
 |-------|--------|-------------|
@@ -391,7 +481,7 @@ Si **no puedes instalar Obsidian** en alguna máquina (computadora de la univers
 
 ---
 
-## 14. Resumen de Macros QuickAdd Disponibles
+## 15. Resumen de Macros QuickAdd Disponibles
 
 | # | Macro | Qué crea | Dónde se guarda |
 |---|-------|---------|-----------------|

@@ -87,8 +87,16 @@ Cada líder tiene autonomía para tomar decisiones técnicas dentro de su módul
 | **Promoción de Riesgos** | Los riesgos de minutas se promueven a notas formales con severidad calculada |
 | **Trazabilidad bidireccional** | Cada tarea referencia su requerimiento (`requirement:`) y su minuta origen (`source:`) |
 | **RTM dinámica** | Dataview genera la matriz de trazabilidad automáticamente |
-| **Dashboard KPIs** | Home.md muestra métricas en tiempo real via Dataview |
-| **Weekly Notes** | Se generan automáticamente con Periodic Notes |
+| **Dashboard KPIs** | Home.md muestra métricas en tiempo real via Dataview (progreso, horas, costos) |
+| **Esfuerzo Estimado vs Real** | `effort` (estimación) + `effort_actual` (horas reales al completar) → Dashboard calcula ₡ automáticamente usando tarifas por persona |
+| **Costo por Persona** | `assignee` × `effort_actual` × tarifa horaria = costo real. Tarifas: Geovanny ₡7,500/h, Elkin ₡6,000/h, Santiago ₡6,000/h |
+| **Weekly Notes Scoped** | Periodic Notes genera notas semanales con `week_start`/`week_end`. Los queries Dataview filtran por rango: solo muestran datos de esa semana específica |
+| **Completadas por Semana** | Las tareas `done` con `completed: YYYY-MM-DD` aparecen automáticamente en la weekly note correspondiente |
+| **Pendientes por Semana** | Las tareas `todo` con `due: YYYY-MM-DD` aparecen en la weekly de su semana límite |
+| **Cycle Time** | `completed - started` = días que tardó una tarea. Se calcula automáticamente en Métricas |
+| **Velocity** | Horas completadas por sprint. Se calcula desde `effort` de tareas `done` |
+
+> **🔑 Principio fundamental:** El frontmatter YAML es la **base de datos** del proyecto. Los 12 tipos de nota documentados en [[01-Proyecto/Guía de Workflow#4. Esquema de Frontmatter — Referencia Definitiva|Guía de Workflow §4]] definen qué campos son REQUERIDOS para que cada automatización funcione. Un campo vacío o mal escrito = dato invisible para el Dashboard.
 
 ## Comunicación
 
@@ -182,7 +190,7 @@ Ver [[00-Dashboard/Roadmap]] para el timeline completo del proyecto.
 
 ## Referencias
 
-- [[01-Proyecto/Guía de Workflow|Guía de Workflow v5.0]] — Documentación detallada de todos los flujos, plugins, diagramas y convenciones
+- [[01-Proyecto/Guía de Workflow|Guía de Workflow v7.0]] — Documentación detallada de todos los flujos, plugins, diagramas, convenciones, y **referencia definitiva de frontmatter** (§4: 12 tipos de nota, campos REQUERIDO/RECOMENDADO/OPCIONAL, mapa campo→automatización)
 - [[01-Proyecto/Propuesta de Gestión|Propuesta de Gestión]] — Fundamentación técnica de las decisiones de tooling
 - [[01-Proyecto/Charter|Charter]] — Alcance y objetivos del proyecto
 - [[01-Proyecto/Equipo|Equipo]] — Roles y responsabilidades detalladas

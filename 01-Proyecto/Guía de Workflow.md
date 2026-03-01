@@ -1586,14 +1586,28 @@ No es un plugin sino una técnica nativa de Obsidian para mejorar rendimiento.
 
 Cada día al abrir el calendario, se crea una nota con la template de daily note que ya incluye secciones para tareas, log y bloqueos.
 
-### 15.2 Notas Semanales con Periodic Notes
+### 15.2 Notas Semanales con Periodic Notes (Scoped Snapshots)
 
 1. Settings → Community Plugins → Periodic Notes → Enable Weekly Notes
 2. Folder: `Daily Notes/`
 3. Format: `YYYY-[W]ww`
-4. Template: crear `99-Templates/_template-weekly-note.md` con resumen semanal
+4. Template: `99-Templates/_template-weekly-note.md` (ya existe y funciona)
 
-**Flujo:** Cada lunes → `Ctrl+P` → "Periodic Notes: Open weekly note" → Se crea nota de la semana con resumen automático.
+**Cómo funciona:**
+- El template calcula `week_start` (lunes) y `week_end` (domingo) automáticamente con Templater + Moment.js
+- Inyecta esas fechas en el frontmatter de la weekly note
+- Cada query Dataview dentro de la nota filtra por `date(this.week_start)` y `date(this.week_end)`
+- **Resultado:** Cada weekly note es un snapshot aislado de esa semana específica
+
+**Para que las weekly notes muestren datos correctos, las tareas DEBEN tener:**
+1. `completed: YYYY-MM-DD` — para aparecer en "Completadas esta semana"
+2. `due: YYYY-MM-DD` — para aparecer en "Pendientes con fecha esta semana"
+3. `effort_actual: "Xh"` — para que "Horas ejecutadas" sea preciso (si falta, usa `effort` como fallback)
+4. `status` actualizado — para "En Progreso" y "Bloqueos"
+
+**Flujo:** Cada lunes → `Ctrl+P` → "Periodic Notes: Open weekly note" → Se crea `Daily Notes/YYYY-WNN.md` con queries scoped a esa semana.
+
+Ver §4.4.7 para el esquema completo del frontmatter de weekly notes y §12.5 para detalles del plugin.
 
 ### 15.3 Actualización Rápida de Tareas con Meta Bind
 
@@ -1777,5 +1791,5 @@ Los gráficos de colaboración (pie, bar) y velocidad (line) se actualizan en ca
 
 *Guía creada: 2026-02-27 · Última actualización: 2026-03-01*
 *Equipo: Geovanny (Project Lead) · Elkin (Líder Investigación — SAB) · Santiago (Líder QA — SAL)*
-*Versión: 6.0 — Agrega §18 Gestión Financiera (costos, marco legal CR, Lean Six Sigma). Dashboard y Métricas con Charts (pie, bar, line, doughnut, polarArea). Onboarding expandido con instrucciones paso a paso para todas las operaciones.*
+*Versión: 7.0 — §4 reescrito como referencia definitiva de frontmatter (12 tipos de nota, campos REQUERIDO/RECOMENDADO/OPCIONAL, mapa campo→automatización, errores frecuentes). §6.1 corrige RSK nomenclatura. §12.5 y §15.2 documentan weekly notes con scoped queries. Todo alineado con filosofía de trazabilidad bidireccional y automatización Dataview.*
 *Revisar y actualizar cada sprint*

@@ -6,6 +6,7 @@ date: <% tp.date.now("YYYY-MM-DD") %>
 duration: ""
 attendees: []
 decisions: []
+risks: []
 action-items: []
 tags:
   - reunión
