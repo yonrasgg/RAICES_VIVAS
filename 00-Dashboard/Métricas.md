@@ -34,7 +34,7 @@ const rnf = dv.pages('"03-Requerimientos/No Funcionales"').where(r => r.type ===
 const risks = dv.pages('"01-Proyecto/Riesgos"').where(r => r.type === "risk");
 const openRisks = risks.where(r => r.status === "open").length;
 
-const adrs = dv.pages('"01-Proyecto/Decisiones"').where(d => d.type === "decision");
+const adrs = dv.pages('"01-Proyecto/Decisiones"').where(d => d.type === "adr");
 const acceptedAdrs = adrs.where(d => d.status === "accepted").length;
 
 dv.table(

@@ -89,7 +89,7 @@ shadow: off
 
 > [!example]+ 🏗️ Decisiones (ADR)
 > ```dataviewjs
-> const adrs = dv.pages('"01-Proyecto/Decisiones"').where(d => d.type === "decision");
+> const adrs = dv.pages('"01-Proyecto/Decisiones"').where(d => d.type === "adr");
 > const accepted = adrs.where(d => d.status === "accepted").length;
 > const proposed = adrs.where(d => d.status === "proposed").length;
 > dv.paragraph(`**${accepted}** aceptadas`);
@@ -237,87 +237,16 @@ color default
 
 === end-multi-column
 
-=== start-multi-column: quick-actions-row3
-```column-settings
-number of columns: 4
-border: off
-shadow: off
-```
-
-```button
-name 📋 Promover Action Item
-type command
-action QuickAdd: Run QuickAdd
-color blue
-```
-
-=== end-column ===
-
-```button
-name 🏗️ Promover Decisión
-type command
-action QuickAdd: Run QuickAdd
-color purple
-```
-
-=== end-column ===
-
-```button
-name ⚠️ Promover Riesgo
-type command
-action QuickAdd: Run QuickAdd
-color yellow
-```
-
-=== end-column ===
-
-```button
-name 💰 Finanzas
-type link
-action [[01-Proyecto/Finanzas]]
-color green
-```
-
-=== end-multi-column
+> [!abstract]+ ⚡ Acciones Avanzadas
+> | 📋 Promover Action Item | 🏗️ Promover Decisión | ⚠️ Promover Riesgo | 💰 [[01-Proyecto/Finanzas\|Finanzas]] |
+> |:---:|:---:|:---:|:---:|
+> | *QuickAdd macro* | *QuickAdd macro* | *QuickAdd macro* | *Enlace directo* |
 
 > **12 macros disponibles en QuickAdd:** Nueva Tarea · Nueva Minuta · Nuevo RF · Nuevo RNF · Nuevo Riesgo · Nuevo ADR · Entrevista · Sprint Planning · Sprint Review · 📋 Promover Action Item · 🏗️ Promover Decisión · ⚠️ Promover Riesgo
 
 ---
 
 ## 📈 Colaboración del Equipo
-
-```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
-const people = {};
-let total = 0;
-for (const t of tasks) {
-  const a = t.assignee || "Sin asignar";
-  people[a] = (people[a] || 0) + 1;
-  total++;
-}
-const labels = Object.keys(people).sort();
-const data = labels.map(l => people[l]);
-
-const chartData = {
-  type: "pie",
-  data: {
-    labels: labels,
-    datasets: [{
-      label: "Tareas asignadas",
-      data: data,
-      backgroundColor: ["#5cf55f", "#36a2eb", "#ff6384", "#ffce56", "#9966ff"]
-    }]
-  },
-  options: {
-    plugins: {
-      title: { display: true, text: "Distribución de Tareas por Integrante" },
-      legend: { position: "bottom" }
-    }
-  }
-};
-
-dv.paragraph("```chart\n" + JSON.stringify(chartData, null, 2) + "\n```");
-```
 
 ```chart
 type: pie
@@ -525,7 +454,7 @@ TABLE WITHOUT ID
   status as "Estado",
   date as "Fecha"
 FROM "01-Proyecto/Decisiones"
-WHERE type = "decision"
+WHERE type = "adr"
 SORT id ASC
 ```
 
