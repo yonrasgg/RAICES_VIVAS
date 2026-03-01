@@ -132,6 +132,14 @@ PALETTES = {
         "detail": (40, 45, 55),
         "text": (235, 238, 245),
     },
+    "tareas": {
+        "bg": (15, 28, 22),         # verde oscuro profundo
+        "primary": (70, 200, 120),  # verde tarea
+        "secondary": (50, 160, 180),# cyan trabajo
+        "accent": (255, 195, 50),   # amarillo progreso
+        "detail": (30, 48, 38),
+        "text": (240, 248, 242),
+    },
 }
 
 
@@ -1359,6 +1367,117 @@ def cover_rnf(path):
     print(f"  ✓ {path}")
 
 
+def cover_tareas(path):
+    """Tareas — checkboxes, barras de progreso, flechas, flujo de trabajo."""
+    p = PALETTES["tareas"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (8, 18, 14))
+
+    # Grid de puntos (kanban)
+    for x in range(0, WIDTH, 45):
+        for y in range(0, HEIGHT, 45):
+            draw.ellipse([x - 1, y - 1, x + 1, y + 1], fill=p["detail"])
+
+    # Checkboxes estilizados
+    cb_positions = [(160, 120), (350, 160), (WIDTH - 350, 140), (WIDTH - 160, 170),
+                    (200, HEIGHT - 130), (WIDTH - 200, HEIGHT - 120)]
+    for cx, cy in cb_positions:
+        draw.rectangle([cx - 12, cy - 12, cx + 12, cy + 12], outline=p["primary"], width=2)
+        if random.random() > 0.4:
+            draw.line([(cx - 7, cy), (cx - 2, cy + 6)], fill=p["accent"], width=3)
+            draw.line([(cx - 2, cy + 6), (cx + 8, cy - 6)], fill=p["accent"], width=3)
+
+    # Barras de progreso
+    for by in [HEIGHT // 4, 3 * HEIGHT // 4]:
+        bar_x = 250
+        bar_w = 200
+        draw.rectangle([bar_x, by - 5, bar_x + bar_w, by + 5], outline=p["detail"], width=1)
+        fill_w = int(bar_w * random.uniform(0.3, 0.9))
+        draw.rectangle([bar_x, by - 5, bar_x + fill_w, by + 5], fill=p["primary"])
+
+        bar_x2 = WIDTH - 250 - bar_w
+        draw.rectangle([bar_x2, by - 5, bar_x2 + bar_w, by + 5], outline=p["detail"], width=1)
+        fill_w2 = int(bar_w * random.uniform(0.3, 0.9))
+        draw.rectangle([bar_x2, by - 5, bar_x2 + fill_w2, by + 5], fill=p["secondary"])
+
+    # Flechas de flujo (workflow)
+    arrow_y = HEIGHT // 2
+    for ax in [180, 400, 620, WIDTH - 620, WIDTH - 400, WIDTH - 180]:
+        draw.polygon([(ax, arrow_y - 8), (ax + 20, arrow_y), (ax, arrow_y + 8)],
+                     fill=p["accent"])
+        if ax < WIDTH - 200:
+            draw.line([(ax + 22, arrow_y), (ax + 60, arrow_y)], fill=p["detail"], width=1)
+
+    # Columnas Kanban estilizadas (3 columnas fantasma)
+    for kx in [WIDTH // 4, WIDTH // 2, 3 * WIDTH // 4]:
+        draw.line([(kx, 50), (kx, HEIGHT - 50)], fill=(*p["detail"],)[:3], width=1)
+
+    # Engranajes pequeños (automatización)
+    for cx, cy, sz in [(100, HEIGHT // 2, 25), (WIDTH - 100, HEIGHT // 2, 25)]:
+        for i in range(8):
+            angle = 2 * math.pi * i / 8
+            x1 = cx + (sz - 4) * math.cos(angle)
+            y1 = cy + (sz - 4) * math.sin(angle)
+            x2 = cx + (sz + 4) * math.cos(angle)
+            y2 = cy + (sz + 4) * math.sin(angle)
+            draw.line([(x1, y1), (x2, y2)], fill=p["secondary"], width=2)
+        draw_concentric_circles(draw, cx, cy, sz, 3, p["secondary"], 2)
+
+    # Rombos y bordes
+    draw_diamond_band(draw, 18, 10, 24, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 18, 10, 24, p["accent"])
+    draw_border_pattern(draw, p, "zigzag")
+
+    # --- Texto TAREAS grande centrado ---
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 110)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    label = "Tareas"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    for off in range(8, 0, -2):
+        glow = tuple(max(0, min(255, c + 40 - off * 4)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow)
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=(0, 0, 0))
+    draw.text((tx, ty), label, font=big_font, fill=p["text"])
+
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    subtitle = "Sprint Tasks · Raíces Vivas"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sx = (WIDTH - (bbox2[2] - bbox2[0])) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=(0, 0, 0))
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
 # =====================================================
 # MAIN — Generar todos los covers
 # =====================================================
@@ -1386,6 +1505,7 @@ if __name__ == "__main__":
         "cover-rf-sab.png": cover_rf_sab,
         "cover-rf-sal.png": cover_rf_sal,
         "cover-rnf.png": cover_rnf,
+        "cover-tareas.png": cover_tareas,
     }
 
     print(f"\n🎨 Generando {len(covers)} covers culturales...\n")
