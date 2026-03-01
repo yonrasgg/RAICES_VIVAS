@@ -206,9 +206,9 @@ Si no puedes instalar Obsidian en alguna máquina:
 
 | Integrante | Rol |
 |------------|-----|
-| **Geovanny** | Líder técnico |
-| **Elkin** | Integrante |
-| **Santiago** | Integrante |
+| **Geovanny** | Project Lead / Arquitecto |
+| **Elkin** | Líder de Investigación / Analista — SAB |
+| **Santiago** | Líder de QA / Analista — SAL |
 
 ---
 

@@ -19,8 +19,8 @@ banner_src_y: 0.45
 | Nombre | Rol Principal | Módulo Lead | Contacto |
 |--------|--------------|-------------|----------|
 | **Geovanny** | Project Lead / Arquitecto | EDU + Transversal | — |
-| **Elkin** | Analista / Investigador | SAB | — |
-| **Santiago** | Analista / QA | SAL | — |
+| **Elkin** | Líder de Investigación / Analista | SAB | — |
+| **Santiago** | Líder de QA / Analista | SAL | — |
 
 ## Responsabilidades por Rol
 
@@ -31,19 +31,21 @@ banner_src_y: 0.45
 - Gestión de configuración (Git, vault)
 - Compilación de entregables finales
 
-### Elkin — Analista / Investigador
+### Elkin — Líder de Investigación / Analista
+- **Liderazgo del módulo Saberes Ancestrales (SAB)**
 - Investigación documental y de campo
-- Lead de módulo Saberes Ancestrales (SAB)
 - Marco metodológico
 - Redacción de conclusiones
 - Validación de requerimientos con usuarios
+- Toma de decisiones técnicas en el ámbito SAB
 
-### Santiago — Analista / QA
-- Lead de módulo Salud Comunitaria (SAL)
+### Santiago — Líder de QA / Analista
+- **Liderazgo del módulo Salud Comunitaria (SAL)**
 - Diseño de instrumentos de investigación
 - Revisión cruzada y control de calidad
 - Pruebas de consistencia en requerimientos
 - Documentación ética y cultural
+- Toma de decisiones técnicas en el ámbito SAL
 
 ## Distribución de Carga (Avance 1)
 

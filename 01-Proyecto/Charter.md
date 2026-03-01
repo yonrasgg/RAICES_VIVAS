@@ -29,8 +29,8 @@ banner_src_y: 0.40
 | Integrante | Rol | Módulo Lead |
 |-----------|-----|-------------|
 | **Geovanny** | Project Lead / Arquitecto | EDU + Transversal |
-| **Elkin** | Analista / Investigador | SAB |
-| **Santiago** | Analista / QA | SAL |
+| **Elkin** | Líder de Investigación / Analista | SAB |
+| **Santiago** | Líder de QA / Analista | SAL |
 
 Ver [[01-Proyecto/Equipo]] para detalle completo.
 

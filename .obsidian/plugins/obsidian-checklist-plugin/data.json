@@ -11,6 +11,12 @@
   "sortDirectionSubGroups": "new->old",
   "includeFiles": "05-Sprints/**",
   "lookAndFeel": "classic",
-  "_collapsedSections": [],
+  "_collapsedSections": [
+    "05-Sprints/Sprint-02/T-025.md",
+    "05-Sprints/Sprint-02/T-024.md",
+    "05-Sprints/Sprint-02/T-023.md",
+    "05-Sprints/Sprint-02/T-022.md",
+    "05-Sprints/Sprint-02/T-021.md"
+  ],
   "_hiddenTags": []
 }
