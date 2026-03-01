@@ -626,9 +626,9 @@ gantt
 
 > **Liderazgo distribuido:** Cada integrante es líder de su área y tiene autonomía para tomar decisiones técnicas dentro de su módulo. Las decisiones transversales se toman en equipo y se documentan como ADR.
 
-**Flujo de sincronización:**
+**Flujo de sincronización ejemplos:**
 ```
-Integrante 1 (Obsidian) → commit → push → GitHub (repo privado)
+Integrante 1 (VS Code/Obsidian) → commit → push → GitHub (repo privado)
 Integrante 2 (Obsidian)          → pull  → edita → push ↑
 Integrante 3 (github.dev)        → edita directamente en navegador ↑
 ```
