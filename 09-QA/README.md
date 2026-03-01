@@ -9,7 +9,6 @@ tags:
   - qa
   - testing
 ---
-
 # QA — Plan de Calidad y Testing
 
 > **Estado:** Placeholder. Se completará cuando se inicie la fase de implementación (Sprint 1+).
@@ -22,7 +21,7 @@ tags:
 - [ ] Pruebas de rendimiento (<3s)
 - [ ] Pruebas de compatibilidad (dispositivos gama baja)
 - [ ] Pruebas offline/sync
-- [ ] Pruebas de seguridad (roles, acceso, auditoría)
+- [ ] Pruebas de seguridad (roles, acceso, auditoría, pentesting)
 
 ## Referencia
 
