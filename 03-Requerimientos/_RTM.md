@@ -16,7 +16,9 @@ banner_src_y: 0.42
 
 ---
 
-## Requerimientos Funcionales — Completo
+## Matriz Dinámica
+
+### Requerimientos Funcionales — Completo
 
 ```dataview
 TABLE WITHOUT ID
@@ -34,7 +36,7 @@ WHERE type = "requirement/functional"
 SORT wbs ASC
 ```
 
-## Requerimientos No Funcionales — Completo
+### Requerimientos No Funcionales — Completo
 
 ```dataview
 TABLE WITHOUT ID
@@ -50,7 +52,7 @@ WHERE type = "requirement/non-functional"
 SORT wbs ASC
 ```
 
-## Resumen por Prioridad
+### Resumen por Prioridad
 
 | MoSCoW | Significado | Criterio |
 |--------|------------|----------|
@@ -59,7 +61,7 @@ SORT wbs ASC
 | **could** | Deseable | Mejora la experiencia, bajo riesgo de omisión |
 | **wont** | Fuera de alcance actual | Documentado para futuras fases |
 
-## Leyenda de Estado
+### Leyenda de Estado
 
 | Estado | Significado |
 |--------|------------|
@@ -69,7 +71,7 @@ SORT wbs ASC
 | `implemented` | Implementado en código |
 | `tested` | Verificado con pruebas |
 
-## Cobertura de Tareas por Requerimiento
+### Cobertura de Tareas por Requerimiento
 
 ```dataviewjs
 const tasks = dv.pages('"05-Sprints"').where(p => p.type === "task");

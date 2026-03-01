@@ -72,7 +72,7 @@ tags:
 RAICES_VIVAS/                          ← Vault root
 │
 ├── 00-Dashboard/                      ← Página de inicio y dashboards
-│   ├── Home.md                        ← Dashboard principal del proyecto
+│   ├── [[00-Dashboard/Home|[[00-Dashboard/Home|Home]]]].md                        ← Dashboard principal del proyecto
 │   ├── Roadmap.md                     ← Timeline y milestones
 │   └── Burndown.md                    ← Métricas de avance
 │

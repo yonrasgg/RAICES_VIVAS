@@ -134,7 +134,7 @@ RAICES_VIVAS/
 
 ### Al iniciar sesión
 1. Abre Obsidian — el plugin Git hace **auto-pull** automáticamente
-2. Ve al **Dashboard** (Home) para ver el estado del proyecto
+2. Ve al **Dashboard** ([[00-Dashboard/Home|Home]]) para ver el estado del proyecto
 3. Revisa tus **tareas pendientes** en el tablero Kanban o en la Daily Note
 
 ### Para crear notas nuevas
