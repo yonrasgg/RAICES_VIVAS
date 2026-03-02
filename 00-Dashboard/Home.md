@@ -9,7 +9,7 @@ tags:
   - dashboard
   - home
 banner_src_x: 0.47714
-banner_src: "08-Recursos/Imágenes/cover-dashboard.png"
+bbanner_src: "08-Recursos/Imágenes/cover-dashboard.png"
 ---
 
 # 🎛️ Raíces Vivas — Centro de Control
