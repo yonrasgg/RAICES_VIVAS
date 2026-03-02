@@ -1,4 +1,7 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-metricas.png"
+---
+---
 type: dashboard
 title: "Métricas de Avance — Raíces Vivas"
 project: raices-vivas

@@ -36,12 +36,12 @@
   "dateInHistoryView": true,
   "diffStyle": "split",
   "hunks": {
-    "showSigns": false,
+    "showSigns": true,
     "hunkCommands": false,
     "statusBar": "colored"
   },
   "lineAuthor": {
-    "show": false,
+    "show": true,
     "followMovement": "inactive",
     "authorDisplay": "initials",
     "showCommitHash": false,
