@@ -52,7 +52,7 @@
       "sort-order": "Ascending Alphabetical"
     },
     "yaml-key-sort": {
-      "enabled": true,
+      "enabled": false,
       "yaml-key-priority-sort-order": "id\nbanner_src\nbanner_src_x\nbanner_src_y\ntype\nmodule\nwbs\ntitle\nstatus\npriority\nassignee\nactor\nsource\nvalidation\nsprint\nphase\nrequirement\neffort\nprobability\nimpact\nowner\ndate\nstarted\ndue\ncompleted\ncreated\nupdated\ntags",
       "priority-keys-at-start-of-yaml": true,
       "yaml-sort-order-for-other-keys": "None"
