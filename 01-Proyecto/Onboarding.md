@@ -1,7 +1,4 @@
 ---
-banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
----
----
 type: guide
 title: "Guía de Onboarding — Raíces Vivas"
 project: raices-vivas
