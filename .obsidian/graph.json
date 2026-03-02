@@ -1,51 +1,22 @@
 {
-  "collapse-filter": false,
+  "collapse-filter": true,
   "search": "",
-  "showTags": true,
-  "showAttachments": true,
-  "hideUnresolved": true,
-  "showOrphans": false,
-  "collapse-color-groups": false,
-  "colorGroups": [
-    {
-      "query": "tag:#sprint  ",
-      "color": {
-        "a": 1,
-        "rgb": 14701138
-      }
-    },
-    {
-      "query": "tag:#requerimiento  ",
-      "color": {
-        "a": 1,
-        "rgb": 14725458
-      }
-    },
-    {
-      "query": "tag:#tarea  ",
-      "color": {
-        "a": 1,
-        "rgb": 11657298
-      }
-    },
-    {
-      "query": "tag:#reunion  ",
-      "color": {
-        "a": 1,
-        "rgb": 988887
-      }
-    }
-  ],
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": true,
+  "colorGroups": [],
   "collapse-display": true,
   "showArrow": false,
   "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 1.14041305297311,
-  "lineSizeMultiplier": 1.06183939601922,
+  "nodeSizeMultiplier": 1,
+  "lineSizeMultiplier": 1,
   "collapse-forces": true,
-  "centerStrength": 0.519747925375928,
-  "repelStrength": 8.07886691208585,
-  "linkStrength": 0.415985524427529,
-  "linkDistance": 231,
-  "scale": 0.5396170846225745,
+  "centerStrength": 0.518713248970312,
+  "repelStrength": 10,
+  "linkStrength": 1,
+  "linkDistance": 250,
+  "scale": 0.5396170846225744,
   "close": true
 }
