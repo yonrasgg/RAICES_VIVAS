@@ -22,9 +22,9 @@ tags:
 ```dataviewjs
 // ── Costos de Recursos Humanos ──
 const team = [
-  { nombre: "Geovanny", rol: "Project Lead / Arquitecto", horas: 0, tarifa: 7500 },
-  { nombre: "Elkin", rol: "Líder Investigación / Analista", horas: 0, tarifa: 6000 },
-  { nombre: "Santiago", rol: "Líder QA / Analista", horas: 0, tarifa: 6000 }
+  { nombre: "Geovanny", rol: "Project Lead / Arquitecto", horas: 0, tarifa: 12275.97 },
+  { nombre: "Elkin", rol: "Líder Investigación / Analista", horas: 0, tarifa: 12275.97 },
+  { nombre: "Santiago", rol: "Líder QA / Analista", horas: 0, tarifa: 12275.97 }
 ];
 
 // Calcular horas reales desde las tareas
