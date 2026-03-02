@@ -11,7 +11,6 @@ tags:
   - proyecto
   - guia
   - workflow
----
 # 📕 Guía de Workflow — Vault Raíces Vivas
 
 > Esta guía explica **cómo funciona el vault**, **en qué orden trabajar**, **qué herramientas usar** y **cómo automatizar** la gestión del proyecto. Es el manual operativo del equipo.

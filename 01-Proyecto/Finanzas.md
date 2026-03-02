@@ -11,7 +11,6 @@ tags:
   - proyecto
   - finanzas
   - gestión
----
 
 # 💰 Gestión Financiera — Raíces Vivas
 

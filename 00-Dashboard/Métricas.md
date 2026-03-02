@@ -10,7 +10,6 @@ tags:
   - dashboard
   - metricas
   - lean-six-sigma
----
 # 📈 Métricas de Avance — Raíces Vivas
 
 > **Framework de Calidad:** Lean Six Sigma (DMAIC) · Métricas de proceso y colaboración

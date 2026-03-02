@@ -9,7 +9,6 @@ tags:
   - dashboard
   - roadmap
   - gantt
----
 # 📅 Roadmap & Gantt — Raíces Vivas
 
 ---

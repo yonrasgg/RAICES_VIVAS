@@ -11,7 +11,6 @@ banner_src_x: 0.47714
 tags:
   - guia
   - onboarding
----
 
 # 🚀 Guía de Onboarding — Raíces Vivas
 
