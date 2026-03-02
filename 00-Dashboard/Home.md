@@ -332,8 +332,8 @@ shadow: off
 - 📕 [[01-Proyecto/Guía de Workflow|Guía de Workflow]]
 - 🚀 [[01-Proyecto/Onboarding|Onboarding]]
 - 💰 [[01-Proyecto/Finanzas|Finanzas]]
-- 🗂️ [[01-Proyecto/Decisiones/|Decisiones (ADR)]]
-- ⚠️ [[01-Proyecto/Riesgos/|Riesgos (RSK)]]
+- 🗂️ [[01-Proyecto/Decisiones/Decisiones|Decisiones (ADR)]]
+- ⚠️ [[01-Proyecto/Riesgos/Riesgos|Riesgos (RSK)]]
 
 === end-column ===
 
