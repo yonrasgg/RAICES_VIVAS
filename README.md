@@ -48,7 +48,99 @@ Todo el trabajo se enmarca dentro de las comunidades indígenas de Costa Rica, a
 
 ---
 
-## 🗂️ Estructura del Proyecto
+## � Configuración Rápida
+
+### 1. Requisitos Previos
+
+| Requisito | Dónde obtenerlo |
+|-----------|-----------------|
+| **Git** (≥ 2.39) | https://git-scm.com/downloads |
+| **Obsidian** (≥ 1.5) | https://obsidian.md/download |
+| **Cuenta GitHub** | https://github.com (con acceso al repo) |
+
+#### 1.1 Tener acceso al repositorio en GitHub
+
+1. Abrí https://github.com en tu navegador
+2. Iniciá sesión con tu **usuario y contraseña de GitHub**
+3. Verificá que podés ver el repositorio: https://github.com/yonrasgg/RAICES_VIVAS
+   - Si no ves el repo, pedile acceso a **Geovanny** (owner del proyecto)
+4. Listo ✅ — solo necesitás recordar tu **usuario** y **contraseña** de GitHub
+
+> 💡 **No necesitás tokens, PATs, ni herramientas extra.** Al abrir el vault en Obsidian, el plugin de Git mostrará una ventanita pidiendo tus credenciales de GitHub. Es normal y ocurre cada vez que se abre el vault, por seguridad.
+
+---
+
+### 2. Clonar el Repositorio
+
+Abrí una **terminal** (Terminal en Linux/Mac, Git Bash en Windows):
+
+```bash
+cd ~/Documents
+git clone https://github.com/yonrasgg/RAICES_VIVAS.git
+```
+
+Si pide usuario y contraseña:
+- **Username:** tu usuario de GitHub
+- **Password:** tu contraseña de GitHub
+
+---
+
+### 3. Abrir el Vault en Obsidian
+
+1. Abrí **Obsidian**
+2. En la pantalla de inicio, clic en **"Open folder as vault"** (Abrir carpeta como vault)
+3. Navegá hasta: `~/Documents/RAICES_VIVAS`
+4. Clic en **"Abrir"** / **"Open"**
+5. Si aparece un aviso sobre **"Trust author and enable plugins"**:
+   - Clic en **"Trust author and enable plugins"** ✅
+   - Esto activa los 22 plugins que el proyecto necesita
+
+> ⚠️ **IMPORTANTE:** Si no confiás en los plugins, el Dashboard, las métricas, los templates y las automatizaciones **NO funcionarán**.
+
+---
+
+### 4. Configurar el Plugin Git (obsidian-git)
+
+El plugin ya viene configurado en el vault. **No hay que configurar nada extra.**
+
+#### Autenticación (cada vez que se abre el vault)
+
+Al abrir Obsidian (o al hacer la primera operación Pull/Push), aparece una **ventanita emergente** pidiendo credenciales. Esto es **normal** y ocurre por seguridad:
+
+1. En **Username:** escribí tu **usuario de GitHub**
+2. En **Password:** escribí tu **contraseña de GitHub**
+3. Listo — el plugin sincroniza automáticamente
+
+> 💡 Este popup aparece **cada vez que abrís el vault**. Es el comportamiento esperado. Simplemente ingresá tus credenciales de GitHub y continuá trabajando.
+
+#### Verificar que funciona:
+
+1. Después de ingresar las credenciales, presioná `Ctrl+P` (o `Cmd+P` en Mac)
+2. Escribí: `Git: Pull`
+3. Seleccioná **"Obsidian Git: Pull"** presionando `Enter`
+4. Debe aparecer una notificación: *"Pull successful"* o *"Already up to date"*
+
+#### Configuración automática (ya incluida):
+
+| Parámetro | Valor | Qué hace |
+|-----------|-------|----------|
+| Auto pull interval | `10 min` | Trae cambios del repo cada 10 minutos |
+| Auto commit interval | `10 min` | Commitea cambios locales cada 10 minutos |
+| Auto push interval | `10 min` | Sube cambios al repo cada 10 minutos |
+| Commit message | `vault backup: {{date}}` | Mensaje automático con fecha |
+| Pull on startup | ✅ Activado | Trae cambios al abrir Obsidian |
+| Push on backup | ✅ Activado | Sube al hacer commit |
+
+#### Si el auto-sync NO funciona:
+
+1. `Ctrl+P` → escribe `Git: Open source control view` → `Enter`
+2. Revisá si hay errores en rojo
+3. Si dice *"Authentication failed"*: verificá que tu usuario y contraseña de GitHub son correctos (probá iniciando sesión en https://github.com desde el navegador)
+4. Si dice *"Git is not ready"*: cerrá y reabrí Obsidian
+
+---
+
+## �🗂️ Estructura del Proyecto
 
 ```
 RAICES_VIVAS/
