@@ -3,10 +3,11 @@ type: document
 title: "Visión General de Arquitectura"
 project: raices-vivas
 status: draft
+banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
+banner_src_x: 0.47714
+banner_src_y: 0.42
 tags:
   - arquitectura
-banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
-banner_src_y: 0.42
 ---
 
 # Visión General de Arquitectura — Raíces Vivas

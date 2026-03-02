@@ -1,9 +1,9 @@
 ---
 type: context
 title: Mapa de Territorios Indígenas de Costa Rica
+module: transversal
 project: raices-vivas
 status: draft
-module: transversal
 created: 2026-02-27
 updated: 2026-02-27
 tags:
@@ -12,6 +12,7 @@ tags:
   - territorios
   - indígena
 banner_src: "08-Recursos/Imágenes/cover-investigacion.png"
+banner_src_x: 0.47714
 banner_src_y: 0.40
 ---
 

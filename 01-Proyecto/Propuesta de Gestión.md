@@ -7,6 +7,7 @@ created: 2025-02-25
 updated: 2026-03-01
 author: Equipo Raíces Vivas
 banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
+banner_src_x: 0.47714
 banner_src_y: 0.42
 tags:
   - meta

@@ -2,11 +2,12 @@
 type: document
 title: "WBS — Raíces Vivas"
 project: raices-vivas
+banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
+banner_src_x: 0.47714
+banner_src_y: 0.42
 tags:
   - arquitectura
   - wbs
-banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
-banner_src_y: 0.42
 ---
 
 # WBS — Work Breakdown Structure

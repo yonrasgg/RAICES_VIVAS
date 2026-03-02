@@ -11,6 +11,7 @@ tags:
   - contexto
   - modulo/sab
 banner_src: "08-Recursos/Imágenes/cover-saberes.png"
+banner_src_x: 0.47714
 banner_src_y: 0.40
 ---
 

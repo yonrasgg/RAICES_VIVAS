@@ -2,10 +2,10 @@
 type: dashboard
 title: "Métricas de Avance — Raíces Vivas"
 project: raices-vivas
-banner_src: "08-Recursos/Imágenes/cover-metricas.png"
-banner_src_y: 0.42
-banner_src_x: 0.47714
 cssclass: dashboard
+banner_src: "08-Recursos/Imágenes/cover-metricas.png"
+banner_src_x: 0.47714
+banner_src_y: 0.42
 tags:
   - dashboard
   - metricas

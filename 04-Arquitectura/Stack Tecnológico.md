@@ -3,11 +3,12 @@ type: document
 title: "Stack Tecnológico — Raíces Vivas"
 project: raices-vivas
 status: pending-adr
+banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
+banner_src_x: 0.47714
+banner_src_y: 0.40
 tags:
   - arquitectura
   - stack
-banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
-banner_src_y: 0.40
 ---
 # Stack Tecnológico — Raíces Vivas
 

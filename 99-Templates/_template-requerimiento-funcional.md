@@ -14,6 +14,7 @@ const rfToday = tp.date.now("YYYY-MM-DD");
 -%>
 ---
 banner_src: "<% rfBanner %>"
+banner_src_x: 0.47714
 banner_src_y: 0.42
 id: <% rfId %>
 type: requirement/functional

@@ -5,11 +5,12 @@ project: raices-vivas
 status: active
 created: 2026-02-27
 updated: 2026-02-27
+banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
+banner_src_x: 0.47714
+banner_src_y: 0.45
 tags:
   - proyecto
   - equipo
-banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
-banner_src_y: 0.45
 ---
 
 # Equipo del Proyecto

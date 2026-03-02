@@ -67,6 +67,7 @@ await tp.file.rename(nextId);
 -%>
 ---
 banner_src: "08-Recursos/Imágenes/cover-riesgos.png"
+banner_src_x: 0.47714
 banner_src_y: 0.42
 type: risk
 id: <% nextId %>

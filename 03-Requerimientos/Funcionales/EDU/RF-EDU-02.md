@@ -1,5 +1,6 @@
 ---
 banner_src: "08-Recursos/Imágenes/cover-rf-edu.png"
+banner_src_x: 0.47714
 banner_src_y: 0.42
 id: RF-EDU-02
 type: requirement/functional
