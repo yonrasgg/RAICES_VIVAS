@@ -77,12 +77,24 @@ git config --global credential.helper store
 
 ## 4. Configurar el Plugin Git (obsidian-git)
 
-El plugin ya viene configurado en el vault. Verifica que funciona:
+El plugin ya viene configurado en el vault. Al abrir Obsidian por primera vez (o al hacer Pull/Push), **aparecerá una ventanita emergente pidiendo credenciales de GitHub**:
+
+- **Username:** tu usuario de GitHub
+- **Password:** pega tu **PAT** (el token del paso 1.1, **NO** tu contraseña de GitHub)
+
+> 💡 Solo lo pide una vez si ejecutaste `git config --global credential.helper store` en el paso 2. Si no lo hiciste, ábrí una terminal dentro de la carpeta del vault y ejecutá:
+> ```bash
+> git config --global credential.helper store
+> ```
+> Luego hacé un Pull manual (paso siguiente) para que guarde las credenciales.
+
+### Verificar que funciona:
 
 1. Presiona `Ctrl+P` (o `Cmd+P` en Mac) para abrir la **Paleta de Comandos**
 2. Escribe: `Git: Pull`
 3. Selecciona **"Obsidian Git: Pull"** presionando `Enter`
-4. Debe aparecer una notificación: *"Pull successful"* o *"Already up to date"*
+4. Si aparece el popup de credenciales: ingresá usuario + PAT
+5. Debe aparecer una notificación: *"Pull successful"* o *"Already up to date"*
 
 ### Configuración automática (ya incluida):
 
@@ -430,7 +442,8 @@ flowchart LR
 | Problema | Causa probable | Solución paso a paso |
 |----------|----------------|---------------------|
 | "Git is not ready" | Plugin no inicializó bien | 1. Cierra Obsidian completamente. 2. Reabre Obsidian. 3. Espera 10 seg. |
-| Push pide usuario/contraseña | Credenciales no guardadas | 1. Abre terminal. 2. Ejecuta: `git config --global credential.helper store`. 3. Haz `git push` manual una vez. 4. Ingresa usuario + PAT. |
+| Push pide usuario/contraseña | Credenciales no guardadas | 1. Abre terminal en la carpeta del vault. 2. Ejecuta: `git config --global credential.helper store`. 3. Haz `git push` manual una vez. 4. En el popup: usuario de GitHub + **PAT** (no la contraseña). 5. Ya no lo vuelve a pedir. |
+| Popup de credenciales al abrir Obsidian | Primera vez o credenciales expiradas | 1. **Username:** tu usuario de GitHub. 2. **Password:** pega tu **PAT** (Sección 1.1). 3. Si no tenés PAT: seguí el paso 1.1. |
 | Plugins no cargan | Cache corrupto | 1. `Ctrl+P` → `Reload app without saving` → `Enter`. 2. Si persiste: cierra, borra `.obsidian/workspace.json`, reabre. |
 | Conflicto de merge | Dos personas editaron el mismo archivo | 1. `Ctrl+P` → `Git: Pull` (intenta auto-merge). 2. Si falla: abrir terminal → `git pull --rebase`. 3. Si hay conflicto: buscar `<<<<<<<` en el archivo → resolver → commit. |
 | Banner no aparece | Campo `banner_src:` incorrecto | 1. Abrir frontmatter. 2. Verificar que la ruta del archivo existe en `08-Recursos/Imágenes/`. |
