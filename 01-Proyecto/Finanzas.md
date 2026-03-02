@@ -11,12 +11,10 @@ tags:
   - proyecto
   - finanzas
   - gestión
-
+---
 # 💰 Gestión Financiera — Raíces Vivas
 
 > **Contexto:** Proyecto académico universitario orientado a comunidades indígenas de Costa Rica. Este documento establece el marco financiero, costos estimados, y consideraciones legales/gubernamentales aplicables al entorno costarricense y territorios indígenas.
-
----
 
 ## 1. Resumen de Costos del Proyecto
 
