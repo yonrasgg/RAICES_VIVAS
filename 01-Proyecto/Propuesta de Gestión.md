@@ -13,7 +13,7 @@ tags:
   - meta
   - propuesta
   - obsidian
-  - gestión
+  - gestion
 ---
 # Propuesta de Gestión del Proyecto "Raíces Vivas" en Obsidian
 

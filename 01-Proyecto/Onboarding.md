@@ -11,12 +11,10 @@ banner_src_y: 0.42
 tags:
   - guia
   - onboarding
-
+---
 # 🚀 Guía de Onboarding — Raíces Vivas
 
 > **Objetivo:** Que cualquier integrante del equipo pueda operar el vault de forma autónoma siguiendo estas instrucciones paso a paso. Cada operación incluye las **teclas exactas**, **opciones a seleccionar** y **campos a completar**.
-
----
 
 ## 1. Requisitos Previos
 
@@ -25,25 +23,22 @@ tags:
 | **Git** (≥ 2.39) | https://git-scm.com/downloads |
 | **Obsidian** (≥ 1.5) | https://obsidian.md/download |
 | **Cuenta GitHub** | https://github.com (con acceso al repo) |
-| **Personal Access Token (PAT)** | GitHub → Settings → Developer Settings → Tokens |
 
-### 1.1 Crear Personal Access Token (PAT) en GitHub
+### 1.1 Tener acceso al repositorio en GitHub
 
-1. Abre https://github.com/settings/tokens
-2. Clic en **"Generate new token"** → selecciona **"Generate new token (classic)"**
-3. En **Note** escribe: `Obsidian RAICES_VIVAS`
-4. En **Expiration** selecciona: `90 days` (o `No expiration` si prefieres)
-5. Marca los scopes:
-   - ✅ `repo` (acceso completo a repositorios privados)
-6. Clic en **"Generate token"**
-7. **COPIA EL TOKEN INMEDIATAMENTE** — no se muestra de nuevo
-8. Guárdalo en un lugar seguro (gestor de contraseñas o archivo local)
+1. Abrí https://github.com en tu navegador
+2. Iniciá sesión con tu **usuario y contraseña de GitHub**
+3. Verificá que podés ver el repositorio: https://github.com/yonrasgg/RAICES_VIVAS
+   - Si no ves el repo, pedile acceso a **Geovanny** (owner del proyecto)
+4. Listo ✅ — solo necesitás recordar tu **usuario** y **contraseña** de GitHub
+
+> 💡 **No necesitás tokens, PATs, ni herramientas extra.** Al abrir el vault en Obsidian, el plugin de Git mostrará una ventanita pidiendo tus credenciales de GitHub. Es normal y ocurre cada vez que se abre el vault, por seguridad.
 
 ---
 
 ## 2. Clonar el Repositorio
 
-Abre una **terminal** (Terminal en Linux/Mac, Git Bash en Windows):
+Abrí una **terminal** (Terminal en Linux/Mac, Git Bash en Windows):
 
 ```bash
 cd ~/Documents
@@ -52,12 +47,7 @@ git clone https://github.com/yonrasgg/RAICES_VIVAS.git
 
 Si pide usuario y contraseña:
 - **Username:** tu usuario de GitHub
-- **Password:** pega tu **PAT** (NO tu contraseña de GitHub)
-
-Para que no vuelva a pedir credenciales:
-```bash
-git config --global credential.helper store
-```
+- **Password:** tu contraseña de GitHub
 
 ---
 
@@ -77,24 +67,24 @@ git config --global credential.helper store
 
 ## 4. Configurar el Plugin Git (obsidian-git)
 
-El plugin ya viene configurado en el vault. Al abrir Obsidian por primera vez (o al hacer Pull/Push), **aparecerá una ventanita emergente pidiendo credenciales de GitHub**:
+El plugin ya viene configurado en el vault. **No hay que configurar nada extra.**
 
-- **Username:** tu usuario de GitHub
-- **Password:** pega tu **PAT** (el token del paso 1.1, **NO** tu contraseña de GitHub)
+### Autenticación (cada vez que se abre el vault)
 
-> 💡 Solo lo pide una vez si ejecutaste `git config --global credential.helper store` en el paso 2. Si no lo hiciste, ábrí una terminal dentro de la carpeta del vault y ejecutá:
-> ```bash
-> git config --global credential.helper store
-> ```
-> Luego hacé un Pull manual (paso siguiente) para que guarde las credenciales.
+Al abrir Obsidian (o al hacer la primera operación Pull/Push), aparece una **ventanita emergente** pidiendo credenciales. Esto es **normal** y ocurre por seguridad:
+
+1. En **Username:** escribí tu **usuario de GitHub**
+2. En **Password:** escribí tu **contraseña de GitHub**
+3. Listo — el plugin sincroniza automáticamente
+
+> 💡 Este popup aparece **cada vez que abrís el vault**. Es el comportamiento esperado. Simplemente ingresá tus credenciales de GitHub y continuá trabajando.
 
 ### Verificar que funciona:
 
-1. Presiona `Ctrl+P` (o `Cmd+P` en Mac) para abrir la **Paleta de Comandos**
-2. Escribe: `Git: Pull`
-3. Selecciona **"Obsidian Git: Pull"** presionando `Enter`
-4. Si aparece el popup de credenciales: ingresá usuario + PAT
-5. Debe aparecer una notificación: *"Pull successful"* o *"Already up to date"*
+1. Después de ingresar las credenciales, presioná `Ctrl+P` (o `Cmd+P` en Mac)
+2. Escribí: `Git: Pull`
+3. Seleccioná **"Obsidian Git: Pull"** presionando `Enter`
+4. Debe aparecer una notificación: *"Pull successful"* o *"Already up to date"*
 
 ### Configuración automática (ya incluida):
 
@@ -111,7 +101,7 @@ El plugin ya viene configurado en el vault. Al abrir Obsidian por primera vez (o
 
 1. `Ctrl+P` → escribe `Git: Open source control view` → `Enter`
 2. Revisa si hay errores en rojo
-3. Si dice "Authentication failed": repite el paso de PAT (Sección 1.1)
+3. Si dice "Authentication failed": verificá que tu usuario y contraseña de GitHub son correctos (probá iniciando sesión en https://github.com desde el navegador)
 4. Si dice "Git is not ready": cierra y reabre Obsidian
 
 ---
@@ -442,8 +432,8 @@ flowchart LR
 | Problema | Causa probable | Solución paso a paso |
 |----------|----------------|---------------------|
 | "Git is not ready" | Plugin no inicializó bien | 1. Cierra Obsidian completamente. 2. Reabre Obsidian. 3. Espera 10 seg. |
-| Push pide usuario/contraseña | Credenciales no guardadas | 1. Abre terminal en la carpeta del vault. 2. Ejecuta: `git config --global credential.helper store`. 3. Haz `git push` manual una vez. 4. En el popup: usuario de GitHub + **PAT** (no la contraseña). 5. Ya no lo vuelve a pedir. |
-| Popup de credenciales al abrir Obsidian | Primera vez o credenciales expiradas | 1. **Username:** tu usuario de GitHub. 2. **Password:** pega tu **PAT** (Sección 1.1). 3. Si no tenés PAT: seguí el paso 1.1. |
+| Push pide usuario/contraseña | Comportamiento normal del plugin | Ingresá tu **usuario** y **contraseña** de GitHub en la ventanita emergente. Esto ocurre cada vez que se abre el vault. |
+| "Authentication failed" | Credenciales incorrectas | 1. Verificá que podés iniciar sesión en https://github.com desde el navegador. 2. Si tu contraseña cambió, usá la nueva. 3. Verificá que tenés acceso al repo RAICES_VIVAS. |
 | Plugins no cargan | Cache corrupto | 1. `Ctrl+P` → `Reload app without saving` → `Enter`. 2. Si persiste: cierra, borra `.obsidian/workspace.json`, reabre. |
 | Conflicto de merge | Dos personas editaron el mismo archivo | 1. `Ctrl+P` → `Git: Pull` (intenta auto-merge). 2. Si falla: abrir terminal → `git pull --rebase`. 3. Si hay conflicto: buscar `<<<<<<<` en el archivo → resolver → commit. |
 | Banner no aparece | Campo `banner_src:` incorrecto | 1. Abrir frontmatter. 2. Verificar que la ruta del archivo existe en `08-Recursos/Imágenes/`. |

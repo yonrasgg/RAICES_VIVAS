@@ -10,7 +10,7 @@ banner_src_x: 0.47714
 banner_src_y: 0.42
 tags:
   - proyecto
-  - gestión
+  - gestion
 ---
 
 # Plan de Gestión del Proyecto — Raíces Vivas

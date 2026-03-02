@@ -12,12 +12,12 @@ tags:
   - proyecto
   - guia
   - workflow
+
+
+---
 # 📕 Guía de Workflow — Vault Raíces Vivas
 
 > Esta guía explica **cómo funciona el vault**, **en qué orden trabajar**, **qué herramientas usar** y **cómo automatizar** la gestión del proyecto. Es el manual operativo del equipo.
-
----
-
 ## 1. Visión General del Vault
 
 El vault de Obsidian funciona como un **sistema de gestión de proyecto integrado** — equivalente a Confluence + Jira + Google Docs en un solo lugar. Todo es Markdown, todo es buscable, todo está interconectado.
