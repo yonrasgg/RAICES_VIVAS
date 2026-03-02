@@ -4,12 +4,11 @@ title: "Raíces Vivas — Centro de Control"
 project: raices-vivas
 cssclass: dashboard
 banner_src: "08-Recursos/Imágenes/cover-dashboard.png"
+banner_src_x: 0.47714
 banner_src_y: 0.38
 tags:
   - dashboard
   - home
-banner_src_x: 0.47714
-bbanner_src: "08-Recursos/Imágenes/cover-dashboard.png"
 ---
 
 # 🎛️ Raíces Vivas — Centro de Control
