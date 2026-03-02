@@ -1,7 +1,3 @@
----
-assignee:
-author:
----
 <%*
 // ══════════════════════════════════════════════════════════════
 // 🏗️ Nuevo ADR (Architecture Decision Record)

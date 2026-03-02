@@ -1,6 +1,3 @@
----
-author:
----
 <%*
 // ── Auto-ID: calcula el siguiente T-XXX consecutivo ──
 const taskPages = dv.pages('"05-Sprints"').where(p => p.type === "task" && p.id);

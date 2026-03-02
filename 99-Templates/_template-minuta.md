@@ -14,7 +14,6 @@ action-items: []
 tags:
   - reunión
 ---
-
 # Minuta: <% tp.frontmatter.title %>
 
 **Fecha:** <% tp.date.now("YYYY-MM-DD") %>  
