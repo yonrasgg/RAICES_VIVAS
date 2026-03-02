@@ -10,5 +10,11 @@
   "rightToLeft": false,
   "tabSize": 6,
   "defaultViewMode": "preview",
-  "showInlineTitle": false
+  "showInlineTitle": false,
+  "pdfExportSettings": {
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
 }
