@@ -68,7 +68,27 @@ Al abrir Obsidian (o al hacer la primera operación Pull/Push), aparece una **ve
 
 ---
 
-## 5. Estructura del Vault
+## 5. Configurar Git Hooks (una sola vez)
+
+Después de clonar y abrir el vault, ejecutá este comando **una vez** desde la terminal en la raíz del repositorio:
+
+```bash
+bash 08-Recursos/scripts/setup-hooks.sh
+```
+
+Esto instala un **pre-commit hook** que repara automáticamente el frontmatter YAML antes de cada commit:
+
+| Problema | Acción del hook |
+|----------|----------------|
+| Bloques YAML duplicados (plugin Banners) | Fusiona en un solo bloque |
+| `banner_src_x` faltante | Lo agrega con valor `0.47714` |
+| Keys desordenadas | Reordena según tipo de nota |
+
+> [!tip] Solo hay que hacerlo una vez por clon. El hook se ejecuta automáticamente en cada commit futuro.
+
+---
+
+## 6. Estructura del Vault
 
 ```
 RAICES_VIVAS/
@@ -88,9 +108,9 @@ RAICES_VIVAS/
 
 ---
 
-## 6. Operaciones Diarias — Paso a Paso
+## 7. Operaciones Diarias — Paso a Paso
 
-### 6.1 Crear una Nueva Tarea
+### 7.1 Crear una Nueva Tarea
 
 **Cuándo usar:** Cuando se necesita registrar trabajo nuevo para un sprint.
 
@@ -115,7 +135,7 @@ RAICES_VIVAS/
 7. La tarea se ubica en `05-Sprints/Sprint-XX/T-XXX.md`
 8. **Verificación:** Abre la tarea y confirma que el frontmatter se llenó correctamente
 
-### 6.2 Cambiar el Estado de una Tarea
+### 7.2 Cambiar el Estado de una Tarea
 
 **Cuándo usar:** Al empezar, completar, o bloquear una tarea.
 
@@ -142,7 +162,7 @@ RAICES_VIVAS/
 2. Arrastra la tarjeta de una columna a otra (Todo → In Progress → Done)
 3. El estado se sincroniza automáticamente
 
-### 6.3 Crear una Nueva Minuta
+### 7.3 Crear una Nueva Minuta
 
 **Cuándo usar:** Para documentar cada reunión del equipo.
 
@@ -159,7 +179,7 @@ RAICES_VIVAS/
    - **Riesgos Identificados:** cualquier riesgo nuevo
    - **Action Items:** checklist de tareas que salieron de la reunión
 
-### 6.4 Promover un Action Item a Tarea Formal
+### 7.4 Promover un Action Item a Tarea Formal
 
 **Cuándo usar:** Después de una reunión, para convertir action items en tareas rastreables.
 
@@ -173,7 +193,7 @@ RAICES_VIVAS/
 4. Se crea una nueva tarea `T-XXX.md` con campo `source: "MIN-001"`
 5. **Trazabilidad:** La tarea referencia la minuta de origen
 
-### 6.5 Promover una Decisión a ADR Formal
+### 7.5 Promover una Decisión a ADR Formal
 
 **Cuándo usar:** Cuando una decisión importante de reunión necesita documentación formal.
 
@@ -186,7 +206,7 @@ RAICES_VIVAS/
 4. Se crea `01-Proyecto/Decisiones/ADR-XXX.md` con ID automático
 5. **Dentro del ADR**, completa: Contexto, Opciones, Justificación, Consecuencias
 
-### 6.6 Promover un Riesgo a Nota Formal
+### 7.6 Promover un Riesgo a Nota Formal
 
 **Cuándo usar:** Cuando se identifica un riesgo en reunión que necesita seguimiento.
 
@@ -201,7 +221,7 @@ RAICES_VIVAS/
 4. La **severidad se calcula automáticamente** (prob × impacto)
 5. Se crea `01-Proyecto/Riesgos/RSK-XXX.md` con plan de respuesta vacío para completar
 
-### 6.7 Crear un Requerimiento Funcional
+### 7.7 Crear un Requerimiento Funcional
 
 1. `Ctrl+P` → `QuickAdd` → `Enter`
 2. Selecciona: **"Nuevo RF"** → `Enter`
@@ -212,7 +232,7 @@ RAICES_VIVAS/
    - **Stakeholder:** quién lo necesita
 4. Se crea en `03-Requerimientos/Funcionales/<MÓDULO>/RF-<MOD>-XX.md`
 
-### 6.8 Crear un Requerimiento No Funcional
+### 7.8 Crear un Requerimiento No Funcional
 
 1. `Ctrl+P` → `QuickAdd` → `Enter`
 2. Selecciona: **"Nuevo RNF"** → `Enter`
@@ -222,14 +242,14 @@ RAICES_VIVAS/
    - **Prioridad MoSCoW:** `must`, `should`, `could`, `wont`
 4. Se crea en `03-Requerimientos/No Funcionales/RNF-XX.md`
 
-### 6.9 Registrar una Entrevista
+### 7.9 Registrar una Entrevista
 
 1. `Ctrl+P` → `QuickAdd` → `Enter`
 2. Selecciona: **"Entrevista"** → `Enter`
 3. Completa los campos solicitados (participante, fecha, contexto)
 4. Se crea en `02-Investigación/Entrevistas/`
 
-### 6.10 Sprint Planning / Sprint Review
+### 7.10 Sprint Planning / Sprint Review
 
 **Sprint Planning:**
 1. `Ctrl+P` → `QuickAdd` → **"Sprint Planning"** → `Enter`
@@ -243,7 +263,7 @@ RAICES_VIVAS/
 
 ---
 
-## 7. Flujo de Trabajo Diario
+## 8. Flujo de Trabajo Diario
 
 ### Al iniciar sesión
 
@@ -274,7 +294,7 @@ RAICES_VIVAS/
 
 ---
 
-## 8. Comandos Git Útiles desde Obsidian
+## 9. Comandos Git Útiles desde Obsidian
 
 | Acción | Teclas | Comando a seleccionar |
 |--------|--------|----------------------|
@@ -288,7 +308,7 @@ RAICES_VIVAS/
 
 ---
 
-## 9. Reglas de Colaboración (No Negociables)
+## 10. Reglas de Colaboración (No Negociables)
 
 | # | Regla | Por qué |
 |---|-------|---------|
@@ -303,13 +323,13 @@ RAICES_VIVAS/
 
 ---
 
-## 10. Frontmatter — El Motor de Automatización del Vault
+## 11. Frontmatter — El Motor de Automatización del Vault
 
 El frontmatter (bloque YAML entre `---` al inicio de cada nota) es la **base de datos del proyecto**. Los dashboards, métricas, weekly notes y tablas automáticas leen estos campos via Dataview. Si un campo está vacío o incorrecto, la nota **desaparece** del sistema.
 
 > 📌 **Referencia completa:** [[Guía de Workflow]] §4 contiene los 12 esquemas detallados con campos REQUERIDO/RECOMENDADO/OPCIONAL y el mapa campo→automatización. Esta sección es un resumen rápido.
 
-### 10.1 Tarjeta de Referencia Rápida por Tipo de Nota
+### 11.1 Tarjeta de Referencia Rápida por Tipo de Nota
 
 #### Tarea (`type: task`) — La más importante
 
@@ -369,7 +389,7 @@ El frontmatter (bloque YAML entre `---` al inicio de cada nota) es la **base de 
 | `date` | Weekly "Reuniones esta semana" | ❌ No aparece en weekly |
 | `id: MIN-XXX` | Trazabilidad (`source:` en tareas/ADRs/riesgos) | ⚠️ Sin vínculo |
 
-### 10.2 Diagrama: Cómo Fluyen los Datos
+### 11.2 Diagrama: Cómo Fluyen los Datos
 
 ```mermaid
 flowchart LR
@@ -389,7 +409,7 @@ flowchart LR
 
 ---
 
-## 11. Resolución de Problemas Comunes
+## 12. Resolución de Problemas Comunes
 
 | Problema | Causa probable | Solución paso a paso |
 |----------|----------------|---------------------|
@@ -406,7 +426,7 @@ flowchart LR
 
 ---
 
-## 12. Editar desde el Navegador (Emergencia)
+## 13. Editar desde el Navegador (Emergencia)
 
 Si **no puedes instalar Obsidian** en alguna máquina (computadora de la universidad, etc.):
 
@@ -419,7 +439,7 @@ Si **no puedes instalar Obsidian** en alguna máquina (computadora de la univers
 
 ---
 
-## 13. Contacto del Equipo
+## 14. Contacto del Equipo
 
 | Integrante | Rol | Módulo | Contacto |
 |------------|-----|--------|----------|
@@ -429,7 +449,7 @@ Si **no puedes instalar Obsidian** en alguna máquina (computadora de la univers
 
 ---
 
-## 14. Tabla de Atajos Esenciales
+## 15. Tabla de Atajos Esenciales
 
 | Atajo | Acción | Cuándo usar |
 |-------|--------|-------------|
@@ -444,7 +464,7 @@ Si **no puedes instalar Obsidian** en alguna máquina (computadora de la univers
 
 ---
 
-## 15. Resumen de Macros QuickAdd Disponibles
+## 16. Resumen de Macros QuickAdd Disponibles
 
 | # | Macro | Qué crea | Dónde se guarda |
 |---|-------|---------|-----------------|
