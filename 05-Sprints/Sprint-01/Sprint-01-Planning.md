@@ -1,4 +1,7 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-sprints.png"
+---
+---
 type: sprint-planning
 title: "Sprint 01 — Avance 1: Análisis y Requerimientos"
 sprint: Sprint-01

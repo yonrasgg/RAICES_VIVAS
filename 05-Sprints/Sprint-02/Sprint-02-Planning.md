@@ -1,6 +1,6 @@
 ---
 banner_src: "08-Recursos/Imágenes/cover-sprints.png"
-banner_src_y: 0.2875
+banner_src_y: 0.2825
 ---
 ---
 type: sprint-planning
