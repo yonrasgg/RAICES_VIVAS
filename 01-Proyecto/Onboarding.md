@@ -464,7 +464,60 @@ Si **no puedes instalar Obsidian** en alguna máquina (computadora de la univers
 
 ---
 
-## 16. Resumen de Macros QuickAdd Disponibles
+## 16. Integración con Jira Cloud (Opción D)
+
+> 📌 **Guía completa:** [[Guía Jira - Opción D]] contiene las instrucciones detalladas de configuración.
+
+### ¿Por qué Jira?
+
+Jira Cloud es la herramienta de gestión operativa complementaria a Obsidian. Obsidian sigue siendo el hub de documentación; Jira provee:
+
+- Board Scrum visual con drag-and-drop
+- Reportes nativos (burndown, velocity)
+- Sprints con asignaciones y prioridades
+- Integración institucional (ecosistema Atlassian)
+
+**Instancia:** `https://ucenfotec-team-y6xzvduw.atlassian.net/jira/software/projects/RV/boards/1`
+
+### Plugins instalados
+
+| Plugin | ID | Rol |
+|--------|----|-----|
+| **Jira Issue Manager** (jira-sync) | `jira-sync` | Crear, actualizar, sincronizar issues |
+| **Jira Issue** | `obsidian-jira-issue` | Dashboards JQL inline (solo lectura) |
+
+### Comandos esenciales de Jira en Obsidian
+
+| Acción | Comando (`Ctrl+P` →) |
+|--------|-----------------------|
+| Crear issue en Jira | `Jira Issue Manager: Create issue in Jira` |
+| Actualizar issue en Jira | `Jira Issue Manager: Update issue in Jira` |
+| Cambiar estado | `Jira Issue Manager: Update issue status in Jira` |
+| Traer issue de Jira | `Jira Issue Manager: Get issue from Jira with custom key` |
+| Importar batch por JQL | `Jira Issue Manager: Batch Fetch Issues by JQL` |
+| Registrar tiempo | `Jira Issue Manager: Update work log in Jira manually` |
+
+### Flujo diario con Jira
+
+1. **Creás tarea** en Obsidian con QuickAdd (igual que antes)
+2. **Sincronizás** con `Ctrl+P` → `Create issue in Jira` → seleccionás proyecto RV
+3. **Editás** en Obsidian (frontmatter) → `Update issue in Jira` para pushear cambios
+4. **Cambiás estado** con `Update issue status in Jira`
+5. Los **dashboards JQL** en Home.md se actualizan automáticamente
+
+### Estructura en Jira
+
+| Nivel | Tipo | Ejemplo |
+|-------|------|---------|
+| **Epic** | Módulo del sistema | Educación (EDU), Saberes (SAB), Salud (SAL), Transversal |
+| **Story** | Requerimiento | RF-EDU-01, RNF-01 |
+| **Task** | Tarea de implementación | T-021 |
+
+> Más detalles en [[01-Proyecto/Decisiones/ADR-007|ADR-007]] y [[Guía Jira - Opción D]].
+
+---
+
+## 17. Resumen de Macros QuickAdd Disponibles
 
 | # | Macro | Qué crea | Dónde se guarda |
 |---|-------|---------|-----------------|
