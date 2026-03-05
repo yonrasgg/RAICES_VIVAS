@@ -13,21 +13,6 @@ tags:
   - onboarding
 ---
 
-## 2. Clonar el Repositorio
-
-Abrí una **terminal** (Terminal en Linux/Mac, Git Bash en Windows):
-
-```bash
-cd ~/Documents
-git clone https://github.com/yonrasgg/RAICES_VIVAS.git
-```
-
-Si pide usuario y contraseña:
-- **Username:** tu usuario de GitHub
-- **Password:** tu contraseña de GitHub
-
----
-
 ## 3. Abrir el Vault en Obsidian
 
 1. Abre **Obsidian**

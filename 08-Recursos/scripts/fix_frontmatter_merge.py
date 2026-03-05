@@ -206,59 +206,83 @@ def fix_file(filepath, apply=False):
     if not lines or lines[0].strip() != '---':
         return False, "no frontmatter"
 
-    # Find all --- delimiters in the first 40 lines
-    delim_positions = []
-    for i, line in enumerate(lines[:40]):
-        if line.strip() == '---':
-            delim_positions.append(i)
+    # Smart frontmatter parsing: walk lines and detect YAML blocks
+    # A YAML block is: `---\n<yaml content>\n---`
+    # Multiple consecutive blocks at the start = broken frontmatter
+    # A `---` after body content (non-YAML line after a closing ---) is a
+    # horizontal rule, NOT a frontmatter delimiter.
+    yaml_blocks = []
+    i = 0
+    while i < len(lines):
+        if lines[i].strip() == '---':
+            # Found an opening delimiter. Look for closing delimiter.
+            block_start = i
+            i += 1
+            block_lines = []
+            found_close = False
+            while i < len(lines):
+                if lines[i].strip() == '---':
+                    found_close = True
+                    break
+                block_lines.append(lines[i])
+                i += 1
+            if found_close and block_lines:
+                # We have a valid YAML block
+                block_text = '\n'.join(block_lines).strip()
+                # Verify it looks like YAML (has at least one key: value)
+                if re.search(r'^[a-zA-Z_][a-zA-Z0-9_-]*\s*:', block_text, re.MULTILINE):
+                    yaml_blocks.append((block_start, i, block_text))
+                    i += 1
+                    # Check if next non-empty line is another `---` (another YAML block)
+                    # Allow blank lines between consecutive YAML blocks
+                    next_i = i
+                    while next_i < len(lines) and lines[next_i].strip() == '':
+                        next_i += 1
+                    if next_i < len(lines) and lines[next_i].strip() == '---':
+                        i = next_i
+                        continue
+                    else:
+                        break  # Body content starts — stop looking for YAML blocks
+                else:
+                    break  # Not YAML content
+            else:
+                break  # No closing delimiter found or empty block
+        else:
+            break  # Non-delimiter line at start = no frontmatter
 
-    if len(delim_positions) < 2:
+    if len(yaml_blocks) == 0:
         return False, "no frontmatter"
 
-    # Normal case: exactly 2 delimiters = valid frontmatter
-    if len(delim_positions) == 2:
-        # Still check if banner_src_x is missing
-        fm_text = '\n'.join(lines[delim_positions[0]+1:delim_positions[1]])
+    # The body starts after the last YAML block's closing delimiter
+    last_block_end = yaml_blocks[-1][1]
+    body = '\n'.join(lines[last_block_end + 1:])
+
+    if len(yaml_blocks) == 1:
+        # Single valid YAML block — check if banner_src_x is missing
+        fm_text = yaml_blocks[0][2]
         if 'banner_src:' in fm_text and 'banner_src_x' not in fm_text:
             # Add banner_src_x
             pairs = parse_yaml_block(fm_text)
             merged = {k: v for k, v in pairs}
             has_banner = 'banner_src' in merged
             if has_banner:
-                # Insert banner_src_x after banner_src
-                new_lines = lines[:delim_positions[0]+1]
+                block_open = yaml_blocks[0][0]
+                block_close = yaml_blocks[0][1]
+                new_lines = lines[:block_open+1]
                 for key, raw in pairs:
                     new_lines.append(raw)
                     if key == 'banner_src':
                         new_lines.append(f'banner_src_x: {BANNER_SRC_X_DEFAULT}')
                 new_lines.append('---')
-                new_lines.extend(lines[delim_positions[1]+1:])
+                new_lines.extend(lines[block_close+1:])
                 if apply:
                     with open(filepath, 'w', encoding='utf-8') as f:
                         f.write('\n'.join(new_lines))
                 return True, "added missing banner_src_x"
         return False, "ok"
 
-    # BROKEN: more than 2 delimiters → need to merge
-    # Extract all YAML blocks between consecutive delimiter pairs
-    blocks = []
-    i = 0
-    while i < len(delim_positions) - 1:
-        start = delim_positions[i]
-        end = delim_positions[i + 1]
-        block_text = '\n'.join(lines[start+1:end]).strip()
-        if block_text:  # Skip empty blocks
-            blocks.append(block_text)
-        i += 1
-
-    if not blocks:
-        return False, "empty frontmatter blocks"
-
-    # Find the last delimiter
-    last_delim = delim_positions[-1]
-
-    # The rest of the file (body)
-    body = '\n'.join(lines[last_delim+1:])
+    # BROKEN: multiple YAML blocks → need to merge
+    blocks = [b[2] for b in yaml_blocks]
 
     # Merge all blocks (later blocks win for duplicates)
     merged, original_order = merge_yaml_blocks(blocks)

@@ -11,26 +11,4 @@ tags:
 project: raices-vivas
 ---
 
-## 📋 Lista de Decisiones
-
-```dataview
-TABLE
-  status AS "Estado",
-  category AS "Categoría",
-  module AS "Módulo",
-  impact AS "Impacto",
-  date AS "Fecha"
-FROM "01-Proyecto/Decisiones"
-WHERE type = "adr"
-SORT id ASC
-```
-
----
-
-## ➕ Nueva Decisión
-
-> `Ctrl+P` → QuickAdd → **🏗️ Nuevo ADR**
-
----
-
 ← [[00-Dashboard/Home|Volver al Dashboard]]

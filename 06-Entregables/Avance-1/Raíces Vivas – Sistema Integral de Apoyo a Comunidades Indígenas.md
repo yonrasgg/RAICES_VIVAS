@@ -5,29 +5,6 @@ source: "[[Software Engineering Introduction]]"
 tags:
 ---
 
-## Acrónimos
-
-- **AUP** – Agile Unified Process
-- **CCSS** – Caja Costarricense de Seguro Social
-- **CI** – Comunidad Indígena
-- **DT** – Diseño Tecnológico (en el contexto del proyecto)
-- **EBAIS** – Equipo Básico de Atención Integral en Salud
-- **HIS** – _Health Information System_ (Sistema de Información en Salud)
-- **ICE** – Instituto Costarricense de Electricidad
-- **INEC** – Instituto Nacional de Estadística y Censos
-- **INVU** – (si no se usa, mejor omitirlo; lo dejo fuera para evitar ruido)
-- **MEP** – Ministerio de Educación Pública
-- **MIDEPLAN** – Ministerio de Planificación Nacional y Política Económica
-- **MINSA** – Ministerio de Salud
-- **RNF** – Requerimiento No Funcional
-- **RF** – Requerimiento Funcional
-- **TI** – Tecnologías de Información
-- **TIC** – Tecnologías de Información y Comunicación
-- **UI** – _User Interface_ (Interfaz de Usuario)
-- **UX** – _User Experience_ (Experiencia de Usuario)
-- **VoC** – _Voice of Customer_ (Voz del Cliente/Usuario)
-
----
 ## Justificación
 
 El proyecto **Raíces Vivas** es socialmente relevante porque atiende necesidades reales y persistentes en comunidades indígenas de Costa Rica, donde convergen desafíos educativos, riesgos de pérdida de patrimonio biocultural y barreras de acceso a servicios básicos de salud. Estas comunidades no solo representan una parte fundamental de la diversidad cultural del país, sino que también resguardan lenguas, formas de organización y saberes ancestrales que aportan valor social, ambiental y científico. Cuando existen brechas en educación, en transmisión de conocimiento y en atención sanitaria, no solo se afecta el bienestar inmediato de las personas, sino también la continuidad de su identidad cultural y sus oportunidades de desarrollo.

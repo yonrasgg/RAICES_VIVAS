@@ -11,27 +11,4 @@ tags:
 project: raices-vivas
 ---
 
-## 📋 Lista de Riesgos
-
-```dataview
-TABLE
-  status AS "Estado",
-  category AS "Categoría",
-  probability AS "Prob.",
-  impact AS "Impacto",
-  severity AS "Severidad",
-  owner AS "Owner"
-FROM "01-Proyecto/Riesgos"
-WHERE type = "risk"
-SORT id ASC
-```
-
----
-
-## ➕ Nuevo Riesgo
-
-> `Ctrl+P` → QuickAdd → **⚠️ Nuevo Riesgo**
-
----
-
 ← [[00-Dashboard/Home|Volver al Dashboard]]

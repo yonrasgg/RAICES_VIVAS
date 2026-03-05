@@ -1,0 +1,39 @@
+#!/bin/bash
+# ──────────────────────────────────────────────────────────────────
+# Pre-commit hook: Raíces Vivas — Auto-reparación de frontmatter
+# ──────────────────────────────────────────────────────────────────
+#
+# Este hook se ejecuta automáticamente antes de cada commit.
+# Detecta y repara frontmatter YAML roto (bloques duplicados,
+# banner_src_x faltante) en archivos .md staged para commit.
+#
+# Instalación: bash 08-Recursos/scripts/setup-hooks.sh
+# ──────────────────────────────────────────────────────────────────
+
+VAULT_ROOT="$(git rev-parse --show-toplevel)"
+SCRIPT="$VAULT_ROOT/08-Recursos/scripts/fix_frontmatter_merge.py"
+
+if [ ! -f "$SCRIPT" ]; then
+    echo "⚠️  fix_frontmatter_merge.py no encontrado — saltando hook"
+    exit 0
+fi
+
+# Check if there are any staged .md files
+STAGED_MD=$(git diff --cached --name-only --diff-filter=ACM | grep '\.md$')
+if [ -z "$STAGED_MD" ]; then
+    exit 0
+fi
+
+echo "🔧 Verificando frontmatter en archivos staged..."
+python3 "$SCRIPT" --apply --staged
+
+# Re-stage any files that were fixed
+if [ $? -eq 0 ]; then
+    for f in $STAGED_MD; do
+        if [ -f "$VAULT_ROOT/$f" ]; then
+            git add "$VAULT_ROOT/$f"
+        fi
+    done
+fi
+
+exit 0
