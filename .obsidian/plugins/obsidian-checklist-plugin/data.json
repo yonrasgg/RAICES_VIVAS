@@ -11,18 +11,6 @@
   "sortDirectionSubGroups": "new->old",
   "includeFiles": "05-Sprints/**",
   "lookAndFeel": "classic",
-  "_collapsedSections": [
-    "05-Sprints/Sprint-02/T-022.md",
-    "05-Sprints/Sprint-02/T-031.md",
-    "05-Sprints/Sprint-02/T-030.md",
-    "05-Sprints/Sprint-02/T-029.md",
-    "05-Sprints/Sprint-02/T-028.md",
-    "05-Sprints/Sprint-02/T-027.md",
-    "05-Sprints/Sprint-02/T-026.md",
-    "05-Sprints/Sprint-02/T-025.md",
-    "05-Sprints/Sprint-02/T-024.md",
-    "05-Sprints/Sprint-02/T-023.md",
-    "05-Sprints/Sprint-02/T-021.md"
-  ],
+  "_collapsedSections": [],
   "_hiddenTags": []
 }
