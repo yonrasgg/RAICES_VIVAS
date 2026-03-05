@@ -10,12 +10,6 @@ tags:
   - review
 ---
 
-# Sprint <% tp.frontmatter.sprint %> — Review
-
-**Fecha:** <% tp.frontmatter.date %>
-
----
-
 ## Objetivo del Sprint
 
 > ¿Cuál era el objetivo?

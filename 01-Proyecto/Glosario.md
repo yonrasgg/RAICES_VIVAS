@@ -13,12 +13,6 @@ tags:
   - glosario
 ---
 
-# Glosario — Raíces Vivas
-
-> Referencia centralizada de acrónimos, términos del dominio, conceptos técnicos y metodológicos utilizados en el proyecto.
-
----
-
 ## Acrónimos
 
 | Acrónimo | Significado |

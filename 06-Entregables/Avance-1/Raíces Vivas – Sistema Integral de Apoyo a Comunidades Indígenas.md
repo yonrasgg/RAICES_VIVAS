@@ -4,30 +4,7 @@ title: Software Development Technician
 source: "[[Software Engineering Introduction]]"
 tags:
 ---
-# Raíces Vivas – Sistema Integral de Apoyo a Comunidades Indígenas
 
-## Introducción
-
-Las comunidades indígenas de Costa Rica representan un componente esencial de la diversidad cultural, histórica y social del país. Aunque constituyen alrededor del **2 % de la población total** del país, estas comunidades —distribuidas en **24 territorios reconocidos legalmente y pertenecientes a ocho pueblos indígenas distintos**— mantienen identidades culturales, lenguas y prácticas ancestrales únicas que han perdurado frente a procesos de cambio social y presión externa.
-
-Estas comunidades, ubicadas en regiones geográficas diversas como las montañas de Talamanca, las llanuras del norte o las costas del Pacífico y el Caribe, han forjado sistemas sociales organizados en torno a la colectividad, la relación con la naturaleza y la transmisión oral del conocimiento. La cultura de pueblos como los **Bribri, Cabécar, Maleku o Boruca** —entre otros— manifiesta una relación simbiótica con el entorno natural y valores comunitarios profundamente arraigados en su cosmovisión.
-
-A pesar de la riqueza cultural que aportan al país, estas poblaciones enfrentan retos significativos en ámbitos esenciales para su bienestar y continuidad cultural. En educación, las poblaciones indígenas históricamente han tenido acceso limitado a programas educativos interculturales que reconozcan y respeten su diversidad lingüística y valores propios, lo que dificulta su desempeño en sistemas estandarizados de evaluación y acceso a la educación superior.
-
-La **transferencia de conocimientos ancestrales** constituye otro punto crítico. Las saberes relacionados con la agricultura tradicional, la medicina natural, la gestión sostenible del entorno o las prácticas culturales resilientes se transmiten principalmente de forma oral. Esta modalidad, aunque culturalmente significativa, está en riesgo de desaparecer ante las presiones de migración juvenil, la asimilación cultural y la falta de mecanismos de documentación y preservación digital.
-
-Además, el **acceso a servicios de salud** sigue siendo una preocupación estructural. Las barreras geográficas, la infraestructura insuficiente y la ausencia de sistemas digitales que faciliten la gestión de historiales médicos, citas y seguimiento de enfermedades crónicas contribuyen a brechas significativas en el bienestar físico de las comunidades indígenas en Costa Rica.
-
-Frente a este panorama, surge la propuesta de desarrollar el **sistema “Raíces Vivas”**, concebido como una plataforma integral de apoyo contextualizado a las comunidades indígenas. Este sistema busca proveer herramientas que faciliten la educación bilingüe e intercultural, la documentación y preservación de conocimientos ancestrales y la gestión básica de salud comunitaria, respetando valores socioculturales y las dinámicas intrínsecas de cada pueblo.
-
-Desde una perspectiva académica, este proyecto no se enfoca inicialmente en la implementación de software, sino en **el análisis integral de la problemática, la identificación de necesidades reales y la especificación de requerimientos técnicos y no técnicos del sistema propuesto**. El objetivo principal en esta fase es detallar y justificar, con sustento empírico y metodológico, las especificaciones que guiarán el desarrollo futuro de “Raíces Vivas” de manera que responda eficazmente a las necesidades y prioridades de sus usuarios potenciales.
-
----
-## Abstract
-
-Las comunidades indígenas de Costa Rica resguardan una parte esencial de la diversidad cultural del país, incluyendo lenguas, prácticas comunitarias y conocimientos ancestrales. No obstante, enfrentan barreras persistentes en tres áreas críticas: (1) educación, donde la realidad de la enseñanza intercultural y comunitaria suele entrar en tensión con los sistemas estandarizados de evaluación nacional; (2) preservación y transferencia de conocimientos ancestrales, amenazadas por la migración juvenil, la presión cultural y la ausencia de mecanismos sistemáticos de documentación y preservación digital; y (3) acceso a servicios de salud, limitado por el aislamiento geográfico y la falta de herramientas unificadas para el seguimiento básico, la coordinación de atención y la continuidad en casos crónicos. Ante este escenario, el presente proyecto plantea **Raíces Vivas**, un sistema tecnológico integral y culturalmente respetuoso, estructurado en tres módulos: apoyo educativo, preservación de saberes ancestrales y gestión comunitaria de salud. En este primer avance no se implementa software; el enfoque se centra en aplicar principios de ingeniería de software para analizar el contexto, identificar actores y necesidades reales, y definir requerimientos medibles y verificables que orienten un desarrollo futuro. La metodología propuesta es aplicada, con enfoque cualitativo-descriptivo, apoyada en revisión documental y técnicas de educción de requerimientos como entrevistas semiestructuradas, observación contextual y validación con usuarios potenciales. Como resultado esperado, se obtiene una especificación inicial de requerimientos funcionales y no funcionales alineados con prioridades comunitarias, restricciones de viabilidad y consideraciones éticas, que sirva como base sólida para una solución tecnológica de impacto social.
-
----
 ## Acrónimos
 
 - **AUP** – Agile Unified Process

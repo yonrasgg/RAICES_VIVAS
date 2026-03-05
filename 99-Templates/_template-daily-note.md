@@ -11,22 +11,6 @@ tags:
 author:
 ---
 
-# ☀️ <% tp.date.now("dddd, DD MMMM YYYY") %>
-
-> Registro diario del equipo Raíces Vivas.
-> **Fecha:** <% tp.date.now("YYYY-MM-DD") %>
-
----
-
-## 🎯 Foco del Día
-
-<!-- ¿Qué se planea lograr hoy? -->
-- [ ] 
-- [ ] 
-- [ ] 
-
----
-
 ## ✅ Tareas Completadas Hoy
 
 ```dataview

@@ -1,7 +1,4 @@
 ---
-banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
----
----
 type: document
 title: "Equipo del Proyecto — Raíces Vivas"
 project: raices-vivas

@@ -1,7 +1,4 @@
 ---
-banner_src: "08-Recursos/Imágenes/cover-dashboard.png"
----
----
 type: dashboard
 title: "Raíces Vivas — Centro de Control"
 project: raices-vivas
@@ -12,12 +9,6 @@ banner_src_y: 0.38
 tags:
   - dashboard
   - home
----
-# 🎛️ Raíces Vivas — Centro de Control
-
-> **Sistema Integral de Apoyo a Comunidades Indígenas**
-> 🌿 Equipo: **Geovanny** (Lead/Arquitecto) · **Elkin** (Líder Investigación) · **Santiago** (Líder QA)
-
 ---
 
 ## 📊 Indicadores Clave (KPIs)

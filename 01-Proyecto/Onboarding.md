@@ -12,29 +12,6 @@ tags:
   - guia
   - onboarding
 ---
-# 🚀 Guía de Onboarding — Raíces Vivas
-
-> **Objetivo:** Que cualquier integrante del equipo pueda operar el vault de forma autónoma siguiendo estas instrucciones paso a paso. Cada operación incluye las **teclas exactas**, **opciones a seleccionar** y **campos a completar**.
-
-## 1. Requisitos Previos
-
-| Requisito | Dónde obtenerlo |
-|-----------|-----------------|
-| **Git** (≥ 2.39) | https://git-scm.com/downloads |
-| **Obsidian** (≥ 1.5) | https://obsidian.md/download |
-| **Cuenta GitHub** | https://github.com (con acceso al repo) |
-
-### 1.1 Tener acceso al repositorio en GitHub
-
-1. Abrí https://github.com en tu navegador
-2. Iniciá sesión con tu **usuario y contraseña de GitHub**
-3. Verificá que podés ver el repositorio: https://github.com/yonrasgg/RAICES_VIVAS
-   - Si no ves el repo, pedile acceso a **Geovanny** (owner del proyecto)
-4. Listo ✅ — solo necesitás recordar tu **usuario** y **contraseña** de GitHub
-
-> 💡 **No necesitás tokens, PATs, ni herramientas extra.** Al abrir el vault en Obsidian, el plugin de Git mostrará una ventanita pidiendo tus credenciales de GitHub. Es normal y ocurre cada vez que se abre el vault, por seguridad.
-
----
 
 ## 2. Clonar el Repositorio
 

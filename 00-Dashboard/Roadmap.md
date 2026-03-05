@@ -12,10 +12,6 @@ tags:
   - gantt
 ---
 
-# 📅 Roadmap & Gantt — Raíces Vivas
-
----
-
 ## Timeline General del Proyecto
 
 ```mermaid
