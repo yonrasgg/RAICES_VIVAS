@@ -1,4 +1,8 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-sprints.png"
+banner_src_y: 0.2875
+---
+---
 type: sprint-planning
 title: "Sprint 02 — Avance 2: Diseño y Arquitectura"
 sprint: Sprint-02

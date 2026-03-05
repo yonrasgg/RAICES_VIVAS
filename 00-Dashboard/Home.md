@@ -1,4 +1,7 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-dashboard.png"
+---
+---
 type: dashboard
 title: "Raíces Vivas — Centro de Control"
 project: raices-vivas
