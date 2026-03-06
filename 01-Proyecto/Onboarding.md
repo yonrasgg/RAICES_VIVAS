@@ -464,56 +464,125 @@ Si **no puedes instalar Obsidian** en alguna máquina (computadora de la univers
 
 ---
 
-## 16. Integración con Jira Cloud (Opción D)
+## 16. Integración Obsidian ↔ Jira Cloud
 
-> 📌 **Guía completa:** [[Guía Jira - Opción D]] contiene las instrucciones detalladas de configuración.
+### Visión General
 
-### ¿Por qué Jira?
+Obsidian es el **hub central** de documentación y planificación. Jira Cloud es la herramienta de **gestión operativa**, proveyendo board Scrum visual, reportes nativos (burndown, velocity) y trazabilidad institucional.
 
-Jira Cloud es la herramienta de gestión operativa complementaria a Obsidian. Obsidian sigue siendo el hub de documentación; Jira provee:
+**La regla es simple: todo se crea y edita en Obsidian, y se sincroniza a Jira con un comando.**
 
-- Board Scrum visual con drag-and-drop
-- Reportes nativos (burndown, velocity)
-- Sprints con asignaciones y prioridades
-- Integración institucional (ecosistema Atlassian)
+| Recurso | URL |
+|---------|-----|
+| **Board Scrum** | [RV Board](https://ucenfotec-team-y6xzvduw.atlassian.net/jira/software/projects/RV/boards/1) |
+| **Proyecto** | `RV` en Jira Cloud |
+| **Plugin** | jira-sync v1.4.4 (Jira Issue Manager) |
 
-**Instancia:** `https://ucenfotec-team-y6xzvduw.atlassian.net/jira/software/projects/RV/boards/1`
+### Jerarquía del Proyecto
 
-### Plugins instalados
+```
+Epic (RV-1, RV-2, RV-3)           → 05-Sprints/Epics/RV-X.md
+  └── Story (RV-4 … RV-9)         → 05-Sprints/Stories/RV-X.md
+       └── Subtask (bajo Story)    → 05-Sprints/Sprint-XX/T-XXX.md
+  └── Task (bajo Epic directo)     → 05-Sprints/Sprint-XX/T-XXX.md
+```
 
-| Plugin | ID | Rol |
-|--------|----|-----|
-| **Jira Issue Manager** (jira-sync) | `jira-sync` | Crear, actualizar, sincronizar issues |
-| **Jira Issue** | `obsidian-jira-issue` | Dashboards JQL inline (solo lectura) |
+| Jira Key | Tipo | Nombre | Módulo | Nota Obsidian |
+|----------|------|--------|--------|---------------|
+| RV-1 | Epic | Educación Intercultural Bilingüe | EDU | [[RV-1]] |
+| RV-2 | Epic | Saberes Ancestrales y Patrimonio | SAB | [[RV-2]] |
+| RV-3 | Epic | Salud Comunitaria e Intercultural | SAL | [[RV-3]] |
+| RV-4 | Story | RF-EDU-01: Registro de docentes (SP: 5) | EDU | [[RV-4]] |
+| RV-5 | Story | RF-EDU-03: Materiales multimedia (SP: 5) | EDU | [[RV-5]] |
+| RV-6 | Story | RF-SAB-01: Saberes ancestrales (SP: 5) | SAB | [[RV-6]] |
+| RV-7 | Story | RF-SAB-04: Restricción acceso (SP: 3) | SAB | [[RV-7]] |
+| RV-8 | Story | RF-SAL-01: Registro pacientes (SP: 3) | SAL | [[RV-8]] |
+| RV-9 | Story | RF-SAL-02: Historial médico (SP: 5) | SAL | [[RV-9]] |
 
-### Comandos esenciales de Jira en Obsidian
+### Templates Disponibles
 
-| Acción | Comando (`Ctrl+P` →) |
-|--------|-----------------------|
-| Crear issue en Jira | `Jira Issue Manager: Create issue in Jira` |
-| Actualizar issue en Jira | `Jira Issue Manager: Update issue in Jira` |
-| Cambiar estado | `Jira Issue Manager: Update issue status in Jira` |
-| Traer issue de Jira | `Jira Issue Manager: Get issue from Jira with custom key` |
-| Importar batch por JQL | `Jira Issue Manager: Batch Fetch Issues by JQL` |
-| Registrar tiempo | `Jira Issue Manager: Update work log in Jira manually` |
+| Template | Tipo | Comando QuickAdd |
+|----------|------|------------------|
+| `_template-epic.md` | Epic | Manual (raro crear nuevos) |
+| `_template-user-story.md` | User Story | Manual |
+| `_template-tarea.md` | Task / Subtask | **Nueva Tarea** (QuickAdd) |
 
-### Flujo diario con Jira
+Cada template incluye campos de Jira en el frontmatter. Al crear la nota, los campos se llenan automáticamente.
 
-1. **Creás tarea** en Obsidian con QuickAdd (igual que antes)
-2. **Sincronizás** con `Ctrl+P` → `Create issue in Jira` → seleccionás proyecto RV
-3. **Editás** en Obsidian (frontmatter) → `Update issue in Jira` para pushear cambios
-4. **Cambiás estado** con `Update issue status in Jira`
-5. Los **dashboards JQL** en Home.md se actualizan automáticamente
+### Campos Sincronizados (Frontmatter → Jira)
 
-### Estructura en Jira
+| Campo Frontmatter | Campo Jira | Dirección | Notas |
+|--------------------|------------|-----------|-------|
+| `key` | Issue Key | ← solo lectura | Jira lo asigna al crear |
+| `summary` | Summary | → push | Título del issue |
+| `issuetype` | Issue Type | → push | Epic / Story / Task / Subtask |
+| `project` | Project | → push | Siempre `RV` |
+| `parent` | Parent | → push | Key del Epic o Story padre |
+| `priority` | Priority | → push | Smart map: critical→Highest, must→Highest, high→High, should→High, medium→Medium, low→Low |
+| `assignee` | Assignee | → push | Nombre → accountId automático: Geovanny, Elkin, Santiago, Equipo |
+| `description` | Description | → push | Texto plano → ADF automático |
+| `duedate` | Due Date | → push | Formato `YYYY-MM-DD` |
+| `timetracking` | Time Estimate | → push | Formato `Xh` (ej: `8h`, `4h`) |
+| `labels` | Labels | → push | Array YAML |
+| `customfield_10016` | Story Points | → push | Numérico (Fibonacci: 1,2,3,5,8,13) |
+| `status` | Status | ← solo lectura | Cambiar vía comando de transición |
 
-| Nivel | Tipo | Ejemplo |
-|-------|------|---------|
-| **Epic** | Módulo del sistema | Educación (EDU), Saberes (SAB), Salud (SAL), Transversal |
-| **Story** | Requerimiento | RF-EDU-01, RNF-01 |
-| **Task** | Tarea de implementación | T-021 |
+### Comandos Jira en Obsidian (`Ctrl+P`)
 
-> Más detalles en [[01-Proyecto/Decisiones/ADR-007|ADR-007]] y [[Guía Jira - Opción D]].
+| Acción | Comando |
+|--------|---------|
+| **Crear issue** nuevo en Jira | `Jira Issue Manager: Create issue in Jira` |
+| **Actualizar** issue existente | `Jira Issue Manager: Update issue in Jira` |
+| **Cambiar estado** | `Jira Issue Manager: Update issue status in Jira` |
+| **Traer** issue de Jira | `Jira Issue Manager: Get issue from Jira with custom key` |
+| **Importar** batch por JQL | `Jira Issue Manager: Batch Fetch Issues by JQL` |
+| **Registrar** tiempo | `Jira Issue Manager: Update work log in Jira manually` |
+
+### Flujo de Trabajo Diario
+
+#### Crear y sincronizar una tarea nueva
+
+1. `Ctrl+P` → **Nueva Tarea** (QuickAdd) → completar prompts
+2. Verificar frontmatter (summary, priority, assignee, parent, description, labels)
+3. `Ctrl+P` → **Create issue in Jira** → seleccionar proyecto `RV`
+4. Jira asigna una key (ej: `RV-45`) y la escribe en el frontmatter
+
+#### Actualizar una tarea existente
+
+1. Editar el frontmatter en Obsidian (ej: cambiar `priority`, `duedate`, `assignee`)
+2. `Ctrl+P` → **Update issue in Jira**
+3. Los cambios se reflejan en Jira inmediatamente
+
+#### Cambiar estado de una tarea
+
+1. `Ctrl+P` → **Update issue status in Jira**
+2. Seleccionar: To Do → In Progress → Done
+
+#### Crear un Epic o Story (poco frecuente)
+
+1. Crear nota manualmente usando `_template-epic.md` o `_template-user-story.md`
+2. Llenar frontmatter (key vacío, summary, module, etc.)
+3. `Ctrl+P` → **Create issue in Jira**
+4. Mover nota a `05-Sprints/Epics/` o `05-Sprints/Stories/`
+
+### Navegación por Jerarquía en Obsidian
+
+Cada nota tiene **Dataview queries automáticas** que muestran la jerarquía:
+
+- **Epic** → lista Stories vinculadas + Tasks directas + RFs del módulo + barra de progreso
+- **Story** → lista Subtasks vinculadas + enlace a Epic padre + enlace a RF
+- **Task** → enlace a Parent (Epic o Story) + enlace a RF
+
+Usar `[[RV-1]]`, `[[RV-4]]`, `[[RF-EDU-01]]` como wikilinks para navegar la jerarquía.
+
+### Sprints
+
+| Sprint | ID Jira | Estado | Contenido |
+|--------|---------|--------|-----------|
+| Sprint 1 | 1 | Cerrado | 17 tasks + 2 impedimentos (todo Done) |
+| Sprint 2 | 34 | Activo | 6 Stories + 5 Tasks (todo To Do) |
+
+> 📌 Referencia técnica: [[01-Proyecto/Decisiones/ADR-007|ADR-007]]
 
 ---
 

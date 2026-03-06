@@ -4,7 +4,7 @@ title: "Plan de Gestión — Raíces Vivas"
 project: raices-vivas
 status: active
 created: 2026-02-27
-updated: 2026-03-01
+updated: 2026-03-05
 banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
@@ -72,11 +72,21 @@ Cada líder tiene autonomía para tomar decisiones técnicas dentro de su módul
 | **Checklist** | Panel lateral con todos los checkboxes pendientes (tag: `tarea`) |
 | **Projects** | Vista de portafolio de archivos con filtros |
 
-### Colaboración
+### Colaboración & Gestión Operativa
 | Plugin | Función |
 |--------|--------|
 | **Git** (obsidian-git) | Auto-commit, push, pull cada 10 min. GitHub como fuente de verdad |
 | **Auto Link Title** | Pega URLs y automáticamente inserta el título como texto del link |
+| **Jira Issue Manager** (jira-sync) | Crear, actualizar y sincronizar issues con Jira Cloud. Mapeo bidireccional de frontmatter → Jira API |
+
+### Jira Cloud
+| Recurso | Valor |
+|---------|-------|
+| **Instancia** | [ucenfotec-team-y6xzvduw.atlassian.net](https://ucenfotec-team-y6xzvduw.atlassian.net) |
+| **Proyecto** | `RV` — Raíces Vivas |
+| **Board Scrum** | [RV Board](https://ucenfotec-team-y6xzvduw.atlassian.net/jira/software/projects/RV/boards/1) |
+| **Jerarquía** | Epic (módulo) → Story (RF priorizado) → Task / Subtask |
+| **Sprints** | Sprint 1 (cerrado), Sprint 2 (activo), máx. 8 SP por sprint |
 
 ## Automatización Clave
 
@@ -98,6 +108,8 @@ Cada líder tiene autonomía para tomar decisiones técnicas dentro de su módul
 | **Pendientes por Semana** | Las tareas `todo` con `due: YYYY-MM-DD` aparecen en la weekly de su semana límite |
 | **Cycle Time** | `completed - started` = días que tardó una tarea. Se calcula automáticamente en Métricas |
 | **Velocity** | Horas completadas por sprint. Se calcula desde `effort` de tareas `done` |
+| **Sincronización Jira** | Cada tarea/story/epic creada en Obsidian se sincroniza a Jira con `Ctrl+P` → *Create issue in Jira*. Los campos frontmatter (summary, priority, assignee, parent, description, labels, duedate, timetracking) se mapean automáticamente a campos Jira |
+| **Jerarquía Obsidian ↔ Jira** | Epics (`05-Sprints/Epics/`), Stories (`05-Sprints/Stories/`) y Tasks (`05-Sprints/Sprint-XX/`) tienen notas Obsidian con Dataview queries que resuelven la jerarquía `parent` idéntica a Jira |
 
 > **🔑 Principio fundamental:** El frontmatter YAML es la **base de datos** del proyecto. Los 12 tipos de nota documentados en [[01-Proyecto/Guía de Workflow#4. Esquema de Frontmatter — Referencia Definitiva|Guía de Workflow §4]] definen qué campos son REQUERIDOS para que cada automatización funcione. Un campo vacío o mal escrito = dato invisible para el Dashboard.
 

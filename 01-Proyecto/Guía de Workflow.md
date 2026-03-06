@@ -321,6 +321,21 @@ requirement: "RF-EDU-01"      # 🟡 RECOMENDADO — RF/RNF padre. "N/A" si admi
 source: "MIN-001"             # 🟡 RECOMENDADO — Minuta que originó esta tarea
                               #   → Trazabilidad bidireccional minuta ↔ tarea
 
+# ── Jira Sync (jira-sync plugin) ──────────────────────────
+key: "RV-XX"                  # ⚪ AUTO — Asignado por Jira al crear. NUNCA editar
+summary: "Título descriptivo" # 🔴 REQUERIDO — Debe coincidir con title
+issuetype: Task               # 🔴 REQUERIDO — Task | Subtask (según parent)
+project: RV                   # 🔴 REQUERIDO — Siempre "RV"
+parent: "RV-1"                # 🔴 REQUERIDO — Key del Epic o Story padre
+                              #   Epic padre: RV-1(EDU) | RV-2(SAB) | RV-3(SAL)
+                              #   Story padre: RV-4..RV-9 → issuetype cambia a Subtask
+description: "Texto plano"    # 🟡 RECOMENDADO — Se convierte a ADF automáticamente
+duedate: 2026-03-14           # 🟡 RECOMENDADO — Mismo valor que "due"
+timetracking: "8h"            # 🟡 RECOMENDADO — Mismo valor que "effort"
+labels:                       # 🟡 RECOMENDADO — Tags en Jira
+  - educacion
+  - sprint-01
+
 # ── Metadata ───────────────────────────────────────────────
 created: 2026-02-27           # ⚪ OPCIONAL — Fecha de creación de la nota
 updated: 2026-02-28           # ⚪ OPCIONAL — Última actualización manual
@@ -719,6 +734,74 @@ tags:                         # 🟡 RECOMENDADO
   - investigación
   - entrevista
 ```
+
+---
+
+#### 4.4.13 Epic Jira (`type: epic`)
+
+**Ubicación:** `05-Sprints/Epics/RV-X.md`
+**Creación:** Manual con template o desde Jira
+**Template:** `99-Templates/_template-epic.md`
+
+```yaml
+type: epic                    # 🔴 REQUERIDO
+key: "RV-1"                   # 🔴 REQUERIDO — Clave Jira
+summary: "Educación Intercultural Bilingüe"  # 🔴 REQUERIDO
+issuetype: Epic               # 🔴 REQUERIDO
+project: RV                   # 🔴 REQUERIDO
+title: "Educación Intercultural Bilingüe"   # 🔴 REQUERIDO
+status: in-progress           # 🔴 REQUERIDO
+priority: high                # 🔴 REQUERIDO
+owner: "Geovanny"             # 🔴 REQUERIDO — Responsable del Epic
+module: educacion             # 🔴 REQUERIDO — educacion | saberes | salud
+description: "Texto plano"    # 🟡 RECOMENDADO — Se convierte a ADF en Jira
+labels:                       # 🟡 RECOMENDADO
+  - educacion
+  - mvp
+tags:                         # 🟡 RECOMENDADO
+  - epic
+  - modulo/edu
+created: 2026-02-03           # ⚪ AUTO
+updated: 2026-03-05           # ⚪ AUTO
+```
+
+> 📌 Las notas Epic incluyen Dataview queries que resuelven automáticamente las Stories, Tasks y RFs vinculadas por el campo `parent`.
+
+---
+
+#### 4.4.14 User Story Jira (`type: story`)
+
+**Ubicación:** `05-Sprints/Stories/RV-X.md`
+**Creación:** Manual con template o desde Jira
+**Template:** `99-Templates/_template-user-story.md`
+
+```yaml
+type: story                   # 🔴 REQUERIDO
+key: "RV-4"                   # 🔴 REQUERIDO — Clave Jira
+summary: "RF-EDU-01: Registro de docentes"  # 🔴 REQUERIDO
+issuetype: Story              # 🔴 REQUERIDO
+project: RV                   # 🔴 REQUERIDO
+parent: "RV-1"                # 🔴 REQUERIDO — Key del Epic padre
+title: "Registro de docentes"             # 🔴 REQUERIDO
+status: todo                  # 🔴 REQUERIDO
+priority: must                # 🔴 REQUERIDO
+assignee: "Geovanny"          # 🔴 REQUERIDO
+module: educacion             # 🔴 REQUERIDO
+requirement: "RF-EDU-01"      # 🔴 REQUERIDO — Requerimiento funcional vinculado
+story_points: 5               # 🔴 REQUERIDO — Fibonacci (1,2,3,5,8,13)
+customfield_10016: 5          # 🔴 REQUERIDO — Mismo valor que story_points (campo Jira)
+description: "Como equipo..." # 🟡 RECOMENDADO — User Story format
+labels:                       # 🟡 RECOMENDADO
+  - educacion
+  - mvp
+tags:                         # 🟡 RECOMENDADO
+  - story
+  - modulo/edu
+created: 2026-02-03           # ⚪ AUTO
+updated: 2026-03-05           # ⚪ AUTO
+```
+
+> 📌 Las notas Story incluyen Dataview queries que resuelven Subtareas vinculadas, enlace al Epic padre, y enlace al RF.
 
 ---
 
@@ -1348,6 +1431,7 @@ Cada **Sprint Review** debe incluir:
 | **Periodic Notes** | Notas semanales/mensuales | Resúmenes de sprint por semana |
 | **Auto Link Title** | Títulos de links | Auto-fetch de títulos web |
 | **Highlightr** | Resaltado avanzado | Hallazgos clave en investigación |
+| **Jira Issue Manager** (jira-sync) | Sincronización con Jira Cloud | Crear, actualizar y traer issues. Mapeo frontmatter → Jira API. Push de summary, priority, assignee, description, labels, parent, duedate, timetracking, SP |
 
 ---
 
@@ -1720,6 +1804,12 @@ El Dashboard Home tiene 7 botones precreados:
 | Checklist panel vacío | Verificar configuración de carpeta/tags en Settings → Checklist |
 | Multi-Column no renderiza | Verificar que el ID sea único y la sintaxis exacta |
 | Buttons no ejecuta acción | Verificar nombre del comando exacto (`Ctrl+P` → buscar) |
+| Jira: "Create issue" no envía campos | Verificar que el frontmatter tiene `summary`, `issuetype`, `project` como mínimo |
+| Jira: Assignee muestra error | El campo `assignee` debe ser nombre exacto: Geovanny, Elkin, Santiago, Equipo |
+| Jira: Description vacía en Jira | El campo `description` en frontmatter debe ser texto plano (se convierte a ADF) |
+| Jira: Priority no mapea | Valores válidos: critical, must, high, should, medium, low, lowest |
+| Jira: Story Points no aparecen | Usar `customfield_10016` (no `story_points`) como campo frontmatter para sync |
+| Jira: Parent rechazado | Task bajo Story → `issuetype: Subtask`. Task bajo Epic → `issuetype: Task` |
 
 ---
 
@@ -1791,7 +1881,7 @@ Los gráficos de colaboración (pie, bar) y velocidad (line) se actualizan en ca
 
 ---
 
-*Guía creada: 2026-02-27 · Última actualización: 2026-03-01*
+*Guía creada: 2026-02-27 · Última actualización: 2026-03-05*
 *Equipo: Geovanny (Project Lead) · Elkin (Líder Investigación — SAB) · Santiago (Líder QA — SAL)*
-*Versión: 7.0 — §4 reescrito como referencia definitiva de frontmatter (12 tipos de nota, campos REQUERIDO/RECOMENDADO/OPCIONAL, mapa campo→automatización, errores frecuentes). §6.1 corrige RSK nomenclatura. §12.5 y §15.2 documentan weekly notes con scoped queries. Todo alineado con filosofía de trazabilidad bidireccional y automatización Dataview.*
+*Versión: 8.0 — Integración Jira Cloud: §4.4.13–14 documentan tipos epic/story. §14 incluye plugin jira-sync. §17 incluye troubleshooting Jira. Frontmatter de tareas ampliado con campos Jira Sync (key, summary, issuetype, project, parent, description, duedate, timetracking, labels). Jerarquía Epic > Story > Task/Subtask alineada con Jira.*
 *Revisar y actualizar cada sprint*
