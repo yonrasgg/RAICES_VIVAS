@@ -20,6 +20,16 @@ const due = await tp.system.prompt("Fecha límite (YYYY-MM-DD)");
 const source = await tp.system.prompt("Minuta origen (ej: MIN-001 o vacío)", "");
 const today = tp.date.now("YYYY-MM-DD");
 
+// ── Jira parent mapping (module → Epic key) ──
+const parentMap = {
+  "educacion": "RV-1",
+  "saberes": "RV-2",
+  "salud": "RV-3",
+  "transversal": "RV-1",
+  "proyecto": "RV-1"
+};
+const parentKey = parentMap[module_] || "RV-1";
+
 // ── Determinar tag de avance según sprint ──
 const sprintNum = sprint.replace("Sprint-0", "").replace("Sprint-", "");
 const avanceTag = sprint === "backlog" ? "" : `\n  - avance-${sprintNum}`;
@@ -33,6 +43,11 @@ banner_src_x: 0.47714
 banner_src_y: 0.42
 type: task
 id: <% nextId %>
+key: ""
+summary: "<% nextId %>: <% title %>"
+issuetype: Task
+project: RV
+parent: "<% parentKey %>"
 title: "<% title %>"
 status: <% status %>
 priority: <% priority %>
