@@ -74,7 +74,7 @@ SORT wbs ASC
 ### Cobertura de Tareas por Requerimiento
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(p => p.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(p => p.type === "task" || p.type === "subtask");
 const reqs = dv.pages('"03-Requerimientos"').where(p => p.type && p.type.startsWith("requirement"));
 
 const rows = reqs.map(req => {
@@ -86,4 +86,18 @@ const rows = reqs.map(req => {
 });
 
 dv.table(["Requerimiento", "Módulo", "Estado", "Cobertura"], rows);
+```
+
+### Vinculación Jira (Epics → Stories)
+
+```dataview
+TABLE WITHOUT ID
+  key as "Jira Key",
+  summary as "Epic / Story",
+  issuetype as "Tipo",
+  parent as "Parent",
+  status as "Estado"
+FROM "05-Sprints/Epics" OR "05-Sprints/Stories"
+WHERE type = "epic" OR type = "story"
+SORT key ASC
 ```

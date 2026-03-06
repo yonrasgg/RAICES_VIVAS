@@ -85,6 +85,16 @@ labels:
 | **Prioridad** | `INPUT[suggester(option(critical), option(high), option(medium), option(low)):priority]` |
 | **Responsable** | `INPUT[suggester(option(Geovanny), option(Elkin), option(Santiago), option(Equipo)):assignee]` |
 | **Sprint** | `INPUT[suggester(option(Sprint-01), option(Sprint-02), option(Sprint-03), option(Sprint-04), option(Sprint-05), option(backlog)):sprint]` |
+| **Clave Jira** | `VIEW[{key}]` |
+| **Parent** | `VIEW[{parent}]` → [[<% parentKey %>]] |
+
+## Trazabilidad Jira
+
+| Nivel | Clave | Nota |
+|-------|-------|------|
+| **Epic** | <% parentKey %> | [[<% parentKey %>]] |
+| **Parent directo** | `VIEW[{parent}]` | [[<% parentKey %>]] |
+| **Requerimiento** | <% requirement %> | [[<% requirement %>]] |
 
 ## Descripción
 

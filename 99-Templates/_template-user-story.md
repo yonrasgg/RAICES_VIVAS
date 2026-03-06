@@ -65,6 +65,7 @@ assignee: "<% storyOwner %>"
 module: <% storyModule %>
 requirement: "<% storyRF %>"
 story_points: <% storySP %>
+customfield_10016: <% storySP %>
 created: <% today %>
 updated: <% today %>
 tags:
