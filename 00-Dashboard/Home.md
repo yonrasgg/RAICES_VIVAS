@@ -92,11 +92,13 @@ dv.table(
 
 ## 🚀 Acciones Rápidas
 
-> **Cómo usar:** Haz clic en cualquier botón → se abre el menú QuickAdd → selecciona la opción correspondiente y completa los campos solicitados.
+> **Cómo usar:** Haz clic en cualquier botón → se abre el menú QuickAdd → selecciona la opción. Los botones **Jira** ejecutan el comando directamente sobre la nota activa.
 
-=== start-multi-column: quick-actions
+### Crear Contenido
+
+=== start-multi-column: qa-crear
 ```column-settings
-number of columns: 4
+number of columns: 3
 border: off
 shadow: off
 ```
@@ -120,15 +122,6 @@ color green
 === end-column ===
 
 ```button
-name ⚠️ Nuevo Riesgo
-type command
-action QuickAdd: Run QuickAdd
-color yellow
-```
-
-=== end-column ===
-
-```button
 name 🏗️ Nuevo ADR
 type command
 action QuickAdd: Run QuickAdd
@@ -137,9 +130,11 @@ color purple
 
 === end-multi-column
 
-=== start-multi-column: quick-actions-row2
+### Requerimientos e Investigación
+
+=== start-multi-column: qa-reqs
 ```column-settings
-number of columns: 4
+number of columns: 3
 border: off
 shadow: off
 ```
@@ -163,6 +158,24 @@ color cyan
 === end-column ===
 
 ```button
+name ⚠️ Nuevo Riesgo
+type command
+action QuickAdd: Run QuickAdd
+color yellow
+```
+
+=== end-multi-column
+
+### Sprints e Investigación
+
+=== start-multi-column: qa-sprints
+```column-settings
+number of columns: 3
+border: off
+shadow: off
+```
+
+```button
 name 🎤 Entrevista
 type command
 action QuickAdd: Run QuickAdd
@@ -172,17 +185,28 @@ color orange
 === end-column ===
 
 ```button
-name 📦 Backlog
-type link
-action [[05-Sprints/Backlog]]
-color default
+name 🚀 Sprint Planning
+type command
+action QuickAdd: Run QuickAdd
+color blue
+```
+
+=== end-column ===
+
+```button
+name 📋 Sprint Review
+type command
+action QuickAdd: Run QuickAdd
+color green
 ```
 
 === end-multi-column
 
-=== start-multi-column: quick-actions-row3
+### Promover desde Minuta
+
+=== start-multi-column: qa-promover
 ```column-settings
-number of columns: 4
+number of columns: 3
 border: off
 shadow: off
 ```
@@ -212,18 +236,81 @@ action QuickAdd: Run QuickAdd
 color yellow
 ```
 
+=== end-multi-column
+
+### Sincronización Jira
+
+=== start-multi-column: qa-jira
+```column-settings
+number of columns: 3
+border: off
+shadow: off
+```
+
+```button
+name 🔄 Crear en Jira
+type command
+action Jira Issue Manager: Create issue in Jira
+color blue
+```
+
+=== end-column ===
+
+```button
+name 📤 Actualizar en Jira
+type command
+action Jira Issue Manager: Update issue in Jira
+color green
+```
+
+=== end-column ===
+
+```button
+name 🔀 Cambiar Estado Jira
+type command
+action Jira Issue Manager: Update issue status in Jira
+color yellow
+```
+
+=== end-multi-column
+
+### Navegación Rápida
+
+=== start-multi-column: qa-nav
+```column-settings
+number of columns: 3
+border: off
+shadow: off
+```
+
+```button
+name 📦 Backlog
+type link
+action [[05-Sprints/Backlog]]
+color default
+```
+
 === end-column ===
 
 ```button
 name 💰 Finanzas
 type link
 action [[01-Proyecto/Finanzas]]
-color green
+color default
+```
+
+=== end-column ===
+
+```button
+name 🌐 Board Jira
+type link
+action https://ucenfotec-team-y6xzvduw.atlassian.net/jira/software/projects/RV/boards/1
+color default
 ```
 
 === end-multi-column
 
-> **12 macros disponibles en QuickAdd:** Nueva Tarea · Nueva Minuta · Nuevo RF · Nuevo RNF · Nuevo Riesgo · Nuevo ADR · Entrevista · Sprint Planning · Sprint Review · 📋 Promover Action Item · 🏗️ Promover Decisión · ⚠️ Promover Riesgo
+> **18 acciones rápidas** — 12 macros QuickAdd (Nueva Tarea · Minuta · RF · RNF · Riesgo · ADR · Entrevista · Sprint Planning · Sprint Review · Promover Action Item · Promover Decisión · Promover Riesgo) · 3 Jira Sync (Crear · Actualizar · Cambiar Estado) · 3 Navegación (Backlog · Finanzas · Board Jira)
 
 ---
 
