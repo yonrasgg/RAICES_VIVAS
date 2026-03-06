@@ -14,7 +14,7 @@ tags:
 ## 📊 Indicadores Clave (KPIs)
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 const done = tasks.where(t => t.status === "done").length;
 const total = tasks.length;
 const pct = total > 0 ? Math.round((done/total)*100) : 0;
@@ -329,7 +329,7 @@ labelColors: true
 > *Gráfico de referencia. La tabla dinámica abajo muestra datos en tiempo real.*
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 const people = {};
 const total = tasks.length;
 for (const t of tasks) {
@@ -373,7 +373,7 @@ beginAtZero: true
 > *Gráfico de referencia. La tabla dinámica Dataview abajo muestra datos en tiempo real.*
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 const statuses = {};
 for (const t of tasks) {
   const s = t.status || "desconocido";
@@ -536,7 +536,7 @@ TABLE WITHOUT ID
   priority as "Prioridad",
   due as "📅 Límite"
 FROM "05-Sprints"
-WHERE type = "task" AND status != "done"
+WHERE (type = "task" OR type = "subtask") AND status != "done"
 SORT priority ASC, due ASC
 LIMIT 10
 ```
@@ -611,7 +611,7 @@ SORT id ASC
 > [!note]- 📈 Progreso por Fase (expandir)
 >
 > ```dataviewjs
-> const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+> const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 > const phases = {};
 > for (const t of tasks) {
 >   const p = t.phase || "sin fase";
@@ -634,8 +634,8 @@ SORT id ASC
 > [!note]- 💰 Resumen Financiero (expandir)
 >
 > ```dataviewjs
-> const tarifas = { "Geovanny": 7500, "Elkin": 6000, "Santiago": 6000 };
-> const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.effort);
+> const tarifas = { "Geovanny": 12248.23, "Elkin": 12248.23, "Santiago": 12248.23 };
+> const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 > const costos = {};
 > for (const t of tasks) {
 >   const person = t.assignee || "Sin asignar";
@@ -705,7 +705,7 @@ SORT id ASC
 
 ### Sprint Actual — Distribución
 
-![[05-Sprints/Sprint-01/Sprint-01-Planning#Distribución por Responsable]]
+![[05-Sprints/Sprint-02/Sprint-02-Planning#Distribución por Responsable]]
 
 ---
 
@@ -719,5 +719,5 @@ SORT id ASC
 
 ---
 
-*Dashboard dinámico · Banners + Buttons + Multi-Column + Dataview + Charts + Mermaid*
-*Última configuración: 2026-03-01*
+*Dashboard dinámico · Banners + Buttons + Multi-Column + Dataview + Charts + Mermaid + Jira Sync*
+*Última configuración: 2026-03-05*

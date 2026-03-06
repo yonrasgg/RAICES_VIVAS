@@ -19,7 +19,7 @@ tags:
 ## 1. Resumen Ejecutivo
 
 ```dataviewjs
-const allTasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const allTasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 const done = allTasks.where(t => t.status === "done").length;
 const total = allTasks.length;
 const pct = total > 0 ? Math.round((done/total)*100) : 0;
@@ -50,7 +50,7 @@ dv.table(
 );
 
 // Sprint actual — dinámico
-const sprintPages = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.sprint);
+const sprintPages = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint);
 const sprintGroups = {};
 for (const t of sprintPages) {
   const s = String(t.sprint);
@@ -85,7 +85,7 @@ labelColors: true
 > *Gráfico de referencia. Actualizar valores manualmente al cierre de cada sprint o usar la tabla dinámica abajo.*
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 const statuses = {};
 for (const t of tasks) {
   const s = t.status || "desconocido";
@@ -141,7 +141,7 @@ beginAtZero: true
 ### 3.3 Detalle Dinámico por Responsable
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 const people = {};
 const totalTasks = tasks.length;
 for (const t of tasks) {
@@ -179,7 +179,7 @@ dv.table(headers, rows);
 ## 4. Tareas por Fase
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 const phases = {};
 for (const t of tasks) {
   const p = t.phase || "sin fase";
@@ -204,7 +204,7 @@ dv.table(headers, rows);
 ## 5. Tareas por Módulo
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 const modules = {};
 for (const t of tasks) {
   const m = t.module || "sin módulo";
@@ -260,7 +260,7 @@ SORT priority ASC
 ### 7.1 Indicadores de Proceso
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 const total = tasks.length;
 const done = tasks.where(t => t.status === "done").length;
 const blocked = tasks.where(t => t.status === "blocked").length;
@@ -296,7 +296,7 @@ dv.table(
 ### 7.2 Tablero de Calidad (Quality Scorecard)
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 const total = tasks.length;
 const done = tasks.where(t => t.status === "done").length;
 const blocked = tasks.where(t => t.status === "blocked").length;
@@ -312,7 +312,7 @@ else if (parseFloat(sigma) >= 69.1) sigmaLevel = "2σ";
 else sigmaLevel = "1σ";
 
 // Schedule Variance
-const sprintTasks = dv.pages('"05-Sprints/Sprint-01"').where(t => t.type === "task");
+const sprintTasks = dv.pages('"05-Sprints/Sprint-01"').where(t => t.type === "task" || t.type === "subtask");
 const sprintTotal = sprintTasks.length;
 const sprintDone = sprintTasks.where(t => t.status === "done").length;
 const sv = sprintTotal > 0 ? (((sprintDone / sprintTotal) - 1) * 100).toFixed(1) : 0;
@@ -376,7 +376,7 @@ tension: 0.3
 ### 8.2 Detalle Dinámico
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.sprint);
+const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint);
 const sprints = {};
 for (const t of tasks) {
   const s = String(t.sprint);
@@ -409,7 +409,7 @@ dv.table(headers, rows);
 > [!note]- 📈 Burndown Sprint 01 (expandir)
 >
 > ```dataviewjs
-> const tasks = dv.pages('"05-Sprints/Sprint-01"').where(t => t.type === "task" && t.completed);
+> const tasks = dv.pages('"05-Sprints/Sprint-01"').where(t => (t.type === "task" || t.type === "subtask") && t.completed);
 > const byDate = {};
 > for (const t of tasks) {
 >   const d = t.completed.toString().slice(0, 10);
@@ -475,8 +475,8 @@ labelColors: true
 ## 12. Resumen Financiero
 
 ```dataviewjs
-const tarifas = { "Geovanny": 7500, "Elkin": 6000, "Santiago": 6000 };
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.effort);
+const tarifas = { "Geovanny": 12248.23, "Elkin": 12248.23, "Santiago": 12248.23 };
+const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 const costos = {};
 for (const t of tasks) {
   const person = t.assignee || "Sin asignar";
@@ -534,4 +534,4 @@ beginAtZero: true
 
 ---
 
-*Métricas dinámicas · Dataview JS + Charts + Lean Six Sigma · Última actualización: 2026-03-01*
+*Métricas dinámicas · Dataview JS + Charts + Lean Six Sigma + Jira Sync · Última actualización: 2026-03-05*

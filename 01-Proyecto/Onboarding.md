@@ -4,7 +4,7 @@ title: "Guía de Onboarding — Raíces Vivas"
 project: raices-vivas
 status: active
 created: 2026-02-28
-updated: 2026-03-01
+updated: 2026-03-05
 banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
@@ -68,43 +68,237 @@ Al abrir Obsidian (o al hacer la primera operación Pull/Push), aparece una **ve
 
 ---
 
-## 5. Configurar Git Hooks (una sola vez)
+## 5. Git Hooks (Información Histórica)
 
-Después de clonar y abrir el vault, ejecutá este comando **una vez** desde la terminal en la raíz del repositorio:
+> [!info] **Estado actual:** El pre-commit hook está **deshabilitado** desde la migración a Jira (2026-03-04). El frontmatter ahora se gestiona a través del plugin **jira-sync** y los templates de Templater. No es necesario ejecutar `setup-hooks.sh`.
 
-```bash
-bash 08-Recursos/scripts/setup-hooks.sh
-```
+El script `08-Recursos/scripts/setup-hooks.sh` está disponible como referencia histórica pero **no hace falta ejecutarlo**. La integridad del frontmatter se garantiza por:
 
-Esto instala un **pre-commit hook** que repara automáticamente el frontmatter YAML antes de cada commit:
+1. **Templates Templater** — Generan frontmatter correcto al crear notas
+2. **Plugin jira-sync** — Sincroniza y valida campos al interactuar con Jira
+3. **Convenciones del equipo** — Documentadas en [[Guía de Workflow]] §4
 
-| Problema | Acción del hook |
-|----------|----------------|
-| Bloques YAML duplicados (plugin Banners) | Fusiona en un solo bloque |
-| `banner_src_x` faltante | Lo agrega con valor `0.47714` |
-| Keys desordenadas | Reordena según tipo de nota |
-
-> [!tip] Solo hay que hacerlo una vez por clon. El hook se ejecuta automáticamente en cada commit futuro.
+> [!tip] Si ves un archivo con frontmatter roto, corrígelo manualmente siguiendo la [[Guía de Workflow#4. Esquema de Frontmatter — Referencia Definitiva|referencia de frontmatter en §4]].
 
 ---
 
-## 6. Estructura del Vault
+## 6. Estructura del Vault — Guía Completa
 
-```
-RAICES_VIVAS/
-├── 00-Dashboard/         ← Home.md (se abre al iniciar), Métricas, Roadmap
-├── 01-Proyecto/          ← Charter, Equipo, Plan, Workflow, Finanzas, ADRs, Riesgos
-├── 02-Investigación/     ← Contextos (EDU, SAB, SAL), Entrevistas, Fuentes
-├── 03-Requerimientos/    ← RTM, RF (EDU/SAB/SAL), RNF
-├── 04-Arquitectura/      ← WBS, Stack, Modelo de Datos, Diagramas, Prototipos
-├── 05-Sprints/           ← Backlog, Sprint-01..05, Tareas (T-001..T-XXX)
-├── 06-Entregables/       ← Avance-1, Avance-2, Presentaciones
-├── 07-Reuniones/         ← Minutas (MIN-001..MIN-XXX)
-├── 08-Recursos/          ← Imágenes, PDFs, Datos, Scripts
-├── 09-QA/                ← Control de calidad
-├── 99-Templates/         ← 11 templates (NUNCA editar directamente)
-└── Daily Notes/          ← Notas semanales automáticas
-```
+> Cada directorio tiene un propósito específico. Usar la carpeta correcta es **CRÍTICO**: las queries de Dataview filtran por ruta (`FROM "05-Sprints"`, etc.), así que una nota en la carpeta equivocada simplemente **no aparece** en los dashboards.
+
+### 📊 `00-Dashboard/` — Centro de Control
+
+| Archivo | Qué hace | Cómo se actualiza |
+|---------|----------|-------------------|
+| `Home.md` | Dashboard principal: KPIs, botones Quick Action, Jira hierarchy, navegación, milestones | **Automático** vía Dataview — No editar queries manualmente |
+| `Métricas.md` | Análisis profundo: Lean Six Sigma, velocidad por sprint, costos, Quality Scorecard | **Automático** vía Dataview |
+| `Roadmap.md` | Gantt visual (Mermaid) con milestones del proyecto | **Manual** — actualizar fechas y estados al cerrar cada fase |
+
+> 💡 **Home.md se abre automáticamente al iniciar Obsidian** (plugin Homepage). Es tu punto de partida cada día. Desde ahí podés navegar a cualquier parte del proyecto con un solo clic.
+
+### 📁 `01-Proyecto/` — Gobierno y Gestión
+
+| Archivo / Carpeta | Contenido | Template | Cuándo actualizar |
+|-------------------|-----------|----------|-------------------|
+| `Charter.md` | Carta del proyecto (alcance, objetivos, restricciones) | — | Referencia constante, solo se edita al inicio |
+| `Alcance.md` | Declaración de alcance formal y exclusiones | — | Referencia |
+| `Equipo.md` | Integrantes, roles, módulos, contacto Jira | — | Al agregar/cambiar integrantes o asignaciones |
+| `Stakeholders.md` | Partes interesadas, niveles de influencia, expectativas | — | Referencia |
+| `Plan de Gestión.md` | Plan maestro: stack tecnológico, plugins, automatización, Jira | — | Referencia |
+| `Guía de Workflow.md` | **La referencia técnica definitiva** (18 secciones, v8.0) | — | Cuando necesitas detalles avanzados de frontmatter, naming, queries |
+| `Onboarding.md` | **Este documento** — guía para incorporar nuevos integrantes | — | Al cambiar procesos |
+| `Finanzas.md` | Gestión financiera: tarifas, presupuesto, costos por sprint | — | Al actualizar tarifas o cerrar sprints |
+| `Glosario.md` | Términos técnicos y de negocio del proyecto | — | Al introducir nuevos conceptos |
+| `Propuesta de Gestión.md` | Propuesta original del proyecto (documento histórico) | — | No editar — referencia histórica |
+| `Decisiones/` | ADRs (Architecture Decision Records): `ADR-001`..`ADR-XXX` | `_template-adr.md` | Al tomar decisiones arquitectónicas o estratégicas |
+| `Riesgos/` | Registro de riesgos formales: `RSK-001`..`RSK-XXX` | `_template-riesgo.md` | Al identificar nuevos riesgos o actualizar existentes |
+
+### 🔬 `02-Investigación/` — Datos e Investigación de Campo
+
+| Carpeta | Contenido | Template |
+|---------|-----------|----------|
+| `Contexto/` | 4 documentos de contexto: Educación, Saberes Ancestrales, Salud Comunitaria, Mapa Territorios | — |
+| `Encuestas/` | Instrumentos y resultados de encuestas a usuarios | — |
+| `Entrevistas/` | Transcripciones y notas de entrevistas a stakeholders | `_template-entrevista.md` |
+| `Fuentes/` | Bibliografía, fuentes secundarias, papers de referencia | — |
+| `Observaciones/` | Notas de observación de campo | — |
+
+### 📋 `03-Requerimientos/` — Especificaciones
+
+| Carpeta / Archivo | Contenido | Template |
+|-------------------|-----------|----------|
+| `_RTM.md` | **Matriz de Trazabilidad** — query automática que cruza RFs con tareas y validación | — (automático) |
+| `Funcionales/EDU/` | RFs módulo Educación: `RF-EDU-01`..`RF-EDU-06` | `_template-requerimiento-funcional.md` |
+| `Funcionales/SAB/` | RFs módulo Saberes: `RF-SAB-01`..`RF-SAB-05` | `_template-requerimiento-funcional.md` |
+| `Funcionales/SAL/` | RFs módulo Salud: `RF-SAL-01`..`RF-SAL-05` | `_template-requerimiento-funcional.md` |
+| `No Funcionales/` | RNFs transversales: `RNF-01`..`RNF-07` | `_template-requerimiento-nofuncional.md` |
+
+> 💡 **Cada RF está vinculado a una Story en Jira** (ej: `RF-EDU-01` → `RV-4`). La trazabilidad completa se ve en la [[03-Requerimientos/_RTM|RTM]].
+
+### 🏗️ `04-Arquitectura/` — Diseño Técnico
+
+| Archivo / Carpeta | Contenido |
+|-------------------|-----------|
+| `WBS.md` | Work Breakdown Structure vinculada a Epics Jira |
+| `Stack Tecnológico.md` | Tecnologías seleccionadas con justificación |
+| `Visión General.md` | Arquitectura de alto nivel y diagrama C4 |
+| `Modelo de Datos.md` | Modelos entidad-relación por módulo |
+| `Diagramas/` | Diagramas técnicos (C4, sequence, flujo, deployment) |
+| `Prototipos/` | Wireframes y mockups UI (Avance 2) |
+
+### 🏃 `05-Sprints/` — Ejecución Ágil
+
+> ⚠️ **LA MÁS IMPORTANTE para queries.** Todas las notas de trabajo deben estar aquí.
+
+| Carpeta / Archivo | Contenido | Template |
+|-------------------|-----------|----------|
+| `Backlog.md` | Kanban visual con todas las tareas clasificadas por estado | — (manual) |
+| `Epics/` | Notas de Epics Jira: `RV-1.md`, `RV-2.md`, `RV-3.md` | `_template-epic.md` |
+| `Stories/` | Notas de User Stories Jira: `RV-4.md`..`RV-9.md` | `_template-user-story.md` |
+| `Sprint-01/` | Sprint 1 (cerrado): Planning + 20 tareas `T-001`..`T-020` | `_template-tarea.md` |
+| `Sprint-02/` | Sprint 2 (activo): Planning + 5 tareas `T-021`..`T-025` | `_template-tarea.md` |
+| `Sprint-03/` a `Sprint-05/` | Sprints futuros (vacíos) | `_template-sprint-planning.md` |
+
+> ⚠️ **REGLA ABSOLUTA:** Toda nota con `type: task` o `type: subtask` **DEBE** estar en `05-Sprints/Sprint-XX/`. Las queries del Dashboard filtran `FROM "05-Sprints"`. Una tarea fuera de esta ruta es **INVISIBLE** para el sistema.
+
+### 📄 `06-Entregables/` — Documentos de Entrega
+
+| Carpeta | Contenido |
+|---------|-----------|
+| `Avance-1/` | Documento integrado del Avance 1 (entregado 2026-02-25) |
+| `Avance-2/` | Documento del Avance 2 (en progreso) |
+| `Presentaciones/` | Slides y presentaciones formales |
+
+### 📝 `07-Reuniones/` — Minutas
+
+Contiene todas las minutas de reunión (`MIN-001`..`MIN-XXX`).
+- **Template:** `_template-minuta.md`
+- **Crear via:** QuickAdd → **Nueva Minuta**
+- **Promover Items:** Desde una minuta podés promover action items a tareas, decisiones a ADRs, y riesgos a notas formales
+
+### 📦 `08-Recursos/` — Assets
+
+| Carpeta | Contenido |
+|---------|-----------|
+| `Imágenes/` | Capturas, logos, banners de portada (`cover-*.png`) |
+| `PDFs/` | Documentos externos de referencia |
+| `Datos/` | Datasets y archivos de datos |
+| `scripts/` | Scripts de automatización: `generate_covers.py` (genera banners), `setup-hooks.sh` (histórico) |
+
+### ✅ `09-QA/` — Control de Calidad
+
+Contiene `README.md` con las reglas de QA del vault: convenciones de naming, frontmatter obligatorio, checklist pre-commit.
+
+### 📐 `99-Templates/` — Plantillas (17 templates)
+
+> ⚠️ **NUNCA editar estos archivos directamente.** Son plantillas que usa Templater/QuickAdd. Si se modifican, TODAS las notas futuras se verán afectadas.
+
+### 📅 `Daily Notes/` — Notas Semanales
+
+Notas semanales automáticas generadas por Periodic Notes (cada lunes). Formato: `YYYY-WXX.md`. Contienen queries Dataview que muestran el snapshot de la semana: tareas completadas, riesgos, decisiones, reuniones.
+
+---
+
+### 6.1 Taxonomía de Tags
+
+> Los tags se asignan en el frontmatter (`tags:` array YAML). Son usados para filtrar, agrupar y buscar notas. **Siempre** usar los tags exactos de esta lista.
+
+#### Tags de Tipo de Contenido
+
+| Tag | Se aplica a | Ejemplo de nota |
+|-----|------------|-----------------|
+| `tarea` | Todas las tareas (`type: task`) | `T-001.md` |
+| `epic` | Epics Jira (`type: epic`) | `RV-1.md` |
+| `story` | User Stories Jira (`type: story`) | `RV-4.md` |
+| `adr` | Decisiones arquitectónicas | `ADR-001.md` |
+| `riesgo` | Riesgos formales | `RSK-001.md` |
+| `reunion` | Minutas de reunión | `MIN-001.md` |
+| `decisión` | Decisiones (tag complementario) | `ADR-001.md` |
+| `dashboard` | Dashboards | `Home.md`, `Métricas.md` |
+| `metricas` | Dashboard de métricas | `Métricas.md` |
+| `guia` | Documentos guía | `Onboarding.md`, `Workflow.md` |
+| `onboarding` | Este documento | `Onboarding.md` |
+
+#### Tags de Sprint
+
+| Tag | Significado |
+|-----|------------|
+| `sprint` | Tag base para cualquier nota de sprint |
+| `sprint-01` | Tarea pertenece a Sprint 1 |
+| `sprint-02` | Tarea pertenece a Sprint 2 |
+| `sprint-XX` | Patrón: siempre `sprint-` + número con 2 dígitos |
+
+#### Tags de Módulo
+
+| Tag | Módulo | Responsable |
+|-----|--------|-------------|
+| `educacion` | EDU — Educación Intercultural Bilingüe | Geovanny |
+| `modulo/edu` | EDU (formato alternativo con namespace) | Geovanny |
+| `modulo/sab` | SAB — Saberes Ancestrales y Patrimonio | Elkin |
+| `modulo/sal` | SAL — Salud Comunitaria e Intercultural | Santiago |
+| `transversal` | Aplica a todos los módulos | Equipo |
+
+#### Tags de Fase
+
+| Tag | Fase del SDLC |
+|-----|--------------|
+| `investigación` | Fase de investigación y contexto |
+| `análisis` | Fase de análisis de requerimientos |
+| `diseño` | Fase de diseño de arquitectura |
+| `implementación` | Fase de codificación |
+| `testing` | Fase de pruebas y QA |
+| `integración` | Fase de integración y entrega |
+| `gestión` | Tareas de gestión de proyecto |
+
+#### Tags Especiales
+
+| Tag | Uso |
+|-----|-----|
+| `lean-six-sigma` | Métricas alineadas a Lean Six Sigma |
+| `moscow` | Priorización MoSCoW (must/should/could/wont) |
+| `kickoff` | Reunión de kickoff del proyecto |
+| `mvp` | Related al Minimum Viable Product |
+| `avance-1`, `avance-2` | Pertenece a un entregable específico |
+
+---
+
+### 6.2 Catálogo de Templates (17 plantillas)
+
+> Todas las plantillas están en `99-Templates/`. Se invocan vía **QuickAdd** (12 macros) o manualmente via **Templater**.
+
+#### Templates con Macro QuickAdd (automáticos)
+
+| # | Template | Macro QuickAdd | Qué genera | Carpeta destino | Campos clave |
+|---|----------|---------------|------------|-----------------|--------------|
+| 1 | `_template-tarea.md` | **Nueva Tarea** | Tarea `T-XXX.md` con auto-ID | `05-Sprints/Sprint-XX/` | type, id, status, assignee, sprint, module, priority, effort, due |
+| 2 | `_template-minuta.md` | **Nueva Minuta** | Minuta `MIN-XXX.md` con auto-ID | `07-Reuniones/` | type, id, date, attendees, agenda |
+| 3 | `_template-adr.md` | **Nuevo ADR** | ADR `ADR-XXX.md` con auto-ID | `01-Proyecto/Decisiones/` | type, id, status, date, deciders |
+| 4 | `_template-riesgo.md` | **Nuevo Riesgo** | Riesgo `RSK-XXX.md` con auto-ID | `01-Proyecto/Riesgos/` | type, id, probability, impact, severity, owner |
+| 5 | `_template-requerimiento-funcional.md` | **Nuevo RF** | RF `RF-MOD-XX.md` con auto-ID | `03-Requerimientos/Funcionales/MOD/` | type, id, module, priority, stakeholder |
+| 6 | `_template-requerimiento-nofuncional.md` | **Nuevo RNF** | RNF `RNF-XX.md` con auto-ID | `03-Requerimientos/No Funcionales/` | type, id, category, priority |
+| 7 | `_template-entrevista.md` | **Entrevista** | Nota de entrevista | `02-Investigación/Entrevistas/` | type, participant, date, context |
+| 8 | `_template-sprint-planning.md` | **Sprint Planning** | Planning de sprint | `05-Sprints/Sprint-XX/` | sprint, goal, dates, commitment |
+| 9 | `_template-sprint-review.md` | **Sprint Review** | Review de sprint | `05-Sprints/Sprint-XX/` | sprint, achievements, velocity |
+
+#### Templates de Promoción (desde Minutas)
+
+| # | Template | Macro QuickAdd | Qué genera | Campos extra |
+|---|----------|---------------|------------|--------------|
+| 10 | `_template-tarea-from-minuta.md` | **📋 Promover Action Item** | Tarea desde action item | `source: "MIN-XXX"` (trazabilidad) |
+| 11 | `_template-adr-from-minuta.md` | **🏗️ Promover Decisión** | ADR desde decisión de reunión | `source: "MIN-XXX"` |
+| 12 | `_template-riesgo-from-minuta.md` | **⚠️ Promover Riesgo** | Riesgo desde reunión | `source: "MIN-XXX"` |
+
+#### Templates Manuales (sin macro QuickAdd)
+
+| # | Template | Cómo usar | Cuándo usar |
+|---|----------|-----------|-------------|
+| 13 | `_template-epic.md` | Templater: Insert template → seleccionar | Al crear un nuevo Epic (raro, solo 3 existen) |
+| 14 | `_template-user-story.md` | Templater: Insert template → seleccionar | Al crear una nueva Story Jira |
+| 15 | `_template-jira-issue.md` | Referencia para importar issues de Jira | Al importar batch desde JQL |
+| 16 | `_template-daily-note.md` | Periodic Notes (automático cada lunes) | No se invoca manualmente |
+| 17 | `_template-weekly-note.md` | Periodic Notes (automático) | No se invoca manualmente |
+
+> 💡 **Para crear una nota nueva:** Siempre preferir QuickAdd (`Ctrl+P` → QuickAdd). Solo usar Templater manualmente para Epics, Stories o imports Jira.
 
 ---
 
