@@ -66,6 +66,13 @@ created: <% today %>
 updated: <% today %>
 tags:
   - tarea<% avanceTag %>
+description: ""
+duedate: <% due %>
+timetracking: <% effort %>
+labels:
+  - <% module_ %>
+  - <% sprint.toLowerCase() %>
+  - <% phase %>
 ---
 
 # <% nextId %>: <% title %>
