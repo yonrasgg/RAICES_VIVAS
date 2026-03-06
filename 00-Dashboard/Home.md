@@ -94,8 +94,6 @@ dv.table(
 
 > **Cómo usar:** Haz clic en cualquier botón → se abre el menú QuickAdd → selecciona la opción. Los botones **Jira** ejecutan el comando directamente sobre la nota activa.
 
-### Crear Contenido
-
 === start-multi-column: qa-crear
 ```column-settings
 number of columns: 3
@@ -129,8 +127,6 @@ color purple
 ```
 
 === end-multi-column
-
-### Requerimientos e Investigación
 
 === start-multi-column: qa-reqs
 ```column-settings
@@ -166,8 +162,6 @@ color yellow
 
 === end-multi-column
 
-### Sprints e Investigación
-
 === start-multi-column: qa-sprints
 ```column-settings
 number of columns: 3
@@ -201,8 +195,6 @@ color green
 ```
 
 === end-multi-column
-
-### Promover desde Minuta
 
 === start-multi-column: qa-promover
 ```column-settings
@@ -238,8 +230,6 @@ color yellow
 
 === end-multi-column
 
-### Sincronización Jira
-
 === start-multi-column: qa-jira
 ```column-settings
 number of columns: 3
@@ -273,8 +263,6 @@ color yellow
 ```
 
 === end-multi-column
-
-### Navegación Rápida
 
 === start-multi-column: qa-nav
 ```column-settings
