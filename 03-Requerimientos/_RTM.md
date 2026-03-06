@@ -78,14 +78,22 @@ const tasks = dv.pages('"05-Sprints"').where(p => p.type === "task" || p.type ==
 const reqs = dv.pages('"03-Requerimientos"').where(p => p.type && p.type.startsWith("requirement"));
 
 const rows = reqs.map(req => {
-  const linkedTasks = tasks.where(t => t.requirement === req.file.name);
+  const name = req.file.name;
+  const linkedTasks = tasks.where(t => {
+    const r = t.requirement;
+    if (!r || r === "N/A") return false;
+    if (Array.isArray(r)) return r.map(String).includes(name);
+    return String(r) === name;
+  });
   const total = linkedTasks.length;
   const done = linkedTasks.where(t => t.status === "done").length;
-  const coverage = total > 0 ? `${done}/${total}` : "⚠️ Sin tareas";
-  return [req.file.link, req.module || req.category || "—", req.status, coverage];
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const bar = total > 0 ? `${"█".repeat(Math.round(pct/10))}${"░".repeat(10 - Math.round(pct/10))} ${pct}%` : "";
+  const coverage = total > 0 ? `${done}/${total} ${bar}` : "⚠️ Sin tareas";
+  return [req.file.link, req.module || req.category || "—", req.priority || "—", req.status, coverage];
 });
 
-dv.table(["Requerimiento", "Módulo", "Estado", "Cobertura"], rows);
+dv.table(["Requerimiento", "Módulo", "MoSCoW", "Estado", "Cobertura (done/total)"], rows);
 ```
 
 ### Vinculación Jira (Epics → Stories)
