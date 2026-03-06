@@ -3,6 +3,8 @@ banner_src: "08-Recursos/Imágenes/cover-rf-sab.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
 id: RF-SAB-04
+key: ""
+story_points: 3
 type: requirement/functional
 module: saberes
 wbs: RV-2.3
