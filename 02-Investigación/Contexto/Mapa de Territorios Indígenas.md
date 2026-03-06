@@ -1,8 +1,9 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-investigacion.png"
+banner_src_x: 0.47714
+banner_src_y: 0.40
 type: context
 title: Mapa de Territorios Indígenas de Costa Rica
-module: transversal
-project: raices-vivas
 status: draft
 created: 2026-02-27
 updated: 2026-02-27
@@ -11,15 +12,8 @@ tags:
   - mapa
   - territorios
   - indígena
-banner_src: "08-Recursos/Imágenes/cover-investigacion.png"
-banner_src_x: 0.47714
-banner_src_y: 0.40
----
-
-# 🗺️ Mapa de Territorios Indígenas de Costa Rica
-
-> Este mapa interactivo muestra la ubicación de los **24 territorios indígenas** reconocidos por la legislación costarricense (Ley Indígena N° 6172, 1977). El proyecto **Raíces Vivas** trabaja con estas comunidades para fortalecer educación, saberes ancestrales y salud comunitaria.
-
+module: transversal
+project: raices-vivas
 ---
 
 ## Mapa Interactivo

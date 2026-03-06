@@ -11,40 +11,6 @@ tags:
 author:
 ---
 
-# ☀️ <% tp.date.now("dddd, DD MMMM YYYY") %>
-
-> Registro diario del equipo Raíces Vivas.
-> **Fecha:** <% tp.date.now("YYYY-MM-DD") %>
-
----
-
-## 🎯 Foco del Día
-
-<!-- ¿Qué se planea lograr hoy? -->
-- [ ] 
-- [ ] 
-- [ ] 
-
----
-
-## ✅ Tareas Completadas Hoy
-
-```dataview
-TABLE WITHOUT ID
-  id AS "ID",
-  title AS "Tarea",
-  assignee AS "👤",
-  effort_actual AS "⏱️ Real",
-  completed AS "Completada"
-FROM "05-Sprints"
-WHERE type = "task"
-  AND status = "done"
-  AND completed = date(this.date)
-SORT completed ASC
-```
-
----
-
 ## 🔄 Tareas en Progreso
 
 ```dataview
