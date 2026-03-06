@@ -4,7 +4,7 @@ title: "Equipo del Proyecto — Raíces Vivas"
 project: raices-vivas
 status: active
 created: 2026-02-27
-updated: 2026-02-27
+updated: 2026-03-05
 banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
 banner_src_x: 0.47714
 banner_src_y: 0.45
@@ -17,11 +17,13 @@ tags:
 
 ## Integrantes
 
-| Nombre | Rol Principal | Módulo Lead | Contacto |
-|--------|--------------|-------------|----------|
-| **Geovanny** | Project Lead / Arquitecto | EDU + Transversal | — |
-| **Elkin** | Líder de Investigación / Analista | SAB | — |
-| **Santiago** | Líder de QA / Analista | SAL | — |
+| Nombre | Rol Principal | Módulo Lead | Jira Usuario | Contacto |
+|--------|--------------|-------------|--------------|----------|
+| **Geovanny** | Project Lead / Arquitecto | EDU + Transversal | galpizars@ucenfotec.ac.cr | — |
+| **Elkin** | Líder de Investigación / Analista | SAB | ecerdag@ucenfotec.ac.cr | — |
+| **Santiago** | Líder de QA / Analista | SAL | smartinezr@ucenfotec.ac.cr | — |
+
+> 📌 En Obsidian, usar el **nombre exacto** (Geovanny, Elkin, Santiago, Equipo) en el campo `assignee` del frontmatter. El plugin jira-sync mapea automáticamente cada nombre a su `accountId` de Jira.
 
 ## Responsabilidades por Rol
 
@@ -56,7 +58,7 @@ TABLE WITHOUT ID
   length(rows) as "Tareas Totales",
   length(filter(rows, (r) => r.status = "done")) as "Completadas"
 FROM "05-Sprints"
-WHERE type = "task"
+WHERE type = "task" OR type = "subtask"
 GROUP BY assignee
 SORT assignee ASC
 ```

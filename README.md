@@ -192,10 +192,12 @@ RAICES_VIVAS/
 │   ├── Diagramas/                 Diagramas técnicos
 │   └── Prototipos/                Wireframes y prototipos UI
 │
-├── 05-Sprints/                ← Ejecución ágil
+├── 05-Sprints/                ← Ejecución ágil + Jerarquía Jira
 │   ├── Backlog.md                 Backlog del producto (tablero Kanban)
-│   ├── Sprint-01/                 Sprint 1: Planning + 20 tareas
-│   ├── Sprint-02/                 Sprint 2: Planning + tareas
+│   ├── Epics/                     Notas de Epics vinculados a Jira (RV-1, RV-2, RV-3)
+│   ├── Stories/                   Notas de User Stories vinculadas a Jira (RV-4..RV-9)
+│   ├── Sprint-01/                 Sprint 1 (cerrado): 20 tareas → Done
+│   ├── Sprint-02/                 Sprint 2 (activo): 11 issues → To Do
 │   ├── Sprint-03/                 (planificado)
 │   ├── Sprint-04/                 (planificado)
 │   └── Sprint-05/                 (planificado)
@@ -214,7 +216,7 @@ RAICES_VIVAS/
 │   ├── PDFs/                      Documentos de referencia
 │   └── scripts/                   Scripts de automatización
 │       ├── generate_covers.py         Generador de banners del vault
-│       └── fix_frontmatter.py         Normalizador de frontmatter YAML
+│       └── generate_covers.py         Generador de imágenes de portada
 │
 ├── 09-QA/                     ← Control de calidad
 │   └── README.md                  Lineamientos de QA

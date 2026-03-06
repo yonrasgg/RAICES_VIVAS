@@ -357,6 +357,52 @@ shadow: off
 
 ---
 
+## 🏛️ Jerarquía Jira — Epics & Stories
+
+> [🌐 Board Scrum en Jira](https://ucenfotec-team-y6xzvduw.atlassian.net/jira/software/projects/RV/boards/1)
+
+=== start-multi-column: jira-nav
+```column-settings
+number of columns: 3
+border: off
+shadow: off
+```
+
+### 🏔️ EDU — Educación
+- 🏔️ [[RV-1]] — Epic
+- 📖 [[RV-4]] — RF-EDU-01 (SP: 5)
+- 📖 [[RV-5]] — RF-EDU-03 (SP: 5)
+
+=== end-column ===
+
+### 🏔️ SAB — Saberes
+- 🏔️ [[RV-2]] — Epic
+- 📖 [[RV-6]] — RF-SAB-01 (SP: 5)
+- 📖 [[RV-7]] — RF-SAB-04 (SP: 3)
+
+=== end-column ===
+
+### 🏔️ SAL — Salud
+- 🏔️ [[RV-3]] — Epic
+- 📖 [[RV-8]] — RF-SAL-01 (SP: 3)
+- 📖 [[RV-9]] — RF-SAL-02 (SP: 5)
+
+=== end-multi-column
+
+```dataview
+TABLE WITHOUT ID
+  key as "Key",
+  summary as "Nombre",
+  issuetype as "Tipo",
+  status as "Estado",
+  story_points as "SP"
+FROM "05-Sprints/Epics" OR "05-Sprints/Stories"
+WHERE type = "epic" OR type = "story"
+SORT key ASC
+```
+
+---
+
 ## 📅 Timeline del Proyecto
 
 ```mermaid
