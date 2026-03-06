@@ -13,7 +13,7 @@ due: 2026-04-01
 completed: 
 team: [Geovanny, Elkin, Santiago]
 created: 2026-02-27
-updated: 2026-02-27
+updated: 2026-03-05
 tags:
   - sprint
   - planning
@@ -45,21 +45,21 @@ gantt
     todayMarker stroke-width:3px,stroke:#f66,opacity:0.8
 
     section 🏗️ Diseño
-    T-021 Diagrama contexto (Geo)      :active, t21, 2026-02-28, 2026-03-07
-    T-025 Stack tecnológico (Equipo)   :        t25, 2026-03-01, 2026-03-07
-    T-022 Modelo ER EDU (Elk)          :        t22, 2026-03-03, 2026-03-14
-    T-023 Modelo ER SAB (San)          :        t23, 2026-03-03, 2026-03-14
-    T-024 Modelo ER SAL (Geo)          :        t24, 2026-03-03, 2026-03-14
+    T-021 Diagrama contexto (Geo) [RV-12]  :active, t21, 2026-02-28, 2026-03-07
+    T-025 Stack tecnológico (Equipo) [RV-30]:        t25, 2026-03-01, 2026-03-07
+    T-022 Modelo ER EDU (Elk) [RV-39]      :        t22, 2026-03-03, 2026-03-14
+    T-023 Modelo ER SAB (San) [RV-40]      :        t23, 2026-03-03, 2026-03-14
+    T-024 Modelo ER SAL (Geo) [RV-41]      :        t24, 2026-03-03, 2026-03-14
 
     section 🎨 Prototipos
-    T-026 Wireframes EDU (Geo)         :        t26, 2026-03-10, 2026-03-18
-    T-027 Wireframes SAB (Elk)         :        t27, 2026-03-12, 2026-03-20
-    T-028 Wireframes SAL (San)         :        t28, 2026-03-14, 2026-03-22
+    T-026 Wireframes EDU (Geo) [RV-42]     :        t26, 2026-03-10, 2026-03-18
+    T-027 Wireframes SAB (Elk) [RV-43]     :        t27, 2026-03-12, 2026-03-20
+    T-028 Wireframes SAL (San) [RV-44]     :        t28, 2026-03-14, 2026-03-22
 
     section ✅ Validación
-    T-029 Instrumentos (San)           :        t29, 2026-03-18, 2026-03-22
-    T-030 Entrevistas (Elk)            :        t30, 2026-03-23, 2026-03-30
-    T-031 Gobernanza cultural (Eq)     :        t31, 2026-03-01, 2026-03-15
+    T-029 Instrumentos (San) [RV-31]       :        t29, 2026-03-18, 2026-03-22
+    T-030 Entrevistas (Elk) [RV-32]        :        t30, 2026-03-23, 2026-03-30
+    T-031 Gobernanza cultural (Eq) [RV-33] :        t31, 2026-03-01, 2026-03-15
     Ajustes post-validación (Equipo)   :        v3, 2026-03-28, 2026-04-01
     ENTREGA AVANCE 2                   :milestone, m2, 2026-04-01, 0d
 ```
@@ -75,7 +75,7 @@ TABLE WITHOUT ID
   priority as "Prioridad",
   due as "Fecha Límite"
 FROM "05-Sprints/Sprint-02"
-WHERE type = "task"
+WHERE type = "task" OR type = "subtask"
 SORT due ASC, id ASC
 ```
 
@@ -87,7 +87,7 @@ TABLE WITHOUT ID
   length(rows) as "Tareas",
   length(filter(rows, (r) => r.status = "done")) as "✅ Done"
 FROM "05-Sprints/Sprint-02"
-WHERE type = "task"
+WHERE type = "task" OR type = "subtask"
 GROUP BY assignee
 SORT assignee ASC
 ```

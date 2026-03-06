@@ -28,7 +28,7 @@ const team = [
 ];
 
 // Calcular horas reales desde las tareas
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 for (const t of tasks) {
   const hours = parseInt(String(t.effort)) || 0;
   const assignee = String(t.assignee || "").toLowerCase();
@@ -95,7 +95,7 @@ dv.table(
 ### 2.2 Horas Invertidas por Sprint (Dinámico)
 
 ```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.sprint && t.effort);
+const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint && t.effort);
 const matrix = {};
 
 for (const t of tasks) {
@@ -130,7 +130,7 @@ dv.table(headers, rows);
 
 ```dataviewjs
 const tarifas = { "Geovanny": 13910, "Elkin": 13910, "Santiago": 13910 };
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" && t.effort);
+const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 const costos = {};
 
 for (const t of tasks) {

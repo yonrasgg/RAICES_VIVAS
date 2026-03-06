@@ -98,21 +98,21 @@ gantt
     todayMarker stroke-width:3px,stroke:#f66,opacity:0.8
 
     section 🏗️ Diseño
-    T-021 Diagrama contexto (Geo)      :active, t21, 2026-02-28, 2026-03-07
-    T-025 Stack tecnológico (Equipo)   :        t25, 2026-03-01, 2026-03-07
-    T-022 Modelo ER EDU (Elk)          :        t22, 2026-03-03, 2026-03-14
-    T-023 Modelo ER SAB (San)          :        t23, 2026-03-03, 2026-03-14
-    T-024 Modelo ER SAL (Geo)          :        t24, 2026-03-03, 2026-03-14
+    T-021 Diagrama contexto (Geo) [RV-12]  :active, t21, 2026-02-28, 2026-03-07
+    T-025 Stack tecnológico (Equipo) [RV-30]:        t25, 2026-03-01, 2026-03-07
+    T-022 Modelo ER EDU (Elk) [RV-39]      :        t22, 2026-03-03, 2026-03-14
+    T-023 Modelo ER SAB (San) [RV-40]      :        t23, 2026-03-03, 2026-03-14
+    T-024 Modelo ER SAL (Geo) [RV-41]      :        t24, 2026-03-03, 2026-03-14
 
     section 🎨 Prototipos
-    Wireframes módulo EDU              :        p1, 2026-03-10, 2026-03-18
-    Wireframes módulo SAB              :        p2, 2026-03-12, 2026-03-20
-    Wireframes módulo SAL              :        p3, 2026-03-14, 2026-03-22
+    T-026 Wireframes EDU (Geo) [RV-42]     :        p1, 2026-03-10, 2026-03-18
+    T-027 Wireframes SAB (Elk) [RV-43]     :        p2, 2026-03-12, 2026-03-20
+    T-028 Wireframes SAL (San) [RV-44]     :        p3, 2026-03-14, 2026-03-22
 
     section ✅ Validación
-    Preparar instrumentos              :        v1, 2026-03-18, 2026-03-22
-    Validación con usuarios            :        v2, 2026-03-23, 2026-03-30
-    Ajustes post-validación            :        v3, 2026-03-28, 2026-04-01
+    T-029 Preparar instrumentos (San) [RV-31]:       v1, 2026-03-18, 2026-03-22
+    T-030 Validación con usuarios (Elk) [RV-32]:     v2, 2026-03-23, 2026-03-30
+    T-031 Gobernanza cultural (Equipo) [RV-33]:      v3, 2026-03-28, 2026-04-01
     ENTREGA AVANCE 2                   :milestone, m2, 2026-04-01, 0d
 ```
 
@@ -136,10 +136,10 @@ TABLE WITHOUT ID
   sprint as "Sprint",
   status as "Estado"
 FROM "05-Sprints"
-WHERE type = "task" AND status != "done"
+WHERE (type = "task" OR type = "subtask") AND status != "done"
 SORT due ASC
 ```
 
 ---
 
-*Roadmap dinámico · Mermaid + Dataview · Última actualización: 2026-02-27*
+*Roadmap dinámico · Mermaid + Dataview + Jira Sync · Última actualización: 2026-03-05*

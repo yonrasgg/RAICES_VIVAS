@@ -58,6 +58,6 @@ TABLE
   assignee as "Responsable",
   requirement as "Requerimiento"
 FROM "05-Sprints"
-WHERE type = "task" AND sprint = "Sprint-<% tp.frontmatter.sprint %>"
+WHERE (type = "task" OR type = "subtask") AND sprint = "Sprint-<% tp.frontmatter.sprint %>"
 SORT priority ASC
 ```

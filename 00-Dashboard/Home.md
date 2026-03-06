@@ -61,7 +61,7 @@ const blocked = tasks.where(t => t.status === "blocked").length;
 const defectRate = total > 0 ? Math.round((blocked / total) * 100) : 0;
 
 // Finanzas (usa horas reales para costos)
-const tarifas = { "Geovanny": 12248.23, "Elkin": 12248.23, "Santiago": 12248.23 };
+const tarifas = { "Geovanny": 13910, "Elkin": 13910, "Santiago": 13910 };
 let estCost = 0, actCost = 0;
 for (const t of tasks.where(t => t.effort)) {
   const est = ((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort);
@@ -634,7 +634,7 @@ SORT id ASC
 > [!note]- 💰 Resumen Financiero (expandir)
 >
 > ```dataviewjs
-> const tarifas = { "Geovanny": 12248.23, "Elkin": 12248.23, "Santiago": 12248.23 };
+> const tarifas = { "Geovanny": 13910, "Elkin": 13910, "Santiago": 13910 };
 > const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 > const costos = {};
 > for (const t of tasks) {

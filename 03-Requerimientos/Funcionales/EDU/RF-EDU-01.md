@@ -65,7 +65,7 @@ TABLE
   sprint as "Sprint",
   priority as "Prioridad"
 FROM "05-Sprints"
-WHERE type = "task" AND requirement = this.file.name
+WHERE (type = "task" OR type = "subtask") AND requirement = this.file.name
 SORT sprint ASC, priority ASC
 ```
 

@@ -846,7 +846,7 @@ Dataview es el plugin más importante. Lee el frontmatter de todas las notas y g
 ```
 // Todas las tareas pendientes
 FROM "05-Sprints"
-WHERE type = "task" AND status != "done"
+WHERE (type = "task" OR type = "subtask") AND status != "done"
 SORT due ASC
 
 // Requerimientos por módulo
@@ -855,7 +855,7 @@ WHERE type = "requirement/functional"
 GROUP BY module
 
 // Horas por responsable (Dataview JS)
-dv.pages('"05-Sprints"').where(t => t.type === "task")
+dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask")
 ```
 
 > **Regla:** Si una tabla del Dashboard está vacía o muestra datos incorrectos, revisa el `type` y los campos en el frontmatter de las notas afectadas.

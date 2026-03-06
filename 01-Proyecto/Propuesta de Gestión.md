@@ -362,7 +362,7 @@ TABLE
   due as "Fecha límite",
   sprint as "Sprint"
 FROM "05-Sprints"
-WHERE type = "task" AND status != "done"
+WHERE (type = "task" OR type = "subtask") AND status != "done"
 SORT priority ASC
 ```
 

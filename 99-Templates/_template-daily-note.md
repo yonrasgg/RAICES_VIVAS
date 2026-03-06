@@ -21,7 +21,7 @@ TABLE WITHOUT ID
   status AS "Estado",
   due AS "📅 Límite"
 FROM "05-Sprints"
-WHERE type = "task"
+WHERE (type = "task" OR type = "subtask")
   AND (status = "in-progress" OR status = "review")
 SORT due ASC
 ```
@@ -38,7 +38,7 @@ TABLE WITHOUT ID
   priority AS "Prioridad",
   due AS "📅 Límite"
 FROM "05-Sprints"
-WHERE type = "task"
+WHERE (type = "task" OR type = "subtask")
   AND status = "todo"
   AND due = date(this.date)
 SORT priority ASC
@@ -54,7 +54,7 @@ TABLE WITHOUT ID
   title AS "Tarea",
   assignee AS "👤"
 FROM "05-Sprints"
-WHERE type = "task" AND status = "blocked"
+WHERE (type = "task" OR type = "subtask") AND status = "blocked"
 SORT id ASC
 ```
 
@@ -67,7 +67,7 @@ SORT id ASC
 
 ```dataviewjs
 const today = dv.current().date;
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task");
+const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 
 // Completadas hoy
 const doneToday = tasks.where(t =>

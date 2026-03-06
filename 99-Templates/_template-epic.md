@@ -102,7 +102,7 @@ TABLE
   assignee as "Responsable",
   sprint as "Sprint"
 FROM "05-Sprints"
-WHERE type = "task" AND parent = this.key
+WHERE (type = "task" OR type = "subtask") AND parent = this.key
 SORT sprint ASC, id ASC
 ```
 

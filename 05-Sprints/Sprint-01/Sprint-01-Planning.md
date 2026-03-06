@@ -84,7 +84,7 @@ TABLE WITHOUT ID
   started as "Inicio",
   due as "Fin"
 FROM "05-Sprints/Sprint-01"
-WHERE type = "task"
+WHERE (type = "task" OR type = "subtask")
 SORT started ASC, id ASC
 ```
 
@@ -96,7 +96,7 @@ TABLE WITHOUT ID
   length(rows) as "Tareas",
   length(filter(rows, (r) => r.status = "done")) as "✅ Done"
 FROM "05-Sprints/Sprint-01"
-WHERE type = "task"
+WHERE (type = "task" OR type = "subtask")
 GROUP BY assignee
 SORT assignee ASC
 ```
@@ -109,7 +109,7 @@ TABLE WITHOUT ID
   length(rows) as "Tareas",
   length(filter(rows, (r) => r.status = "done")) as "✅ Done"
 FROM "05-Sprints/Sprint-01"
-WHERE type = "task"
+WHERE (type = "task" OR type = "subtask")
 GROUP BY phase
 ```
 

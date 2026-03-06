@@ -475,7 +475,7 @@ labelColors: true
 ## 12. Resumen Financiero
 
 ```dataviewjs
-const tarifas = { "Geovanny": 12248.23, "Elkin": 12248.23, "Santiago": 12248.23 };
+const tarifas = { "Geovanny": 13910, "Elkin": 13910, "Santiago": 13910 };
 const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 const costos = {};
 for (const t of tasks) {
