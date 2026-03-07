@@ -1943,5 +1943,5 @@ Los gráficos de colaboración (pie, bar) y velocidad (line) se actualizan en ca
 
 *Guía creada: 2026-02-27 · Última actualización: 2026-03-05*
 *Equipo: Geovanny (Project Lead) · Elkin (Líder Investigación — SAB) · Santiago (Líder QA — SAL)*
-*Versión: 8.0 — Integración Jira Cloud: §4.4.13–14 documentan tipos epic/story. §14 incluye plugin jira-sync. §17 incluye troubleshooting Jira. Frontmatter de tareas ampliado con campos Jira Sync (key, summary, issuetype, project, parent, description, duedate, timetracking, labels). Jerarquía Epic > Story > Task/Subtask alineada con Jira.*
+*Versión: 8.1 — §4.4.1 incluye campos de dependencia (blocks, blocked_by, impediments). §6.5 documenta el sistema de dependencias e impedimentos. Integración Jira Cloud: §4.4.13–14 documentan tipos epic/story. §14 incluye plugin jira-sync. §17 incluye troubleshooting Jira. Frontmatter de tareas ampliado con campos Jira Sync. Jerarquía Epic > Story > Task/Subtask alineada con Jira.*
 *Revisar y actualizar cada sprint*
