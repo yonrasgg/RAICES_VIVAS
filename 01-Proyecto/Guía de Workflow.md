@@ -336,6 +336,14 @@ labels:                       # 🟡 RECOMENDADO — Tags en Jira
   - educacion
   - sprint-01
 
+# ── Dependencias ───────────────────────────────────────────
+blocks:                       # 🟡 RECOMENDADO — Tareas que ESTA tarea bloquea
+  - T-026                     #   → "No puedo empezar T-026 hasta que T-022 termine"
+blocked_by:                   # 🟡 RECOMENDADO — Tareas que bloquean A ESTA tarea
+  - T-021                     #   → "Necesito T-021 terminado para empezar"
+impediments: []               # 🟡 RECOMENDADO — Descripción de impedimentos activos
+                              #   → Ej: ["Esperando acceso BD", "Falta aprobación legal"]
+
 # ── Metadata ───────────────────────────────────────────────
 created: 2026-02-27           # ⚪ OPCIONAL — Fecha de creación de la nota
 updated: 2026-02-28           # ⚪ OPCIONAL — Última actualización manual
@@ -1019,6 +1027,58 @@ todo → in-progress → review → done
 - **Todo entregable pasa por revisión cruzada** antes de marcarse `done`
 - Reviewer: cualquier integrante que NO sea el autor
 - El reviewer verifica los criterios de aceptación (DoD) en la tarea
+
+### 6.5 Sistema de Dependencias e Impedimentos
+
+El vault implementa un sistema de dependencias bidireccional a nivel de frontmatter para rastrear qué tarea bloquea a qué otra, y documentar impedimentos descriptivos.
+
+#### Campos de Dependencia
+
+| Campo | Tipo | Propósito | Ejemplo |
+|-------|------|-----------|---------|
+| `blocks` | Array YAML | Tareas que **esta** tarea bloquea | `[T-022, T-023]` |
+| `blocked_by` | Array YAML | Tareas que bloquean **a esta** tarea | `[T-021]` |
+| `impediments` | Array YAML | Descripción textual de bloqueos externos | `["Esperando acceso BD"]` |
+
+#### Reglas de Uso
+
+1. **Siempre bidireccional**: Si T-021 tiene `blocks: [T-022]`, entonces T-022 **debe** tener `blocked_by: [T-021]`
+2. **Usar IDs de Obsidian**: Escribir `T-022`, no `RV-39` ni el título completo
+3. **Impedimentos ≠ Dependencias**: Un impedimento es un bloqueo externo (acceso, aprobación, recurso). Una dependencia es una relación entre tareas del mismo proyecto
+4. **Limpiar al resolver**: Cuando un impedimento se resuelve, eliminarlo del array
+
+#### Ejemplo en Frontmatter
+
+```yaml
+blocks:
+  - T-026
+  - T-027
+blocked_by:
+  - T-021
+impediments:
+  - "Esperando definición de paleta de colores por parte del cliente"
+```
+
+#### Queries Automáticas
+
+Cada nota de tarea (template `_template-tarea.md`) incluye dos queries Dataview que muestran automáticamente:
+- **"Esta tarea bloquea"**: Lista de tareas que dependen de esta
+- **"Esta tarea está bloqueada por"**: Lista de tareas que deben completarse primero
+
+El Sprint Planning incluye:
+- **Mapa de Dependencias**: Diagrama Mermaid con la cadena completa del sprint
+- **Tareas con Bloqueos Activos**: Query que muestra solo las tareas con bloqueadores pendientes
+- **Impedimentos Activos**: Query que muestra impedimentos descriptivos
+
+#### Cómo Registrar un Impedimento
+
+1. Abrir la nota de la tarea afectada
+2. En el frontmatter, editar `impediments`:
+   ```yaml
+   impediments:
+     - "Descripción clara del impedimento"
+   ```
+3. Cuando se resuelva, cambiar a `impediments: []`
 
 ---
 

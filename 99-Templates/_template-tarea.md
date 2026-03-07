@@ -73,6 +73,9 @@ labels:
   - <% module_ %>
   - <% sprint.toLowerCase() %>
   - <% phase %>
+blocks: []
+blocked_by: []
+impediments: []
 ---
 
 # <% nextId %>: <% title %>
@@ -112,7 +115,36 @@ labels:
 
 ## Dependencias
 
-> Tareas previas o bloqueos.
+### 🚫 Esta tarea bloquea:
+
+```dataview
+TABLE WITHOUT ID
+  file.link as "Tarea",
+  status as "Estado",
+  assignee as "Responsable",
+  due as "Fecha límite"
+FROM "05-Sprints"
+WHERE contains(blocked_by, this.id)
+SORT due ASC
+```
+
+### ⛔ Esta tarea está bloqueada por:
+
+```dataview
+TABLE WITHOUT ID
+  file.link as "Tarea",
+  status as "Estado",
+  assignee as "Responsable",
+  due as "Fecha límite"
+FROM "05-Sprints"
+WHERE contains(this.blocked_by, file.name)
+SORT due ASC
+```
+
+### ⚠️ Impedimentos Activos
+
+> Editar el campo `impediments` en el frontmatter para documentar bloqueos descriptivos.
+> Formato: `impediments: ["Descripción del impedimento"]`
 
 ## Notas
 

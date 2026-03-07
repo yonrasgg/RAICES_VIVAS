@@ -323,11 +323,17 @@ Notas semanales automáticas generadas por Periodic Notes (cada lunes). Formato:
 | **Prioridad** | must, should, could | `must` |
 | **Fase** | investigación, análisis, diseño, etc. | `diseño` |
 | **Esfuerzo (horas)** | Estimación en horas | `4` |
-| **Requerimiento relacionado** | ID del RF/RNF | `RF-EDU-01` |
+| **Bloquea a (blocks)** | IDs de tareas separados por coma | `T-026, T-027` |
+| **Bloqueada por (blocked_by)** | IDs de tareas separados por coma | `T-021` |
 
 6. Se crea automáticamente el archivo con ID `T-XXX` (calculado por Templater)
 7. La tarea se ubica en `05-Sprints/Sprint-XX/T-XXX.md`
 8. **Verificación:** Abre la tarea y confirma que el frontmatter se llenó correctamente
+
+> [!tip] Dependencias
+> Si tu tarea depende de otra que aún no termina, agrégala en `blocked_by`.
+> Si otra tarea necesita que la tuya termine primero, agrégala en `blocks`.
+> **Siempre mantén la relación bidireccional.** Si T-021 tiene `blocks: [T-022]`, abre T-022 y agrega `blocked_by: [T-021]`.
 
 ### 7.2 Cambiar el Estado de una Tarea
 
@@ -343,6 +349,11 @@ Notas semanales automáticas generadas por Periodic Notes (cada lunes). Formato:
    - `done` → Completada
    - `blocked` → Bloqueada
 4. Si cambias a `done`, agrega también: `completed: 2026-03-01` (fecha actual)
+5. **Si cambias a `blocked`**, agrega un impedimento:
+   ```yaml
+   impediments:
+     - "Descripción del bloqueo externo"
+   ```
 
 **Opción B — Usar Meta Bind (si la nota tiene controles interactivos):**
 1. Abre la tarea

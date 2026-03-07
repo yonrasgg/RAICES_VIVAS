@@ -92,6 +92,96 @@ GROUP BY assignee
 SORT assignee ASC
 ```
 
+## 🔗 Mapa de Dependencias
+
+```mermaid
+graph LR
+    T021["T-021<br/>Diagrama contexto<br/>🟢 Geo"]
+    T025["T-025<br/>Stack ADR<br/>🔵 Equipo"]
+    T022["T-022<br/>ER EDU<br/>🟡 Elk"]
+    T023["T-023<br/>ER SAB<br/>🟡 San"]
+    T024["T-024<br/>ER SAL<br/>🟡 Geo"]
+    T026["T-026<br/>Wireframes EDU<br/>🟠 Geo"]
+    T027["T-027<br/>Wireframes SAB<br/>🟠 Elk"]
+    T028["T-028<br/>Wireframes SAL<br/>🟠 San"]
+    T029["T-029<br/>Instrumentos<br/>🔴 San"]
+    T030["T-030<br/>Entrevistas<br/>🔴 Elk"]
+    T031["T-031<br/>Gobernanza ADR<br/>🔵 Equipo"]
+
+    T021 -->|bloquea| T022
+    T021 -->|bloquea| T023
+    T021 -->|bloquea| T024
+    T025 -->|bloquea| T026
+    T025 -->|bloquea| T027
+    T025 -->|bloquea| T028
+    T022 -->|bloquea| T026
+    T023 -->|bloquea| T027
+    T024 -->|bloquea| T028
+    T026 -->|bloquea| T029
+    T027 -->|bloquea| T029
+    T028 -->|bloquea| T029
+    T029 -->|bloquea| T030
+
+    style T021 fill:#4CAF50,color:#fff
+    style T025 fill:#2196F3,color:#fff
+    style T022 fill:#FFC107,color:#000
+    style T023 fill:#FFC107,color:#000
+    style T024 fill:#FFC107,color:#000
+    style T026 fill:#FF9800,color:#fff
+    style T027 fill:#FF9800,color:#fff
+    style T028 fill:#FF9800,color:#fff
+    style T029 fill:#f44336,color:#fff
+    style T030 fill:#f44336,color:#fff
+    style T031 fill:#2196F3,color:#fff
+```
+
+> **Ruta crítica:** T-021 → T-022/T-023/T-024 → T-026/T-027/T-028 → T-029 → T-030
+> T-025 y T-031 pueden ejecutarse en paralelo con la ruta crítica.
+
+## 🚧 Tareas con Bloqueos Activos
+
+```dataviewjs
+const tasks = dv.pages('"05-Sprints/Sprint-02"')
+  .where(t => (t.type === "task" || t.type === "subtask") && t.blocked_by && t.blocked_by.length > 0);
+
+const rows = [];
+for (const t of tasks) {
+  const blockers = t.blocked_by.map(String);
+  const blockerPages = dv.pages('"05-Sprints/Sprint-02"')
+    .where(p => blockers.includes(String(p.id)));
+  const pendingBlockers = blockerPages.where(p => p.status !== "done");
+  
+  if (pendingBlockers.length > 0) {
+    const blockerList = pendingBlockers.map(p => `${p.id} (${p.status})`).join(", ");
+    rows.push([t.file.link, t.status, t.assignee, blockerList]);
+  }
+}
+
+if (rows.length > 0) {
+  dv.table(["Tarea Bloqueada", "Estado", "Responsable", "Bloqueada por (pendientes)"], rows);
+} else {
+  dv.paragraph("✅ **No hay bloqueos activos** — todas las dependencias previas están resueltas.");
+}
+```
+
+## ⚠️ Impedimentos Activos
+
+```dataviewjs
+const tasks = dv.pages('"05-Sprints/Sprint-02"')
+  .where(t => t.impediments && t.impediments.length > 0);
+
+if (tasks.length > 0) {
+  const rows = tasks.map(t => [
+    t.file.link,
+    t.assignee,
+    t.impediments.join("; ")
+  ]);
+  dv.table(["Tarea", "Responsable", "Impedimento"], rows);
+} else {
+  dv.paragraph("✅ **Sin impedimentos registrados.**");
+}
+```
+
 ## Capacidad del Equipo
 
 | Integrante | Tareas Asignadas | Horas Estimadas |
