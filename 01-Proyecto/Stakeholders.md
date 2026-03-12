@@ -1,7 +1,5 @@
 ---
 banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
----
----
 type: document
 title: "Registro de Stakeholders — Raíces Vivas"
 project: raices-vivas
