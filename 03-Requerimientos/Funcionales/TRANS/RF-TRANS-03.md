@@ -1,12 +1,5 @@
 ---
-<<<<<<< HEAD:03-Requerimientos/Funcionales/TRANS/RF-TRANS-03.md
 banner_src: "08-Recursos/Imágenes/cover-rf.png"
-=======
-banner_src: "08-Recursos/Imágenes/cover-rnf.png"
----
----
-banner_src: "08-Recursos/Imágenes/cover-rnf.png"
->>>>>>> origin/main:03-Requerimientos/No Funcionales/RNF-07.md
 banner_src_x: 0.47714
 banner_src_y: 0.42
 id: RF-TRANS-03
