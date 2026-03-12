@@ -1,4 +1,7 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
+---
+---
 type: document
 title: "WBS — Raíces Vivas"
 project: raices-vivas
