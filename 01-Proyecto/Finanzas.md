@@ -1,4 +1,7 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
+---
+---
 type: document
 title: "Gestión Financiera — Raíces Vivas"
 project: raices-vivas

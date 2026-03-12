@@ -1,4 +1,7 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-educacion.png"
+---
+---
 type: context
 title: "Contexto — Educación en Territorios Indígenas"
 module: educacion

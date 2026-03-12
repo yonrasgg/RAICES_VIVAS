@@ -1,5 +1,8 @@
 ---
 banner_src: "08-Recursos/Imágenes/cover-investigacion.png"
+---
+---
+banner_src: "08-Recursos/Imágenes/cover-investigacion.png"
 banner_src_x: 0.47714
 banner_src_y: 0.40
 type: context
