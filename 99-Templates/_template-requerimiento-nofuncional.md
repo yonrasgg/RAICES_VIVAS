@@ -2,16 +2,16 @@
 banner_src: "08-Recursos/Imágenes/cover-rnf.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
-id: <% tp.system.prompt("ID del RNF (ej: RNF-08)") %>
+id: '<% tp.system.prompt("ID del RNF (ej: RNF-08)") %>'
 type: requirement/non-functional
-category: <% tp.system.suggester(["conectividad", "multilingüismo", "seguridad", "usabilidad", "rendimiento", "compatibilidad", "gobernanza"], ["conectividad", "multilingüismo", "seguridad", "usabilidad", "rendimiento", "compatibilidad", "gobernanza"]) %>
-wbs: <% tp.system.prompt("Código WBS (ej: RV-4.1)") %>
-title: "<% tp.system.prompt("Título del RNF") %>"
+category: '<% tp.system.suggester(["conectividad", "multilingüismo", "seguridad", "usabilidad", "rendimiento", "compatibilidad", "gobernanza"], ["conectividad", "multilingüismo", "seguridad", "usabilidad", "rendimiento", "compatibilidad", "gobernanza"]) %>'
+wbs: '<% tp.system.prompt("Código WBS (ej: RV-4.1)") %>'
+title: '<% tp.system.prompt("Título del RNF") %>'
 status: draft
-priority: <% tp.system.suggester(["must", "should", "could", "wont"], ["must", "should", "could", "wont"]) %>
+priority: '<% tp.system.suggester(["must", "should", "could", "wont"], ["must", "should", "could", "wont"]) %>'
 metric: ""
-created: <% tp.date.now("YYYY-MM-DD") %>
-updated: <% tp.date.now("YYYY-MM-DD") %>
+created: '<% tp.date.now("YYYY-MM-DD") %>'
+updated: '<% tp.date.now("YYYY-MM-DD") %>'
 tags:
   - requerimiento
   - no-funcional
