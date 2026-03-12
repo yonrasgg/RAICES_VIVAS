@@ -182,7 +182,7 @@ RAICES_VIVAS/
 │   │   ├── SAB/                       RF-SAB-01 a RF-SAB-05
 │   │   └── SAL/                       RF-SAL-01 a RF-SAL-05
 │   └── No Funcionales/
-│       └── RNF-01 a RNF-07           Rendimiento, seguridad, usabilidad...
+│       └── RF-TRANS-01 a RF-TRANS-03           Rendimiento, seguridad, usabilidad...
 │
 ├── 04-Arquitectura/           ← Diseño y arquitectura
 │   ├── Visión General.md          Arquitectura de alto nivel

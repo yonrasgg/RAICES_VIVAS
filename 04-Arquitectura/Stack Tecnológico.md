@@ -18,12 +18,12 @@ tags:
 
 | Criterio | RNF Origen | Restricción |
 |----------|-----------|-------------|
-| Offline-first | [[RNF-01]] | PWA con Service Workers o app nativa con SQLite local |
-| Multilingüe | [[RNF-02]] | i18n nativo, contenido etiquetado por idioma |
-| Rendimiento | [[RNF-03]] | <3s en búsquedas, carga ligera |
-| Seguridad | [[RNF-04]] | Roles, cifrado, auditoría |
-| Usabilidad | [[RNF-05]] | UI simple, flujos guiados, ≤6 campos |
-| Gama baja | [[RNF-06]] | Android 8+, navegadores modernos, sin HW especial |
+| Offline-first | [[RF-TRANS-01]] | PWA con Service Workers o app nativa con SQLite local |
+| Multilingüe | [[RF-TRANS-02]] | i18n nativo, contenido etiquetado por idioma |
+| Rendimiento | [[RNF-01]] | <3s en búsquedas, carga ligera |
+| Seguridad | [[RNF-02]] | Roles, cifrado, auditoría |
+| Usabilidad | [[RNF-03]] | UI simple, flujos guiados, ≤6 campos |
+| Gama baja | [[RNF-04]] | Android 8+, navegadores modernos, sin HW especial |
 
 ## Opciones a Evaluar
 

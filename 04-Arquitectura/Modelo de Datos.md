@@ -209,4 +209,4 @@ erDiagram
 
 - Los diagramas son **conceptuales** — se refinarán con tipos de datos específicos y constraints en Avance 2
 - El modelo offline-sync requiere campos adicionales: `sync_status`, `last_synced`, `conflict_resolution`
-- Los datos médicos requieren cifrado at-rest (definido en [[RNF-04-confidencialidad]])
+- Los datos médicos requieren cifrado at-rest (definido en [[RNF-02-confidencialidad]])

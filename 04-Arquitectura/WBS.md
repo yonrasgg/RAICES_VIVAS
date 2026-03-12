@@ -114,10 +114,10 @@ graph LR
 | RV-3.2 | Citas y Brigadas | [[RV-3]] | [[RV-9]] | [[RF-SAL-02]], [[RF-SAL-03]] |
 | RV-3.3 | Seguimiento y Alertas | [[RV-3]] | — | [[RF-SAL-04]] |
 | RV-3.4 | Confidencialidad/Offline | [[RV-3]] | — | [[RF-SAL-05]] |
-| RV-4.1 | Conectividad/Offline | — | — | [[RNF-01]] |
-| RV-4.2 | Multilingüismo | — | — | [[RNF-02]], [[RNF-03]] |
-| RV-4.3 | Seguridad/Privacidad | — | — | [[RNF-04]], [[RNF-05]] |
-| RV-4.4 | Rendimiento/Compat. | — | — | [[RNF-06]], [[RNF-07]] |
+| RV-4.1 | Conectividad/Offline | — | — | [[RF-TRANS-01]] |
+| RV-4.2 | Multilingüismo | — | — | [[RF-TRANS-02]], [[RNF-01]] |
+| RV-4.3 | Seguridad/Privacidad | — | — | [[RNF-02]], [[RNF-03]] |
+| RV-4.4 | Rendimiento/Compat. | — | — | [[RNF-04]], [[RF-TRANS-03]] |
 
 ### Dataview — Estado de Tareas por Epic
 

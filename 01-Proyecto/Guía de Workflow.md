@@ -419,7 +419,7 @@ tags:                         # 🟡 RECOMENDADO
 ```yaml
 # ── Identidad ──────────────────────────────────────────────
 type: requirement/non-functional  # 🔴 REQUERIDO
-id: RNF-01                        # 🔴 REQUERIDO
+id: RF-TRANS-01                        # 🔴 REQUERIDO
 category: conectividad            # 🔴 REQUERIDO — Clasificación del RNF
                                   #   Valores: conectividad | multilingüismo | rendimiento |
                                   #            seguridad | usabilidad | compatibilidad | gobernanza
@@ -994,7 +994,7 @@ El Linter limpia automáticamente el Markdown al guardar:
 |------|---------|---------|
 | Tarea | `T-XXX` | T-001, T-031 |
 | RF | `RF-MOD-XX` | RF-EDU-01, RF-SAB-03 |
-| RNF | `RNF-XX` | RNF-01, RNF-07 |
+| RNF | `RNF-XX` | RF-TRANS-01, RF-TRANS-03 |
 | Riesgo | `RSK-XXX` | RSK-001, RSK-006 |
 | ADR | `ADR-XXX` | ADR-001, ADR-006 |
 | Sprint | `Sprint-XX` | Sprint-01, Sprint-02 |

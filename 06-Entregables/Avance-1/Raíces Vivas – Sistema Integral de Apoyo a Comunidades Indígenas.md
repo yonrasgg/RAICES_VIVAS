@@ -385,46 +385,46 @@ El sistema debe generar alertas para seguimiento de enfermedades crónicas segú
 
 #### RV-4. Requerimientos Transversales
 
-**[[RNF-01]] (RV-4.1): Operación offline + sincronización**
+**[[RF-TRANS-01]] (RV-4.1): Operación offline + sincronización**
 El sistema debe operar en modo offline y sincronizar datos automáticamente cuando se detecte conectividad.
 **Métrica/verificación:**
 
 * Permite registrar datos sin internet.
 * Sincroniza y resuelve conflictos básicos (última edición o prioridad por rol).
 
-**[[RNF-02]] (RV-4.2): Multilingüismo**
+**[[RF-TRANS-02]] (RV-4.2): Multilingüismo**
 El sistema debe soportar contenido multilingüe (español y al menos una lengua indígena seleccionable), tanto en UI como en contenidos etiquetados.
 **Métrica/verificación:**
 
 * UI con selector de idioma.
 * Contenido etiquetado por idioma.
 
-**[[RNF-03]] (RV-4.4): Rendimiento**
+**[[RNF-01]] (RV-4.4): Rendimiento**
 El tiempo de respuesta no debe superar **3 segundos** para búsquedas y consultas comunes en condiciones normales.
 **Métrica/verificación:**
 
 * Prueba con dataset representativo (ej. 200 contenidos + 300 registros).
 
-**[[RNF-04]] (RV-4.3): Confidencialidad y privacidad en salud**
+**[[RNF-02]] (RV-4.3): Confidencialidad y privacidad en salud**
 El sistema debe garantizar confidencialidad de datos médicos mediante control de acceso por roles y registro de accesos (auditoría mínima).
 **Métrica/verificación:**
 
 * Un usuario sin rol de salud no puede ver historial.
 * Se registra quién consultó, qué y cuándo.
 
-**[[RNF-05]] (RV-4.2): Usabilidad en alfabetización digital básica**
+**[[RNF-03]] (RV-4.2): Usabilidad en alfabetización digital básica**
 La interfaz debe ser usable para usuarios con alfabetización digital básica, minimizando campos obligatorios y manteniendo flujos guiados.
 **Métrica/verificación:**
 
 * Registrar una cita o un material en ≤ 2 minutos con un formulario de ≤ 6 campos obligatorios.
 
-**[[RNF-06]] (RV-4.4): Compatibilidad de dispositivo**
+**[[RNF-04]] (RV-4.4): Compatibilidad de dispositivo**
 El sistema debe funcionar en dispositivos de gama media o baja (Android común y navegadores modernos), evitando dependencias pesadas.
 **Métrica/verificación:**
 
 * Carga inicial razonable y sin requerir hardware especializado.
 
-**[[RNF-07]] (RV-4.3): Gobernanza cultural y control comunitario**
+**[[RF-TRANS-03]] (RV-4.3): Gobernanza cultural y control comunitario**
 El sistema debe permitir que la comunidad defina niveles de acceso y roles para contenidos culturales, evitando exposición no autorizada.
 **Métrica/verificación:**
 
@@ -467,13 +467,13 @@ Brecha educativa → necesidad de materiales bilingües → RV-1.2 → [[RF-EDU-
 | [[RF-SAL-03]]        | RF   | RV-3.2 | Salud       | Dificultad para coordinar atención                | Gestión de citas comunitarias                         | Programar citas con responsable y lugar                       | Personal salud                        | S         | Sin solapamientos por responsable            | Observación                       | Prueba con agenda          |
 | [[RF-SAL-04]]        | RF   | RV-3.2 | Salud       | Campañas preventivas mal coordinadas              | Registrar brigadas/campañas                           | Registro de campañas y población objetivo                     | Personal salud                        | C         | Lista de participantes + estado              | Doc. institucional                | Validación con salud       |
 | [[RF-SAL-05]]        | RF   | RV-3.3 | Salud       | Pérdida de seguimiento en crónicos                | Alertas de seguimiento                                | Alertas por periodicidad configurable                         | Personal salud                        | S         | Regla configurable + panel de alertas        | Entrevistas                       | Prueba con casos           |
-| [[RNF-01]]           | RNF  | RV-4.1 | Transversal | Conectividad limitada / intermitente              | Operación offline y sincronización                    | Offline + sync automática                                     | Todos                                 | M         | Registra sin internet + sincroniza           | Contexto territorial              | Prueba de campo            |
-| [[RNF-02]]           | RNF  | RV-4.2 | Transversal | Multilingüismo / barrera cultural                 | UI y contenidos multilingües                          | UI con selector + contenido etiquetado                        | Todos                                 | M         | Selector idioma + etiquetas                  | Entrevistas                       | Validación usuarios        |
-| [[RNF-03]]           | RNF  | RV-4.4 | Transversal | Baja tolerancia a lentitud                        | Rendimiento aceptable                                 | Respuesta <3s en consultas comunes                            | Todos                                 | S         | Prueba de rendimiento simple                 | Buenas prácticas                  | Test técnico               |
-| [[RNF-04]]           | RNF  | RV-4.3 | Transversal | Datos médicos sensibles                           | Privacidad y control por roles                        | Acceso por roles + auditoría mínima                           | Salud/Admin                           | M         | Bloqueo por rol + log accesos                | Ética + normativa                 | Revisión con salud         |
-| [[RNF-05]]           | RNF  | RV-4.2 | Transversal | Alfabetización digital básica                     | Usabilidad simplificada                               | Flujos guiados, pocos campos obligatorios                     | Todos                                 | S         | Acción clave ≤2 min, ≤6 campos oblig.        | Observación                       | Prueba con usuarios        |
-| [[RNF-06]]           | RNF  | RV-4.4 | Transversal | Dispositivos de gama baja                         | Compatibilidad y ligereza                             | Funciona en Android/Browser comunes                           | Todos                                 | S         | Sin hardware especial                        | Contexto                          | Test de compatibilidad     |
-| [[RNF-07]]           | RNF  | RV-4.3 | Transversal | Riesgo cultural por difusión                      | Gobernanza cultural                                   | Roles/permisos configurables por comunidad                    | Admin comunitario                     | M         | Configurable por admin local                 | Ética + entrevistas               | Validación comunitaria     |
+| [[RF-TRANS-01]]           | RF   | RV-4.1 | Transversal | Conectividad limitada / intermitente              | Operación offline y sincronización                    | Offline + sync automática                                     | Todos                                 | M         | Registra sin internet + sincroniza           | Contexto territorial              | Prueba de campo            |
+| [[RF-TRANS-02]]           | RF   | RV-4.2 | Transversal | Multilingüismo / barrera cultural                 | UI y contenidos multilingües                          | UI con selector + contenido etiquetado                        | Todos                                 | M         | Selector idioma + etiquetas                  | Entrevistas                       | Validación usuarios        |
+| [[RNF-01]]           | RNF  | RV-4.4 | Transversal | Baja tolerancia a lentitud                        | Rendimiento aceptable                                 | Respuesta <3s en consultas comunes                            | Todos                                 | S         | Prueba de rendimiento simple                 | Buenas prácticas                  | Test técnico               |
+| [[RNF-02]]           | RNF  | RV-4.3 | Transversal | Datos médicos sensibles                           | Privacidad y control por roles                        | Acceso por roles + auditoría mínima                           | Salud/Admin                           | M         | Bloqueo por rol + log accesos                | Ética + normativa                 | Revisión con salud         |
+| [[RNF-03]]           | RNF  | RV-4.2 | Transversal | Alfabetización digital básica                     | Usabilidad simplificada                               | Flujos guiados, pocos campos obligatorios                     | Todos                                 | S         | Acción clave ≤2 min, ≤6 campos oblig.        | Observación                       | Prueba con usuarios        |
+| [[RNF-04]]           | RNF  | RV-4.4 | Transversal | Dispositivos de gama baja                         | Compatibilidad y ligereza                             | Funciona en Android/Browser comunes                           | Todos                                 | S         | Sin hardware especial                        | Contexto                          | Test de compatibilidad     |
+| [[RF-TRANS-03]]           | RF   | RV-4.3 | Transversal | Riesgo cultural por difusión                      | Gobernanza cultural                                   | Roles/permisos configurables por comunidad                    | Admin comunitario                     | M         | Configurable por admin local                 | Ética + entrevistas               | Validación comunitaria     |
 
 ---
 ## Conclusiones y Recomendaciones

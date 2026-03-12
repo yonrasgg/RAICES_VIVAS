@@ -112,7 +112,7 @@ RAICES_VIVAS/                          ← Vault root
 │   │   ├── EDU/ (RF-EDU-01..06)       ← Módulo Educativo (6 RF)
 │   │   ├── SAB/ (RF-SAB-01..05)       ← Módulo Saberes (5 RF)
 │   │   └── SAL/ (RF-SAL-01..05)       ← Módulo Salud (5 RF)
-│   └── No Funcionales/ (RNF-01..07)   ← 7 RNF transversales
+│   └── No Funcionales/ (RF-TRANS-01..07)   ← 7 RNF transversales
 │
 ├── 04-Arquitectura/                   ← Diseño técnico
 │   ├── Visión General.md              ← Arquitectura de alto nivel
@@ -216,7 +216,7 @@ tags:
 
 ```yaml
 ---
-id: RNF-01
+id: RF-TRANS-01
 type: requirement/non-functional
 category: conectividad     # conectividad | multilingüismo | seguridad | usabilidad | rendimiento | compatibilidad | gobernanza
 wbs: RV-4.1

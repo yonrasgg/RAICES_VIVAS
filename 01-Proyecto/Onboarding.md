@@ -134,7 +134,7 @@ El script `08-Recursos/scripts/setup-hooks.sh` está disponible como referencia 
 | `Funcionales/EDU/` | RFs módulo Educación: `RF-EDU-01`..`RF-EDU-06` | `_template-requerimiento-funcional.md` |
 | `Funcionales/SAB/` | RFs módulo Saberes: `RF-SAB-01`..`RF-SAB-05` | `_template-requerimiento-funcional.md` |
 | `Funcionales/SAL/` | RFs módulo Salud: `RF-SAL-01`..`RF-SAL-05` | `_template-requerimiento-funcional.md` |
-| `No Funcionales/` | RNFs transversales: `RNF-01`..`RNF-07` | `_template-requerimiento-nofuncional.md` |
+| `No Funcionales/` | RNFs transversales: `RF-TRANS-01`..`RF-TRANS-03` | `_template-requerimiento-nofuncional.md` |
 
 > 💡 **Cada RF está vinculado a una Story en Jira** (ej: `RF-EDU-01` → `RV-4`). La trazabilidad completa se ve en la [[03-Requerimientos/_RTM|RTM]].
 

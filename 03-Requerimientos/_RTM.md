@@ -20,6 +20,8 @@ author: Geovanny
 
 ### Requerimientos Funcionales — Completo
 
+> Incluye módulos EDU, SAB, SAL y TRANS (transversales reclasificados desde NF el 2026-03-11).
+
 ```dataview
 TABLE WITHOUT ID
   id as "ID",
