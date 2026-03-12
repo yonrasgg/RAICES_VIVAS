@@ -1,4 +1,7 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-saberes.png"
+---
+---
 type: context
 title: "Contexto — Saberes Ancestrales"
 module: saberes

@@ -1,4 +1,7 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-salud.png"
+---
+---
 type: context
 title: "Contexto — Salud Comunitaria"
 module: salud
