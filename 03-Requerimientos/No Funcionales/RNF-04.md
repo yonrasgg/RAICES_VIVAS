@@ -4,48 +4,51 @@ banner_src_x: 0.47714
 banner_src_y: 0.42
 id: RNF-04
 type: requirement/non-functional
-category: seguridad
-wbs: RV-4.3
-title: "Confidencialidad y privacidad en salud"
+category: compatibilidad
+wbs: RV-4.4
+title: "Compatibilidad de dispositivo"
 status: approved
-priority: must
-metric: "Un usuario sin rol de salud no puede ver el historial médico. Se registra quién consultó, qué dato y cuándo (log de auditoría mínimo)."
+priority: should
+metric: "El sistema funciona en dispositivos Android gama media-baja y navegadores modernos sin requerir hardware especializado."
 created: 2026-02-25
-updated: 2026-02-27
+updated: 2026-03-11
 tags:
   - requerimiento
   - no-funcional
   - transversal
-  - prioridad/must
+  - prioridad/should
 ---
 
-# RNF-04: Confidencialidad y privacidad en salud
+# RNF-04: Compatibilidad de dispositivo
+
+> [!info] Renumerado
+> Este requerimiento fue renumerado de **RNF-06** a **RNF-04** el 2026-03-11 tras la reclasificación de RNF-01, RNF-02 y RNF-07 como funcionales.
 
 ## Descripción
 
-Los datos médicos deben ser accesibles solo por usuarios con rol autorizado (personal de salud). Toda consulta de datos sensibles debe quedar registrada en un log de auditoría.
+El sistema debe funcionar correctamente en dispositivos de gama media-baja (Android 8+) y navegadores modernos, sin requerir hardware especializado.
 
 ## Justificación
 
-Los datos médicos son altamente sensibles. La exposición no autorizada viola la privacidad del paciente y puede generar daño real (estigma, discriminación en comunidades pequeñas).
+En territorios indígenas los dispositivos disponibles son de gama baja. Exigir hardware de alto rendimiento excluye a la mayoría de usuarios.
 
 ## Métrica / Verificación
 
-**Métrica:** Un usuario sin rol de salud no puede ver historial médico. Se registra: quién consultó, qué dato, cuándo.
+**Métrica:** Carga inicial en tiempo razonable. No requiere hardware especializado (GPS avanzado, NFC, etc.).
 
-**Método de verificación:** Revisión con personal de salud + prueba de acceso con roles diferentes.
+**Método de verificación:** Test de compatibilidad en al menos 3 dispositivos representativos.
 
 ## Impacto en Módulos
 
-- [ ] Educación (EDU)
-- [ ] Saberes Ancestrales (SAB)
+- [x] Educación (EDU)
+- [x] Saberes Ancestrales (SAB)
 - [x] Salud (SAL)
 
 ## Trazabilidad
 
-- **Problema de origen:** Datos médicos sensibles en comunidades donde todos se conocen
-- **WBS:** [[WBS#RV-4.3]]
-- **Categoría:** Seguridad
+- **Problema de origen:** Dispositivos de gama baja en territorios indígenas
+- **WBS:** [[WBS#RV-4.4]]
+- **Categoría:** Compatibilidad
 
 ## Tareas Vinculadas
 
@@ -66,3 +69,4 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+| 2026-03-11 | Renumerado de RNF-06 → RNF-04 | Equipo |

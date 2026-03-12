@@ -4,14 +4,14 @@ banner_src_x: 0.47714
 banner_src_y: 0.42
 id: RNF-03
 type: requirement/non-functional
-category: rendimiento
-wbs: RV-4.4
-title: "Rendimiento"
+category: usabilidad
+wbs: RV-4.2
+title: "Usabilidad en alfabetización digital básica"
 status: approved
 priority: should
-metric: "Tiempo de respuesta menor a 3 segundos para búsquedas y consultas comunes con dataset representativo."
+metric: "Un usuario puede completar una acción clave (registrar cita, subir material) en ≤2 minutos con formulario de ≤6 campos obligatorios."
 created: 2026-02-25
-updated: 2026-02-27
+updated: 2026-03-11
 tags:
   - requerimiento
   - no-funcional
@@ -19,21 +19,24 @@ tags:
   - prioridad/should
 ---
 
-# RNF-03: Rendimiento
+# RNF-03: Usabilidad en alfabetización digital básica
+
+> [!info] Renumerado
+> Este requerimiento fue renumerado de **RNF-05** a **RNF-03** el 2026-03-11 tras la reclasificación de RNF-01, RNF-02 y RNF-07 como funcionales.
 
 ## Descripción
 
-El sistema debe responder en menos de 3 segundos para búsquedas y consultas comunes en condiciones normales de uso.
+La interfaz debe ser simple, con flujos guiados, formularios cortos y navegación intuitiva para usuarios con experiencia limitada en tecnología.
 
 ## Justificación
 
-Los usuarios tienen baja tolerancia a la lentitud y experiencia limitada con tecnología. Un sistema lento genera frustración y abandono.
+Muchos usuarios (docentes rurales, personal de salud en brigada, portadores de saber) tienen alfabetización digital básica. Una interfaz compleja impide la adopción.
 
 ## Métrica / Verificación
 
-**Métrica:** Tiempo de respuesta < 3 segundos para las 10 consultas más frecuentes con dataset representativo.
+**Métrica:** Completar una acción clave en ≤2 minutos con formulario de ≤6 campos obligatorios.
 
-**Método de verificación:** Test técnico de rendimiento con dataset de prueba simulando volumen real.
+**Método de verificación:** Prueba de usabilidad con usuarios reales, midiendo tiempo y tasa de éxito.
 
 ## Impacto en Módulos
 
@@ -43,9 +46,9 @@ Los usuarios tienen baja tolerancia a la lentitud y experiencia limitada con tec
 
 ## Trazabilidad
 
-- **Problema de origen:** Baja tolerancia a lentitud en usuarios con alfabetización digital básica
-- **WBS:** [[WBS#RV-4.4]]
-- **Categoría:** Rendimiento
+- **Problema de origen:** Alfabetización digital básica en la población objetivo
+- **WBS:** [[WBS#RV-4.2]]
+- **Categoría:** Usabilidad
 
 ## Tareas Vinculadas
 
@@ -66,3 +69,4 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+| 2026-03-11 | Renumerado de RNF-05 → RNF-03 | Equipo |

@@ -4,36 +4,39 @@ banner_src_x: 0.47714
 banner_src_y: 0.42
 id: RNF-01
 type: requirement/non-functional
-category: conectividad
-wbs: RV-4.1
-title: "Operación offline + sincronización"
+category: rendimiento
+wbs: RV-4.4
+title: "Rendimiento"
 status: approved
-priority: must
-metric: "Permite registrar datos sin internet. Sincroniza automáticamente al detectar conectividad. Resuelve conflictos básicos."
+priority: should
+metric: "Tiempo de respuesta menor a 3 segundos para búsquedas y consultas comunes con dataset representativo."
 created: 2026-02-25
-updated: 2026-02-27
+updated: 2026-03-11
 tags:
   - requerimiento
   - no-funcional
   - transversal
-  - prioridad/must
+  - prioridad/should
 ---
 
-# RNF-01: Operación offline + sincronización
+# RNF-01: Rendimiento
+
+> [!info] Renumerado
+> Este requerimiento fue renumerado de **RNF-03** a **RNF-01** el 2026-03-11 tras la reclasificación de RNF-01, RNF-02 y RNF-07 como funcionales.
 
 ## Descripción
 
-El sistema debe funcionar en modo offline, permitiendo registrar, consultar y modificar datos sin conexión a internet, y sincronizar automáticamente cuando se detecte conectividad.
+El sistema debe responder en menos de 3 segundos para búsquedas y consultas comunes en condiciones normales de uso.
 
 ## Justificación
 
-Los territorios indígenas de Costa Rica tienen conectividad limitada o inexistente. Sin modo offline, el sistema sería inutilizable en las condiciones reales de uso.
+Los usuarios tienen baja tolerancia a la lentitud y experiencia limitada con tecnología. Un sistema lento genera frustración y abandono.
 
 ## Métrica / Verificación
 
-**Métrica:** Se puede crear un registro completo (paciente, material, saber) sin conexión a internet. La sincronización se ejecuta automáticamente al restaurar conectividad.
+**Métrica:** Tiempo de respuesta < 3 segundos para las 10 consultas más frecuentes con dataset representativo.
 
-**Método de verificación:** Prueba de campo — registrar datos en modo avión, restaurar conexión, verificar sincronización sin pérdida.
+**Método de verificación:** Test técnico de rendimiento con dataset de prueba simulando volumen real.
 
 ## Impacto en Módulos
 
@@ -43,9 +46,9 @@ Los territorios indígenas de Costa Rica tienen conectividad limitada o inexiste
 
 ## Trazabilidad
 
-- **Problema de origen:** Conectividad limitada/intermitente en territorios indígenas
-- **WBS:** [[WBS#RV-4.1]]
-- **Categoría:** Conectividad
+- **Problema de origen:** Baja tolerancia a lentitud en usuarios con alfabetización digital básica
+- **WBS:** [[WBS#RV-4.4]]
+- **Categoría:** Rendimiento
 
 ## Tareas Vinculadas
 
@@ -66,3 +69,4 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+| 2026-03-11 | Renumerado de RNF-03 → RNF-01 | Equipo |

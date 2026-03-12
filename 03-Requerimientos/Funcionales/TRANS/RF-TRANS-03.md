@@ -1,9 +1,9 @@
 ---
-banner_src: "08-Recursos/Imágenes/cover-rnf.png"
+banner_src: "08-Recursos/Imágenes/cover-rf.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
-id: RNF-07
-type: requirement/non-functional
+id: RF-TRANS-03
+type: requirement/functional
 category: gobernanza
 wbs: RV-4.3
 title: "Gobernanza cultural y control comunitario"
@@ -11,15 +11,18 @@ status: approved
 priority: must
 metric: "Configuración de roles y permisos editable por admin comunitario. Cada comunidad puede definir sus propias reglas de acceso."
 created: 2026-02-25
-updated: 2026-02-27
+updated: 2026-03-11
 tags:
   - requerimiento
-  - no-funcional
+  - funcional
   - transversal
   - prioridad/must
 ---
 
-# RNF-07: Gobernanza cultural y control comunitario
+# RF-TRANS-03: Gobernanza cultural y control comunitario
+
+> [!info] Reclasificado
+> Este requerimiento fue reclasificado de **RNF-07** a **RF-TRANS-03** el 2026-03-11. Se determinó que describe comportamiento funcional (configuración de roles y permisos por comunidad), no una cualidad de calidad.
 
 ## Descripción
 
@@ -46,6 +49,7 @@ La gobernanza cultural es un derecho reconocido de los pueblos indígenas. Un si
 - **Problema de origen:** Riesgo cultural por difusión sin control comunitario
 - **WBS:** [[WBS#RV-4.3]]
 - **Categoría:** Gobernanza
+- **ID anterior:** RNF-07
 
 ## Tareas Vinculadas
 
@@ -56,7 +60,10 @@ TABLE
   sprint as "Sprint",
   priority as "Prioridad"
 FROM "05-Sprints"
-WHERE (type = "task" OR type = "subtask") AND requirement = this.file.name
+WHERE (type = "task" OR type = "subtask") AND (
+  (typeof(requirement) = "array" AND contains(requirement, "RF-TRANS-03")) OR
+  requirement = this.file.name
+)
 SORT sprint ASC, priority ASC
 ```
 
@@ -64,5 +71,6 @@ SORT sprint ASC, priority ASC
 
 | Fecha | Cambio | Autor |
 |-------|--------|-------|
-| 2026-02-25 | Creación inicial (Avance 1) | Equipo |
+| 2026-02-25 | Creación inicial como RNF-07 (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+| 2026-03-11 | Reclasificado de RNF-07 → RF-TRANS-03 (funcional transversal) | Equipo |

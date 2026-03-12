@@ -4,14 +4,14 @@ banner_src_x: 0.47714
 banner_src_y: 0.42
 id: RNF-02
 type: requirement/non-functional
-category: multilingüismo
-wbs: RV-4.2
-title: "Multilingüismo"
+category: seguridad
+wbs: RV-4.3
+title: "Confidencialidad y privacidad en salud"
 status: approved
 priority: must
-metric: "UI con selector de idioma funcional. Contenido etiquetado por idioma permitiendo filtrar y navegar en lengua preferida."
+metric: "Un usuario sin rol de salud no puede ver el historial médico. Se registra quién consultó, qué dato y cuándo (log de auditoría mínimo)."
 created: 2026-02-25
-updated: 2026-02-27
+updated: 2026-03-11
 tags:
   - requerimiento
   - no-funcional
@@ -19,33 +19,36 @@ tags:
   - prioridad/must
 ---
 
-# RNF-02: Multilingüismo
+# RNF-02: Confidencialidad y privacidad en salud
+
+> [!info] Renumerado
+> Este requerimiento fue renumerado de **RNF-04** a **RNF-02** el 2026-03-11 tras la reclasificación de RNF-01, RNF-02 y RNF-07 como funcionales.
 
 ## Descripción
 
-El sistema debe soportar interfaz de usuario bilingüe (español + al menos una lengua indígena) y permitir etiquetar contenidos por idioma.
+Los datos médicos deben ser accesibles solo por usuarios con rol autorizado (personal de salud). Toda consulta de datos sensibles debe quedar registrada en un log de auditoría.
 
 ## Justificación
 
-Los usuarios son hablantes nativos de lenguas indígenas (bribri, cabécar, etc.). Un sistema solo en español limita la adopción y excluye a los principales beneficiarios.
+Los datos médicos son altamente sensibles. La exposición no autorizada viola la privacidad del paciente y puede generar daño real (estigma, discriminación en comunidades pequeñas).
 
 ## Métrica / Verificación
 
-**Métrica:** Selector de idioma funcional en la UI. Todo contenido tiene etiqueta de idioma obligatoria.
+**Métrica:** Un usuario sin rol de salud no puede ver historial médico. Se registra: quién consultó, qué dato, cuándo.
 
-**Método de verificación:** Validación con usuarios bilingües — completar un flujo completo en lengua indígena.
+**Método de verificación:** Revisión con personal de salud + prueba de acceso con roles diferentes.
 
 ## Impacto en Módulos
 
-- [x] Educación (EDU)
-- [x] Saberes Ancestrales (SAB)
+- [ ] Educación (EDU)
+- [ ] Saberes Ancestrales (SAB)
 - [x] Salud (SAL)
 
 ## Trazabilidad
 
-- **Problema de origen:** Multilingüismo / barrera cultural
-- **WBS:** [[WBS#RV-4.2]]
-- **Categoría:** Multilingüismo
+- **Problema de origen:** Datos médicos sensibles en comunidades donde todos se conocen
+- **WBS:** [[WBS#RV-4.3]]
+- **Categoría:** Seguridad
 
 ## Tareas Vinculadas
 
@@ -66,3 +69,4 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+| 2026-03-11 | Renumerado de RNF-04 → RNF-02 | Equipo |
