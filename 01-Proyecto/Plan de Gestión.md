@@ -1,4 +1,7 @@
 ---
+banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
+---
+---
 type: document
 title: "Plan de Gestión — Raíces Vivas"
 project: raices-vivas
