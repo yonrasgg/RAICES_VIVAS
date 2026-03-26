@@ -38,11 +38,10 @@ gantt
     AVANCE 2                :milestone, m2, 2026-04-01, 0d
 
     section 💻 Implementación
-    Sprint 1 — Módulo piloto:        c1, 2026-04-01, 2026-04-15
-    Sprint 2 — Core features:        c2, 2026-04-15, 2026-04-30
-    Sprint 3 — Integración  :        c3, 2026-05-01, 2026-05-15
-    Testing y refinamiento  :        c4, 2026-05-15, 2026-05-30
-    ENTREGA FINAL           :milestone, m3, 2026-05-30, 0d
+    Sprint-03 EDU piloto + sync  :        c1, 2026-04-01, 2026-04-30
+    Sprint-04 SAB + SAL + motor  :        c2, 2026-05-01, 2026-05-31
+    Sprint-05 integración + test :        c3, 2026-06-01, 2026-06-30
+    ENTREGA FINAL           :milestone, m3, 2026-06-30, 0d
 ```
 
 ---
@@ -124,7 +123,7 @@ gantt
 |---|-----------|---------------|--------|-------------|
 | M1 | Avance 1 — Requerimientos | 2026-02-25 | ✅ Entregado | Equipo |
 | M2 | Avance 2 — Arquitectura | 2026-04-01 | 🔄 En progreso | Equipo |
-| M3 | Entrega Final | 2026-05-30 | ⏳ Pendiente | Equipo |
+| M3 | Entrega Final | 2026-06-30 | ⏳ Pendiente | Equipo |
 
 ## Entregas Próximas
 
@@ -142,4 +141,4 @@ SORT due ASC
 
 ---
 
-*Roadmap dinámico · Mermaid + Dataview + Jira Sync · Última actualización: 2026-03-05*
+*Roadmap dinámico · Mermaid + Dataview + Jira Sync · Última actualización: 2026-03-26*

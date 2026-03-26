@@ -61,7 +61,7 @@ const blocked = tasks.where(t => t.status === "blocked").length;
 const defectRate = total > 0 ? Math.round((blocked / total) * 100) : 0;
 
 // Finanzas (usa horas reales para costos)
-const tarifas = { "Geovanny": 13910, "Elkin": 13910, "Santiago": 13910 };
+const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500 };
 let estCost = 0, actCost = 0;
 for (const t of tasks.where(t => t.effort)) {
   const est = ((v) => { if (!v) return 0; if (typeof v === "number") return v; const m = String(v).match(/\d+/); return m ? parseInt(m[0]) : 0; })(t.effort);
@@ -426,7 +426,12 @@ shadow: off
 - 📄 [[06-Entregables/Avance-1/Raíces Vivas – Sistema Integral de Apoyo a Comunidades Indígenas|Avance 1]]
 - 📦 [[05-Sprints/Sprint-01/Sprint-01-Planning|Sprint 01]]
 - 📦 [[05-Sprints/Sprint-02/Sprint-02-Planning|Sprint 02]]
+- � [[05-Sprints/Sprint-03/Sprint-03-Planning|Sprint 03]]
+- 📦 [[05-Sprints/Sprint-04/Sprint-04-Planning|Sprint 04]]
+- 📦 [[05-Sprints/Sprint-05/Sprint-05-Planning|Sprint 05]]
 - 📝 [[07-Reuniones/MIN-001|Minuta Kickoff]]
+- 📝 [[07-Reuniones/MIN-002|Minuta Sprint-02 Arranque]]
+- 📝 [[07-Reuniones/MIN-003|Minuta Prep Avance 2]]
 
 === end-multi-column
 
@@ -463,6 +468,16 @@ shadow: off
 - 📖 [[RV-9]] — RF-SAL-02 (SP: 5)
 
 === end-multi-column
+
+### 🔄 TRANS — Transversal
+- 🏔️ [[EPIC-TRANS]] — Epic (sync, i18n, gobernanza)
+- 📖 [[US-TRANS-01]] — Sync offline/online (SP: 8)
+- 📖 [[US-TRANS-02]] — Interfaz multilingüe (SP: 5)
+- 📖 [[US-EDU-04]] — Motor práctica EDU (SP: 5)
+- 📖 [[US-EDU-05]] — Seguimiento académico (SP: 3)
+- 📖 [[US-SAB-03]] — Búsqueda saberes (SP: 3)
+- 📖 [[US-SAL-03]] — Gestión citas SAL (SP: 5)
+- 📖 [[US-SAL-05]] — Alertas clínicas (SP: 3)
 
 ```dataview
 TABLE WITHOUT ID
@@ -504,11 +519,10 @@ gantt
     ENTREGA AVANCE 2        :milestone, m2, 2026-04-01, 0d
 
     section 💻 Implementación
-    Sprint 1 piloto         :        c1, 2026-04-01, 2026-04-15
-    Sprint 2 core           :        c2, 2026-04-15, 2026-04-30
-    Sprint 3 integración    :        c3, 2026-05-01, 2026-05-15
-    Testing                 :        c4, 2026-05-15, 2026-05-30
-    ENTREGA FINAL           :milestone, m3, 2026-05-30, 0d
+    Sprint-03 EDU piloto + sync  :        c1, 2026-04-01, 2026-04-30
+    Sprint-04 SAB + SAL + motor  :        c2, 2026-05-01, 2026-05-31
+    Sprint-05 integración + test :        c3, 2026-06-01, 2026-06-30
+    ENTREGA FINAL           :milestone, m3, 2026-06-30, 0d
 ```
 
 ---
@@ -622,7 +636,7 @@ SORT id ASC
 > [!note]- 💰 Resumen Financiero (expandir)
 >
 > ```dataviewjs
-> const tarifas = { "Geovanny": 13910, "Elkin": 13910, "Santiago": 13910 };
+> const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500 };
 > const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 > const costos = {};
 > for (const t of tasks) {
@@ -703,9 +717,9 @@ SORT id ASC
 |---|-----------|-------|--------|
 | M1 | ✅ Avance 1 — Análisis y Requerimientos | 2026-02-25 | ✅ Entregado |
 | M2 | 🏗️ Avance 2 — Diseño y Arquitectura | 2026-04-01 | 🔄 En progreso |
-| M3 | 💻 Entrega Final — Implementación | 2026-05-30 | ⏳ Pendiente |
+| M3 | 💻 Entrega Final — Integración y Piloto | 2026-06-30 | ⏳ Pendiente |
 
 ---
 
 *Dashboard dinámico · Banners + Buttons + Multi-Column + Dataview + Charts + Mermaid + Jira Sync*
-*Última configuración: 2026-03-05*
+*Última configuración: 2026-03-26*
