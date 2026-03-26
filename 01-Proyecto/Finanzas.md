@@ -5,7 +5,7 @@ title: "Gestión Financiera — Raíces Vivas"
 project: raices-vivas
 status: active
 created: 2026-03-01
-updated: 2026-03-02
+updated: 2026-03-26
 banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
@@ -23,9 +23,9 @@ tags:
 ```dataviewjs
 // ── Costos de Recursos Humanos ──
 const team = [
-  { nombre: "Geovanny", rol: "Project Lead / Arquitecto", horas: 0, tarifa: 13910 },
-  { nombre: "Elkin", rol: "Líder Investigación / Analista", horas: 0, tarifa: 13910 },
-  { nombre: "Santiago", rol: "Líder QA / Analista", horas: 0, tarifa: 13910 }
+  { nombre: "Geovanny", rol: "Project Lead / Arquitecto", horas: 0, tarifa: 8500 },
+  { nombre: "Elkin", rol: "Líder Investigación / Analista", horas: 0, tarifa: 6500 },
+  { nombre: "Santiago", rol: "Líder QA / Analista", horas: 0, tarifa: 6500 }
 ];
 
 // Calcular horas reales desde las tareas
@@ -87,11 +87,11 @@ dv.table(
 
 | Integrante | Rol | Tarifa / Hora (₡) | Tarifa / Hora (USD) | Dedicación Semanal |
 |-----------|-----|-------------------|--------------------|--------------------|
-| **Geovanny** | Project Lead / Arquitecto | ₡13,910 | $26.00 | 12–15 h/semana |
-| **Elkin** | Líder Investigación / Analista | ₡13,910 | $26.00 | 8–10 h/semana |
-| **Santiago** | Líder QA / Analista | ₡13,910 | $26.00 | 8–10 h/semana |
+| **Geovanny** | Project Lead / Arquitecto | ₡8,500 | $15.89 | 12–15 h/semana |
+| **Elkin** | Líder Investigación / Analista | ₡6,500 | $12.15 | 8–10 h/semana |
+| **Santiago** | Líder QA / Analista | ₡6,500 | $12.15 | 8–10 h/semana |
 
-> **Nota:** Tarifa unificada de **$26.00 USD/h** (₡13,910/h) para todo el equipo, basada en tarifa profesional para ingeniería de software en Costa Rica. Tipo de cambio referencial: ₡535/USD (BCCR, marzo 2026).
+> **Nota:** Tarifas diferenciadas por rol y nivel de responsabilidad, basadas en el mercado laboral costarricense 2026. Ref: Decreto de Salarios Mínimos MTSS — Licenciado universitario ~₡750K/mes (₡4,687/h base) + factor de especialización PM; Técnico superior ~₡570K/mes (₡3,562/h base) + factor de especialización analista. Tipo de cambio referencial: ₡535/USD (BCCR, marzo 2026).
 
 ### 2.2 Horas Invertidas por Sprint (Dinámico)
 
@@ -130,14 +130,14 @@ dv.table(headers, rows);
 ### 2.3 Costo Acumulado por Integrante
 
 ```dataviewjs
-const tarifas = { "Geovanny": 13910, "Elkin": 13910, "Santiago": 13910 };
+const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500 };
 const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 const costos = {};
 
 for (const t of tasks) {
   const person = t.assignee || "Sin asignar";
   const hours = parseInt(String(t.effort)) || 0;
-  const tarifa = tarifas[person] || 13910;
+  const tarifa = tarifas[person] || 7000;
   if (!costos[person]) costos[person] = { horas: 0, costo: 0 };
   costos[person].horas += hours;
   costos[person].costo += hours * tarifa;
@@ -148,7 +148,7 @@ const rows = [];
 let grandTotal = 0;
 
 for (const [person, data] of Object.entries(costos).sort()) {
-  const tarifa = tarifas[person] || 13910;
+  const tarifa = tarifas[person] || 7000;
   grandTotal += data.costo;
   rows.push([person, `${data.horas}h`, `₡${tarifa.toLocaleString()}`, `₡${data.costo.toLocaleString()}`, `$${Math.round(data.costo / 535).toLocaleString()}`]);
 }
@@ -357,14 +357,14 @@ Las **ADIs** son la estructura de gobernanza local reconocida por el Estado en l
 
 | Categoría | Detalle | Costo Estimado (₡) | Costo (USD) |
 |-----------|---------|---------------------|-------------|
-| Desarrollo (3 personas × 6 meses) | 480h × ₡13,910 | ₡6,676,800 | $12,480 |
+| Desarrollo (3 personas × 6 meses) | Geo: 200h×₡8,500 + Elk/San: 280h×₡6,500 | ₡3,520,000 | $6,579 |
 | Registro de marca "Raíces Vivas" | 1 clase RNPI | ₡185,000 | $346 |
 | Constitución de Asociación | Personería + libros | ₡180,000 | $336 |
 | Hosting / Dominio web | 12 meses | ₡60,000 | $112 |
 | Seguro de riesgos INS | 6 meses | ₡90,000 | $168 |
 | Capacitación a comunidades | 3 talleres | ₡150,000 | $280 |
 | Viáticos y transporte | 12 visitas a territorios | ₡360,000 | $673 |
-| **Total Fase Implementación** | | **₡7,701,800** | **$14,396** |
+| **Total Fase Implementación** | | **₡4,520,000** | **$8,449** |
 
 ### 6.3 Presupuesto Visual
 
@@ -373,7 +373,7 @@ type: bar
 labels: [RR.HH., Herramientas, Marca, Asociación, Hosting, Seguros, Capacitación, Transporte]
 series:
   - title: Costo Estimado (miles ₡)
-    data: [6677, 0, 185, 180, 60, 90, 150, 360]
+    data: [3520, 0, 185, 180, 60, 90, 150, 360]
 width: 80%
 labelColors: true
 fill: true
@@ -385,7 +385,7 @@ type: doughnut
 labels: [Recursos Humanos, Registro de Marca, Constitución Legal, Hosting/Dominio, Seguros, Capacitación, Transporte]
 series:
   - title: Distribución de Costos
-    data: [6677, 185, 180, 60, 90, 150, 360]
+    data: [3520, 185, 180, 60, 90, 150, 360]
 width: 60%
 labelColors: true
 ```
@@ -438,4 +438,4 @@ labelColors: true
 
 ---
 
-*Última actualización: 2026-03-02*
+*Última actualización: 2026-03-26*
