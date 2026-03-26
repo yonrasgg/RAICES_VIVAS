@@ -153,6 +153,31 @@ Territorios adicionales distribuidos en el Pacífico Sur (Buenos Aires, Osa, Con
 
 ---
 
+## Infraestructura Tecnológica por Zona
+
+> Datos basados en cobertura SUTEL 2025 y reportes de ICE/Kolbi para zonas rurales.
+
+| Zona / Territorio | Cobertura Celular | Electricidad | EBAIS Cercano | Acceso Vial | Implicación Técnica |
+|-------------------|-------------------|-------------|---------------|-------------|---------------------|
+| **Talamanca Alta** (Bribri) | 2G parcial / sin cobertura interior | Red ICE intermitente | EBAIS Suretka (~2h caminando) | Senderos, lanchas | Offline-first obligatorio, sync por lotes, energía solar |
+| **Alto Chirripó** (Cabécar) | Sin cobertura | Solar + micro-hidro | EBAIS Grano de Oro (~4-8h) | Senderos de montaña | Servidor local RPi, sync cuando baja al pueblo, power bank solar |
+| **Telire** (Cabécar) | Sin cobertura | Sin red, solar parcial | Ninguno local (~6h) | Solo a pie + lancha | Máxima autonomía: todo offline, sync trimestral |
+| **Guatuso** (Maleku) | 4G Kolbi/Movistar | Red ICE estable | EBAIS Guatuso (<30min) | Carretera asfaltada | Puede funcionar con sync regular, WiFi comunal viable |
+| **Buenos Aires** (Boruca, Térraba) | 3G/4G parcial | Red ICE | EBAIS Buenos Aires (~1h) | Carretera + lastre | Hybrid: WiFi en centro + offline en periferia |
+| **Coto Brus** (Ngäbe) | 2G/3G en cabecera | Red ICE parcial | EBAIS Sabalito (~2h) | Lastre, difícil en lluvia | Offline-first, sync cuando visitan cabecera semanal |
+| **Quitirrisí** (Huetar) | 4G completo | Red ICE estable | EBAIS Colón (~15min) | Carretera asfaltada | Funciona como zona urbana, sync continuo |
+
+### Recomendación de Despliegue por Fase
+
+| Fase | Territorio Piloto | Justificación |
+|------|-------------------|---------------|
+| **Piloto 1** | Guatuso (Maleku) o Quitirrisí (Huetar) | Buena conectividad, cercanía al Valle Central, comunidades receptivas con lengua activa |
+| **Piloto 2** | Buenos Aires (Boruca/Térraba) | Conectividad intermedia, rico en saberes culturales (Diablitos), EBAIS accesible |
+| **Expansión** | Talamanca (Bribri) | Población grande, uso real de lengua, desafío técnico medio |
+| **Fase avanzada** | Alto Chirripó/Telire (Cabécar) | Máximo desafío: sin conectividad, requiere infraestructura completa (RPi + solar) |
+
+---
+
 ## Enlaces Relacionados
 
 - [[Educación]] — Contexto del módulo educativo
