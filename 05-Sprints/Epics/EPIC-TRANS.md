@@ -9,7 +9,8 @@ issuetype: Epic
 project: RV
 title: "Funcionalidades Transversales"
 status: todo
-priority: high
+priority: must
+assignee: "Geovanny"
 owner: "Geovanny"
 module: transversal
 created: 2026-03-26

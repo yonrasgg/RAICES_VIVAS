@@ -16,6 +16,7 @@ module: transversal
 requirement: "RF-TRANS-01"
 story_points: 8
 customfield_10016: 8
+sprint: Sprint-03
 created: 2026-03-26
 updated: 2026-03-26
 tags:

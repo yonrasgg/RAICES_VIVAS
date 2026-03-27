@@ -16,6 +16,7 @@ module: educacion
 requirement: "RF-EDU-04"
 story_points: 5
 customfield_10016: 5
+sprint: Sprint-04
 created: 2026-03-26
 updated: 2026-03-26
 tags:
