@@ -1,5 +1,4 @@
 ---
-banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
 type: document
 title: "Gestión Financiera — Raíces Vivas"
 project: raices-vivas
@@ -29,11 +28,23 @@ const team = [
   { nombre: "Equipo", rol: "Tareas colectivas", horas: 0, tarifa: 7167 }
 ];
 
+// Helper: parsear horas (maneja Luxon Duration + strings "8h")
+const parseH = (v) => {
+  if (!v) return 0;
+  if (typeof v === "number") return v;
+  if (typeof v === "object" && v !== null) {
+    if (typeof v.as === "function") return v.as("hours");
+    if (v.hours !== undefined) return v.hours;
+  }
+  const m = String(v).match(/(\d+)/);
+  return m ? parseInt(m[1]) : 0;
+};
+
 // Calcular horas reales (effort_actual para done, effort para pendientes)
 const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 for (const t of tasks) {
-  const est = parseInt(String(t.effort)) || 0;
-  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const est = parseH(t.effort);
+  const act = parseH(t.effort_actual);
   const hours = (t.status === "done" && act > 0) ? act : est;
   const assignee = String(t.assignee || "").toLowerCase();
   if (assignee.includes("geovanny")) team[0].horas += hours;
@@ -100,14 +111,24 @@ dv.table(
 ### 2.2 Horas Invertidas por Sprint — Plan vs Real (Dinámico)
 
 ```dataviewjs
+const parseH = (v) => {
+  if (!v) return 0;
+  if (typeof v === "number") return v;
+  if (typeof v === "object" && v !== null) {
+    if (typeof v.as === "function") return v.as("hours");
+    if (v.hours !== undefined) return v.hours;
+  }
+  const m = String(v).match(/(\d+)/);
+  return m ? parseInt(m[1]) : 0;
+};
 const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint && t.effort);
 const matrix = {};
 
 for (const t of tasks) {
   const sprint = String(t.sprint);
   const person = t.assignee || "Sin asignar";
-  const est = parseInt(String(t.effort)) || 0;
-  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const est = parseH(t.effort);
+  const act = parseH(t.effort_actual);
   const real = (t.status === "done" && act > 0) ? act : est;
   if (!matrix[sprint]) matrix[sprint] = {};
   if (!matrix[sprint][person]) matrix[sprint][person] = { plan: 0, real: 0 };
@@ -153,14 +174,24 @@ dv.paragraph(`> **📊 Varianza de horas:** ${gDelta >= 0 ? "+" : ""}${gDelta}h 
 ### 2.3 Costo Acumulado por Integrante — Plan vs Real
 
 ```dataviewjs
+const parseH = (v) => {
+  if (!v) return 0;
+  if (typeof v === "number") return v;
+  if (typeof v === "object" && v !== null) {
+    if (typeof v.as === "function") return v.as("hours");
+    if (v.hours !== undefined) return v.hours;
+  }
+  const m = String(v).match(/(\d+)/);
+  return m ? parseInt(m[1]) : 0;
+};
 const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500, "Equipo": 7167 };
 const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 const costos = {};
 
 for (const t of tasks) {
   const person = t.assignee || "Sin asignar";
-  const est = parseInt(String(t.effort)) || 0;
-  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const est = parseH(t.effort);
+  const act = parseH(t.effort_actual);
   const real = (t.status === "done" && act > 0) ? act : est;
   const tarifa = tarifas[person] || 7000;
   if (!costos[person]) costos[person] = { planH: 0, realH: 0, planCost: 0, realCost: 0 };
@@ -207,6 +238,16 @@ dv.table(headers, rows);
 ### 2.4 Costo por Sprint (Dinámico)
 
 ```dataviewjs
+const parseH = (v) => {
+  if (!v) return 0;
+  if (typeof v === "number") return v;
+  if (typeof v === "object" && v !== null) {
+    if (typeof v.as === "function") return v.as("hours");
+    if (v.hours !== undefined) return v.hours;
+  }
+  const m = String(v).match(/(\d+)/);
+  return m ? parseInt(m[1]) : 0;
+};
 const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500, "Equipo": 7167 };
 const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint && t.effort);
 const sprints = {};
@@ -214,8 +255,8 @@ const sprints = {};
 for (const t of tasks) {
   const sprint = String(t.sprint);
   const person = t.assignee || "Sin asignar";
-  const est = parseInt(String(t.effort)) || 0;
-  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const est = parseH(t.effort);
+  const act = parseH(t.effort_actual);
   const real = (t.status === "done" && act > 0) ? act : est;
   const tarifa = tarifas[person] || 7000;
   if (!sprints[sprint]) sprints[sprint] = { tasks: 0, done: 0, planH: 0, realH: 0, planCost: 0, realCost: 0 };
@@ -281,13 +322,23 @@ beginAtZero: true
 ### 2.5 Indicadores Financieros (Dinámico)
 
 ```dataviewjs
+const parseH = (v) => {
+  if (!v) return 0;
+  if (typeof v === "number") return v;
+  if (typeof v === "object" && v !== null) {
+    if (typeof v.as === "function") return v.as("hours");
+    if (v.hours !== undefined) return v.hours;
+  }
+  const m = String(v).match(/(\d+)/);
+  return m ? parseInt(m[1]) : 0;
+};
 const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500, "Equipo": 7167 };
 const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 let planH = 0, realH = 0, planC = 0, realC = 0, done = 0;
 
 for (const t of tasks) {
-  const est = parseInt(String(t.effort)) || 0;
-  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const est = parseH(t.effort);
+  const act = parseH(t.effort_actual);
   const real = (t.status === "done" && act > 0) ? act : est;
   const tarifa = tarifas[t.assignee] || 7000;
   planH += est;
