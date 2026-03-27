@@ -9,7 +9,7 @@ issuetype: Story
 project: RV
 parent: "RV-3"
 title: "Registro de pacientes con ID único"
-status: todo
+status: done
 priority: must
 assignee: "Santiago"
 module: salud
@@ -18,7 +18,7 @@ story_points: 3
 customfield_10016: 3
 sprint: Sprint-02
 created: 2026-02-03
-updated: 2026-03-05
+updated: 2026-03-26
 tags:
   - story
   - modulo/sal

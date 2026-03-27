@@ -9,7 +9,7 @@ summary: "Funcionalidades Transversales"
 issuetype: Epic
 project: RV
 title: "Funcionalidades Transversales"
-status: todo
+status: in-progress
 priority: must
 assignee: "Geovanny"
 owner: "Geovanny"

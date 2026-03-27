@@ -77,12 +77,12 @@ type: doughnut
 labels: [Done, In Progress, Todo, Review, Blocked]
 series:
   - title: Estado de Tareas
-    data: [15, 3, 5, 2, 0]
+    data: [31, 0, 0, 0, 0]
 width: 50%
 labelColors: true
 ```
 
-> *Gráfico de referencia. Actualizar valores manualmente al cierre de cada sprint o usar la tabla dinámica abajo.*
+> *Gráfico de referencia actualizado al cierre de Sprint-02 (2026-03-26). La tabla dinámica abajo siempre está actualizada.*
 
 ```dataviewjs
 const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
@@ -112,10 +112,10 @@ dv.table(headers, rows);
 
 ```chart
 type: pie
-labels: [Geovanny, Elkin, Santiago]
+labels: [Geovanny, Elkin, Santiago, Equipo]
 series:
   - title: Tareas Asignadas
-    data: [8, 6, 6]
+    data: [11, 8, 8, 4]
 width: 50%
 labelColors: true
 ```
@@ -127,16 +127,16 @@ type: bar
 labels: [Geovanny, Elkin, Santiago]
 series:
   - title: Horas Planificadas
-    data: [45, 28, 28]
+    data: [60, 48, 48]
   - title: Horas Completadas
-    data: [30, 20, 18]
+    data: [61, 49, 49]
 width: 70%
 labelColors: true
 fill: true
 beginAtZero: true
 ```
 
-> *Actualizar datos de los gráficos estáticos al cierre de cada sprint. La tabla dinámica abajo siempre está actualizada.*
+> *Actualizado al cierre de Sprint-02 (2026-03-26). La tabla dinámica abajo siempre está actualizada.*
 
 ### 3.3 Detalle Dinámico por Responsable
 

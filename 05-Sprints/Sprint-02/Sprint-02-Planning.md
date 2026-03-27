@@ -6,14 +6,14 @@ type: sprint-planning
 title: "Sprint 02 — Avance 2: Diseño y Arquitectura"
 sprint: Sprint-02
 avance: Avance-2
-status: active
+status: done
 goal: "Diseñar la arquitectura del sistema, crear modelos ER por módulo y definir el stack tecnológico"
 started: 2026-02-28
 due: 2026-04-01
-completed: 
+completed: 2026-03-26
 team: [Geovanny, Elkin, Santiago]
 created: 2026-02-27
-updated: 2026-03-05
+updated: 2026-03-26
 tags:
   - sprint
   - planning

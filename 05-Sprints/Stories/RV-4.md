@@ -9,7 +9,7 @@ issuetype: Story
 project: RV
 parent: "RV-1"
 title: "Registro de docentes comunitarios"
-status: todo
+status: done
 priority: must
 assignee: "Geovanny"
 module: educacion
@@ -18,7 +18,7 @@ story_points: 5
 customfield_10016: 5
 sprint: Sprint-02
 created: 2026-02-03
-updated: 2026-03-05
+updated: 2026-03-26
 tags:
   - story
   - modulo/edu

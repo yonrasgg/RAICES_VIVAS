@@ -6,25 +6,29 @@ kanban-plugin: basic
 
 # 📦 Product Backlog — Raíces Vivas
 
-## 📋 Backlog (Sprint 02)
+## 📋 Backlog (Sprint 03+)
 
-- [ ] [[05-Sprints/Sprint-02/T-021|T-021 (RV-12): Diagrama de contexto]] #high @Geovanny 📅 2026-03-07
-- [ ] [[05-Sprints/Sprint-02/T-025|T-025 (RV-30): Stack tecnológico (ADR)]] #medium @Equipo 📅 2026-03-07
-- [ ] [[05-Sprints/Sprint-02/T-022|T-022 (RV-39): Modelo ER EDU]] #high @Elkin 📅 2026-03-14
-- [ ] [[05-Sprints/Sprint-02/T-023|T-023 (RV-40): Modelo ER SAB]] #high @Santiago 📅 2026-03-14
-- [ ] [[05-Sprints/Sprint-02/T-024|T-024 (RV-41): Modelo ER SAL]] #high @Geovanny 📅 2026-03-14
-- [ ] [[05-Sprints/Sprint-02/T-026|T-026 (RV-42): Wireframes módulo EDU]] #high @Geovanny 📅 2026-03-18
-- [ ] [[05-Sprints/Sprint-02/T-027|T-027 (RV-43): Wireframes módulo SAB]] #high @Elkin 📅 2026-03-20
-- [ ] [[05-Sprints/Sprint-02/T-028|T-028 (RV-44): Wireframes módulo SAL]] #high @Santiago 📅 2026-03-22
-- [ ] [[05-Sprints/Sprint-02/T-029|T-029 (RV-31): Instrumentos de validación]] #medium @Santiago 📅 2026-03-22
-- [ ] [[05-Sprints/Sprint-02/T-030|T-030 (RV-32): Planificar entrevistas]] #medium @Elkin 📅 2026-03-22
-- [ ] [[05-Sprints/Sprint-02/T-031|T-031 (RV-33): Gobernanza cultural (ADR)]] #medium @Equipo 📅 2026-03-15
+*Sprint-02 completado al 100%. Tareas futuras se agregarán conforme se planifiquen los sprints 03–05.*
 
 ## 🔄 En Progreso
 
 
 ## 👀 En Revisión
 
+
+## ✅ Completado (Sprint 02)
+
+- [x] [[05-Sprints/Sprint-02/T-021|T-021 (RV-12): Diagrama de contexto]] @Geovanny ✅ 2026-03-07
+- [x] [[05-Sprints/Sprint-02/T-025|T-025 (RV-30): Stack tecnológico (ADR)]] @Equipo ✅ 2026-03-14
+- [x] [[05-Sprints/Sprint-02/T-022|T-022 (RV-39): Modelo ER EDU]] @Elkin ✅ 2026-03-14
+- [x] [[05-Sprints/Sprint-02/T-023|T-023 (RV-40): Modelo ER SAB]] @Santiago ✅ 2026-03-14
+- [x] [[05-Sprints/Sprint-02/T-024|T-024 (RV-41): Modelo ER SAL]] @Geovanny ✅ 2026-03-14
+- [x] [[05-Sprints/Sprint-02/T-031|T-031 (RV-33): Gobernanza cultural (ADR)]] @Equipo ✅ 2026-03-14
+- [x] [[05-Sprints/Sprint-02/T-026|T-026 (RV-42): Wireframes módulo EDU]] @Geovanny ✅ 2026-03-19
+- [x] [[05-Sprints/Sprint-02/T-027|T-027 (RV-43): Wireframes módulo SAB]] @Elkin ✅ 2026-03-20
+- [x] [[05-Sprints/Sprint-02/T-028|T-028 (RV-44): Wireframes módulo SAL]] @Santiago ✅ 2026-03-22
+- [x] [[05-Sprints/Sprint-02/T-029|T-029 (RV-31): Instrumentos de validación]] @Santiago ✅ 2026-03-22
+- [x] [[05-Sprints/Sprint-02/T-030|T-030 (RV-32): Planificar entrevistas]] @Elkin ✅ 2026-03-25
 
 ## ✅ Completado (Sprint 01)
 

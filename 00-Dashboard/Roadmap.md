@@ -30,11 +30,12 @@ gantt
     Setup vault gestión     :done,   a5, 2026-02-26, 2026-02-27
 
     section 🏗️ Avance 2 — Arquitectura
-    Diseño de arquitectura  :active, b1, 2026-02-28, 2026-03-15
-    Modelos entidad-relación:        b2, 2026-03-03, 2026-03-14
-    Decisión stack (ADR)    :        b3, 2026-03-01, 2026-03-07
-    Prototipos UI/UX        :        b4, 2026-03-10, 2026-03-25
-    Validación con usuarios :        b5, 2026-03-20, 2026-04-01
+    Diseño de arquitectura  :done,   b1, 2026-02-28, 2026-03-15
+    Modelos entidad-relación:done,   b2, 2026-03-03, 2026-03-14
+    Decisión stack (ADR)    :done,   b3, 2026-03-01, 2026-03-14
+    Prototipos UI/UX        :done,   b4, 2026-03-10, 2026-03-25
+    Validación con usuarios :done,   b5, 2026-03-20, 2026-03-25
+    Compilación Avance 2    :active, b6, 2026-03-21, 2026-04-01
     AVANCE 2                :milestone, m2, 2026-04-01, 0d
 
     section 💻 Implementación
@@ -97,21 +98,21 @@ gantt
     todayMarker stroke-width:3px,stroke:#f66,opacity:0.8
 
     section 🏗️ Diseño
-    T-021 Diagrama contexto (Geo) [RV-12]  :active, t21, 2026-02-28, 2026-03-07
-    T-025 Stack tecnológico (Equipo) [RV-30]:        t25, 2026-03-01, 2026-03-07
-    T-022 Modelo ER EDU (Elk) [RV-39]      :        t22, 2026-03-03, 2026-03-14
-    T-023 Modelo ER SAB (San) [RV-40]      :        t23, 2026-03-03, 2026-03-14
-    T-024 Modelo ER SAL (Geo) [RV-41]      :        t24, 2026-03-03, 2026-03-14
+    T-021 Diagrama contexto (Geo) [RV-12]  :done,   t21, 2026-02-28, 2026-03-07
+    T-025 Stack tecnológico (Equipo) [RV-30]:done,  t25, 2026-03-01, 2026-03-14
+    T-022 Modelo ER EDU (Elk) [RV-39]      :done,   t22, 2026-03-03, 2026-03-14
+    T-023 Modelo ER SAB (San) [RV-40]      :done,   t23, 2026-03-03, 2026-03-14
+    T-024 Modelo ER SAL (Geo) [RV-41]      :done,   t24, 2026-03-03, 2026-03-14
 
     section 🎨 Prototipos
-    T-026 Wireframes EDU (Geo) [RV-42]     :        p1, 2026-03-10, 2026-03-18
-    T-027 Wireframes SAB (Elk) [RV-43]     :        p2, 2026-03-12, 2026-03-20
-    T-028 Wireframes SAL (San) [RV-44]     :        p3, 2026-03-14, 2026-03-22
+    T-026 Wireframes EDU (Geo) [RV-42]     :done,   p1, 2026-03-10, 2026-03-19
+    T-027 Wireframes SAB (Elk) [RV-43]     :done,   p2, 2026-03-12, 2026-03-20
+    T-028 Wireframes SAL (San) [RV-44]     :done,   p3, 2026-03-14, 2026-03-22
 
     section ✅ Validación
-    T-029 Preparar instrumentos (San) [RV-31]:       v1, 2026-03-18, 2026-03-22
-    T-030 Validación con usuarios (Elk) [RV-32]:     v2, 2026-03-23, 2026-03-30
-    T-031 Gobernanza cultural (Equipo) [RV-33]:      v3, 2026-03-28, 2026-04-01
+    T-029 Preparar instrumentos (San) [RV-31]:done,  v1, 2026-03-18, 2026-03-22
+    T-030 Planificar entrevistas (Elk) [RV-32]:done, v2, 2026-03-20, 2026-03-25
+    T-031 Gobernanza cultural (Equipo) [RV-33]:done, v3, 2026-03-07, 2026-03-14
     ENTREGA AVANCE 2                   :milestone, m2, 2026-04-01, 0d
 ```
 
@@ -141,4 +142,4 @@ SORT due ASC
 
 ---
 
-*Roadmap dinámico · Mermaid + Dataview + Jira Sync · Última actualización: 2026-03-26*
+*Roadmap dinámico · Mermaid + Dataview + Jira Sync · Última actualización: 2026-03-26 (Sprint-02 completado)*
