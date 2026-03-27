@@ -73,18 +73,47 @@ tags:
 
 ### ¿Qué funcionó bien?
 
-- Planificación detallada de cada tarea antes de ejecutar
-- ADR como mecanismo de decisión (FODA cuantitativo)
-- Épica transversal agrupa preocupaciones cross-cutting
+- Planificación detallada de cada tarea antes de ejecutar — permitió que las especificaciones de ER y wireframes estén claras antes de dibujar
+- ADR como mecanismo de decisión (FODA cuantitativo en ADR-008) — eliminó discusiones subjetivas sobre stack
+- Épica transversal (EPIC-TRANS) agrupa preocupaciones cross-cutting y simplifica el planning de sprints futuros
+- La investigación de conectividad territorial (SUTEL, FONATEL) aportó datos reales que sustentaron la decisión offline-first — no fue solo una suposición
+- Weekly notes con Dataview mantuvieron visibilidad de progreso sin esfuerzo manual
+- La sincronización Jira ↔ Obsidian asegura que los stakeholders siempre ven datos actualizados
 
 ### ¿Qué mejorar?
 
-- Iniciar ejecución de diagramas antes en el sprint (no solo planificación)
-- Coordinar acceso a territorios con más anticipación
-- Establecer checkpoints de avance semanal
+- Iniciar ejecución de diagramas antes en el sprint (no solo planificación) — el sprint priorizó especificación, y la ejecución visual quedó rezagada
+- Coordinar acceso a territorios con más anticipación — la logística para entrevistas en Cabécar/Chirripó requiere al menos 3 semanas de gestión previa con CONAI
+- Establecer checkpoints de avance semanal con entregables visibles (no solo status updates)
+- El Linter plugin causó conflictos con frontmatter multi-tipo — se desactivó `yaml-key-sort` pero se necesita un mecanismo de validación por tipo de nota
+- Documentar las decisiones verbales del equipo de forma más oportuna (varias decisiones se tomaron en conversaciones informales y se formalizaron días después)
 
 ### ¿Qué intentar diferente?
 
-- Sprint-03: Ejecutar diagramas en primera semana, validar en segunda
-- Pair-design: Dos integrantes en un mismo diagrama para acelerar
-- Validación incremental: mockups de baja fidelidad → alta fidelidad
+- Sprint-03: Ejecutar diagramas C4 y ER en Mermaid durante la **primera semana**, validar con el equipo en la **segunda**
+- Pair-design: Dos integrantes en un mismo diagrama para acelerar y mejorar calidad
+- Validación incremental: mockups de baja fidelidad → evaluación SUS → alta fidelidad
+- Usar daily notes como registro de decisiones inmediatas para no perder contexto
+- Establecer una "design review" formal antes de pasar de especificación a ejecución
+
+---
+
+## Bitácora de Cambios del Sprint
+
+| Fecha | Cambio | Responsable | Impacto |
+|-------|--------|-------------|---------|
+| 2026-03-03 | Arranque Sprint-02: 11 tareas asignadas (T-021→T-031) | Geovanny | Distribución de trabajo entre 3 integrantes |
+| 2026-03-05 | Evaluación comparativa de stack (React vs Flutter vs Vue) | Equipo | Inputs para ADR-008 |
+| 2026-03-07 | Desactivación de `yaml-key-sort` en Linter por conflictos de frontmatter multi-tipo | Geovanny | ~95 archivos reparados, `fix_frontmatter.py` creado |
+| 2026-03-10 | ADR-008 aprobado: PWA con React + PouchDB + CouchDB + i18next | Equipo | Stack tecnológico definido — desbloquea wireframes y planning de implementación |
+| 2026-03-12 | ADR-009 aprobado: Gobernanza Cultural con 4 niveles CARE | Equipo | Marco ético para manejo de datos sensibles — impacta modelo de datos y UI |
+| 2026-03-12 | Modelos ER definidos: EDU (6 entidades), SAB (7 entidades), SAL (6 entidades) | Elkin, Santiago, Geovanny | Base para wireframes y esquema de base de datos |
+| 2026-03-14 | Investigación de conectividad territorial completada (17/24 con cobertura parcial) | Geovanny | Sustenta requisito offline-first (RNF-01) con datos SUTEL/FONATEL |
+| 2026-03-17 | EPIC-TRANS creada (RV-47 en Jira) + 7 user stories (RV-48→RV-54) | Geovanny | 32 SP distribuidos en Sprint 03-05; épica transversal formalizada |
+| 2026-03-17 | Sprint-03, 04 y 05 planning docs creados con metas y distribución de stories | Geovanny | Roadmap de implementación definido hasta junio 2026 |
+| 2026-03-19 | Especificaciones de wireframes por módulo (EDU 5 pantallas, SAB 5, SAL 5) | Equipo | Base para ejecución visual en Sprint-03 |
+| 2026-03-19 | Instrumentos de validación definidos: guión + SUS + checklist WCAG 2.1 AA | Santiago | Listos para aplicar sobre mockups en Sprint-03 |
+| 2026-03-21 | Compilación del documento Avance-2 iniciada | Geovanny | Consolidación de todos los artefactos del sprint |
+| 2026-03-21 | Sincronización completa Jira ↔ Obsidian: 52 issues, 0 discrepancias | Geovanny | Consistencia total entre vault y Jira |
+| 2026-03-26 | Sprint-02 Review redactado | Equipo | Cierre formal del sprint con evidencias y retro |
+| 2026-04-01 | Entrega del Avance-2 al profesor | Equipo | Hito de entrega académica completado |
