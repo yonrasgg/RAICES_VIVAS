@@ -25,17 +25,21 @@ tags:
 const team = [
   { nombre: "Geovanny", rol: "Project Lead / Arquitecto", horas: 0, tarifa: 8500 },
   { nombre: "Elkin", rol: "Líder Investigación / Analista", horas: 0, tarifa: 6500 },
-  { nombre: "Santiago", rol: "Líder QA / Analista", horas: 0, tarifa: 6500 }
+  { nombre: "Santiago", rol: "Líder QA / Analista", horas: 0, tarifa: 6500 },
+  { nombre: "Equipo", rol: "Tareas colectivas", horas: 0, tarifa: 7167 }
 ];
 
-// Calcular horas reales desde las tareas
+// Calcular horas reales (effort_actual para done, effort para pendientes)
 const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
 for (const t of tasks) {
-  const hours = parseInt(String(t.effort)) || 0;
+  const est = parseInt(String(t.effort)) || 0;
+  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const hours = (t.status === "done" && act > 0) ? act : est;
   const assignee = String(t.assignee || "").toLowerCase();
   if (assignee.includes("geovanny")) team[0].horas += hours;
   else if (assignee.includes("elkin")) team[1].horas += hours;
   else if (assignee.includes("santiago")) team[2].horas += hours;
+  else team[3].horas += hours;
 }
 
 const totalHoras = team.reduce((s, m) => s + m.horas, 0);
@@ -93,7 +97,7 @@ dv.table(
 
 > **Nota:** Tarifas diferenciadas por rol y nivel de responsabilidad, basadas en el mercado laboral costarricense 2026. Ref: Decreto de Salarios Mínimos MTSS — Licenciado universitario ~₡750K/mes (₡4,687/h base) + factor de especialización PM; Técnico superior ~₡570K/mes (₡3,562/h base) + factor de especialización analista. Tipo de cambio referencial: ₡535/USD (BCCR, marzo 2026).
 
-### 2.2 Horas Invertidas por Sprint (Dinámico)
+### 2.2 Horas Invertidas por Sprint — Plan vs Real (Dinámico)
 
 ```dataviewjs
 const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint && t.effort);
@@ -102,59 +106,219 @@ const matrix = {};
 for (const t of tasks) {
   const sprint = String(t.sprint);
   const person = t.assignee || "Sin asignar";
-  const hours = parseInt(String(t.effort)) || 0;
+  const est = parseInt(String(t.effort)) || 0;
+  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const real = (t.status === "done" && act > 0) ? act : est;
   if (!matrix[sprint]) matrix[sprint] = {};
-  if (!matrix[sprint][person]) matrix[sprint][person] = 0;
-  matrix[sprint][person] += hours;
+  if (!matrix[sprint][person]) matrix[sprint][person] = { plan: 0, real: 0 };
+  matrix[sprint][person].plan += est;
+  matrix[sprint][person].real += real;
 }
 
 const people = [...new Set(tasks.map(t => t.assignee || "Sin asignar"))].sort();
-const headers = ["Sprint", ...people, "Total Sprint"];
+const headers = ["Sprint"];
+for (const p of people) headers.push(`${p} (P/R)`);
+headers.push("Total Plan", "Total Real", "Δ");
+
 const rows = [];
+const totals = {};
+for (const p of people) totals[p] = { plan: 0, real: 0 };
+let grandPlan = 0, grandReal = 0;
 
 for (const [sprint, data] of Object.entries(matrix).sort()) {
   const row = [sprint];
-  let total = 0;
+  let sPlan = 0, sReal = 0;
   for (const p of people) {
-    const h = data[p] || 0;
-    row.push(`${h}h`);
-    total += h;
+    const d = data[p] || { plan: 0, real: 0 };
+    row.push(`${d.plan}h / ${d.real}h`);
+    sPlan += d.plan; sReal += d.real;
+    totals[p].plan += d.plan; totals[p].real += d.real;
   }
-  row.push(`**${total}h**`);
+  const delta = sReal - sPlan;
+  row.push(`**${sPlan}h**`, `**${sReal}h**`, `${delta >= 0 ? "+" : ""}${delta}h`);
   rows.push(row);
+  grandPlan += sPlan; grandReal += sReal;
 }
 
+const totalRow = ["**TOTAL**"];
+for (const p of people) totalRow.push(`**${totals[p].plan}h / ${totals[p].real}h**`);
+const gDelta = grandReal - grandPlan;
+totalRow.push(`**${grandPlan}h**`, `**${grandReal}h**`, `**${gDelta >= 0 ? "+" : ""}${gDelta}h**`);
+rows.push(totalRow);
+
 dv.table(headers, rows);
+dv.paragraph(`> **📊 Varianza de horas:** ${gDelta >= 0 ? "+" : ""}${gDelta}h (${grandPlan > 0 ? ((gDelta/grandPlan)*100).toFixed(1) : 0}%) · Formato: Plan / Real`);
 ```
 
-### 2.3 Costo Acumulado por Integrante
+### 2.3 Costo Acumulado por Integrante — Plan vs Real
 
 ```dataviewjs
-const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500 };
+const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500, "Equipo": 7167 };
 const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 const costos = {};
 
 for (const t of tasks) {
   const person = t.assignee || "Sin asignar";
-  const hours = parseInt(String(t.effort)) || 0;
+  const est = parseInt(String(t.effort)) || 0;
+  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const real = (t.status === "done" && act > 0) ? act : est;
   const tarifa = tarifas[person] || 7000;
-  if (!costos[person]) costos[person] = { horas: 0, costo: 0 };
-  costos[person].horas += hours;
-  costos[person].costo += hours * tarifa;
+  if (!costos[person]) costos[person] = { planH: 0, realH: 0, planCost: 0, realCost: 0 };
+  costos[person].planH += est;
+  costos[person].realH += real;
+  costos[person].planCost += est * tarifa;
+  costos[person].realCost += real * tarifa;
 }
 
-const headers = ["👤 Integrante", "Horas Totales", "Tarifa (₡/h)", "Costo Total (₡)", "Costo Total (USD)"];
+const headers = ["👤 Integrante", "H. Plan", "H. Real", "Tarifa (₡/h)", "Costo Plan (₡)", "Costo Real (₡)", "Δ Costo (₡)", "Real (USD)"];
 const rows = [];
-let grandTotal = 0;
+let gPlan = 0, gReal = 0;
 
-for (const [person, data] of Object.entries(costos).sort()) {
+for (const [person, d] of Object.entries(costos).sort()) {
   const tarifa = tarifas[person] || 7000;
-  grandTotal += data.costo;
-  rows.push([person, `${data.horas}h`, `₡${tarifa.toLocaleString()}`, `₡${data.costo.toLocaleString()}`, `$${Math.round(data.costo / 535).toLocaleString()}`]);
+  gPlan += d.planCost;
+  gReal += d.realCost;
+  const delta = d.realCost - d.planCost;
+  rows.push([
+    person,
+    `${d.planH}h`,
+    `${d.realH}h`,
+    `₡${tarifa.toLocaleString()}`,
+    `₡${d.planCost.toLocaleString()}`,
+    `₡${d.realCost.toLocaleString()}`,
+    `${delta >= 0 ? "+" : ""}₡${delta.toLocaleString()}`,
+    `$${Math.round(d.realCost / 535).toLocaleString()}`
+  ]);
 }
-rows.push(["**TOTAL**", "", "", `**₡${grandTotal.toLocaleString()}**`, `**$${Math.round(grandTotal/535).toLocaleString()}**`]);
+const gDelta = gReal - gPlan;
+rows.push([
+  "**TOTAL**", "", "", "",
+  `**₡${gPlan.toLocaleString()}**`,
+  `**₡${gReal.toLocaleString()}**`,
+  `**${gDelta >= 0 ? "+" : ""}₡${gDelta.toLocaleString()}**`,
+  `**$${Math.round(gReal/535).toLocaleString()}**`
+]);
 
 dv.table(headers, rows);
+```
+
+> **Nota:** Las tareas asignadas a "Equipo" (trabajo colectivo) se costean a tarifa promedio: ₡7,167/h = (₡8,500 + ₡6,500 + ₡6,500) ÷ 3.
+
+### 2.4 Costo por Sprint (Dinámico)
+
+```dataviewjs
+const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500, "Equipo": 7167 };
+const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint && t.effort);
+const sprints = {};
+
+for (const t of tasks) {
+  const sprint = String(t.sprint);
+  const person = t.assignee || "Sin asignar";
+  const est = parseInt(String(t.effort)) || 0;
+  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const real = (t.status === "done" && act > 0) ? act : est;
+  const tarifa = tarifas[person] || 7000;
+  if (!sprints[sprint]) sprints[sprint] = { tasks: 0, done: 0, planH: 0, realH: 0, planCost: 0, realCost: 0 };
+  sprints[sprint].tasks++;
+  if (t.status === "done") sprints[sprint].done++;
+  sprints[sprint].planH += est;
+  sprints[sprint].realH += real;
+  sprints[sprint].planCost += est * tarifa;
+  sprints[sprint].realCost += real * tarifa;
+}
+
+const headers = ["Sprint", "Tareas", "Done", "H. Plan", "H. Real", "Costo Plan (₡)", "Costo Real (₡)", "Δ (₡)", "CPI"];
+const rows = [];
+let gPH = 0, gRH = 0, gPC = 0, gRC = 0, gT = 0, gD = 0;
+
+for (const [sprint, d] of Object.entries(sprints).sort()) {
+  const delta = d.realCost - d.planCost;
+  const cpi = d.realCost > 0 ? (d.planCost / d.realCost).toFixed(2) : "N/A";
+  gPH += d.planH; gRH += d.realH; gPC += d.planCost; gRC += d.realCost;
+  gT += d.tasks; gD += d.done;
+  rows.push([
+    sprint, d.tasks, d.done,
+    `${d.planH}h`, `${d.realH}h`,
+    `₡${d.planCost.toLocaleString()}`, `₡${d.realCost.toLocaleString()}`,
+    `${delta >= 0 ? "+" : ""}₡${delta.toLocaleString()}`,
+    cpi
+  ]);
+}
+const gDelta = gRC - gPC;
+const gCPI = gRC > 0 ? (gPC / gRC).toFixed(2) : "N/A";
+rows.push([
+  "**TOTAL**", `**${gT}**`, `**${gD}**`,
+  `**${gPH}h**`, `**${gRH}h**`,
+  `**₡${gPC.toLocaleString()}**`, `**₡${gRC.toLocaleString()}**`,
+  `**${gDelta >= 0 ? "+" : ""}₡${gDelta.toLocaleString()}**`,
+  `**${gCPI}**`
+]);
+
+dv.table(headers, rows);
+dv.paragraph(`> **📊 CPI (Cost Performance Index):** ${gCPI} · Varianza: ${gDelta >= 0 ? "+" : ""}₡${gDelta.toLocaleString()} (${gPC > 0 ? ((gDelta/gPC)*100).toFixed(1) : 0}%) · CPI > 1 = bajo presupuesto · CPI < 1 = sobre presupuesto`);
+```
+
+```chart
+type: bar
+labels: [Sprint-01, Sprint-02]
+series:
+  - title: Geovanny (₡K)
+    data: [434, 306]
+  - title: Elkin (₡K)
+    data: [182, 189]
+  - title: Santiago (₡K)
+    data: [189, 202]
+  - title: Equipo (₡K)
+    data: [43, 79]
+width: 70%
+labelColors: true
+fill: true
+beginAtZero: true
+```
+
+> *Costos en miles de colones (₡). Actualizado al 2026-03-26. Incluye 42 tareas de Sprint-01 y Sprint-02.*
+
+### 2.5 Indicadores Financieros (Dinámico)
+
+```dataviewjs
+const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500, "Equipo": 7167 };
+const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
+let planH = 0, realH = 0, planC = 0, realC = 0, done = 0;
+
+for (const t of tasks) {
+  const est = parseInt(String(t.effort)) || 0;
+  const act = t.effort_actual ? (parseInt(String(t.effort_actual)) || 0) : 0;
+  const real = (t.status === "done" && act > 0) ? act : est;
+  const tarifa = tarifas[t.assignee] || 7000;
+  planH += est;
+  realH += real;
+  planC += est * tarifa;
+  realC += real * tarifa;
+  if (t.status === "done") done++;
+}
+
+const total = tasks.length;
+const deltaC = realC - planC;
+const deltaH = realH - planH;
+const cpi = realC > 0 ? (planC / realC).toFixed(2) : "N/A";
+const spi = total > 0 ? (done / total).toFixed(2) : "N/A";
+const pctDone = total > 0 ? Math.round((done / total) * 100) : 0;
+const pctVar = planC > 0 ? ((deltaC / planC) * 100).toFixed(1) : 0;
+
+dv.table(
+  ["📏 Indicador", "Valor", "Meta", "Semáforo"],
+  [
+    ["**Horas planificadas**", `${planH}h`, "-", "📋"],
+    ["**Horas ejecutadas (reales)**", `${realH}h`, "-", "📋"],
+    ["**Varianza de horas**", `${deltaH >= 0 ? "+" : ""}${deltaH}h (${planH > 0 ? ((deltaH/planH)*100).toFixed(1) : 0}%)`, "< ±10%", Math.abs(deltaH/planH) < 0.1 ? "🟢" : "🟡"],
+    ["**Costo planificado (EV)**", `₡${planC.toLocaleString()}`, "-", "📋"],
+    ["**Costo real (AC)**", `₡${realC.toLocaleString()} ($${Math.round(realC/535).toLocaleString()})`, "-", "📋"],
+    ["**Varianza de costo (CV)**", `${deltaC >= 0 ? "+" : ""}₡${deltaC.toLocaleString()} (${pctVar}%)`, "< ±10%", Math.abs(parseFloat(pctVar)) < 10 ? "🟢" : "🟡"],
+    ["**CPI (Cost Performance Index)**", cpi, "> 0.95", parseFloat(cpi) >= 0.95 ? "🟢" : parseFloat(cpi) >= 0.85 ? "🟡" : "🔴"],
+    ["**SPI (Schedule Performance)**", `${spi} (${pctDone}% done)`, "> 0.90", parseFloat(spi) >= 0.9 ? "🟢" : "🟡"],
+    ["**Tareas completadas**", `${done} / ${total}`, "-", pctDone >= 95 ? "🟢" : pctDone >= 70 ? "🟡" : "🔴"],
+  ]
+);
 ```
 
 ---
