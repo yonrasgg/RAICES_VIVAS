@@ -3,7 +3,8 @@ banner_src: "08-Recursos/Imágenes/cover-rf-sal.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
 type: story
-key: ""
+key: RV-53
+link: "https://ucenfotec-team-y6xzvduw.atlassian.net/browse/RV-53"
 summary: "RF-SAL-03: Gestión de citas y brigadas de salud"
 issuetype: Story
 project: RV

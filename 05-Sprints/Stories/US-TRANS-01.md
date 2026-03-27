@@ -3,11 +3,12 @@ banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
 type: story
-key: ""
+key: RV-48
+link: "https://ucenfotec-team-y6xzvduw.atlassian.net/browse/RV-48"
 summary: "RF-TRANS-01: Sincronización offline/online bidireccional"
 issuetype: Story
 project: RV
-parent: "EPIC-TRANS"
+parent: RV-47
 title: "Sincronización offline/online bidireccional"
 status: todo
 priority: must

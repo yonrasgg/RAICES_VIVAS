@@ -3,11 +3,12 @@ banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
 type: story
-key: ""
+key: RV-49
+link: "https://ucenfotec-team-y6xzvduw.atlassian.net/browse/RV-49"
 summary: "RF-TRANS-02: Interfaz multilingüe con selección de idioma"
 issuetype: Story
 project: RV
-parent: "EPIC-TRANS"
+parent: RV-47
 title: "Interfaz multilingüe con selección de idioma"
 status: todo
 priority: must

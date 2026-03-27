@@ -3,7 +3,8 @@ banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
 type: epic
-key: ""
+key: RV-47
+link: "https://ucenfotec-team-y6xzvduw.atlassian.net/browse/RV-47"
 summary: "Funcionalidades Transversales"
 issuetype: Epic
 project: RV

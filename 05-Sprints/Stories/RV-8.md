@@ -16,6 +16,7 @@ module: salud
 requirement: "RF-SAL-01"
 story_points: 3
 customfield_10016: 3
+sprint: Sprint-02
 created: 2026-02-03
 updated: 2026-03-05
 tags:

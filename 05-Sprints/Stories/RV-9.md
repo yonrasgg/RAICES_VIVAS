@@ -9,13 +9,14 @@ issuetype: Story
 project: RV
 parent: "RV-3"
 title: "Historial médico básico por paciente"
-status: todo
+status: in-progress
 priority: must
 assignee: "Santiago"
 module: salud
 requirement: "RF-SAL-02"
 story_points: 5
 customfield_10016: 5
+sprint: Sprint-02
 created: 2026-02-03
 updated: 2026-03-05
 tags:

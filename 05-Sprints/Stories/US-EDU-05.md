@@ -3,7 +3,8 @@ banner_src: "08-Recursos/Imágenes/cover-rf-edu.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
 type: story
-key: ""
+key: RV-51
+link: "https://ucenfotec-team-y6xzvduw.atlassian.net/browse/RV-51"
 summary: "RF-EDU-05: Seguimiento académico por docente"
 issuetype: Story
 project: RV

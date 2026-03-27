@@ -3,7 +3,8 @@ banner_src: "08-Recursos/Imágenes/cover-rf-sab.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
 type: story
-key: ""
+key: RV-52
+link: "https://ucenfotec-team-y6xzvduw.atlassian.net/browse/RV-52"
 summary: "RF-SAB-03: Búsqueda y consulta de saberes ancestrales"
 issuetype: Story
 project: RV
