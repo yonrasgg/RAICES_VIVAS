@@ -127,9 +127,9 @@ type: bar
 labels: [Geovanny, Elkin, Santiago]
 series:
   - title: Horas Planificadas
-    data: [73, 57, 58]
+    data: [80, 56, 59]
   - title: Horas Completadas
-    data: [72, 58, 59]
+    data: [86, 57, 60]
 width: 70%
 labelColors: true
 fill: true
@@ -349,7 +349,7 @@ flowchart LR
 | **Define** | ✅ Completada | Charter, Alcance, Stakeholders, Equipo definidos |
 | **Measure** | ✅ Completada | RTM, métricas baseline, requerimientos priorizados |
 | **Analyze** | 🔄 En curso | Riesgos identificados (RSK-001..006), ADRs (ADR-001..006) |
-| **Improve** | ⏳ Pendiente | Sprints de implementación (Avance 2+) |
+| **Improve** | 🔄 En curso | Sprints 1-2 completados · Sprint 3+ pendiente |
 | **Control** | 🔄 Continuo | Dashboards, QA checks, Linter, RTM dinámica |
 
 ---
@@ -363,9 +363,9 @@ type: line
 labels: [Sprint-01, Sprint-02, Sprint-03, Sprint-04, Sprint-05]
 series:
   - title: Planificadas
-    data: [20, 5, 0, 0, 0]
+    data: [20, 22, 0, 0, 0]
   - title: Completadas
-    data: [15, 0, 0, 0, 0]
+    data: [20, 21, 0, 0, 0]
 width: 80%
 labelColors: true
 fill: false
@@ -475,7 +475,7 @@ labelColors: true
 ## 12. Resumen Financiero
 
 ```dataviewjs
-const tarifas = { "Geovanny": 13910, "Elkin": 13910, "Santiago": 13910 };
+const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500 };
 const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
 const costos = {};
 for (const t of tasks) {
@@ -509,7 +509,7 @@ type: bar
 labels: [Geovanny, Elkin, Santiago]
 series:
   - title: Costo (miles ₡)
-    data: [337, 168, 168]
+    data: [740, 371, 390]
 width: 60%
 labelColors: true
 fill: true
@@ -534,4 +534,4 @@ beginAtZero: true
 
 ---
 
-*Métricas dinámicas · Dataview JS + Charts + Lean Six Sigma + Jira Sync · Última actualización: 2026-03-05*
+*Métricas dinámicas · Dataview JS + Charts + Lean Six Sigma + Jira Sync · Última actualización: 2026-03-26*
