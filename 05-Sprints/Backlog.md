@@ -8,15 +8,41 @@ kanban-plugin: basic
 
 ## 📋 Backlog (Sprint 03+)
 
-*Sprint-02 completado al 100%. Tareas futuras se agregarán conforme se planifiquen los sprints 03–05.*
+- [ ] [[05-Sprints/Stories/RV-48|RV-48: Sync offline/online bidireccional]] @Geovanny 🏷️ Sprint-03 (8 SP)
+- [ ] [[05-Sprints/Stories/RV-49|RV-49: Interfaz multilingüe i18n]] @Elkin 🏷️ Sprint-03 (5 SP)
+- [ ] [[05-Sprints/Stories/RV-50|RV-50: Motor de práctica educativa]] @Geovanny 🏷️ Sprint-04 (5 SP)
+- [ ] [[05-Sprints/Stories/RV-51|RV-51: Seguimiento académico docente]] @Santiago 🏷️ Sprint-04 (3 SP)
+- [ ] [[05-Sprints/Stories/RV-52|RV-52: Búsqueda de saberes con filtros]] @Elkin 🏷️ Sprint-04 (3 SP)
+- [ ] [[05-Sprints/Stories/RV-53|RV-53: Gestión de citas médicas]] @Santiago 🏷️ Sprint-04 (5 SP)
+- [ ] [[05-Sprints/Stories/RV-54|RV-54: Alertas clínicas de seguimiento]] @Geovanny 🏷️ Sprint-05 (3 SP)
+- [ ] [[05-Sprints/Stories/RV-55|RV-55: Registro básico de estudiantes]] @Geovanny 🏷️ Sprint-04 (3 SP)
+- [ ] [[05-Sprints/Stories/RV-56|RV-56: Seguimiento de progreso básico]] @Santiago 🏷️ Sprint-05 (3 SP)
+- [ ] [[05-Sprints/Stories/RV-57|RV-57: Clasificación de saberes por categoría]] @Elkin 🏷️ Sprint-04 (3 SP)
+- [ ] [[05-Sprints/Stories/RV-58|RV-58: Registro de consentimiento informado]] @Elkin 🏷️ Sprint-04 (5 SP)
+- [ ] [[05-Sprints/Stories/RV-59|RV-59: Gestión de brigadas de salud]] @Santiago 🏷️ Sprint-05 (3 SP)
+- [ ] [[05-Sprints/Stories/RV-60|RV-60: Gobernanza cultural y control comunitario]] @Geovanny 🏷️ Sprint-04 (5 SP)
 
 ## 🔄 En Progreso
 
+- [ ] [[05-Sprints/Sprint-02/T-042|T-042: Exportar PDF y entregar Avance 2]] @Geovanny 📅 2026-04-01
 
 ## 👀 En Revisión
 
 
-## ✅ Completado (Sprint 02)
+## ✅ Completado (Sprint 02 — Casos de Uso)
+
+- [x] [[05-Sprints/Sprint-02/T-032|T-032: Clasificar actores del sistema]] @Geovanny ✅ 2026-03-28
+- [x] [[05-Sprints/Sprint-02/T-033|T-033: Lista general de 19 casos de uso]] @Elkin ✅ 2026-03-28
+- [x] [[05-Sprints/Sprint-02/T-034|T-034: Documentar CU-EDU-01 y CU-EDU-03]] @Geovanny ✅ 2026-03-29
+- [x] [[05-Sprints/Sprint-02/T-035|T-035: Documentar CU-SAB-01 y CU-SAB-04]] @Elkin ✅ 2026-03-29
+- [x] [[05-Sprints/Sprint-02/T-036|T-036: Documentar CU-SAL-01 y CU-SAL-02]] @Santiago ✅ 2026-03-29
+- [x] [[05-Sprints/Sprint-02/T-037|T-037: Documentar CU-TRANS-01 y CU-TRANS-02]] @Santiago ✅ 2026-03-29
+- [x] [[05-Sprints/Sprint-02/T-038|T-038: Diagrama UML de casos de uso]] @Geovanny ✅ 2026-03-30
+- [x] [[05-Sprints/Sprint-02/T-039|T-039: Matriz trazabilidad CU ↔ RF]] @Elkin ✅ 2026-03-30
+- [x] [[05-Sprints/Sprint-02/T-040|T-040: Conclusiones y recomendaciones]] @Santiago ✅ 2026-03-30
+- [x] [[05-Sprints/Sprint-02/T-041|T-041: Compilar y revisar documento final]] @Geovanny ✅ 2026-03-31
+
+## ✅ Completado (Sprint 02 — Arquitectura)
 
 - [x] [[05-Sprints/Sprint-02/T-021|T-021 (RV-12): Diagrama de contexto]] @Geovanny ✅ 2026-03-07
 - [x] [[05-Sprints/Sprint-02/T-025|T-025 (RV-30): Stack tecnológico (ADR)]] @Equipo ✅ 2026-03-14

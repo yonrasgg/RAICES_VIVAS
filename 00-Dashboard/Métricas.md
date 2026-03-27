@@ -77,12 +77,12 @@ type: doughnut
 labels: [Done, In Progress, Todo, Review, Blocked]
 series:
   - title: Estado de Tareas
-    data: [31, 0, 0, 0, 0]
+    data: [41, 0, 1, 0, 0]
 width: 50%
 labelColors: true
 ```
 
-> *Gráfico de referencia actualizado al cierre de Sprint-02 (2026-03-26). La tabla dinámica abajo siempre está actualizada.*
+> *Gráfico de referencia actualizado al cierre de Sprint-02 (2026-03-26). Incluye T-032→T-042 (casos de uso). La tabla dinámica abajo siempre está actualizada.*
 
 ```dataviewjs
 const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
@@ -115,7 +115,7 @@ type: pie
 labels: [Geovanny, Elkin, Santiago, Equipo]
 series:
   - title: Tareas Asignadas
-    data: [11, 8, 8, 4]
+    data: [16, 11, 11, 4]
 width: 50%
 labelColors: true
 ```
@@ -127,16 +127,16 @@ type: bar
 labels: [Geovanny, Elkin, Santiago]
 series:
   - title: Horas Planificadas
-    data: [60, 48, 48]
+    data: [73, 57, 58]
   - title: Horas Completadas
-    data: [61, 49, 49]
+    data: [72, 58, 59]
 width: 70%
 labelColors: true
 fill: true
 beginAtZero: true
 ```
 
-> *Actualizado al cierre de Sprint-02 (2026-03-26). La tabla dinámica abajo siempre está actualizada.*
+> *Actualizado al cierre de Sprint-02 (2026-03-26). Incluye T-032→T-042 (casos de uso). La tabla dinámica abajo siempre está actualizada.*
 
 ### 3.3 Detalle Dinámico por Responsable
 
