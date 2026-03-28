@@ -132,22 +132,11 @@ graph LR
 ## 🚧 Tareas con Bloqueos Activos
 
 ```sqlseal
-TEMPLATE
-{{#if data.length}}
-| Tarea Bloqueada | Estado | Responsable | Bloqueada por |
-|---|---|---|---|
-{{#each data}}
-| {{this.tarea}} | {{this.estado}} | {{this.responsable}} | {{this.bloqueada_por}} |
-{{/each}}
-{{else}}
-✅ **No hay bloqueos activos** — todas las dependencias previas están resueltas.
-{{/if}}
-
 SELECT
-  name as tarea,
-  status as estado,
-  assignee as responsable,
-  blocked_by as bloqueada_por
+  name as "Tarea Bloqueada",
+  status as "Estado",
+  assignee as "Responsable",
+  blocked_by as "Bloqueada por"
 FROM files
 WHERE path LIKE '05-Sprints/Sprint-02%'
   AND (type = 'task' OR type = 'subtask')
@@ -158,21 +147,10 @@ ORDER BY id ASC
 ## ⚠️ Impedimentos Activos
 
 ```sqlseal
-TEMPLATE
-{{#if data.length}}
-| Tarea | Responsable | Impedimento |
-|---|---|---|
-{{#each data}}
-| {{this.tarea}} | {{this.responsable}} | {{this.impedimento}} |
-{{/each}}
-{{else}}
-✅ **Sin impedimentos registrados.**
-{{/if}}
-
 SELECT
-  name as tarea,
-  assignee as responsable,
-  impediments as impedimento
+  name as "Tarea",
+  assignee as "Responsable",
+  impediments as "Impedimento"
 FROM files
 WHERE path LIKE '05-Sprints/Sprint-02%'
   AND (type = 'task' OR type = 'subtask')

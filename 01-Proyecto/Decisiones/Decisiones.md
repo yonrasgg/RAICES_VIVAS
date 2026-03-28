@@ -22,22 +22,12 @@ project: raices-vivas
 ## 📊 Resumen Ejecutivo
 
 ```sqlseal
-TEMPLATE
-{{#each data}}
-| 📊 Métrica | Valor |
-|---|---|
-| 📝 Total ADRs | {{this.total}} |
-| ✅ Aceptadas | {{this.accepted}} |
-| 🔄 Propuestas | {{this.proposed}} |
-| 🔀 Superseded | {{this.superseded}} |
-| ⛔ Deprecated | {{this.deprecated}} |
-{{/each}}
 SELECT
-  COUNT(*) as total,
-  SUM(CASE WHEN status = 'accepted' THEN 1 ELSE 0 END) as accepted,
-  SUM(CASE WHEN status = 'proposed' THEN 1 ELSE 0 END) as proposed,
-  SUM(CASE WHEN status = 'superseded' THEN 1 ELSE 0 END) as superseded,
-  SUM(CASE WHEN status = 'deprecated' THEN 1 ELSE 0 END) as deprecated
+  COUNT(*) as "📝 Total",
+  SUM(CASE WHEN status = 'accepted' THEN 1 ELSE 0 END) as "✅ Aceptadas",
+  SUM(CASE WHEN status = 'proposed' THEN 1 ELSE 0 END) as "🔄 Propuestas",
+  SUM(CASE WHEN status = 'superseded' THEN 1 ELSE 0 END) as "🔀 Superseded",
+  SUM(CASE WHEN status = 'deprecated' THEN 1 ELSE 0 END) as "⛔ Deprecated"
 FROM files
 WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
 ```

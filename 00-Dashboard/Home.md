@@ -14,33 +14,16 @@ tags:
 ## 📊 Indicadores Clave (KPIs)
 
 ```sqlseal
-TEMPLATE
-| 📊 Indicador | Valor | Detalle |
-|---|---|---|
-{{#each data}}
-| 🎯 Progreso General | **{{this.pct}}%** ({{this.done_tasks}}/{{this.total_tasks}}) | — |
-| 📋 Requerimientos | **{{this.total_reqs}}** total | {{this.rf_count}} RF · {{this.rnf_count}} RNF |
-| ⚠️ Riesgos Abiertos | **{{this.open_risks}}** | {{this.total_risks}} registrados |
-| 🏗️ ADR Aceptadas | **{{this.accepted_adrs}}** | {{this.total_adrs}} total |
-| 🚫 Bloqueadas | **{{this.blocked_tasks}}** | Throughput: **{{this.done_tasks}}** tareas |
-{{/each}}
-
-> ⏱️ *Horas y costos → ver* [[01-Proyecto/Finanzas|Finanzas]] *y* [[00-Dashboard/Métricas|Métricas]]
-
 SELECT
-  SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' THEN 1 ELSE 0 END) as total_tasks,
-  SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' THEN 1 ELSE 0 END) as done_tasks,
-  ROUND(100.0 * SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' THEN 1 ELSE 0 END) / MAX(1, SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' THEN 1 ELSE 0 END))) as pct,
-  SUM(CASE WHEN type='requirement/functional' AND path LIKE '03-Requerimientos%' THEN 1 ELSE 0 END) as rf_count,
-  SUM(CASE WHEN type='requirement/non-functional' AND path LIKE '03-Requerimientos%' THEN 1 ELSE 0 END) as rnf_count,
-  SUM(CASE WHEN type LIKE 'requirement%' AND path LIKE '03-Requerimientos%' THEN 1 ELSE 0 END) as total_reqs,
-  SUM(CASE WHEN type='risk' AND path LIKE '01-Proyecto/Riesgos%' THEN 1 ELSE 0 END) as total_risks,
-  SUM(CASE WHEN type='risk' AND path LIKE '01-Proyecto/Riesgos%' AND status='open' THEN 1 ELSE 0 END) as open_risks,
-  SUM(CASE WHEN type='adr' AND path LIKE '01-Proyecto/Decisiones%' THEN 1 ELSE 0 END) as total_adrs,
-  SUM(CASE WHEN type='adr' AND path LIKE '01-Proyecto/Decisiones%' AND status='accepted' THEN 1 ELSE 0 END) as accepted_adrs,
-  SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='blocked' THEN 1 ELSE 0 END) as blocked_tasks
+  SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' THEN 1 ELSE 0 END) || '/' || SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' THEN 1 ELSE 0 END) || ' (' || ROUND(100.0 * SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' THEN 1 ELSE 0 END) / MAX(1, SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' THEN 1 ELSE 0 END))) || '%)' as "🎯 Progreso",
+  SUM(CASE WHEN type='requirement/functional' AND path LIKE '03-Requerimientos%' THEN 1 ELSE 0 END) || ' RF · ' || SUM(CASE WHEN type='requirement/non-functional' AND path LIKE '03-Requerimientos%' THEN 1 ELSE 0 END) || ' RNF' as "📋 Reqs",
+  SUM(CASE WHEN type='risk' AND path LIKE '01-Proyecto/Riesgos%' AND status='open' THEN 1 ELSE 0 END) || ' / ' || SUM(CASE WHEN type='risk' AND path LIKE '01-Proyecto/Riesgos%' THEN 1 ELSE 0 END) as "⚠️ Riesgos (abiertos/total)",
+  SUM(CASE WHEN type='adr' AND path LIKE '01-Proyecto/Decisiones%' AND status='accepted' THEN 1 ELSE 0 END) || ' / ' || SUM(CASE WHEN type='adr' AND path LIKE '01-Proyecto/Decisiones%' THEN 1 ELSE 0 END) as "🏗️ ADR (aceptadas/total)",
+  SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='blocked' THEN 1 ELSE 0 END) as "🚫 Bloqueadas"
 FROM files
 ```
+
+> ⏱️ *Horas y costos → ver* [[01-Proyecto/Finanzas|Finanzas]] *y* [[00-Dashboard/Métricas|Métricas]]
 
 ---
 
@@ -274,19 +257,12 @@ GROUP BY assignee
 ```
 
 ```sqlseal
-TEMPLATE
-| 👤 Integrante | Asignadas | ✅ Done | 🔄 En curso | 📋 Pend. |
-|---|---|---|---|---|
-{{#each data}}
-| {{this.assignee}} | {{this.total}} | {{this.done}} | {{this.in_progress}} | {{this.pending}} |
-{{/each}}
-
 SELECT
-  COALESCE(assignee, 'Sin asignar') as assignee,
-  COUNT(*) as total,
-  SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as done,
-  SUM(CASE WHEN status = 'in-progress' THEN 1 ELSE 0 END) as in_progress,
-  SUM(CASE WHEN status NOT IN ('done', 'in-progress') THEN 1 ELSE 0 END) as pending
+  COALESCE(assignee, 'Sin asignar') as "👤 Integrante",
+  COUNT(*) as "Asignadas",
+  SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "✅ Done",
+  SUM(CASE WHEN status = 'in-progress' THEN 1 ELSE 0 END) as "🔄 En curso",
+  SUM(CASE WHEN status NOT IN ('done', 'in-progress') THEN 1 ELSE 0 END) as "📋 Pend."
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
 GROUP BY assignee
@@ -315,14 +291,7 @@ ORDER BY status ASC
 ```
 
 ```sqlseal
-TEMPLATE
-| Estado | Cantidad |
-|---|---|
-{{#each data}}
-| {{this.status}} | {{this.cnt}} |
-{{/each}}
-
-SELECT status, COUNT(*) as cnt
+SELECT status as "Estado", COUNT(*) as "Cantidad"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
 GROUP BY status
@@ -430,7 +399,7 @@ shadow: off
 
 ```sqlseal
 SELECT
-  key as "Key",
+  "key" as "Key",
   summary as "Nombre",
   issuetype as "Tipo",
   status as "Estado",
@@ -535,14 +504,7 @@ ORDER BY id ASC
 > [!note]- 📈 Progreso por Fase (expandir)
 >
 > ```sqlseal
-> TEMPLATE
-> | Fase | Total | Done |
-> |---|---|---|
-> {{#each data}}
-> | {{this.phase}} | {{this.total}} | {{this.done}} |
-> {{/each}}
->
-> SELECT COALESCE(phase, 'sin fase') as phase, COUNT(*) as total, SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as done
+> SELECT COALESCE(phase, 'sin fase') as "Fase", COUNT(*) as "Total", SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "Done"
 > FROM files
 > WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
 > GROUP BY phase
@@ -554,22 +516,13 @@ ORDER BY id ASC
 > [!note]- 💰 Resumen Financiero (expandir)
 >
 > ```sqlseal
-> TEMPLATE
-> | 👤 Integrante | Tareas | H. Est. | H. Real | Costo Est. (₡) | Costo Real (₡) |
-> |---|---|---|---|---|---|
-> {{#each data}}
-> | {{this.assignee}} | {{this.tasks}} | {{this.est_hours}}h | {{this.act_hours}}h | ₡{{this.est_cost}} | ₡{{this.act_cost}} |
-> {{/each}}
->
-> > *Detalle completo en* [[01-Proyecto/Finanzas|Gestión Financiera]]
->
 > SELECT
->   COALESCE(t.assignee, 'Sin asignar') as assignee,
->   COUNT(*) as tasks,
->   SUM(CAST(t.effort AS INTEGER)) as est_hours,
->   SUM(CAST(COALESCE(t.effort_actual, t.effort) AS INTEGER)) as act_hours,
->   SUM(CAST(t.effort AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as est_cost,
->   SUM(CAST(COALESCE(t.effort_actual, t.effort) AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as act_cost
+>   COALESCE(t.assignee, 'Sin asignar') as "👤 Integrante",
+>   COUNT(*) as "Tareas",
+>   SUM(CAST(t.effort AS INTEGER)) as "H. Est.",
+>   SUM(CAST(COALESCE(t.effort_actual, t.effort) AS INTEGER)) as "H. Real",
+>   SUM(CAST(t.effort AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Est. (₡)",
+>   SUM(CAST(COALESCE(t.effort_actual, t.effort) AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Real (₡)"
 > FROM files t
 > LEFT JOIN file(08-Recursos/Datos/finanzas-config.csv) c ON t.assignee = c.integrante
 > WHERE (t.type = 'task' OR t.type = 'subtask') AND t.path LIKE '05-Sprints%' AND t.effort IS NOT NULL AND t.effort != ''

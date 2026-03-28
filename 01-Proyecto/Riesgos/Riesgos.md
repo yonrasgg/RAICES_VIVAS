@@ -22,26 +22,14 @@ project: raices-vivas
 ## 📊 Resumen Ejecutivo
 
 ```sqlseal
-TEMPLATE
-{{#each data}}
-| 📊 Métrica | Valor |
-|---|---|
-| ⚠️ Total Riesgos | {{this.total}} |
-| 🔴 Abiertos | {{this.open_count}} |
-| 🟡 Aceptados | {{this.accepted}} |
-| 🟢 Mitigados | {{this.mitigated}} |
-| ⚫ Cerrados | {{this.closed}} |
-| 🔥 Severidad Crítica | {{this.critical}} |
-| 🟠 Severidad Alta | {{this.high}} |
-{{/each}}
 SELECT
-  COUNT(*) as total,
-  SUM(CASE WHEN status = 'open' THEN 1 ELSE 0 END) as open_count,
-  SUM(CASE WHEN status = 'accepted' THEN 1 ELSE 0 END) as accepted,
-  SUM(CASE WHEN status = 'mitigated' THEN 1 ELSE 0 END) as mitigated,
-  SUM(CASE WHEN status = 'closed' THEN 1 ELSE 0 END) as closed,
-  SUM(CASE WHEN severity = 'crítico' THEN 1 ELSE 0 END) as critical,
-  SUM(CASE WHEN severity = 'alto' THEN 1 ELSE 0 END) as high
+  COUNT(*) as "⚠️ Total",
+  SUM(CASE WHEN status = 'open' THEN 1 ELSE 0 END) as "🔴 Abiertos",
+  SUM(CASE WHEN status = 'accepted' THEN 1 ELSE 0 END) as "🟡 Aceptados",
+  SUM(CASE WHEN status = 'mitigated' THEN 1 ELSE 0 END) as "🟢 Mitigados",
+  SUM(CASE WHEN status = 'closed' THEN 1 ELSE 0 END) as "⚫ Cerrados",
+  SUM(CASE WHEN severity = 'crítico' THEN 1 ELSE 0 END) as "🔥 Crítico",
+  SUM(CASE WHEN severity = 'alto' THEN 1 ELSE 0 END) as "🟠 Alto"
 FROM files
 WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
 ```
