@@ -22,7 +22,7 @@ tags:
 
 ## Objetivo del Sprint
 
-> Producir la documentación de casos de uso del sistema Raíces Vivas (19 CU, 8 expandidos) junto con el diseño de arquitectura: diagrama de contexto (C4), modelos entidad-relación por módulo, decisión de stack tecnológico, y gobernanza cultural.
+> Producir la documentación de casos de uso del sistema Raíces Vivas (23 CU, 12 expandidos) junto con el diseño de arquitectura: diagrama de contexto (C4), modelos entidad-relación por módulo, decisión de stack tecnológico, y gobernanza cultural.
 
 ## ¿Se cumplió el objetivo?
 
@@ -55,7 +55,7 @@ tags:
 | Tarea | Artefacto | Estado | Responsable |
 |-------|-----------|--------|-------------|
 | T-032 — Clasificar actores del sistema | §2 del Avance 2: 10 actores + 4 sistemas | ✅ Completado | Geovanny |
-| T-033 — Lista general de 19 casos de uso | §3 del Avance 2: tabla con 19 CU | ✅ Completado | Elkin |
+| T-033 — Lista general de 23 casos de uso | §3 del Avance 2: tabla con 23 CU | ✅ Completado | Elkin |
 | T-034 — Documentar CU-EDU-01 y CU-EDU-03 | §4.1 y §4.2 del Avance 2 | ✅ Completado | Geovanny |
 | T-035 — Documentar CU-SAB-01 y CU-SAB-04 | §4.3 y §4.4 del Avance 2 | ✅ Completado | Elkin |
 | T-036 — Documentar CU-SAL-01 y CU-SAL-02 | §4.5 y §4.6 del Avance 2 | ✅ Completado | Santiago |
@@ -68,7 +68,7 @@ tags:
 
 ## Demo / Evidencias
 
-- [[06-Entregables/Avance-2/Raíces Vivas — Avance 2 Diseño y Arquitectura|Avance 2: Casos de Uso]] — Documento completo con 8 CU expandidos
+- [[06-Entregables/Avance-2/Raíces Vivas — Avance 2 Diseño y Arquitectura|Avance 2: Casos de Uso]] — Documento completo con 12 CU expandidos
 - [[ADR-008|ADR-008 — Stack Tecnológico]] — Aceptado: PWA React + PouchDB + i18next
 - [[ADR-009|ADR-009 — Gobernanza Cultural]] — Aceptado: CARE + 4 niveles de acceso
 - [[04-Arquitectura/Visión General|Visión General (C4)]] — Diagramas C4 Level 1 + Level 2 en Mermaid
@@ -83,7 +83,7 @@ tags:
 - El análisis de casos de uso aportó claridad sobre los flujos reales del sistema
 - La clasificación de actores primarios vs secundarios reveló la complejidad de la gobernanza cultural
 - Las decisiones ADR-008 y ADR-009 desbloquearon los casos de uso transversales
-- La trazabilidad 19:19 (RF↔CU) confirmó que no hay requerimientos huérfanos
+- La trazabilidad 23:23 (RF↔CU) confirmó que no hay requerimientos huérfanos
 
 ## Lecciones Aprendidas (mini-retro)
 
