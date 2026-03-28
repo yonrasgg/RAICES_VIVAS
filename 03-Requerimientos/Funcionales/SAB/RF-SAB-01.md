@@ -73,3 +73,14 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-002]] | Saberes sin registro formal en Talamanca |
+| Entrevista | [[ENT-004]] | Urgencia de preservación según líder Boruca |
+| Encuesta | [[ENC-SAB-01]] | Comunidad prioriza registro multimedia de saberes |
+| Observación | [[OBS-002]] | Transmisión oral sin soporte documental en Bribri |
+| Observación | [[OBS-003]] | Prácticas artesanales en riesgo en Boruca |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

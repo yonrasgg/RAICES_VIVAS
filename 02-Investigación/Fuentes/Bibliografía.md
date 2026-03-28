@@ -1,6 +1,7 @@
 ---
 type: bibliography
 title: "Fuentes Bibliográficas y Documentales"
+module: transversal
 project: raices-vivas
 status: approved
 author: Geovanny

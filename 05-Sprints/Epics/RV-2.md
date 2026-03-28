@@ -11,6 +11,7 @@ title: "Saberes Ancestrales y Patrimonio"
 status: in-progress
 priority: high
 owner: "Elkin"
+assignee: "Elkin"
 module: saberes
 created: 2026-02-03
 updated: 2026-03-05

@@ -71,3 +71,14 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-002]] | Necesidad de catalogar saberes por tipo y territorio |
+| Entrevista | [[ENT-004]] | Clasificación cultural por dominio de conocimiento |
+| Encuesta | [[ENC-SAB-01]] | Demanda de búsqueda por categoría y pueblo |
+| Observación | [[OBS-002]] | Diversidad de saberes sin taxonomía común |
+| Observación | [[OBS-003]] | Categorías implícitas en prácticas observadas |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

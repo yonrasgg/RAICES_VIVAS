@@ -71,3 +71,13 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-003]] | Dificultad para coordinar citas y brigadas |
+| Encuesta | [[ENC-SAL-01]] | Necesidad de agendamiento integrado |
+| Observación | [[OBS-002]] | Coordinación de brigadas por teléfono sin agenda |
+| Observación | [[OBS-003]] | Campañas preventivas sin planificación centralizada |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

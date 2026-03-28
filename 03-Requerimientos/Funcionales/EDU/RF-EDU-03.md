@@ -74,3 +74,12 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-001]] | Necesidad de material multimedia accesible offline |
+| Encuesta | [[ENC-EDU-01]] | Preferencia por contenido audiovisual bilingüe |
+| Observación | [[OBS-001]] | Recursos digitales inexistentes en aulas visitadas |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

@@ -74,3 +74,13 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-003]] | Fragmentación de datos de pacientes entre visitas |
+| Encuesta | [[ENC-SAL-01]] | Demanda de registro unificado de pacientes |
+| Observación | [[OBS-002]] | Atención médica sin continuidad en Talamanca |
+| Observación | [[OBS-003]] | Brigadas sin acceso a historial en Boruca |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

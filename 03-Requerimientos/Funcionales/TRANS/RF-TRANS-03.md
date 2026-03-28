@@ -74,3 +74,14 @@ SORT sprint ASC, priority ASC
 | 2026-02-25 | Creación inicial como RNF-07 (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
 | 2026-03-11 | Reclasificado de RNF-07 → RF-TRANS-03 (funcional transversal) | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-001]] | Roles de acceso diferenciados por función comunitaria |
+| Entrevista | [[ENT-002]] | Gobernanza de datos como principio cultural |
+| Entrevista | [[ENT-003]] | Control de acceso clínico por rol de salud |
+| Entrevista | [[ENT-004]] | Autorización comunitaria para contenido sensible |
+| Bibliografía | [[Bibliografía#6]] | Fuentes sobre gobernanza digital indígena |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

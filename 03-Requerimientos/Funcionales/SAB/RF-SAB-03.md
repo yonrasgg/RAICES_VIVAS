@@ -71,3 +71,14 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-002]] | Saberes como recurso educativo intergeneracional |
+| Entrevista | [[ENT-004]] | Vínculo entre saberes y procesos de enseñanza |
+| Encuesta | [[ENC-SAB-01]] | Interés en conectar saberes con educación formal |
+| Observación | [[OBS-002]] | Saberes usados informalmente en enseñanza Bribri |
+| Observación | [[OBS-003]] | Artesanas enseñando a jóvenes en Boruca |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

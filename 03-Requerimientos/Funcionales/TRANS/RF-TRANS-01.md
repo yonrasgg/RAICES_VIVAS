@@ -74,3 +74,14 @@ SORT sprint ASC, priority ASC
 | 2026-02-25 | Creación inicial como RNF-01 (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
 | 2026-03-11 | Reclasificado de RNF-01 → RF-TRANS-01 (funcional transversal) | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-001]] | Conectividad intermitente como barrera principal en Maleku |
+| Entrevista | [[ENT-002]] | Zonas sin cobertura en Talamanca Alta |
+| Entrevista | [[ENT-003]] | Brigadas médicas operando sin conexión estable |
+| Entrevista | [[ENT-004]] | Aislamiento digital en territorio Boruca |
+| Bibliografía | [[Bibliografía#6]] | Fuentes sobre conectividad y brecha digital |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

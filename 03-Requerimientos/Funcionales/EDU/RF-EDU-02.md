@@ -72,3 +72,12 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-001]] | Brecha de contenidos bilingües en territorio Maleku |
+| Encuesta | [[ENC-EDU-01]] | Demanda de materiales contextualizados |
+| Observación | [[OBS-001]] | Uso limitado de recursos pedagógicos observado |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

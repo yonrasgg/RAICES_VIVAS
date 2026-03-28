@@ -74,3 +74,14 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-002]] | Gobernanza comunitaria sobre acceso a saberes |
+| Entrevista | [[ENT-004]] | Control de acceso como requisito cultural |
+| Encuesta | [[ENC-SAB-01]] | Comunidad exige autorización para contenido sensible |
+| Observación | [[OBS-002]] | Saberes restringidos a ciertos roles sociales |
+| Observación | [[OBS-003]] | Conocimiento sagrado con acceso diferenciado |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

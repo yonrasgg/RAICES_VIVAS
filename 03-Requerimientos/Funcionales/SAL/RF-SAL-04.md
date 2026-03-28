@@ -71,3 +71,13 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-003]] | Pérdida de seguimiento en pacientes crónicos |
+| Encuesta | [[ENC-SAL-01]] | Alertas tempranas como prioridad comunitaria |
+| Observación | [[OBS-002]] | Pacientes crónicos sin sistema de monitoreo |
+| Observación | [[OBS-003]] | Seguimiento manual con riesgo de pérdida |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

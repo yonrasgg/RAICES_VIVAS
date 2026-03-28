@@ -11,6 +11,7 @@ title: "Salud Comunitaria e Intercultural"
 status: in-progress
 priority: high
 owner: "Santiago"
+assignee: "Santiago"
 module: salud
 created: 2026-02-03
 updated: 2026-03-05

@@ -74,3 +74,13 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-003]] | Historial médico inaccesible entre consultas |
+| Encuesta | [[ENC-SAL-01]] | Necesidad de registro de historial básico |
+| Observación | [[OBS-002]] | Personal de salud sin datos previos del paciente |
+| Observación | [[OBS-003]] | Información clínica perdida entre brigadas |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

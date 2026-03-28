@@ -11,6 +11,7 @@ title: "Educación Intercultural Bilingüe"
 status: in-progress
 priority: high
 owner: "Geovanny"
+assignee: "Geovanny"
 module: educacion
 created: 2026-02-03
 updated: 2026-03-05

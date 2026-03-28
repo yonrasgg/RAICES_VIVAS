@@ -71,3 +71,12 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-001]] | Reportes de rendimiento necesarios para MEP y comunidad |
+| Encuesta | [[ENC-EDU-01]] | Demanda de visibilidad de avance educativo |
+| Observación | [[OBS-001]] | Sin instrumentos de reporte en centros visitados |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

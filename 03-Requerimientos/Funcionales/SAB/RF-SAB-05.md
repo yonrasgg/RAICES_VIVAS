@@ -71,3 +71,14 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-002]] | Trazabilidad cultural para verificar origen de saberes |
+| Entrevista | [[ENT-004]] | Necesidad de auditoría sobre modificaciones |
+| Encuesta | [[ENC-SAB-01]] | Transparencia en gestión de contenido cultural |
+| Observación | [[OBS-002]] | Saberes compartidos sin registro de autoría |
+| Observación | [[OBS-003]] | Cadena de custodia cultural inexistente |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

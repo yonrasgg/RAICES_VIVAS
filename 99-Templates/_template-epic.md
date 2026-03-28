@@ -44,6 +44,7 @@ title: "<% epicTitle %>"
 status: todo
 priority: <% epicPriority %>
 owner: "<% epicOwner %>"
+assignee: "<% epicOwner %>"
 module: <% epicModule %>
 created: <% today %>
 updated: <% today %>

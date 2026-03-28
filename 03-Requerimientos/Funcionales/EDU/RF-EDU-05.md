@@ -72,3 +72,12 @@ SORT sprint ASC, priority ASC
 |-------|--------|-------|
 | 2026-02-25 | Creación inicial (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-001]] | Necesidad de seguimiento individual por estudiante |
+| Encuesta | [[ENC-EDU-01]] | Sin mecanismo de retroalimentación temprana |
+| Observación | [[OBS-001]] | Docentes sin visibilidad del progreso estudiantil |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |

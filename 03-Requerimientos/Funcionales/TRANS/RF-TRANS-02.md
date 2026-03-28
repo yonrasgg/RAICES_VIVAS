@@ -74,3 +74,14 @@ SORT sprint ASC, priority ASC
 | 2026-02-25 | Creación inicial como RNF-02 (Avance 1) | Equipo |
 | 2026-02-27 | Migración a nota individual | Equipo |
 | 2026-03-11 | Reclasificado de RNF-02 → RF-TRANS-02 (funcional transversal) | Equipo |
+
+## Fuentes de Investigación
+
+| Tipo | Referencia | Hallazgo clave |
+|------|-----------|----------------|
+| Entrevista | [[ENT-001]] | Maleku como lengua prioritaria de interfaz |
+| Entrevista | [[ENT-002]] | Bribri y Cabécar como lenguas requeridas |
+| Entrevista | [[ENT-003]] | Personal de salud necesita interfaz en español |
+| Entrevista | [[ENT-004]] | Boruca demanda interfaz en lengua local |
+| Bibliografía | [[Bibliografía#6]] | Fuentes sobre diversidad lingüística indígena |
+| Metodología | [[Enfoque-Metodológico]] | Marco metodológico general |
