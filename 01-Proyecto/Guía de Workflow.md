@@ -1358,14 +1358,11 @@ flowchart TD
 
 ### 12.5 Estadísticas desde Dashboard
 
-```dataviewjs
-// Ejemplo de query para Home.md
-const adrs = dv.pages('"01-Proyecto/Decisiones"').where(p => p.type === "adr");
-dv.table(["ID", "Título", "Estado", "Categoría", "Impacto", "Fecha"],
-  adrs.sort(p => p.id, "asc").map(p => [
-    p.file.link, p.title, p.status, p.category, p.impact, p.date
-  ])
-);
+```sqlseal
+SELECT id AS "ID", title AS "Título", status AS "Estado", category AS "Categoría", impact AS "Impacto", "date" AS "Fecha"
+FROM files
+WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
+ORDER BY id ASC
 ```
 
 **Métricas disponibles:**
@@ -1435,15 +1432,12 @@ flowchart TD
 
 ### 13.6 Estadísticas desde Dashboard
 
-```dataviewjs
-// Ejemplo de query para Home.md
-const risks = dv.pages('"01-Proyecto/Riesgos"').where(p => p.type === "risk");
-dv.table(["ID", "Título", "Severidad", "Estado", "Owner", "Revisión"],
-  risks.sort(p => p.severity === "crítico" ? 0 : p.severity === "alto" ? 1 : p.severity === "medio" ? 2 : 3)
-    .map(p => [
-      p.file.link, p.title, p.severity, p.status, p.owner, p.review_date
-    ])
-);
+```sqlseal
+SELECT id AS "ID", title AS "Título", severity AS "Severidad", status AS "Estado", owner AS "Owner", review_date AS "Revisión"
+FROM files
+WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+ORDER BY
+  CASE severity WHEN 'crítico' THEN 0 WHEN 'alto' THEN 1 WHEN 'medio' THEN 2 ELSE 3 END ASC
 ```
 
 **Métricas disponibles:**
