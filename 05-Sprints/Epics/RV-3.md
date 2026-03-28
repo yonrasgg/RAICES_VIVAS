@@ -72,16 +72,16 @@ ORDER BY key_ ASC
 SELECT name as "Tarea", key_ as "Jira", title as "Título", status as "Estado", assignee as "Responsable", sprint as "Sprint"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND parent = @key AND path LIKE '05-Sprints%'
-ORDER BY sprint ASC, id ASC
+ORDER BY sprint ASC, name ASC
 ```
 
 ## Requerimientos Funcionales del Módulo
 
 ```sqlseal
-SELECT name as "Nota", id as "RF", title as "Título", priority as "Prioridad", status as "Estado"
+SELECT name as "RF", title as "Título", priority as "Prioridad", status as "Estado"
 FROM files
 WHERE type = 'requirement/functional' AND path LIKE '03-Requerimientos/Funcionales/SAL%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ## Progreso

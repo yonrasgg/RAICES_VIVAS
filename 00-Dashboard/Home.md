@@ -448,7 +448,7 @@ gantt
 ## 🏃 Tareas Pendientes (Top 10)
 
 ```sqlseal
-SELECT id as "ID", title as "Tarea", assignee as "👤", status as "Estado", priority as "Prioridad", due as "📅 Límite"
+SELECT name as "ID", title as "Tarea", assignee as "👤", status as "Estado", priority as "Prioridad", due as "📅 Límite"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND status != 'done' AND path LIKE '05-Sprints%'
 ORDER BY priority ASC, due ASC
@@ -460,7 +460,7 @@ LIMIT 10
 ## ⚠️ Riesgos Activos
 
 ```sqlseal
-SELECT id as "ID", title as "Riesgo", probability as "Prob.", impact as "Impacto", severity as "Severidad", owner as "Responsable", status as "Estado"
+SELECT name as "ID", title as "Riesgo", probability as "Prob.", impact as "Impacto", severity as "Severidad", owner as "Responsable", status as "Estado"
 FROM files
 WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
 ORDER BY severity DESC
@@ -471,10 +471,10 @@ ORDER BY severity DESC
 ## 🏗️ Decisiones Arquitectónicas (ADR)
 
 ```sqlseal
-SELECT id as "ID", title as "Decisión", status as "Estado", "date" as "Fecha"
+SELECT name as "ID", title as "Decisión", status as "Estado", "date" as "Fecha"
 FROM files
 WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ---

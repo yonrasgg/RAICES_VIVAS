@@ -1359,10 +1359,10 @@ flowchart TD
 ### 12.5 Estadísticas desde Dashboard
 
 ```sqlseal
-SELECT id AS "ID", title AS "Título", status AS "Estado", category AS "Categoría", impact AS "Impacto", "date" AS "Fecha"
+SELECT name AS "ID", title AS "Título", status AS "Estado", category AS "Categoría", impact AS "Impacto", "date" AS "Fecha"
 FROM files
 WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 **Métricas disponibles:**
@@ -1433,7 +1433,7 @@ flowchart TD
 ### 13.6 Estadísticas desde Dashboard
 
 ```sqlseal
-SELECT id AS "ID", title AS "Título", severity AS "Severidad", status AS "Estado", owner AS "Owner", review_date AS "Revisión"
+SELECT name AS "ID", title AS "Título", severity AS "Severidad", status AS "Estado", owner AS "Owner", review_date AS "Revisión"
 FROM files
 WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
 ORDER BY

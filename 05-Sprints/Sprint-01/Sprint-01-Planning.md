@@ -75,7 +75,7 @@ gantt
 
 ```sqlseal
 SELECT
-  id as "ID",
+  name as "ID",
   title as "Tarea",
   assignee as "Responsable",
   phase as "Fase",
@@ -85,7 +85,7 @@ SELECT
   due as "Fin"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints/Sprint-01%'
-ORDER BY started ASC, id ASC
+ORDER BY started ASC, name ASC
 ```
 
 ## Distribución por Responsable

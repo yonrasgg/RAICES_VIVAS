@@ -40,7 +40,7 @@ WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
 
 ```sqlseal
 SELECT
-  id AS "ID",
+  name AS "ID",
   name AS "Riesgo",
   status AS "Estado",
   severity AS "Severidad",
@@ -50,7 +50,7 @@ SELECT
   review_date AS "Próxima Revisión"
 FROM files
 WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ---
@@ -59,7 +59,7 @@ ORDER BY id ASC
 
 ```sqlseal
 SELECT
-  id AS "ID",
+  name AS "ID",
   name AS "Riesgo",
   severity AS "Severidad",
   probability AS "Probabilidad",
@@ -78,14 +78,14 @@ ORDER BY severity DESC
 
 ```sqlseal
 SELECT
-  id AS "ID",
+  name AS "ID",
   name AS "Riesgo",
   status AS "Estado",
   severity AS "Severidad"
 FROM files
 WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
   AND (status = 'mitigated' OR status = 'closed')
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ---
@@ -94,34 +94,34 @@ ORDER BY id ASC
 
 ### Técnico
 ```sqlseal
-SELECT id, name AS "Riesgo", title AS "Título"
+SELECT name AS "Riesgo", title AS "Título"
 FROM files
 WHERE type = 'risk' AND category = 'técnico' AND path LIKE '01-Proyecto/Riesgos%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ### Recurso
 ```sqlseal
-SELECT id, name AS "Riesgo", title AS "Título"
+SELECT name AS "Riesgo", title AS "Título"
 FROM files
 WHERE type = 'risk' AND category = 'recurso' AND path LIKE '01-Proyecto/Riesgos%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ### Calidad
 ```sqlseal
-SELECT id, name AS "Riesgo", title AS "Título"
+SELECT name AS "Riesgo", title AS "Título"
 FROM files
 WHERE type = 'risk' AND category = 'calidad' AND path LIKE '01-Proyecto/Riesgos%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ### Calendario
 ```sqlseal
-SELECT id, name AS "Riesgo", title AS "Título"
+SELECT name AS "Riesgo", title AS "Título"
 FROM files
 WHERE type = 'risk' AND category = 'calendario' AND path LIKE '01-Proyecto/Riesgos%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ---
@@ -151,13 +151,13 @@ ORDER BY id ASC
 
 ```sqlseal
 SELECT
-  id AS "RSK",
+  name AS "RSK",
   title AS "Riesgo",
   related_decisions AS "ADRs Vinculados"
 FROM files
 WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
   AND related_decisions IS NOT NULL AND related_decisions != ''
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ---

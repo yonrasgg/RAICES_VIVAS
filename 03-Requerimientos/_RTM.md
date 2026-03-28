@@ -23,7 +23,7 @@ author: Geovanny
 > Incluye módulos EDU, SAB, SAL y TRANS (transversales reclasificados desde NF el 2026-03-11).
 
 ```sqlseal
-SELECT id as "ID", module as "Módulo", wbs as "WBS", title as "Descripción", priority as "MoSCoW", actor as "Actor", source as "Fuente", validation as "Validación", status as "Estado"
+SELECT name as "ID", module as "Módulo", wbs as "WBS", title as "Descripción", priority as "MoSCoW", actor as "Actor", source as "Fuente", validation as "Validación", status as "Estado"
 FROM files
 WHERE type = 'requirement/functional' AND path LIKE '03-Requerimientos/Funcionales%'
 ORDER BY wbs ASC
@@ -32,7 +32,7 @@ ORDER BY wbs ASC
 ### Requerimientos No Funcionales — Completo
 
 ```sqlseal
-SELECT id as "ID", category as "Categoría", wbs as "WBS", title as "Descripción", priority as "MoSCoW", metric as "Métrica", status as "Estado"
+SELECT name as "ID", category as "Categoría", wbs as "WBS", title as "Descripción", priority as "MoSCoW", metric as "Métrica", status as "Estado"
 FROM files
 WHERE type = 'requirement/non-functional' AND path LIKE '03-Requerimientos/No Funcionales%'
 ORDER BY wbs ASC

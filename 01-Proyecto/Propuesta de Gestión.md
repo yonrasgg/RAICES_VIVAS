@@ -332,7 +332,7 @@ Tags activos del proyecto:
 ### 5.1 Dashboard Home - Tabla de Requerimientos por Módulo
 
 ```sqlseal
-SELECT name as "RF", id as "ID", title as "Título", priority as "Prioridad", status as "Estado", actor as "Actor"
+SELECT name as "RF", title as "Título", priority as "Prioridad", status as "Estado", actor as "Actor"
 FROM files
 WHERE type = 'requirement/functional' AND path LIKE '03-Requerimientos%'
 ORDER BY module ASC, priority ASC
@@ -359,7 +359,7 @@ ORDER BY priority ASC
 ### 5.4 Matriz de Trazabilidad Dinámica
 
 ```sqlseal
-SELECT name as "Req", id as "ID", module as "Módulo", wbs as "WBS", priority as "MoSCoW", source as "Fuente", validation as "Validación", status as "Estado"
+SELECT name as "Req", module as "Módulo", wbs as "WBS", priority as "MoSCoW", source as "Fuente", validation as "Validación", status as "Estado"
 FROM files
 WHERE path LIKE '03-Requerimientos%'
 ORDER BY wbs ASC

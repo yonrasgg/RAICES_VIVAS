@@ -38,7 +38,7 @@ tags:
 ## ✅ Tareas Completadas esta Semana
 
 ```sqlseal
-SELECT id AS "ID", title AS "Tarea", assignee AS "👤", effort_actual AS "⏱️ Real", completed AS "Completada"
+SELECT name AS "ID", title AS "Tarea", assignee AS "👤", effort_actual AS "⏱️ Real", completed AS "Completada"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND status = 'done' AND completed >= @week_start AND completed <= @week_end AND path LIKE '05-Sprints%'
 ORDER BY completed ASC
@@ -49,7 +49,7 @@ ORDER BY completed ASC
 ## 🔄 Tareas en Progreso (al cierre de semana)
 
 ```sqlseal
-SELECT id AS "ID", title AS "Tarea", assignee AS "👤", status AS "Estado", due AS "📅 Límite"
+SELECT name AS "ID", title AS "Tarea", assignee AS "👤", status AS "Estado", due AS "📅 Límite"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND (status = 'in-progress' OR status = 'review') AND path LIKE '05-Sprints%'
 ORDER BY due ASC
@@ -60,7 +60,7 @@ ORDER BY due ASC
 ## 📋 Tareas Pendientes con Fecha esta Semana
 
 ```sqlseal
-SELECT id AS "ID", title AS "Tarea", assignee AS "👤", priority AS "Prioridad", due AS "📅 Límite"
+SELECT name AS "ID", title AS "Tarea", assignee AS "👤", priority AS "Prioridad", due AS "📅 Límite"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND status = 'todo' AND due >= @week_start AND due <= @week_end AND path LIKE '05-Sprints%'
 ORDER BY due ASC
@@ -71,10 +71,10 @@ ORDER BY due ASC
 ## 🚧 Bloqueos
 
 ```sqlseal
-SELECT id AS "ID", title AS "Tarea", assignee AS "👤"
+SELECT name AS "ID", title AS "Tarea", assignee AS "👤"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND status = 'blocked' AND path LIKE '05-Sprints%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 <!-- Notas adicionales sobre bloqueos -->
@@ -100,7 +100,7 @@ FROM files
 ## ⚠️ Riesgos Activos (snapshot)
 
 ```sqlseal
-SELECT id AS "ID", title AS "Riesgo", severity AS "Severidad", status AS "Estado"
+SELECT name AS "ID", title AS "Riesgo", severity AS "Severidad", status AS "Estado"
 FROM files
 WHERE type = 'risk' AND status = 'open' AND path LIKE '01-Proyecto/Riesgos%'
 ORDER BY severity DESC

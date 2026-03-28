@@ -70,7 +70,7 @@ SELECT
   priority as "Prioridad"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%' AND parent = @key
-ORDER BY sprint ASC, id ASC
+ORDER BY sprint ASC, name ASC
 ```
 
 ## Trazabilidad

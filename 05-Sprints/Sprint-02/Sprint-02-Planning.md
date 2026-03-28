@@ -67,10 +67,10 @@ gantt
 ## Tareas del Sprint
 
 ```sqlseal
-SELECT id as "ID", title as "Tarea", assignee as "👤", status as "Estado", priority as "Prioridad", due as "Fecha Límite"
+SELECT name as "ID", title as "Tarea", assignee as "👤", status as "Estado", priority as "Prioridad", due as "Fecha Límite"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints/Sprint-02%'
-ORDER BY due ASC, id ASC
+ORDER BY due ASC, name ASC
 ```
 
 ## Distribución por Responsable
@@ -141,7 +141,7 @@ FROM files
 WHERE path LIKE '05-Sprints/Sprint-02%'
   AND (type = 'task' OR type = 'subtask')
   AND blocked_by IS NOT NULL AND blocked_by != ''
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ## ⚠️ Impedimentos Activos
@@ -155,7 +155,7 @@ FROM files
 WHERE path LIKE '05-Sprints/Sprint-02%'
   AND (type = 'task' OR type = 'subtask')
   AND impediments IS NOT NULL AND impediments != ''
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ## Capacidad del Equipo

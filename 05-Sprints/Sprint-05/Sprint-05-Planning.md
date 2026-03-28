@@ -89,14 +89,14 @@ tags:
 
 ```sqlseal
 SELECT
-  id as "ID",
+  name as "ID",
   title as "Tarea",
   assignee as "👤",
   status as "Estado",
   priority as "Prioridad"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints/Sprint-05%'
-ORDER BY priority ASC, id ASC
+ORDER BY priority ASC, name ASC
 ```
 
 ## Stories del Sprint

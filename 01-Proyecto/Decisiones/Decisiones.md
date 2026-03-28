@@ -38,7 +38,7 @@ WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
 
 ```sqlseal
 SELECT
-  id AS "ID",
+  name AS "ID",
   name AS "Decisión",
   status AS "Estado",
   category AS "Categoría",
@@ -48,7 +48,7 @@ SELECT
   date AS "Fecha"
 FROM files
 WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ---
@@ -57,42 +57,42 @@ ORDER BY id ASC
 
 ### Tecnología
 ```sqlseal
-SELECT id, name AS "Decisión", title AS "Título"
+SELECT name AS "Decisión", title AS "Título"
 FROM files
 WHERE type = 'adr' AND category = 'tecnología' AND path LIKE '01-Proyecto/Decisiones%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ### Proceso
 ```sqlseal
-SELECT id, name AS "Decisión", title AS "Título"
+SELECT name AS "Decisión", title AS "Título"
 FROM files
 WHERE type = 'adr' AND category = 'proceso' AND path LIKE '01-Proyecto/Decisiones%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ### Diseño
 ```sqlseal
-SELECT id, name AS "Decisión", title AS "Título"
+SELECT name AS "Decisión", title AS "Título"
 FROM files
 WHERE type = 'adr' AND category = 'diseño' AND path LIKE '01-Proyecto/Decisiones%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ### Arquitectura
 ```sqlseal
-SELECT id, name AS "Decisión", title AS "Título"
+SELECT name AS "Decisión", title AS "Título"
 FROM files
 WHERE type = 'adr' AND category = 'arquitectura' AND path LIKE '01-Proyecto/Decisiones%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ### Gobernanza
 ```sqlseal
-SELECT id, name AS "Decisión", title AS "Título"
+SELECT name AS "Decisión", title AS "Título"
 FROM files
 WHERE type = 'adr' AND category = 'gobernanza' AND path LIKE '01-Proyecto/Decisiones%'
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ---
@@ -124,13 +124,13 @@ ORDER BY id ASC
 
 ```sqlseal
 SELECT
-  id AS "ADR",
+  name AS "ADR",
   title AS "Decisión",
   related_risks AS "Riesgos Vinculados"
 FROM files
 WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
   AND related_risks IS NOT NULL AND related_risks != ''
-ORDER BY id ASC
+ORDER BY name ASC
 ```
 
 ---
@@ -139,7 +139,7 @@ ORDER BY id ASC
 
 ```sqlseal
 SELECT
-  id AS "ID",
+  name AS "ID",
   title AS "Decisión",
   date AS "Fecha",
   status AS "Estado"
