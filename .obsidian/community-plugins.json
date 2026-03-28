@@ -23,6 +23,5 @@
   "drawio-obsidian",
   "jira-sync",
   "sqlseal",
-  "sqlseal-charts",
-  "obsidian-csv-table"
+  "sqlseal-charts"
 ]
