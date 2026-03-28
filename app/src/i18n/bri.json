@@ -1,0 +1,68 @@
+{
+  "app": {
+    "name": "Raíces Vivas",
+    "tagline": "Ñaka kë̀ klöwö ès wö̀tnaska"
+  },
+  "nav": {
+    "home": "Ú kìtè",
+    "edu": "Kë̀ klö",
+    "sab": "Siwawa kë̀",
+    "sal": "Tso̱'",
+    "settings": "Shtë̀"
+  },
+  "sync": {
+    "online": "Kë̀ duwö̀",
+    "offline": "Kë̀ duö̀ ñaka",
+    "syncing": "Duwö̀ tè…",
+    "error": "Ñaka duwö̀ tè",
+    "pending": "{{count}} tè kë̀ duwö̀",
+    "lastSynced": "Tè duwö̀: {{date}}"
+  },
+  "edu": {
+    "title": "Kë̀ klö Ès Wö̀tnaska",
+    "docentes": "Shtákapa",
+    "estudiantes": "Klë̀rë",
+    "materiales": "Kë̀ tsö́ klö",
+    "ejercicios": "Kë̀ sá klö",
+    "addDocente": "Shtákapa wë",
+    "addEstudiante": "Klë̀rë wë",
+    "addMaterial": "Kë̀ tsö́ wë",
+    "nombre": "Kë̀",
+    "territorio": "Kö",
+    "lengua": "Kë̀è",
+    "nivel": "Wö̀",
+    "tema": "Tè kë̀",
+    "buscar": "Stsö̀…",
+    "sinResultados": "Ñaka kë̀ stsö̀",
+    "guardar": "Wéke",
+    "cancelar": "Ñö̀",
+    "eliminar": "Kë̀ bà",
+    "editar": "Kë̀ tse"
+  },
+  "sab": {
+    "title": "Siwawa Kë̀",
+    "registro": "Siwawa kë̀ wë",
+    "catalogo": "Siwawa tsö́"
+  },
+  "sal": {
+    "title": "Tso̱' Ès Kö",
+    "pacientes": "Tso̱' kë̀",
+    "citas": "Tso̱' tè"
+  },
+  "settings": {
+    "title": "Shtë̀",
+    "language": "Kë̀è",
+    "sync": "Duwö̀"
+  },
+  "common": {
+    "loading": "Kë̀ duwö̀…",
+    "save": "Wéke",
+    "cancel": "Ñö̀",
+    "delete": "Kë̀ bà",
+    "edit": "Kë̀ tse",
+    "back": "Ñö̀ rö",
+    "confirm": "¿Kë̀ bö̀?",
+    "yes": "Ö̀",
+    "no": "Ñö̀"
+  }
+}

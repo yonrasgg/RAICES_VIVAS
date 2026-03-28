@@ -1,0 +1,68 @@
+{
+  "app": {
+    "name": "Raíces Vivas",
+    "tagline": "Jkö kë̀ tjawö ès kö"
+  },
+  "nav": {
+    "home": "Ú",
+    "edu": "Tjawö",
+    "sab": "Jkö kë̀",
+    "sal": "Batsú",
+    "settings": "Shtë̀"
+  },
+  "sync": {
+    "online": "Kë̀ duwö̀",
+    "offline": "Kë̀ duö̀ ñaka",
+    "syncing": "Duwö̀ tè…",
+    "error": "Ñaka duwö̀ tè",
+    "pending": "{{count}} tè kë̀ duwö̀",
+    "lastSynced": "Tè duwö̀: {{date}}"
+  },
+  "edu": {
+    "title": "Tjawö Ès Kö",
+    "docentes": "Shtákapa",
+    "estudiantes": "Klë̀rë",
+    "materiales": "Kë̀ tsö́",
+    "ejercicios": "Kë̀ sá",
+    "addDocente": "Shtákapa wë",
+    "addEstudiante": "Klë̀rë wë",
+    "addMaterial": "Kë̀ tsö́ wë",
+    "nombre": "Kë̀",
+    "territorio": "Kö",
+    "lengua": "Kë̀è",
+    "nivel": "Wö̀",
+    "tema": "Tè kë̀",
+    "buscar": "Stsö̀…",
+    "sinResultados": "Ñaka kë̀ stsö̀",
+    "guardar": "Wéke",
+    "cancelar": "Ñö̀",
+    "eliminar": "Kë̀ bà",
+    "editar": "Kë̀ tse"
+  },
+  "sab": {
+    "title": "Jkö Kë̀",
+    "registro": "Jkö kë̀ wë",
+    "catalogo": "Jkö tsö́"
+  },
+  "sal": {
+    "title": "Batsú Ès Kö",
+    "pacientes": "Batsú kë̀",
+    "citas": "Batsú tè"
+  },
+  "settings": {
+    "title": "Shtë̀",
+    "language": "Kë̀è",
+    "sync": "Duwö̀"
+  },
+  "common": {
+    "loading": "Kë̀ duwö̀…",
+    "save": "Wéke",
+    "cancel": "Ñö̀",
+    "delete": "Kë̀ bà",
+    "edit": "Kë̀ tse",
+    "back": "Ñö̀ rö",
+    "confirm": "¿Kë̀ bö̀?",
+    "yes": "Ö̀",
+    "no": "Ñö̀"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "app": {
+    "name": "Raíces Vivas",
+    "tagline": "Ngöbe kuin kwe"
+  },
+  "nav": {
+    "home": "Ñô",
+    "edu": "Tödëga",
+    "sab": "Kukwe kira",
+    "sal": "Kä ngwen nüne",
+    "settings": "Ñô tikwe"
+  },
+  "sync": {
+    "online": "Kä nüne",
+    "offline": "Kä ñaka nüne",
+    "syncing": "Kä nüne tö…",
+    "error": "Ñaka kä nüne",
+    "pending": "{{count}} tö kä nüne",
+    "lastSynced": "Tö kä nüne: {{date}}"
+  },
+  "edu": {
+    "title": "Tödëga Kwe",
+    "docentes": "Ni tödëkä",
+    "estudiantes": "Monso tödëkä",
+    "materiales": "Kukwe tödëga",
+    "ejercicios": "Kukwe nuä",
+    "addDocente": "Ni tödëkä tikwe",
+    "addEstudiante": "Monso tödëkä tikwe",
+    "addMaterial": "Kukwe tödëga tikwe",
+    "nombre": "Kä",
+    "territorio": "Kä",
+    "lengua": "Blite",
+    "nivel": "Ñaka gare",
+    "tema": "Kukwe",
+    "buscar": "Kukwe ngiä…",
+    "sinResultados": "Ñaka kukwe kwani",
+    "guardar": "Tikwe",
+    "cancelar": "Ñaka",
+    "eliminar": "Denkä",
+    "editar": "Tikwe"
+  },
+  "sab": {
+    "title": "Kukwe Kira",
+    "registro": "Kukwe kira tikwe",
+    "catalogo": "Kukwe kira jökrä"
+  },
+  "sal": {
+    "title": "Kä Ngwen Nüne",
+    "pacientes": "Ni bren",
+    "citas": "Kä ngwen nüne tö"
+  },
+  "settings": {
+    "title": "Ñô Tikwe",
+    "language": "Blite",
+    "sync": "Kä nüne"
+  },
+  "common": {
+    "loading": "Kä nüne tö…",
+    "save": "Tikwe",
+    "cancel": "Ñaka",
+    "delete": "Denkä",
+    "edit": "Tikwe",
+    "back": "Ñaka ja kite",
+    "confirm": "¿Erametre?",
+    "yes": "Jän",
+    "no": "Ñaka"
+  }
+}

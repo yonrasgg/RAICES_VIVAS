@@ -1,0 +1,68 @@
+{
+  "app": {
+    "name": "Raíces Vivas",
+    "tagline": "Sistema Integral para Comunidades Indígenas"
+  },
+  "nav": {
+    "home": "Inicio",
+    "edu": "Educación",
+    "sab": "Saberes",
+    "sal": "Salud",
+    "settings": "Configuración"
+  },
+  "sync": {
+    "online": "Conectado",
+    "offline": "Sin conexión",
+    "syncing": "Sincronizando…",
+    "error": "Error de sincronización",
+    "pending": "{{count}} cambio(s) pendiente(s)",
+    "lastSynced": "Última sync: {{date}}"
+  },
+  "edu": {
+    "title": "Educación Intercultural Bilingüe",
+    "docentes": "Docentes",
+    "estudiantes": "Estudiantes",
+    "materiales": "Materiales Educativos",
+    "ejercicios": "Ejercicios",
+    "addDocente": "Registrar Docente",
+    "addEstudiante": "Registrar Estudiante",
+    "addMaterial": "Subir Material",
+    "nombre": "Nombre",
+    "territorio": "Territorio",
+    "lengua": "Lengua",
+    "nivel": "Nivel",
+    "tema": "Tema",
+    "buscar": "Buscar…",
+    "sinResultados": "No se encontraron resultados",
+    "guardar": "Guardar",
+    "cancelar": "Cancelar",
+    "eliminar": "Eliminar",
+    "editar": "Editar"
+  },
+  "sab": {
+    "title": "Saberes Ancestrales",
+    "registro": "Registrar Saber",
+    "catalogo": "Catálogo"
+  },
+  "sal": {
+    "title": "Salud Comunitaria",
+    "pacientes": "Pacientes",
+    "citas": "Citas"
+  },
+  "settings": {
+    "title": "Configuración",
+    "language": "Idioma",
+    "sync": "Sincronización"
+  },
+  "common": {
+    "loading": "Cargando…",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "back": "Volver",
+    "confirm": "¿Está seguro?",
+    "yes": "Sí",
+    "no": "No"
+  }
+}
