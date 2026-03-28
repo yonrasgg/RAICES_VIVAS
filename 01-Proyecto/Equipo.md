@@ -52,15 +52,15 @@ tags:
 
 ## Distribución de Carga (Avance 1)
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   assignee as "Responsable",
-  length(rows) as "Tareas Totales",
-  length(filter(rows, (r) => r.status = "done")) as "Completadas"
-FROM "05-Sprints"
-WHERE type = "task" OR type = "subtask"
+  COUNT(*) as "Tareas Totales",
+  SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "Completadas"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
 GROUP BY assignee
-SORT assignee ASC
+ORDER BY assignee ASC
 ```
 
 ## Reglas de Trabajo

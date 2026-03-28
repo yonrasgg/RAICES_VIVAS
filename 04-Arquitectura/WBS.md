@@ -124,15 +124,15 @@ graph LR
 
 ### Dataview — Estado de Tareas por Epic
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   key as "Key",
   summary as "Epic / Story",
   issuetype as "Tipo",
   status as "Estado"
-FROM "05-Sprints/Epics" OR "05-Sprints/Stories"
-WHERE type = "epic" OR type = "story"
-SORT key ASC
+FROM files
+WHERE (type = 'epic' OR type = 'story') AND (path LIKE '05-Sprints/Epics%' OR path LIKE '05-Sprints/Stories%')
+ORDER BY key ASC
 ```
 
 ---

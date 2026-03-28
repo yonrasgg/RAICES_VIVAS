@@ -84,28 +84,28 @@ tags:
 
 ## Tareas del Sprint
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   id as "ID",
   title as "Tarea",
   assignee as "👤",
   status as "Estado",
   priority as "Prioridad"
-FROM "05-Sprints/Sprint-03"
-WHERE type = "task" OR type = "subtask"
-SORT priority ASC, id ASC
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints/Sprint-03%'
+ORDER BY priority ASC, id ASC
 ```
 
 ## Stories del Sprint
 
-```dataview
-TABLE WITHOUT ID
-  file.name as "ID",
+```sqlseal
+SELECT
+  name as "ID",
   title as "Historia",
   assignee as "👤",
   story_points as "SP",
   status as "Estado"
-FROM "05-Sprints/Stories"
-WHERE type = "story" AND (contains(file.name, "TRANS-01") OR contains(file.name, "TRANS-02"))
-SORT file.name ASC
+FROM files
+WHERE type = 'story' AND path LIKE '05-Sprints/Stories%' AND (name LIKE '%TRANS-01%' OR name LIKE '%TRANS-02%')
+ORDER BY name ASC
 ```

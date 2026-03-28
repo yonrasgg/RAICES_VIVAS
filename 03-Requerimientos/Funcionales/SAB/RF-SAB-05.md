@@ -54,15 +54,15 @@ El sistema debe registrar confirmación de consentimiento del portador del saber
 
 ## Tareas Vinculadas
 
-```dataview
-TABLE
+```sqlseal
+SELECT
   status as "Estado",
   assignee as "Responsable",
   sprint as "Sprint",
   priority as "Prioridad"
-FROM "05-Sprints"
-WHERE (type = "task" OR type = "subtask") AND requirement = this.file.name
-SORT sprint ASC, priority ASC
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%' AND requirement = @id
+ORDER BY sprint ASC, priority ASC
 ```
 
 ## Historial de Cambios

@@ -73,8 +73,8 @@ gantt
 
 ## Tareas del Sprint
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   id as "ID",
   title as "Tarea",
   assignee as "Responsable",
@@ -83,33 +83,33 @@ TABLE WITHOUT ID
   effort as "Esfuerzo",
   started as "Inicio",
   due as "Fin"
-FROM "05-Sprints/Sprint-01"
-WHERE (type = "task" OR type = "subtask")
-SORT started ASC, id ASC
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints/Sprint-01%'
+ORDER BY started ASC, id ASC
 ```
 
 ## Distribución por Responsable
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   assignee as "👤 Responsable",
-  length(rows) as "Tareas",
-  length(filter(rows, (r) => r.status = "done")) as "✅ Done"
-FROM "05-Sprints/Sprint-01"
-WHERE (type = "task" OR type = "subtask")
+  COUNT(*) as "Tareas",
+  SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "✅ Done"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints/Sprint-01%'
 GROUP BY assignee
-SORT assignee ASC
+ORDER BY assignee ASC
 ```
 
 ## Distribución por Fase
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   phase as "📍 Fase",
-  length(rows) as "Tareas",
-  length(filter(rows, (r) => r.status = "done")) as "✅ Done"
-FROM "05-Sprints/Sprint-01"
-WHERE (type = "task" OR type = "subtask")
+  COUNT(*) as "Tareas",
+  SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "✅ Done"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints/Sprint-01%'
 GROUP BY phase
 ```
 

@@ -128,16 +128,16 @@ gantt
 
 ## Entregas Próximas
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   title as "Tarea / Entrega",
   assignee as "👤",
   due as "Fecha",
   sprint as "Sprint",
   status as "Estado"
-FROM "05-Sprints"
-WHERE (type = "task" OR type = "subtask") AND status != "done"
-SORT due ASC
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%' AND status != 'done'
+ORDER BY due ASC
 ```
 
 ---

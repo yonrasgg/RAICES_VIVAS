@@ -62,18 +62,16 @@ Los territorios indígenas de Costa Rica tienen conectividad limitada o inexiste
 
 ## Tareas Vinculadas
 
-```dataview
-TABLE
+```sqlseal
+SELECT
   status as "Estado",
   assignee as "Responsable",
   sprint as "Sprint",
   priority as "Prioridad"
-FROM "05-Sprints"
-WHERE (type = "task" OR type = "subtask") AND (
-  (typeof(requirement) = "array" AND contains(requirement, "RF-TRANS-01")) OR
-  requirement = this.file.name
-)
-SORT sprint ASC, priority ASC
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
+  AND (requirement = @id OR requirement LIKE '%' || @id || '%')
+ORDER BY sprint ASC, priority ASC
 ```
 
 ## Historial de Cambios

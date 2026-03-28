@@ -479,16 +479,16 @@ shadow: off
 - 📖 [[US-SAL-03]] — Gestión citas SAL (SP: 5)
 - 📖 [[US-SAL-05]] — Alertas clínicas (SP: 3)
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   key as "Key",
   summary as "Nombre",
   issuetype as "Tipo",
   status as "Estado",
   story_points as "SP"
-FROM "05-Sprints/Epics" OR "05-Sprints/Stories"
-WHERE type = "epic" OR type = "story"
-SORT key ASC
+FROM files
+WHERE (type = 'epic' OR type = 'story') AND (path LIKE '05-Sprints/Epics%' OR path LIKE '05-Sprints/Stories%')
+ORDER BY key ASC
 ```
 
 ---

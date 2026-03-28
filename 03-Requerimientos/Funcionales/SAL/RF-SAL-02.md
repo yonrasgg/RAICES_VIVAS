@@ -57,15 +57,15 @@ El sistema debe permitir registrar un historial médico básico por paciente: co
 
 ## Tareas Vinculadas
 
-```dataview
-TABLE
+```sqlseal
+SELECT
   status as "Estado",
   assignee as "Responsable",
   sprint as "Sprint",
   priority as "Prioridad"
-FROM "05-Sprints"
-WHERE (type = "task" OR type = "subtask") AND requirement = this.file.name
-SORT sprint ASC, priority ASC
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%' AND requirement = @id
+ORDER BY sprint ASC, priority ASC
 ```
 
 ## Historial de Cambios
