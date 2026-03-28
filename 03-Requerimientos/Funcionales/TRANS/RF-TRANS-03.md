@@ -3,15 +3,23 @@ banner_src: "08-Recursos/Imágenes/cover-rf.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
 id: RF-TRANS-03
+key: ""
+story_points: 5
 type: requirement/functional
+module: transversal
 category: gobernanza
 wbs: RV-4.3
 title: "Gobernanza cultural y control comunitario"
 status: approved
 priority: must
+actor:
+  - Admin comunitario
+source: "investigación"
+validation: "Revisión con líderes comunitarios"
 metric: "Configuración de roles y permisos editable por admin comunitario. Cada comunidad puede definir sus propias reglas de acceso."
 created: 2026-02-25
 updated: 2026-03-11
+sprint: null
 tags:
   - requerimiento
   - funcional

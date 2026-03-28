@@ -3,15 +3,23 @@ banner_src: "08-Recursos/Imágenes/cover-rf.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
 id: RF-TRANS-02
+key: ""
+story_points: 5
 type: requirement/functional
+module: transversal
 category: multilingüismo
 wbs: RV-4.2
 title: "Multilingüismo"
 status: approved
 priority: must
+actor:
+  - Usuario
+source: "investigación"
+validation: "Prueba de selector de idioma con hablantes nativos"
 metric: "UI con selector de idioma funcional. Contenido etiquetado por idioma permitiendo filtrar y navegar en lengua preferida."
 created: 2026-02-25
 updated: 2026-03-11
+sprint: null
 tags:
   - requerimiento
   - funcional

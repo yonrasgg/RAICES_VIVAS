@@ -3,15 +3,24 @@ banner_src: "08-Recursos/Imágenes/cover-rf.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
 id: RF-TRANS-01
+key: ""
+story_points: 8
 type: requirement/functional
+module: transversal
 category: conectividad
 wbs: RV-4.1
 title: "Operación offline + sincronización"
 status: approved
 priority: must
+actor:
+  - Sistema
+  - Usuario
+source: "investigación"
+validation: "Prueba sin conectividad en campo"
 metric: "Permite registrar datos sin internet. Sincroniza automáticamente al detectar conectividad. Resuelve conflictos básicos."
 created: 2026-02-25
 updated: 2026-03-11
+sprint: null
 tags:
   - requerimiento
   - funcional
