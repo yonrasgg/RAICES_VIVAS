@@ -40,7 +40,7 @@ Cada líder tiene autonomía para tomar decisiones técnicas dentro de su módul
 ### Core Workflow
 | Plugin | Función |
 |--------|--------|
-| **Dataview** | Queries dinámicos, RTM, métricas, KPIs en Dashboard |
+| **SQLSeal** | Consultas SQL dinámicas, RTM, métricas, KPIs en Dashboard |
 | **Templater** | Templates interactivos con prompts y lógica JavaScript |
 | **QuickAdd** | 12 macros: crear tareas, minutas, RF, RNF, riesgos, ADRs, promover action items + decisiones + riesgos |
 | **Tasks** | Emoji format para fechas/prioridades, estados custom (`[/]` In Progress, `[-]` Cancelled) |
@@ -93,24 +93,24 @@ Cada líder tiene autonomía para tomar decisiones técnicas dentro de su módul
 
 | Sistema | Descripción |
 |---------|------------|
-| **Auto-ID Tareas** | Al crear una tarea, Templater + Dataview calcula automáticamente `T-XXX` (nunca manual) |
-| **Auto-ID Decisiones** | Al crear un ADR, Templater + Dataview calcula automáticamente `ADR-XXX` (nunca manual) |
-| **Auto-ID Riesgos** | Al crear un riesgo, Templater + Dataview calcula automáticamente `RSK-XXX` con severidad automática |
+| **Auto-ID Tareas** | Al crear una tarea, Templater calcula automáticamente `T-XXX` (nunca manual) |
+| **Auto-ID Decisiones** | Al crear un ADR, Templater calcula automáticamente `ADR-XXX` (nunca manual) |
+| **Auto-ID Riesgos** | Al crear un riesgo, Templater calcula automáticamente `RSK-XXX` con severidad automática |
 | **Promoción de Action Items** | Los action items de minutas se promueven a tareas formales con un comando QuickAdd |
 | **Promoción de Decisiones** | Las decisiones de minutas se promueven a ADRs formales con trazabilidad bidireccional |
 | **Promoción de Riesgos** | Los riesgos de minutas se promueven a notas formales con severidad calculada |
 | **Trazabilidad bidireccional** | Cada tarea referencia su requerimiento (`requirement:`) y su minuta origen (`source:`) |
-| **RTM dinámica** | Dataview genera la matriz de trazabilidad automáticamente |
-| **Dashboard KPIs** | Home.md muestra métricas en tiempo real via Dataview (progreso, horas, costos) |
+| **RTM dinámica** | SQLSeal genera la matriz de trazabilidad automáticamente |
+| **Dashboard KPIs** | Home.md muestra métricas en tiempo real vía SQLSeal (progreso, horas, costos) |
 | **Esfuerzo Estimado vs Real** | `effort` (estimación) + `effort_actual` (horas reales al completar) → Dashboard calcula ₡ automáticamente usando tarifas por persona |
-| **Costo por Persona** | `assignee` × `effort_actual` × tarifa horaria = costo real. Tarifas: Geovanny ₡7,500/h, Elkin ₡6,000/h, Santiago ₡6,000/h |
-| **Weekly Notes Scoped** | Periodic Notes genera notas semanales con `week_start`/`week_end`. Los queries Dataview filtran por rango: solo muestran datos de esa semana específica |
+| **Costo por Persona** | `assignee` × `effort_actual` × tarifa horaria = costo real. Tarifas: Geovanny ₡8,500/h, Elkin ₡6,500/h, Santiago ₡6,500/h |
+| **Weekly Notes Scoped** | Periodic Notes genera notas semanales con `week_start`/`week_end`. Los queries SQLSeal filtran por rango: solo muestran datos de esa semana específica |
 | **Completadas por Semana** | Las tareas `done` con `completed: YYYY-MM-DD` aparecen automáticamente en la weekly note correspondiente |
 | **Pendientes por Semana** | Las tareas `todo` con `due: YYYY-MM-DD` aparecen en la weekly de su semana límite |
 | **Cycle Time** | `completed - started` = días que tardó una tarea. Se calcula automáticamente en Métricas |
 | **Velocity** | Horas completadas por sprint. Se calcula desde `effort` de tareas `done` |
 | **Sincronización Jira** | Cada tarea/story/epic creada en Obsidian se sincroniza a Jira con `Ctrl+P` → *Create issue in Jira*. Los campos frontmatter (summary, priority, assignee, parent, description, labels, duedate, timetracking) se mapean automáticamente a campos Jira |
-| **Jerarquía Obsidian ↔ Jira** | Epics (`05-Sprints/Epics/`), Stories (`05-Sprints/Stories/`) y Tasks (`05-Sprints/Sprint-XX/`) tienen notas Obsidian con Dataview queries que resuelven la jerarquía `parent` idéntica a Jira |
+| **Jerarquía Obsidian ↔ Jira** | Epics (`05-Sprints/Epics/`), Stories (`05-Sprints/Stories/`) y Tasks (`05-Sprints/Sprint-XX/`) tienen notas Obsidian con SQLSeal queries que resuelven la jerarquía `parent` idéntica a Jira |
 
 > **🔑 Principio fundamental:** El frontmatter YAML es la **base de datos** del proyecto. Los 12 tipos de nota documentados en [[01-Proyecto/Guía de Workflow#4. Esquema de Frontmatter — Referencia Definitiva|Guía de Workflow §4]] definen qué campos son REQUERIDOS para que cada automatización funcione. Un campo vacío o mal escrito = dato invisible para el Dashboard.
 
@@ -134,7 +134,7 @@ Cada líder tiene autonomía para tomar decisiones técnicas dentro de su módul
 | **Tasks emoji format** | `📅` due, `✅` done, `⏫` priority — al final de la línea | Cada checkbox |
 | **Checklist panel** | Panel lateral muestra todos los DoD pendientes (tag: `tarea`) | Tiempo real |
 | **Peer review** | Revisión cruzada de entregables (Santiago lidera QA) | Pre-entrega |
-| **RTM dinámica** | Dataview verifica completitud automáticamente | Tiempo real |
+| **RTM dinámica** | SQLSeal verifica completitud automáticamente | Tiempo real |
 | **Promoción de Action Items** | Items de minutas se formalizan como tareas con trazabilidad | Post-reunión |
 
 ## Gestión de Riesgos
@@ -161,9 +161,9 @@ Ver [[01-Proyecto/Finanzas|Gestión Financiera]] para el detalle completo. Resum
 
 | Integrante | Rol | Tarifa / Hora (₡) | Dedicación Semanal |
 |-----------|-----|-------------------|-------------------|
-| **Geovanny** | Project Lead / Arquitecto | ₡7,500 | 12–15 h/semana |
-| **Elkin** | Líder Investigación / Analista | ₡6,000 | 8–10 h/semana |
-| **Santiago** | Líder QA / Analista | ₡6,000 | 8–10 h/semana |
+| **Geovanny** | Project Lead / Arquitecto | ₡8,500 | 12–15 h/semana |
+| **Elkin** | Líder Investigación / Analista | ₡6,500 | 8–10 h/semana |
+| **Santiago** | Líder QA / Analista | ₡6,500 | 8–10 h/semana |
 
 ### Herramientas (Costo Cero)
 

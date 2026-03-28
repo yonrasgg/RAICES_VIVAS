@@ -44,7 +44,7 @@ RAICES_VIVAS/
 
 ### Principio Fundamental
 
-> **Cada nota tiene un `type` en su frontmatter.** Esto es lo que hace funcionar Dataview, los dashboards y toda la automatización. Sin `type`, una nota es invisible para el sistema.
+> **Cada nota tiene un `type` en su frontmatter.** Esto es lo que hace funcionar SQLSeal, los dashboards y toda la automatización. Sin `type`, una nota es invisible para el sistema.
 
 ### Ciclo de Vida del Proyecto
 
@@ -199,7 +199,7 @@ Tienes **12 macros** pre-configuradas:
 
 ### 4.1 ¿Qué es el frontmatter y por qué es crítico?
 
-Es el bloque YAML al inicio de cada nota, entre `---`. **Es la base de datos del proyecto.** Dataview lee estos campos para generar:
+Es el bloque YAML al inicio de cada nota, entre `---`. **Es la base de datos del proyecto.** SQLSeal lee estos campos para generar:
 
 - **Dashboard KPIs** — progreso, horas, costos (Home.md)
 - **Métricas Lean Six Sigma** — throughput, velocity, cycle time (Métricas.md)
@@ -214,15 +214,15 @@ Es el bloque YAML al inicio de cada nota, entre `---`. **Es la base de datos del
 
 ```mermaid
 flowchart LR
-    FM["🏷️ Frontmatter YAML<br/>(type, status, effort...)"] -->|Dataview lee| SS["⚙️ SQLSeal Engine<br/>(SQL queries, JOIN, GROUP BY)"]
-    DV -->|Genera| DASH["📊 Dashboard<br/>Home.md"]
-    DV -->|Genera| MET["📈 Métricas<br/>Métricas.md"]
-    DV -->|Genera| WK["📅 Weekly Note<br/>2026-W09.md"]
-    DV -->|Genera| RTM["🔗 RTM<br/>Trazabilidad"]
-    DV -->|Genera| RF_T["📋 Tareas Vinculadas<br/>(en cada RF/RNF)"]
+    FM["🏷️ Frontmatter YAML<br/>(type, status, effort...)"] -->|SQLSeal lee| SS["⚙️ SQLSeal Engine<br/>(SQL queries, JOIN, GROUP BY)"]
+    SS -->|Genera| DASH["📊 Dashboard<br/>Home.md"]
+    SS -->|Genera| MET["📈 Métricas<br/>Métricas.md"]
+    SS -->|Genera| WK["📅 Weekly Note<br/>2026-W09.md"]
+    SS -->|Genera| RTM["🔗 RTM<br/>Trazabilidad"]
+    SS -->|Genera| RF_T["📋 Tareas Vinculadas<br/>(en cada RF/RNF)"]
 
     style FM fill:#1a1a2e,stroke:#5cf55f,color:#fff
-    style DV fill:#1a1a2e,stroke:#e8b931,color:#fff
+    style SS fill:#1a1a2e,stroke:#e8b931,color:#fff
     style DASH fill:#1a1a2e,stroke:#3498db,color:#fff
     style MET fill:#1a1a2e,stroke:#3498db,color:#fff
     style WK fill:#1a1a2e,stroke:#3498db,color:#fff
@@ -255,9 +255,9 @@ flowchart LR
 | Regla | Ejemplo correcto | Ejemplo incorrecto | Por qué |
 |-------|-----------------|-------------------|---------|
 | Strings con caracteres especiales van entre comillas | `title: "Diseño de API REST"` | `title: Diseño: API` | Los `:` rompen el YAML |
-| Horas siempre entre comillas | `effort: "8h"` | `effort: 8h` | Sin comillas, Dataview lo parsea como Duration (objeto), no string |
-| Fechas sin comillas, formato ISO | `due: 2026-03-14` | `due: "14/03/2026"` | Dataview necesita ISO para comparaciones con `date()` |
-| Listas con corchetes o guiones | `tags:\n  - tarea` | `tags: tarea` | Dataview espera arrays para campos multi-valor |
+| Horas siempre entre comillas | `effort: "8h"` | `effort: 8h` | Sin comillas, YAML lo parsea de forma inesperada y SQLSeal no lo lee correctamente |
+| Fechas sin comillas, formato ISO | `due: 2026-03-14` | `due: "14/03/2026"` | SQLSeal necesita ISO para comparaciones con operadores SQL |
+| Listas con corchetes o guiones | `tags:\n  - tarea` | `tags: tarea` | SQLSeal espera arrays para campos multi-valor |
 | Campos vacíos: string vacío o nulo | `source: ""` o `completed:` | `source: null` | `null` literal puede causar errores en queries |
 | IDs siempre en formato estándar | `id: T-001` | `id: T001` o `id: 1` | Los queries filtran por patrón `T-XXX` |
 
@@ -275,7 +275,7 @@ A continuación, cada tipo de nota con su esquema completo. Los campos marcados 
 
 ```yaml
 # ── Identidad ──────────────────────────────────────────────
-type: task                    # 🔴 REQUERIDO — Dataview filtra por este valor
+type: task                    # 🔴 REQUERIDO — SQLSeal filtra por este valor
 id: T-XXX                     # 🔴 REQUERIDO — Auto-generado. NUNCA editar manualmente
 title: "Título descriptivo"   # 🔴 REQUERIDO — Aparece en todas las tablas
 
@@ -356,7 +356,7 @@ tags:                         # 🟡 RECOMENDADO — Checklist plugin busca tag 
 > **Auto-ID:** Al crear con QuickAdd, Templater ejecuta `app.vault.getFiles()` para encontrar el `T-XXX` más alto y calcula el siguiente. El archivo se renombra automáticamente. **Nunca crear T-XXX.md manualmente.**
 
 > **⚠️ Error frecuente — `effort` sin comillas:**
-> Si escribes `effort: 8h` (sin comillas), Dataview lo parsea como un objeto `Duration`, no como string. El dashboard mostrará `0h` porque `parseInt("8h")` falla sobre un Duration. **Siempre** escribir `effort: "8h"`.
+> Si escribes `effort: 8h` (sin comillas), YAML lo parsea de forma inesperada y SQLSeal no lo lee correctamente. El dashboard mostrará `0h` porque `parseInt("8h")` falla sobre un tipo inesperado. **Siempre** escribir `effort: "8h"`.
 
 > **⚠️ Error frecuente — `completed` vacío en tarea `done`:**
 > Si cambias `status: done` pero no llenas `completed: YYYY-MM-DD`, la tarea NO aparecerá en ninguna weekly note y el cálculo de Cycle Time será imposible. **Siempre** llenar ambos campos juntos.
@@ -404,7 +404,7 @@ tags:                         # 🟡 RECOMENDADO
   - prioridad/must
 ```
 
-> **Tareas Vinculadas (automático):** Cada RF tiene una query Dataview al final del archivo que lista todas las tareas cuyo campo `requirement:` coincide con el `id` del RF. Esta conexión es automática — solo hay que mantener el campo `requirement` correcto en las tareas.
+> **Tareas Vinculadas (automático):** Cada RF tiene una query SQLSeal al final del archivo que lista todas las tareas cuyo campo `requirement:` coincide con el `id` del RF. Esta conexión es automática — solo hay que mantener el campo `requirement` correcto en las tareas.
 
 ---
 
@@ -449,7 +449,7 @@ tags:                            # 🟡 RECOMENDADO
 
 ```yaml
 # ── Identidad ──────────────────────────────────────────────
-type: meeting                 # 🔴 REQUERIDO — Dataview filtra reuniones
+type: meeting                 # 🔴 REQUERIDO — SQLSeal filtra reuniones
 id: MIN-001                   # 🔴 REQUERIDO — ID único de la minuta
 
 # ── Contenido ──────────────────────────────────────────────
@@ -545,7 +545,7 @@ review_date: 2026-03-15       # 🔴 REQUERIDO — Próxima revisión (auto: +14
 
 ```yaml
 # ── Identidad ──────────────────────────────────────────────
-type: adr                     # 🔴 REQUERIDO — Dataview filtra por "adr" (NO "decision")
+type: adr                     # 🔴 REQUERIDO — SQLSeal filtra por "adr" (NO "decision")
 id: ADR-001                   # 🔴 REQUERIDO — Auto-generado via app.vault + Templater
 title: "Obsidian como sistema central"  # 🔴 REQUERIDO
 
@@ -580,7 +580,7 @@ related_risks:                # 🟡 RECOMENDADO — Riesgos que mitiga/introduc
 
 > **Auto-ID:** El campo `id` se calcula automáticamente (`ADR-XXX`). El archivo se renombra al ID.
 > **Superseded:** Cuando una decisión es reemplazada, se pone `status: superseded` y se llena `superseded_by: ADR-XXX`.
-> **⚠️ type = "adr", NO "decision":** Los queries de Dashboard y Weekly Notes filtran por `type === "adr"`. Si escribes `type: decision`, la nota será invisible para Dataview.
+> **⚠️ type = "adr", NO "decision":** Los queries de Dashboard y Weekly Notes filtran por `type === "adr"`. Si escribes `type: decision`, la nota será invisible para SQLSeal.
 
 ---
 
@@ -598,10 +598,10 @@ title: "Semana 09 — 2026"     # 🔴 REQUERIDO — Auto-generado por Templater
 # ── Rango de Fechas (CRÍTICO para scoping) ─────────────────
 sprint: Sprint-01             # 🟡 RECOMENDADO — Sprint activo esa semana
 week_start: 2026-02-23        # 🔴 REQUERIDO — Lunes de la semana (ISO)
-                              #   → Todas las queries Dataview usan date(this.week_start)
+                              #   → Todas las queries SQLSeal usan date(this.week_start)
                               #   → Sin este campo, las tablas muestran TODO el vault
 week_end: 2026-03-01          # 🔴 REQUERIDO — Domingo de la semana (ISO)
-                              #   → Todas las queries Dataview usan date(this.week_end)
+                              #   → Todas las queries SQLSeal usan date(this.week_end)
                               #   → Sin este campo, las tablas muestran TODO el vault
 
 # ── Metadata ───────────────────────────────────────────────
@@ -619,7 +619,7 @@ tags:                         # 🟡 RECOMENDADO
 > | 🔄 En Progreso | `status = "in-progress" OR status = "review"` | `type`, `status` |
 > | 📋 Pendientes con fecha | `due >= date(this.week_start) AND due <= date(this.week_end) AND status = "todo"` | `type`, `status`, `due` |
 > | 🚧 Bloqueos | `status = "blocked"` | `type`, `status` |
-> | 📊 Métricas | DataviewJS calcula horas, ADRs, reuniones en el rango | `effort_actual`, `completed`, `date` (en ADRs/minutas) |
+> | 📊 Métricas | SQLSeal calcula horas, ADRs, reuniones en el rango | `effort_actual`, `completed`, `date` (en ADRs/minutas) |
 > | ⚠️ Riesgos | `type = "risk" AND status = "open"` | `type`, `status` (en riesgos) |
 >
 > **Ejemplo práctico:** W09 (Feb 23 → Mar 1) muestra T-016 a T-020 como "completadas" porque sus campos `completed` caen entre `2026-02-23` y `2026-03-01`. Las tareas del Sprint-02 (due: Mar 7+) NO aparecen en "Pendientes" porque sus `due` son posteriores al `week_end`.
@@ -774,7 +774,7 @@ created: 2026-02-03           # ⚪ AUTO
 updated: 2026-03-05           # ⚪ AUTO
 ```
 
-> 📌 Las notas Epic incluyen Dataview queries que resuelven automáticamente las Stories, Tasks y RFs vinculadas por el campo `parent`.
+> 📌 Las notas Epic incluyen SQLSeal queries que resuelven automáticamente las Stories, Tasks y RFs vinculadas por el campo `parent`.
 
 ---
 
@@ -810,7 +810,7 @@ created: 2026-02-03           # ⚪ AUTO
 updated: 2026-03-05           # ⚪ AUTO
 ```
 
-> 📌 Las notas Story incluyen Dataview queries que resuelven Subtareas vinculadas, enlace al Epic padre, y enlace al RF.
+> 📌 Las notas Story incluyen SQLSeal queries que resuelven Subtareas vinculadas, enlace al Epic padre, y enlace al RF.
 
 ---
 
@@ -820,7 +820,7 @@ La siguiente tabla es la referencia definitiva de **qué campo alimenta qué aut
 
 | Campo | Tipo de Nota | Lo Consume | Efecto si Falta |
 |-------|-------------|------------|-----------------|
-| `type` | TODAS | Todos los queries Dataview | La nota es **invisible** para todo el sistema |
+| `type` | TODAS | Todos los queries SQLSeal | La nota es **invisible** para todo el sistema |
 | `id` | task, risk, adr, meeting, req | Tablas, links, RTM | No se puede referenciar ni vincular |
 | `status` | task, risk, adr, req | Dashboard KPIs, Kanban, Weekly, Métricas | No aparece en tablas filtradas por estado |
 | `effort` | task | Dashboard "Horas Estimadas", Velocity | Horas estimadas = 0 |
@@ -840,32 +840,36 @@ La siguiente tabla es la referencia definitiva de **qué campo alimenta qué aut
 | `source` | task, risk, adr | Trazabilidad a minuta de origen | Se pierde el historial de decisión |
 | `module` | task, req, context | Filtro por módulo, agrupación | No aparece en vistas filtradas por módulo |
 
-> 📌 **Trazabilidad bidireccional completa:** Cada nota de requerimiento (RF y RNF) incluye una query Dataview al final que lista automáticamente todas las tareas vinculadas. Cada nota de tarea tiene un campo `requirement:` que referencia al requerimiento asociado. Las decisiones y riesgos se interconectan entre sí y con los requerimientos que afectan.
+> 📌 **Trazabilidad bidireccional completa:** Cada nota de requerimiento (RF y RNF) incluye una query SQLSeal al final que lista automáticamente todas las tareas vinculadas. Cada nota de tarea tiene un campo `requirement:` que referencia al requerimiento asociado. Las decisiones y riesgos se interconectan entre sí y con los requerimientos que afectan.
 
 ---
 
 ## 5. Cómo Funciona Cada Herramienta
 
-### 5.1 Dataview — El Motor de Consultas
+### 5.1 SQLSeal — El Motor de Consultas
 
-Dataview es el plugin más importante. Lee el frontmatter de todas las notas y genera tablas/listas dinámicas.
+SQLSeal es el plugin de consultas del vault. Lee el frontmatter de todas las notas y genera tablas dinámicas usando **SQL estándar**.
 
-**Ejemplos de queries que ya están activas:**
+**Sintaxis fundamental:**
 
+````
+```sqlseal
+TABLE t = file(05-Sprints)
+TABLE c = file(08-Recursos/Datos/finanzas-config.csv)
+
+SELECT t.id, t.title, t.status, t.assignee
+FROM t
+WHERE t.type = 'task' AND t.status != 'done'
+ORDER BY t.due ASC
 ```
-// Todas las tareas pendientes
-FROM "05-Sprints"
-WHERE (type = "task" OR type = "subtask") AND status != "done"
-SORT due ASC
+````
 
-// Requerimientos por módulo
-FROM "03-Requerimientos/Funcionales"
-WHERE type = "requirement/functional"
-GROUP BY module
-
-// Horas por responsable (Dataview JS)
-app.vault.getFiles().filter(f => f.path.startsWith('05-Sprints/'))
-```
+**Reglas clave:**
+- La declaración de tabla usa `=` (no `FROM`): `TABLE alias = file(ruta)`
+- Las rutas NO llevan comillas: `file(05-Sprints)` (no `file("05-Sprints")`)
+- Los valores en WHERE sí llevan comillas simples: `t.status = 'done'`
+- Se pueden hacer JOINs entre tablas: `FROM t JOIN c ON t.assignee = c.persona`
+- Columnas `key` y `end` se renombran automáticamente a `key_` y `end_`
 
 > **Regla:** Si una tabla del Dashboard está vacía o muestra datos incorrectos, revisa el `type` y los campos en el frontmatter de las notas afectadas.
 
@@ -1062,7 +1066,7 @@ impediments:
 
 #### Queries Automáticas
 
-Cada nota de tarea (template `_template-tarea.md`) incluye dos queries Dataview que muestran automáticamente:
+Cada nota de tarea (template `_template-tarea.md`) incluye dos queries SQLSeal que muestran automáticamente:
 - **"Esta tarea bloquea"**: Lista de tareas que dependen de esta
 - **"Esta tarea está bloqueada por"**: Lista de tareas que deben completarse primero
 
@@ -1124,7 +1128,7 @@ En las reuniones surgen **Action Items** — cosas por hacer que se registran en
 sequenceDiagram
     participant M as MIN-002.md
     participant QA as QuickAdd
-    participant TP as Templater + Dataview
+    participant TP as Templater + SQLSeal
     participant T as T-026.md
     participant BK as Backlog.md
 
@@ -1254,7 +1258,7 @@ flowchart LR
 |-------|-------|-------------------|
 | Tarea → Requerimiento | `requirement: RF-EDU-01` | Frontmatter + `[[RF-EDU-01]]` al final |
 | Tarea → Minuta | `source: MIN-001` | Frontmatter + `[[MIN-001]]` en Notas |
-| Requerimiento → Tareas | Dataview query automática | Al final de cada RF/RNF |
+| Requerimiento → Tareas | SQLSeal query automática | Al final de cada RF/RNF |
 | Minuta → Tarea | Wikilink post-promoción | `[[T-026\|Descripción]]` en Action Items |
 | Minuta → Decisión | Wikilink post-promoción | `[[ADR-001\|Descripción]]` en Decisiones |
 | Minuta → Riesgo | Wikilink post-promoción | `[[RSK-001\|Descripción]]` en Riesgos |
@@ -1263,7 +1267,7 @@ flowchart LR
 | Riesgo → Requerimientos | `related_requirements:` | Frontmatter + wikilinks en cuerpo |
 | Riesgo → Decisiones | `related_decisions:` | Frontmatter + wikilinks en cuerpo |
 | RTM → Todo | Tabla centralizada | `03-Requerimientos/_RTM.md` |
-| Dashboard → Todo | Queries Dataview | `00-Dashboard/Home.md` |
+| Dashboard → Todo | Queries SQLSeal | `00-Dashboard/Home.md` |
 
 ### 10.3 Verificación de Trazabilidad
 
@@ -1464,7 +1468,7 @@ Cada **Sprint Review** debe incluir:
 
 | Plugin | Función | Uso en el Proyecto |
 |--------|---------|-------------------|
-| **Dataview** | Consultas SQL sobre notas | Dashboards, tablas, métricas dinámicas |
+| **SQLSeal** | Consultas SQL sobre notas | Dashboards, tablas, métricas dinámicas |
 | **Templater** | Templates con lógica JS | Creación automatizada de notas |
 | **QuickAdd** | Macros y comandos rápidos | 12 macros para crear notas, promover decisiones y riesgos |
 | **Kanban** | Tablero visual | Backlog y gestión de tareas |
@@ -1557,7 +1561,7 @@ Crea dropdowns, inputs y toggles que editan directamente los campos YAML de la n
 
 **Cómo funciona:** Al hacer clic en el widget, aparece un menú desplegable. Al seleccionar una opción, el campo del frontmatter YAML se actualiza automáticamente. No hay que editar el YAML manualmente.
 
-> ⚠️ **Regla importante:** Los valores del Meta Bind DEBEN coincidir exactamente con los valores esperados en las queries Dataview. Si Dataview busca `status = "done"`, el Meta Bind debe ofrecer `option(done)`, no `option(Done)` ni `option(completado)`.
+> ⚠️ **Regla importante:** Los valores del Meta Bind DEBEN coincidir exactamente con los valores esperados en las queries SQLSeal. Si SQLSeal busca `status = 'done'`, el Meta Bind debe ofrecer `option(done)`, no `option(Done)` ni `option(completado)`.
 
 ---
 
@@ -1625,7 +1629,7 @@ const monday = moment().startOf('isoWeek').format('YYYY-MM-DD');
 const sunday = moment().endOf('isoWeek').format('YYYY-MM-DD');
 ```
 
-Esto inyecta `week_start` y `week_end` en el frontmatter. Luego, **cada query Dataview** en la nota usa esas fechas como filtro:
+Esto inyecta `week_start` y `week_end` en el frontmatter. Luego, **cada query SQLSeal** en la nota usa esas fechas como filtro:
 
 ```sql
 -- Ejemplo: solo tareas completadas ESTA semana
@@ -1642,7 +1646,7 @@ WHERE completed >= date(this.week_start) AND completed <= date(this.week_end)
 | 🔄 En Progreso | Tareas activas (snapshot global) | `status = "in-progress" OR "review"` |
 | 📋 Pendientes | Tareas con `due` en el rango | `due >= week_start AND due <= week_end AND status = "todo"` |
 | 🚧 Bloqueos | Tareas bloqueadas (snapshot global) | `status = "blocked"` |
-| 📊 Métricas | KPIs calculados: horas, ADRs, reuniones | DataviewJS con rango week_start ↔ week_end |
+| 📊 Métricas | KPIs calculados: horas, ADRs, reuniones | SQLSeal con rango week_start ↔ week_end |
 | ⚠️ Riesgos | Riesgos abiertos (snapshot global) | `type = "risk" AND status = "open"` |
 
 > **⚠️ Campos críticos para que funcione:** `week_start` y `week_end` en el frontmatter de la weekly note, y `completed`/`due` en las tareas. Si faltan, las tablas muestran datos globales en vez de semanales. Ver §4.4.7 para el esquema completo.
@@ -1691,13 +1695,13 @@ Contenido columna 3
 
 No es un plugin sino una técnica nativa de Obsidian para mejorar rendimiento.
 
-**Dónde se usa:** Dashboard Home, Métricas — secciones pesadas de DataviewJS que no necesitan verse inmediatamente.
+**Dónde se usa:** Dashboard Home, Métricas — secciones pesadas de SQLSeal que no necesitan verse inmediatamente.
 
 **Sintaxis — Callout colapsado (cerrado por defecto):**
 ```
 > [!note]- Título de la sección (clic para expandir)
 > 
-> Contenido pesado aquí (queries Dataview, tablas grandes, etc.)
+> Contenido pesado aquí (queries SQLSeal, tablas grandes, etc.)
 ```
 
 **Sintaxis — Callout expandido por defecto:**
@@ -1737,7 +1741,7 @@ Cada día al abrir el calendario, se crea una nota con la template de daily note
 **Cómo funciona:**
 - El template calcula `week_start` (lunes) y `week_end` (domingo) automáticamente con Templater + Moment.js
 - Inyecta esas fechas en el frontmatter de la weekly note
-- Cada query Dataview dentro de la nota filtra por `date(this.week_start)` y `date(this.week_end)`
+- Cada query SQLSeal dentro de la nota filtra por `date(this.week_start)` y `date(this.week_end)`
 - **Resultado:** Cada weekly note es un snapshot aislado de esa semana específica
 
 **Para que las weekly notes muestren datos correctos, las tareas DEBEN tener:**
@@ -1759,7 +1763,7 @@ El flujo más rápido para actualizar el estado de una tarea:
    - Cambiar Estado → `done`
    - Cambiar Prioridad → `low`
 3. El frontmatter se actualiza automáticamente
-4. El Dashboard refleja el cambio inmediatamente (Dataview lee el nuevo valor)
+4. El Dashboard refleja el cambio inmediatamente (SQLSeal lee el nuevo valor)
 
 **⚡ Esto reemplaza:** Abrir YAML → editar campo → guardar → cerrar vista source.
 
@@ -1814,7 +1818,7 @@ El Dashboard Home tiene 7 botones precreados:
 - [ ] Verificar que el Dashboard (Home) abre automáticamente con banner
 - [ ] Revisar esta Guía de Workflow completa
 - [ ] Probar crear una nota con QuickAdd (`Ctrl+P` → QuickAdd)
-- [ ] Verificar que todos los requerimientos muestran la sección 'Tareas Vinculadas' (Dataview)
+- [ ] Verificar que todos los requerimientos muestran la sección 'Tareas Vinculadas' (SQLSeal)
 - [ ] Probar cambiar un estado de tarea con Meta Bind (ver §15.3)
 - [ ] Probar abrir el Checklist panel (ver §14.4)
 - [ ] Verificar que Periodic Notes está configurado (ver §13.2)
@@ -1846,14 +1850,14 @@ El Dashboard Home tiene 7 botones precreados:
 | Problema | Solución |
 |----------|----------|
 | Dashboard muestra tablas vacías | Verificar `type:` en frontmatter de las notas |
-| Dataview no actualiza | `Ctrl+P` → "Dataview: Force Refresh All Views" |
+| SQLSeal no actualiza | `Ctrl+P` → "Reload app without saving" → esperar 5 seg |
 | Template no se aplica | Verificar que QuickAdd/Templater estén habilitados |
 | Kanban no muestra tarjetas | Verificar formato del kanban (no editar en modo source) |
 | Git conflict | `Ctrl+P` → "Git: Pull" → resolver conflicts manualmente |
 | Mermaid no renderiza | Verificar sintaxis → usar preview mode (`Ctrl+E`) |
 | Nota no aparece en queries | Verificar que el campo `type` existe y es correcto |
 | Meta Bind no muestra dropdown | Verificar que el plugin está habilitado y la sintaxis es exacta |
-| Meta Bind cambia valor pero Dashboard no refleja | Forzar refresh Dataview (`Ctrl+P` → "Force Refresh") |
+| Meta Bind cambia valor pero Dashboard no refleja | Forzar refresh SQLSeal (`Ctrl+P` → "Reload app without saving") |
 | Banner no aparece en nota | Verificar `banner_src:` en frontmatter con ruta correcta al .png |
 | Banners muestra imagen cortada | Ajustar `banner_y:` (0.0=top, 0.5=centro, 1.0=bottom) |
 | Checklist panel vacío | Verificar configuración de carpeta/tags en Settings → Checklist |
@@ -1876,7 +1880,7 @@ El proyecto cuenta con un documento de gestión financiera completo. Ver [[01-Pr
 
 | Categoría | Descripción | Estado |
 |-----------|------------|--------|
-| **Recursos Humanos** | Tarifas por hora × horas invertidas (Dataview dinámico) | ✅ Activo |
+| **Recursos Humanos** | Tarifas por hora × horas invertidas (SQLSeal dinámico) | ✅ Activo |
 | **Herramientas** | Stack 100% gratuito (Obsidian, GitHub, Git, VS Code) | ✅ Costo cero |
 | **Administrativo / Legal** | Registro de marca, constitución de asociación, MEIC | ⏳ Fase implementación |
 | **Gubernamental** | Plan de gestión de marca, consulta previa CONAI | ⏳ Fase implementación |
@@ -1900,9 +1904,9 @@ Las horas trabajadas se rastrean automáticamente via el campo `effort:` en cada
 
 | Integrante | Tarifa (₡/h) | Tarifa (USD/h) |
 |-----------|--------------|----------------|
-| Geovanny | ₡7,500 | ~$14 |
-| Elkin | ₡6,000 | ~$11 |
-| Santiago | ₡6,000 | ~$11 |
+| Geovanny | ₡8,500 | ~$16 |
+| Elkin | ₡6,500 | ~$12 |
+| Santiago | ₡6,500 | ~$12 |
 
 > Tipo de cambio referencial: ₡535/USD (BCCR, marzo 2026)
 
@@ -1936,7 +1940,7 @@ Los gráficos de colaboración (pie, bar) y velocidad (line) se actualizan en ca
 
 ---
 
-*Guía creada: 2026-02-27 · Última actualización: 2026-03-05*
+*Guía creada: 2026-02-27 · Última actualización: 2026-03-08*
 *Equipo: Geovanny (Project Lead) · Elkin (Líder Investigación — SAB) · Santiago (Líder QA — SAL)*
-*Versión: 8.1 — §4.4.1 incluye campos de dependencia (blocks, blocked_by, impediments). §6.5 documenta el sistema de dependencias e impedimentos. Integración Jira Cloud: §4.4.13–14 documentan tipos epic/story. §14 incluye plugin jira-sync. §17 incluye troubleshooting Jira. Frontmatter de tareas ampliado con campos Jira Sync. Jerarquía Epic > Story > Task/Subtask alineada con Jira.*
+*Versión: 9.0 — Migración completa Dataview → SQLSeal. §5.1 reescrita para documentar sintaxis SQLSeal (TABLE alias = file(path), SQL estándar). Todas las referencias actualizadas. Tarifas actualizadas a ₡8,500/₡6,500/₡6,500. Integración Jira Cloud: §4.4.13–14 documentan tipos epic/story. §14 incluye plugin jira-sync. §17 incluye troubleshooting Jira.*
 *Revisar y actualizar cada sprint*

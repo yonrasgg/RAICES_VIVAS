@@ -84,14 +84,14 @@ El script `08-Recursos/scripts/setup-hooks.sh` está disponible como referencia 
 
 ## 6. Estructura del Vault — Guía Completa
 
-> Cada directorio tiene un propósito específico. Usar la carpeta correcta es **CRÍTICO**: las queries de Dataview filtran por ruta (`FROM "05-Sprints"`, etc.), así que una nota en la carpeta equivocada simplemente **no aparece** en los dashboards.
+> Cada directorio tiene un propósito específico. Usar la carpeta correcta es **CRÍTICO**: las queries de SQLSeal filtran por ruta (`TABLE t = file(05-Sprints)`, etc.), así que una nota en la carpeta equivocada simplemente **no aparece** en los dashboards.
 
 ### 📊 `00-Dashboard/` — Centro de Control
 
 | Archivo | Qué hace | Cómo se actualiza |
 |---------|----------|-------------------|
-| `Home.md` | Dashboard principal: KPIs, botones Quick Action, Jira hierarchy, navegación, milestones | **Automático** vía Dataview — No editar queries manualmente |
-| `Métricas.md` | Análisis profundo: Lean Six Sigma, velocidad por sprint, costos, Quality Scorecard | **Automático** vía Dataview |
+| `Home.md` | Dashboard principal: KPIs, botones Quick Action, Jira hierarchy, navegación, milestones | **Automático** vía SQLSeal — No editar queries manualmente |
+| `Métricas.md` | Análisis profundo: Lean Six Sigma, velocidad por sprint, costos, Quality Scorecard | **Automático** vía SQLSeal |
 | `Roadmap.md` | Gantt visual (Mermaid) con milestones del proyecto | **Manual** — actualizar fechas y estados al cerrar cada fase |
 
 > 💡 **Home.md se abre automáticamente al iniciar Obsidian** (plugin Homepage). Es tu punto de partida cada día. Desde ahí podés navegar a cualquier parte del proyecto con un solo clic.
@@ -195,7 +195,7 @@ Contiene `README.md` con las reglas de QA del vault: convenciones de naming, fro
 
 ### 📅 `Daily Notes/` — Notas Semanales
 
-Notas semanales automáticas generadas por Periodic Notes (cada lunes). Formato: `YYYY-WXX.md`. Contienen queries Dataview que muestran el snapshot de la semana: tareas completadas, riesgos, decisiones, reuniones.
+Notas semanales automáticas generadas por Periodic Notes (cada lunes). Formato: `YYYY-WXX.md`. Contienen queries SQLSeal que muestran el snapshot de la semana: tareas completadas, riesgos, decisiones, reuniones.
 
 ---
 
@@ -520,7 +520,7 @@ Notas semanales automáticas generadas por Periodic Notes (cada lunes). Formato:
 | 1 | **No editar el mismo archivo simultáneamente** | Evita conflictos de merge |
 | 2 | **Coordinar por chat antes de editar archivos compartidos** | Reducir colisiones |
 | 3 | **Usar QuickAdd para crear notas** | Garantiza frontmatter correcto y Auto-ID |
-| 4 | **No editar dashboards ni queries manualmente** | Se actualizan solos vía Dataview |
+| 4 | **No editar dashboards ni queries manualmente** | Se actualizan solos vía SQLSeal |
 | 5 | **No borrar archivos sin avisar al equipo** | Especialmente templates y configs |
 | 6 | **Si hay conflicto de merge** → avisar al equipo inmediatamente | No resolver solo si no estás seguro |
 | 7 | **Mantener el campo `status:` actualizado** en tus tareas | Dashboards dependen de este campo |
@@ -530,7 +530,7 @@ Notas semanales automáticas generadas por Periodic Notes (cada lunes). Formato:
 
 ## 11. Frontmatter — El Motor de Automatización del Vault
 
-El frontmatter (bloque YAML entre `---` al inicio de cada nota) es la **base de datos del proyecto**. Los dashboards, métricas, weekly notes y tablas automáticas leen estos campos via Dataview. Si un campo está vacío o incorrecto, la nota **desaparece** del sistema.
+El frontmatter (bloque YAML entre `---` al inicio de cada nota) es la **base de datos del proyecto**. Los dashboards, métricas, weekly notes y tablas automáticas leen estos campos vía SQLSeal. Si un campo está vacío o incorrecto, la nota **desaparece** del sistema.
 
 > 📌 **Referencia completa:** [[Guía de Workflow]] §4 contiene los 12 esquemas detallados con campos REQUERIDO/RECOMENDADO/OPCIONAL y el mapa campo→automatización. Esta sección es un resumen rápido.
 
@@ -553,7 +553,7 @@ El frontmatter (bloque YAML entre `---` al inicio de cada nota) es la **base de 
 
 > **⚠️ Error #1 más común:** Cambiar `status: done` pero olvidar llenar `completed: YYYY-MM-DD` y `effort_actual: "Xh"`. Esto hace que la tarea no aparezca en la weekly note y el costo se calcule como ₡0.
 
-> **⚠️ Error #2 más común:** Escribir `effort: 8h` sin comillas. Dataview lo interpreta como Duration (objeto), no string. **Siempre** usar `effort: "8h"` con comillas.
+> **⚠️ Error #2 más común:** Escribir `effort: 8h` sin comillas. YAML lo interpreta de forma inesperada y SQLSeal no lo lee correctamente. **Siempre** usar `effort: "8h"` con comillas.
 
 **Checklist al completar una tarea:**
 1. ✅ `status: done`
@@ -598,14 +598,14 @@ El frontmatter (bloque YAML entre `---` al inicio de cada nota) es la **base de 
 
 ```mermaid
 flowchart LR
-    FM["🏷️ Tú editas el frontmatter<br/>(type, status, effort,<br/>completed, due...)"] -->|Dataview lee<br/>los campos| SS["⚙️ SQLSeal Engine<br/>(SQL queries, JOIN, GROUP BY)"]
-    DV -->|Genera tablas<br/>y KPIs| DASH["📊 Dashboard<br/>Home.md · Métricas.md"]
-    DV -->|Filtra por<br/>week_start ↔ week_end| WK["📅 Weekly Note<br/>(snapshot de esa semana)"]
+    FM["🏷️ Tú editas el frontmatter<br/>(type, status, effort,<br/>completed, due...)"] -->|SQLSeal lee<br/>los campos| SS["⚙️ SQLSeal Engine<br/>(SQL queries, JOIN, GROUP BY)"]
+    SS -->|Genera tablas<br/>y KPIs| DASH["📊 Dashboard<br/>Home.md · Métricas.md"]
+    SS -->|Filtra por<br/>week_start ↔ week_end| WK["📅 Weekly Note<br/>(snapshot de esa semana)"]
 
     FM -->|Al completar tarea:<br/>1. status: done<br/>2. completed: YYYY-MM-DD<br/>3. effort_actual: Xh| WK
 
     style FM fill:#1a1a2e,stroke:#5cf55f,color:#fff
-    style DV fill:#1a1a2e,stroke:#e8b931,color:#fff
+    style SS fill:#1a1a2e,stroke:#e8b931,color:#fff
     style DASH fill:#1a1a2e,stroke:#3498db,color:#fff
     style WK fill:#1a1a2e,stroke:#e06c75,color:#fff
 ```
@@ -624,7 +624,7 @@ flowchart LR
 | Plugins no cargan | Cache corrupto | 1. `Ctrl+P` → `Reload app without saving` → `Enter`. 2. Si persiste: cierra, borra `.obsidian/workspace.json`, reabre. |
 | Conflicto de merge | Dos personas editaron el mismo archivo | 1. `Ctrl+P` → `Git: Pull` (intenta auto-merge). 2. Si falla: abrir terminal → `git pull --rebase`. 3. Si hay conflicto: buscar `<<<<<<<` en el archivo → resolver → commit. |
 | Banner no aparece | Campo `banner_src:` incorrecto | 1. Abrir frontmatter. 2. Verificar que la ruta del archivo existe en `08-Recursos/Imágenes/`. |
-| Dashboard vacío | Dataview no ha indexado | 1. `Ctrl+P` → `Dataview: Force refresh all views` → `Enter`. 2. Espera 5 seg. |
+| Dashboard vacío | SQLSeal no ha renderizado | 1. `Ctrl+P` → `Reload app without saving` → `Enter`. 2. Espera 5 seg para que SQLSeal re-indexe. |
 | QuickAdd no muestra macros | Plugin no cargó correctamente | 1. `Ctrl+P` → `Reload app without saving`. 2. Verificar: Settings → Community Plugins → QuickAdd está habilitado (toggle azul). |
 | Tarea no aparece en Dashboard | Frontmatter incorrecto | 1. Abrir la tarea. 2. Verificar que tiene `type: task`. 3. Verificar `status:` tiene un valor válido. |
 | Checklist panel vacío | Tag incorrecto | 1. Verificar que las tareas tienen `tags: tarea` en frontmatter. 2. Verificar que están en `05-Sprints/`. |
@@ -640,7 +640,7 @@ Si **no puedes instalar Obsidian** en alguna máquina (computadora de la univers
 3. Presiona la tecla **`.`** (punto) en tu teclado
 4. Se abre **VS Code Web** — puedes editar cualquier archivo Markdown
 5. Los cambios se commitean directamente al repo
-6. ⚠️ **Limitación:** No tendrás Dataview, QuickAdd ni templates — solo edición básica
+6. ⚠️ **Limitación:** No tendrás SQLSeal, QuickAdd ni templates — solo edición básica
 
 ---
 
@@ -772,7 +772,7 @@ Cada template incluye campos de Jira en el frontmatter. Al crear la nota, los ca
 
 ### Navegación por Jerarquía en Obsidian
 
-Cada nota tiene **Dataview queries automáticas** que muestran la jerarquía:
+Cada nota tiene **SQLSeal queries automáticas** que muestran la jerarquía:
 
 - **Epic** → lista Stories vinculadas + Tasks directas + RFs del módulo + barra de progreso
 - **Story** → lista Subtasks vinculadas + enlace a Epic padre + enlace a RF
