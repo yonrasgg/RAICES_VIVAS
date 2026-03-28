@@ -60,16 +60,16 @@ Módulo de gestión educativa comunitaria para el Sistema Integral **Raíces Viv
 ## User Stories Vinculadas
 
 ```sqlseal
-SELECT name as "Story", key as "Jira", title as "Historia", status as "Estado", story_points as "SP", priority as "Prioridad"
+SELECT name as "Story", key_ as "Jira", title as "Historia", status as "Estado", story_points as "SP", priority as "Prioridad"
 FROM files
 WHERE type = 'story' AND parent = @key AND path LIKE '05-Sprints/Stories%'
-ORDER BY key ASC
+ORDER BY key_ ASC
 ```
 
 ## Tareas Directas (bajo este Epic)
 
 ```sqlseal
-SELECT name as "Tarea", key as "Jira", title as "Título", status as "Estado", assignee as "Responsable", sprint as "Sprint"
+SELECT name as "Tarea", key_ as "Jira", title as "Título", status as "Estado", assignee as "Responsable", sprint as "Sprint"
 FROM files
 WHERE (type = 'task' OR type = 'subtask') AND parent = @key AND path LIKE '05-Sprints%'
 ORDER BY sprint ASC, id ASC

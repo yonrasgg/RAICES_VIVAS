@@ -77,10 +77,10 @@ ORDER BY r.name ASC
 ### Vinculación Jira (Epics → Stories)
 
 ```sqlseal
-SELECT key as "Jira Key", summary as "Epic / Story", issuetype as "Tipo", parent as "Parent", status as "Estado"
+SELECT key_ as "Jira Key", summary as "Epic / Story", issuetype as "Tipo", parent as "Parent", status as "Estado"
 FROM files
 WHERE (type = 'epic' OR type = 'story') AND (path LIKE '05-Sprints/Epics%' OR path LIKE '05-Sprints/Stories%')
-ORDER BY key ASC
+ORDER BY key_ ASC
 ```
 
 ### Trazabilidad RF ↔ Casos de Uso (Avance 2)

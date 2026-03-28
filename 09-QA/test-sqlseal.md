@@ -147,6 +147,14 @@ SELECT name, title FROM files WHERE type = 'risk' LIMIT 1
 
 ---
 
+## 12. Diagnóstico: columna key_ (sanitise rename)
+
+```sqlseal
+SELECT name, key_ FROM files WHERE type = 'epic' LIMIT 3
+```
+
+---
+
 ## Resultado esperado
 
 | Sección | Debe mostrar |

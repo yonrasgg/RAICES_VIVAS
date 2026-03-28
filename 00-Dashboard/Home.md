@@ -399,14 +399,14 @@ shadow: off
 
 ```sqlseal
 SELECT
-  "key" as "Key",
+  key_ as "Key",
   summary as "Nombre",
   issuetype as "Tipo",
   status as "Estado",
   story_points as "SP"
 FROM files
 WHERE (type = 'epic' OR type = 'story') AND (path LIKE '05-Sprints/Epics%' OR path LIKE '05-Sprints/Stories%')
-ORDER BY key ASC
+ORDER BY key_ ASC
 ```
 
 ---
