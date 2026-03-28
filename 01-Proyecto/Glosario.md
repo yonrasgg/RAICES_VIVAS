@@ -123,11 +123,11 @@ tags:
 | Término | Definición |
 |---------|-----------|
 | **Backlog** | Lista priorizada de todos los elementos de trabajo pendientes del proyecto (tareas, historias de usuario, bugs) |
-| **Dataview** | Plugin de Obsidian que permite hacer consultas tipo SQL sobre las notas del vault usando el frontmatter como base de datos |
+| **SQLSeal** | Plugin de Obsidian que reemplazó a Dataview; permite hacer consultas SQL reales (SQLite) sobre las notas del vault usando el frontmatter como base de datos (ver [[ADR-017]]) |
 | **Frontmatter** | Bloque de metadatos en formato YAML al inicio de cada archivo Markdown, delimitado por `---`; contiene type, id, status, tags, etc. |
 | **Kanban** | Método visual de gestión de trabajo que representa tareas como tarjetas en columnas (Todo, In Progress, Done) |
 | **Modelo ER** | Modelo Entidad-Relación; representación gráfica de las entidades de un sistema y sus relaciones |
-| **Plugin** | Extensión que agrega funcionalidad a Obsidian (ej. Dataview, Templater, QuickAdd, Banner, obsidian-git) |
+| **Plugin** | Extensión que agrega funcionalidad a Obsidian (ej. SQLSeal, Templater, QuickAdd, Banner, obsidian-git) |
 | **QuickAdd** | Plugin de Obsidian que permite crear notas desde macros predefinidas con prompts interactivos |
 | **Sprint** | Período de tiempo fijo (1-4 semanas) durante el cual el equipo trabaja en un conjunto comprometido de tareas |
 | **Template / Plantilla** | Archivo modelo con estructura predefinida que se usa para crear notas nuevas de un tipo específico (tarea, minuta, RF, etc.) |

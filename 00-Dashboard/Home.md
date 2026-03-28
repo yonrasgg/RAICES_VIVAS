@@ -580,5 +580,5 @@ ORDER BY name ASC
 
 ---
 
-*Dashboard dinámico · Banners + Buttons + Multi-Column + Dataview + Charts + Mermaid + Jira Sync*
+*Dashboard dinámico · Banners + Buttons + Multi-Column + SQLSeal + Charts + Mermaid + Jira Sync*
 *Última configuración: 2026-03-26*

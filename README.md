@@ -266,7 +266,7 @@ El proyecto se gestiona con un enfoque **ágil adaptado** para contexto académi
         <strong>Obsidian</strong>
       </a>
       <br/>
-      <sub>Knowledge base, dashboard, templates, automatizaciones (Dataview, Templater, QuickAdd, Kanban)</sub>
+      <sub>Knowledge base, dashboard, templates, automatizaciones (SQLSeal, Templater, QuickAdd, Kanban)</sub>
     </td>
     <td align="center" width="150">
       <a href="https://git-scm.com/">

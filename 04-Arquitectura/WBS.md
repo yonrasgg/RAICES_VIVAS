@@ -122,7 +122,7 @@ graph LR
 | RV-4.3 | Seguridad/Privacidad | — | — | [[RNF-02]], [[RNF-03]] |
 | RV-4.4 | Rendimiento/Compat. | — | — | [[RNF-04]], [[RF-TRANS-03]] |
 
-### Dataview — Estado de Tareas por Epic
+### SQLSeal — Estado de Tareas por Epic
 
 ```sqlseal
 SELECT
@@ -137,4 +137,4 @@ ORDER BY key ASC
 
 ---
 
-*WBS dinámico · Mermaid + Dataview + Jira Sync · Última actualización: 2026-03-05*
+*WBS dinámico · Mermaid + SQLSeal + Jira Sync · Última actualización: 2026-03-05*

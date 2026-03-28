@@ -14,7 +14,7 @@ author: Geovanny
 ---
 # Matriz de Trazabilidad de Requerimientos (RTM)
 
-> Vista dinámica generada por Dataview. Cada requerimiento es una nota independiente con frontmatter estructurado.
+> Vista dinámica generada por SQLSeal. Cada requerimiento es una nota independiente con frontmatter estructurado.
 
 ## Matriz Dinámica
 

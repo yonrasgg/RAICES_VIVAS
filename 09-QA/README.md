@@ -79,7 +79,7 @@ El frontmatter YAML es la **base de datos** del proyecto. Un campo vacío, mal e
 
 | Error | Impacto en automatización | Cómo detectar |
 |-------|--------------------------|---------------|
-| `effort: 8h` (sin comillas) | Dashboard muestra 0h. Dataview parsea como Duration, no string | `grep -rn "^effort: [0-9]" 05-Sprints/` |
+| `effort: 8h` (sin comillas) | Dashboard muestra 0h. SQLSeal parsea como Duration, no string | `grep -rn "^effort: [0-9]" 05-Sprints/` |
 | `status: done` sin `completed:` | Tarea no aparece en weekly "Completadas esta semana" | Comparar conteo `done` vs conteo `completed: 20` |
 | `status: done` sin `effort_actual:` | Costo real = ₡0, Weekly muestra 0h ejecutadas | `grep -l "status: done" \| xargs grep "effort_actual: \"\""` |
 | `type: decision` (en vez de `adr`) | ADR invisible para Dashboard y Métricas | `grep -rn "^type: decision"` |

@@ -49,7 +49,7 @@ end: '<% tp.system.prompt("Fecha fin del sprint (YYYY-MM-DD)") %>'
 - [ ] Links de trazabilidad actualizados
 - [ ] Revisado por al menos 1 integrante del equipo
 
-## Tareas del Sprint (Dataview)
+## Tareas del Sprint (SQLSeal)
 
 ```sqlseal
 SELECT name as "ID", status as "Estado", priority as "Prioridad", assignee as "Responsable", requirement as "Requerimiento"

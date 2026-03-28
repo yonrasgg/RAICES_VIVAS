@@ -142,7 +142,7 @@ ORDER BY due ASC
 
 ---
 
-*Roadmap dinámico · Mermaid + Dataview + Jira Sync · Última actualización: 2026-03-26 (Sprint-02 completado)*
+*Roadmap dinámico · Mermaid + SQLSeal + Jira Sync · Última actualización: 2026-03-26 (Sprint-02 completado)*
 
 ## Navegación
 
