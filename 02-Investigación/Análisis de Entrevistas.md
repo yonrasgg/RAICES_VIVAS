@@ -92,7 +92,7 @@ mindmap
 
 | Gap | Descripción | Acción recomendada |
 |-----|-------------|-------------------|
-| G-EDU-01 | No existe RF para compartir materiales entre docentes de distintas comunidades del mismo pueblo | Crear RF-EDU-06: "Repositorio compartido inter-comunitario" |
+| G-EDU-01 | No existe RF para compartir materiales entre docentes de distintas comunidades del mismo pueblo | Crear RF-EDU-07: "Repositorio compartido inter-comunitario" |
 | G-EDU-02 | No hay integración prevista con sistema MEP para exportar progreso | Evaluar viabilidad de exportación → sistema MEP en Sprint-04 |
 | G-EDU-03 | Formación docente no contemplada en el alcance actual | Agregar tarea de capacitación en Sprint-03: "Taller de formación para docentes piloto" |
 
@@ -191,7 +191,7 @@ La siguiente tabla consolida los gaps identificados que requieren acción:
 
 | # | Gap | Módulo | Acción | Prioridad | Sprint sugerido |
 |---|-----|--------|--------|-----------|----------------|
-| G-EDU-01 | Repositorio compartido inter-comunitario | EDU | Crear RF-EDU-06 | Alta | Sprint-03 |
+| G-EDU-01 | Repositorio compartido inter-comunitario | EDU | Crear RF-EDU-07 | Alta | Sprint-03 |
 | G-EDU-02 | Exportación a sistema MEP | EDU | Evaluar viabilidad | Baja | Sprint-04+ |
 | G-EDU-03 | Capacitación docente piloto | EDU | Crear tarea capacitación | Media | Sprint-03 |
 | G-SAB-01 | Revocación de contenido | SAB | Crear RF-SAB-06 | Alta | Sprint-03 |
@@ -209,7 +209,7 @@ La siguiente tabla consolida los gaps identificados que requieren acción:
 ### 4.1 Para Sprint-03 (Prioridad inmediata)
 
 1. **Reemplazar datos simulados con datos reales** — Las 4 entrevistas y 3 observaciones están marcadas `simulated: true`. Planificar trabajo de campo real.
-2. **Crear los 3 requerimientos faltantes** (RF-EDU-06, RF-SAB-06, RF-SAB-07) identificados en esta síntesis.
+2. **Crear los 4 requerimientos faltantes** (RF-EDU-07, RF-SAB-06, RF-SAB-07, RF-SAL-06) identificados en esta síntesis.
 3. **Formalizar protocolo de consentimiento CARE** como documento en `01-Proyecto/` con flujo de aprobación por ADI + Consejo/Awá.
 4. **Reforzar RNF-04** (privacidad) con requerimientos específicos de protección de datos de salud.
 5. **Documentar campo `tratamiento_tradicional`** en modelo de datos de SAL.
@@ -244,7 +244,7 @@ La siguiente tabla consolida los gaps identificados que requieren acción:
 | Módulos cubiertos | 4 (EDU, SAB, SAL, TRANS) |
 | Requerimientos validados | 15 RF (de 15 existentes) = 100% validación |
 | Gaps identificados | 10 necesidades no cubiertas |
-| Nuevos RF sugeridos | 4 (RF-EDU-06, RF-SAB-06, RF-SAB-07, RF-SAL-06) |
+| Nuevos RF sugeridos | 4 (RF-EDU-07, RF-SAB-06, RF-SAB-07, RF-SAL-06) |
 
 ---
 
