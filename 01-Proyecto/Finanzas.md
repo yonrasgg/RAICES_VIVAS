@@ -20,7 +20,7 @@ tags:
 ## 1. Resumen de Costos del Proyecto
 
 ```sqlseal
-TABLE tasks FROM file("05-Sprints") WHERE type = 'task' OR type = 'subtask'
+TABLE tasks FROM file("05-Sprints")
 TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
 
 SELECT
@@ -33,7 +33,7 @@ SELECT
   SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Real ₡"
 FROM tasks t
 LEFT JOIN config c ON t.assignee = c.persona
-WHERE t.effort IS NOT NULL
+WHERE (t.type = 'task' OR t.type = 'subtask') AND t.effort IS NOT NULL
 GROUP BY t.assignee
 ORDER BY SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) DESC
 ```
@@ -63,7 +63,7 @@ ORDER BY SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT
 ### 2.2 Horas Invertidas por Sprint — Plan vs Real (Dinámico)
 
 ```sqlseal
-TABLE tasks FROM file("05-Sprints") WHERE (type = 'task' OR type = 'subtask') AND sprint IS NOT NULL AND effort IS NOT NULL
+TABLE tasks FROM file("05-Sprints")
 
 SELECT
   t.sprint as "Sprint",
@@ -78,6 +78,7 @@ SELECT
   SUM(CAST(REPLACE(t.effort,'h','') AS INTEGER)) || 'h' as "Total Plan",
   SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER)) || 'h' as "Total Real"
 FROM tasks t
+WHERE ((t.type = 'task' OR t.type = 'subtask') AND t.sprint IS NOT NULL AND t.effort IS NOT NULL)
 GROUP BY t.sprint
 ORDER BY t.sprint ASC
 ```
@@ -87,7 +88,7 @@ ORDER BY t.sprint ASC
 ### 2.3 Costo Acumulado por Integrante — Plan vs Real
 
 ```sqlseal
-TABLE tasks FROM file("05-Sprints") WHERE (type = 'task' OR type = 'subtask') AND effort IS NOT NULL
+TABLE tasks FROM file("05-Sprints")
 TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
 
 SELECT
@@ -101,6 +102,7 @@ SELECT
   ROUND(SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) / 535.0) as "Real (USD)"
 FROM tasks t
 LEFT JOIN config c ON t.assignee = c.persona
+WHERE ((t.type = 'task' OR t.type = 'subtask') AND t.effort IS NOT NULL)
 GROUP BY t.assignee
 ORDER BY SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) DESC
 ```
@@ -110,7 +112,7 @@ ORDER BY SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT
 ### 2.4 Costo por Sprint (Dinámico)
 
 ```sqlseal
-TABLE tasks FROM file("05-Sprints") WHERE (type = 'task' OR type = 'subtask') AND sprint IS NOT NULL AND effort IS NOT NULL
+TABLE tasks FROM file("05-Sprints")
 TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
 
 SELECT
@@ -125,6 +127,7 @@ SELECT
   ROUND(CAST(SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) AS REAL) / NULLIF(SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)), 0), 2) as "CPI"
 FROM tasks t
 LEFT JOIN config c ON t.assignee = c.persona
+WHERE ((t.type = 'task' OR t.type = 'subtask') AND t.sprint IS NOT NULL AND t.effort IS NOT NULL)
 GROUP BY t.sprint
 ORDER BY t.sprint ASC
 ```
@@ -154,7 +157,7 @@ beginAtZero: true
 ### 2.5 Indicadores Financieros (Dinámico)
 
 ```sqlseal
-TABLE tasks FROM file("05-Sprints") WHERE (type = 'task' OR type = 'subtask') AND effort IS NOT NULL
+TABLE tasks FROM file("05-Sprints")
 TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
 
 SELECT
@@ -169,6 +172,7 @@ SELECT
   SUM(CASE WHEN t.status = 'done' THEN 1 ELSE 0 END) || ' / ' || COUNT(*) as "Completadas"
 FROM tasks t
 LEFT JOIN config c ON t.assignee = c.persona
+WHERE ((t.type = 'task' OR t.type = 'subtask') AND t.effort IS NOT NULL)
 ```
 
 > **Referencia:** CPI > 0.95 🟢 · CPI 0.85–0.95 🟡 · CPI < 0.85 🔴 · SPI > 0.90 🟢 · SPI < 0.90 🟡
