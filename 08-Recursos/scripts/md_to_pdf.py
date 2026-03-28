@@ -410,7 +410,7 @@ pre code {
     margin: 16pt auto;
     page-break-inside: avoid;
     max-width: 100%;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .mermaid-diagram svg {
@@ -484,7 +484,7 @@ h2:not(:first-of-type) {
 @media print {
     body { color: black; }
     a { color: black; text-decoration: none; }
-    .mermaid-diagram svg { max-height: 500pt; }
+    .mermaid-diagram svg { max-height: none; }
 }
 """
 
