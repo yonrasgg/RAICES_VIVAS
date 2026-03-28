@@ -258,17 +258,20 @@ color default
 
 ## 📈 Colaboración del Equipo
 
-```chart
-type: pie
-labels: [Geovanny, Elkin, Santiago]
-series:
-  - title: Tareas Asignadas
-    data: [8, 6, 6]
-width: 50%
-labelColors: true
+```sqlseal
+CHART
+{
+  series: [{
+    type: 'pie',
+    radius: '60%',
+    encode: { value: 'cnt', itemName: 'assignee' }
+  }]
+}
+SELECT COALESCE(assignee, 'Sin asignar') as assignee, COUNT(*) as cnt
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
+GROUP BY assignee
 ```
-
-> *Gráfico de referencia. La tabla dinámica abajo muestra datos en tiempo real.*
 
 ```sqlseal
 TEMPLATE
@@ -294,19 +297,22 @@ ORDER BY assignee ASC
 
 ## 📊 Estado de Tareas
 
-```chart
-type: bar
-labels: [Done, In Progress, Todo, Blocked, Review]
-series:
-  - title: Cantidad
-    data: [15, 3, 5, 0, 2]
-width: 70%
-labelColors: true
-fill: true
-beginAtZero: true
+```sqlseal
+CHART
+{
+  xAxis: { type: 'category' },
+  yAxis: { type: 'value' },
+  series: [{
+    type: 'bar',
+    encode: { x: 'status', y: 'cnt' }
+  }]
+}
+SELECT status, COUNT(*) as cnt
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
+GROUP BY status
+ORDER BY status ASC
 ```
-
-> *Gráfico de referencia. La tabla dinámica Dataview abajo muestra datos en tiempo real.*
 
 ```sqlseal
 TEMPLATE
