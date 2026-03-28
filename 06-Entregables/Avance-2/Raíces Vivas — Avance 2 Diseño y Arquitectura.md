@@ -32,15 +32,15 @@ banner_src_y: 0.42
 
 Este documento presenta el segundo avance del proyecto **Raíces Vivas**, un sistema integral de apoyo a comunidades indígenas de Costa Rica en tres ejes: educación intercultural bilingüe (EDU), preservación de saberes ancestrales (SAB) y salud comunitaria (SAL), con un módulo transversal (TRANS) que gestiona conectividad, multilingüismo y gobernanza cultural.
 
-El presente avance se centra en el análisis de **casos de uso** del sistema: identificación de actores, documentación de 19 casos de uso (8 en formato expandido), diagrama UML y trazabilidad con los requerimientos funcionales establecidos en el Avance 1.
+El presente avance se centra en el análisis de **casos de uso** del sistema: identificación de actores, documentación de 23 casos de uso (12 en formato expandido), diagrama UML y trazabilidad con los requerimientos funcionales establecidos en el Avance 1. Los 4 casos de uso adicionales (CU-EDU-07, CU-SAB-06, CU-SAB-07, CU-SAL-06) fueron incorporados a partir de los hallazgos del [[02-Investigación/Análisis de Entrevistas|Análisis de Investigación Cualitativa]].
 
 ### 1.1 Estructura del Documento
 
 | Sección | Contenido | Criterio de Rúbrica |
 |---------|-----------|-------------------|
 | §2 | Identificación y clasificación de actores | Criterio 1 (4 pts) |
-| §3 | Lista general de 19 casos de uso | Criterio 2 (4 pts) |
-| §4 | Documentación expandida de 8 casos de uso | Criterios 3-5 (12 pts) |
+| §3 | Lista general de 23 casos de uso | Criterio 2 (4 pts) |
+| §4 | Documentación expandida de 12 casos de uso | Criterios 3-5 (12 pts) |
 | §5 | Diagrama de casos de uso (UML) | Criterio 6 (4 pts) |
 | §6 | Referencia cruzada RF ↔ CU | Criterio 7 (4 pts) |
 | §7 | Conclusiones y recomendaciones | Criterio 8 (4 pts) |
@@ -139,7 +139,7 @@ graph LR
 
 ## 3. Lista General de Casos de Uso
 
-El sistema Raíces Vivas comprende **19 casos de uso** derivados de los 19 requerimientos funcionales aprobados. Se organizan por módulo y alineados con la priorización MoSCoW.
+El sistema Raíces Vivas comprende **23 casos de uso** derivados de los 23 requerimientos funcionales aprobados. Se organizan por módulo y alineados con la priorización MoSCoW.
 
 | # | ID | Caso de Uso | Módulo | RF | Actor Principal | Prioridad | Expandido |
 |---|-----|-------------|--------|-----|-----------------|-----------|-----------|
@@ -149,27 +149,31 @@ El sistema Raíces Vivas comprende **19 casos de uso** derivados de los 19 reque
 | 4 | CU-EDU-04 | Organizar material por asignatura y competencia | EDU | RF-EDU-04 | Docente comunitario | Should | — |
 | 5 | CU-EDU-05 | Realizar ejercicio de práctica | EDU | RF-EDU-05 | Estudiante | Should | — |
 | 6 | CU-EDU-06 | Consultar progreso de estudiante | EDU | RF-EDU-06 | Docente comunitario | Could | — |
-| 7 | CU-SAB-01 | Registrar saber ancestral multimedia | SAB | RF-SAB-01 | Guía cultural | Must | ✅ §4.3 |
-| 8 | CU-SAB-02 | Clasificar saber por categoría | SAB | RF-SAB-02 | Admin comunitario | Should | — |
-| 9 | CU-SAB-03 | Buscar saberes por filtros | SAB | RF-SAB-03 | Usuario autorizado | Should | — |
-| 10 | CU-SAB-04 | Configurar restricción de acceso por autorización comunitaria | SAB | RF-SAB-04 | Admin comunitario | Must | ✅ §4.4 |
-| 11 | CU-SAB-05 | Registrar consentimiento informado | SAB | RF-SAB-05 | Admin comunitario | Must | — |
-| 12 | CU-SAL-01 | Registrar paciente con ID único | SAL | RF-SAL-01 | Auxiliar de salud | Must | ✅ §4.5 |
-| 13 | CU-SAL-02 | Registrar historial médico básico | SAL | RF-SAL-02 | Auxiliar de salud | Must | ✅ §4.6 |
-| 14 | CU-SAL-03 | Programar cita médica | SAL | RF-SAL-03 | Auxiliar de salud | Should | — |
-| 15 | CU-SAL-04 | Gestionar brigada de salud | SAL | RF-SAL-04 | Auxiliar de salud | Could | — |
-| 16 | CU-SAL-05 | Configurar alerta de seguimiento clínico | SAL | RF-SAL-05 | Auxiliar de salud | Should | — |
-| 17 | CU-TRANS-01 | Sincronizar datos offline/online | TRANS | RF-TRANS-01 | Sistema / Usuario | Must | ✅ §4.7 |
-| 18 | CU-TRANS-02 | Seleccionar idioma de interfaz | TRANS | RF-TRANS-02 | Usuario autenticado | Must | ✅ §4.8 |
-| 19 | CU-TRANS-03 | Configurar gobernanza de datos comunitarios | TRANS | RF-TRANS-03 | Admin comunitario | Must | — |
+| 7 | CU-EDU-07 | Compartir material entre comunidades del mismo pueblo | EDU | RF-EDU-07 | Docente comunitario | Should | ✅ §4.9 |
+| 8 | CU-SAB-01 | Registrar saber ancestral multimedia | SAB | RF-SAB-01 | Guía cultural | Must | ✅ §4.3 |
+| 9 | CU-SAB-02 | Clasificar saber por categoría | SAB | RF-SAB-02 | Admin comunitario | Should | — |
+| 10 | CU-SAB-03 | Buscar saberes por filtros | SAB | RF-SAB-03 | Usuario autorizado | Should | — |
+| 11 | CU-SAB-04 | Configurar restricción de acceso por autorización comunitaria | SAB | RF-SAB-04 | Admin comunitario | Must | ✅ §4.4 |
+| 12 | CU-SAB-05 | Registrar consentimiento informado | SAB | RF-SAB-05 | Admin comunitario | Must | — |
+| 13 | CU-SAB-06 | Revocar contenido por decisión comunitaria | SAB | RF-SAB-06 | Admin comunitario | Must | ✅ §4.10 |
+| 14 | CU-SAB-07 | Consultar registro de auditoría de acceso | SAB | RF-SAB-07 | Admin comunitario | Should | ✅ §4.11 |
+| 15 | CU-SAL-01 | Registrar paciente con ID único | SAL | RF-SAL-01 | Auxiliar de salud | Must | ✅ §4.5 |
+| 16 | CU-SAL-02 | Registrar historial médico básico | SAL | RF-SAL-02 | Auxiliar de salud | Must | ✅ §4.6 |
+| 17 | CU-SAL-03 | Programar cita médica | SAL | RF-SAL-03 | Auxiliar de salud | Should | — |
+| 18 | CU-SAL-04 | Gestionar brigada de salud | SAL | RF-SAL-04 | Auxiliar de salud | Could | — |
+| 19 | CU-SAL-05 | Configurar alerta de seguimiento clínico | SAL | RF-SAL-05 | Auxiliar de salud | Should | — |
+| 20 | CU-SAL-06 | Exportar expediente a EDUS (CCSS) | SAL | RF-SAL-06 | Auxiliar de salud | Could | ✅ §4.12 |
+| 21 | CU-TRANS-01 | Sincronizar datos offline/online | TRANS | RF-TRANS-01 | Sistema / Usuario | Must | ✅ §4.7 |
+| 22 | CU-TRANS-02 | Seleccionar idioma de interfaz | TRANS | RF-TRANS-02 | Usuario autenticado | Must | ✅ §4.8 |
+| 23 | CU-TRANS-03 | Configurar gobernanza de datos comunitarios | TRANS | RF-TRANS-03 | Admin comunitario | Must | — |
 
-**Resumen:** 19 casos de uso — 10 Must, 6 Should, 2 Could, 1 Won't (ninguno). Se documentan **8 en formato expandido** (todos Must), 2 por cada módulo principal.
+**Resumen:** 23 casos de uso — 11 Must, 8 Should, 3 Could, 1 Won't (ninguno). Se documentan **12 en formato expandido**, 3 por cada módulo principal.
 
 ---
 
 ## 4. Documentación Detallada de Casos de Uso
 
-> Los 8 casos de uso documentados a continuación siguen el formato expandido con los 14 campos requeridos: caso de uso, actor principal, objetivo, precondiciones, disparador, escenario (flujos principal y alternos), excepciones, prioridad, disponibilidad, frecuencia de uso, canal para el actor, actores secundarios, canales para actores secundarios y aspectos pendientes.
+> Los 12 casos de uso documentados a continuación siguen el formato expandido con los 14 campos requeridos: caso de uso, actor principal, objetivo, precondiciones, disparador, escenario (flujos principal y alternos), excepciones, prioridad, disponibilidad, frecuencia de uso, canal para el actor, actores secundarios, canales para actores secundarios y aspectos pendientes.
 
 ### 4.1 CU-EDU-01: Registrar docente comunitario
 
