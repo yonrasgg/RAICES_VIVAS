@@ -33,11 +33,11 @@ MERMAID_CACHE.mkdir(parents=True, exist_ok=True)
 
 
 def render_mermaid(code: str, index: int) -> str:
-    """Render a Mermaid diagram to SVG using mmdc CLI, with caching."""
+    """Render a Mermaid diagram to PNG using mmdc CLI, with caching."""
     digest = hashlib.sha256(code.encode()).hexdigest()[:12]
-    svg_file = MERMAID_CACHE / f"diagram_{index}_{digest}.svg"
+    png_file = MERMAID_CACHE / f"diagram_{index}_{digest}.png"
 
-    if not svg_file.exists():
+    if not png_file.exists():
         with tempfile.NamedTemporaryFile(
             mode="w", suffix=".mmd", delete=False
         ) as tmp:
@@ -48,14 +48,14 @@ def render_mermaid(code: str, index: int) -> str:
                 [
                     "npx", "mmdc",
                     "-i", tmp_path,
-                    "-o", str(svg_file),
-                    "-b", "transparent",
+                    "-o", str(png_file),
+                    "-b", "white",
                     "-t", "default",
-                    "--scale", "2",
+                    "--scale", "4",
                 ],
                 capture_output=True,
                 text=True,
-                timeout=60,
+                timeout=120,
                 cwd=str(ROOT),
             )
             if result.returncode != 0:
@@ -64,10 +64,9 @@ def render_mermaid(code: str, index: int) -> str:
         finally:
             os.unlink(tmp_path)
 
-    svg_content = svg_file.read_text(encoding="utf-8")
-    # Clean SVG for embedding
-    svg_content = re.sub(r'<\?xml[^>]*\?>', '', svg_content)
-    return f'<div class="mermaid-diagram">{svg_content}</div>'
+    png_data = png_file.read_bytes()
+    b64 = base64.b64encode(png_data).decode("ascii")
+    return f'<div class="mermaid-diagram"><img src="data:image/png;base64,{b64}" alt="Diagram {index}" /></div>'
 
 
 # ── Markdown preprocessing ────────────────────────────────────────────────
@@ -410,10 +409,9 @@ pre code {
     margin: 16pt auto;
     page-break-inside: avoid;
     max-width: 100%;
-    overflow: visible;
 }
 
-.mermaid-diagram svg {
+.mermaid-diagram img {
     max-width: 100%;
     height: auto;
 }
@@ -484,7 +482,7 @@ h2:not(:first-of-type) {
 @media print {
     body { color: black; }
     a { color: black; text-decoration: none; }
-    .mermaid-diagram svg { max-height: none; }
+    .mermaid-diagram img { max-height: none; }
 }
 """
 
