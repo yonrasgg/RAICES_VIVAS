@@ -1000,11 +1000,15 @@ El diagrama C4 Level 1 muestra el sistema Raíces Vivas en su contexto, con los 
 
 > Documento completo: [[04-Arquitectura/Modelo de Datos]]
 
-Se diseñaron modelos ER para cada módulo:
-- **EDU:** 5 entidades (DOCENTE, ESTUDIANTE, MATERIAL_EDUCATIVO, EJERCICIO, INTENTO)
-- **SAB:** 4 entidades principales (SABER, CATEGORIA_SABER, CONSENTIMIENTO, ROL_COMUNITARIO)
-- **SAL:** 5 entidades (PACIENTE, HISTORIAL_MEDICO, CITA, CAMPANA, ALERTA_SEGUIMIENTO)
-- **Transversal:** 3 entidades (USUARIO, ROL, LOG_AUDITORIA)
+Se diseñaron modelos ER detallados para cada módulo, derivados de los 23 RF y 4 RNF. Todas las entidades incluyen campos de sincronización offline (`sync_status`, `last_synced`, `device_id`) y los datos médicos están marcados con cifrado AES-256 en reposo.
+
+| Módulo | Entidades | Total | Relaciones clave |
+|--------|-----------|-------|------------------|
+| **TRANS** | USUARIO, PUEBLO, COMUNIDAD, ROL, PERMISO, ROL_PERMISO, IDIOMA, LOG_AUDITORIA, SINCRONIZACION | 9 | USUARIO ↔ ROL ↔ PERMISO, COMUNIDAD → PUEBLO |
+| **EDU** | DOCENTE, ESTUDIANTE, CENTRO_EDUCATIVO, ASIGNATURA, COMPETENCIA, MATERIAL_EDUCATIVO, MATERIAL_COMPARTIDO, EJERCICIO, INTENTO, PROGRESO | 10 | DOCENTE → MATERIAL → EJERCICIO → INTENTO → PROGRESO |
+| **SAB** | PORTADOR_SABER, CATEGORIA_SABER, SABER, CONSENTIMIENTO, ROL_COMUNITARIO, PERMISO_ACCESO_SABER, HISTORIAL_NIVEL_ACCESO, REVOCACION, LOG_ACCESO_SABER | 9 | SABER ← CONSENTIMIENTO (obligatorio), SABER → REVOCACION (prevalece en sync) |
+| **SAL** | PACIENTE, HISTORIAL_MEDICO, CONDICION_CRONICA, ALERGIA, MEDICACION, CITA, BRIGADA, BRIGADA_PARTICIPACION, ALERTA_SEGUIMIENTO, EXPORTACION_EDUS | 10 | PACIENTE → HISTORIAL ↔ CONDICION/ALERGIA/MEDICACION, BRIGADA → EXPORTACION_EDUS |
+| **Total** | | **38** | 5 diagramas Mermaid (incluye vista integrada inter-módulos) |
 
 ### A.3 Stack Tecnológico (ADR-008)
 
