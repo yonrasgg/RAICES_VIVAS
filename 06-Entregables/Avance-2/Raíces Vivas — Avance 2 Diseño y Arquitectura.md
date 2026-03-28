@@ -1071,6 +1071,332 @@ Principios CARE aplicados: Collective Benefit, Authority to Control, Responsibil
 
 ---
 
+## Anexo C: Análisis FODA del Proyecto
+
+> Análisis estratégico de **F**ortalezas, **O**portunidades, **D**ebilidades y **A**menazas del proyecto Raíces Vivas, con orientación Lean Six Sigma para identificar factores internos y externos que impactan la entrega de valor.
+
+### C.1 Matriz FODA
+
+| | **Factores Positivos** | **Factores Negativos** |
+|---|---|---|
+| **Internos** | **Fortalezas** | **Debilidades** |
+| | F1. Arquitectura offline-first (PouchDB/CouchDB) diseñada para territorios sin conectividad | D1. Conectividad limitada en 80% del territorio operativo dificulta validaciones remotas |
+| | F2. Gobernanza cultural CARE integrada como principio de diseño (ADR-009) — no como parche | D2. Alfabetización digital básica en comunidades objetivo: usuarios requieren interfaces ≤6 campos |
+| | F3. Stack tecnológico moderno y abierto (React 19, TypeScript, PWA) — sin dependencia de vendor | D3. Equipo de 3 personas con carga académica paralela limita velocidad de entrega |
+| | F4. 23 RF trazados 1:1 con casos de uso; 12 expandidos con 14 campos cada uno | D4. Ausencia de infraestructura CouchDB de producción — sync solo validado localmente |
+| | F5. Investigación de campo real: 4 entrevistas, observación directa, análisis de contenido | D5. Sin acceso directo a sistema EDUS/CCSS para validar mapeo de exportación (RF-SAL-06) |
+| | F6. Soporte multilingüe nativo (es, bribri, cabécar, ngäbere) con i18next | D6. Validación con comunidades pendiente — flujos de consentimiento diseñados teóricamente |
+| **Externos** | **Oportunidades** | **Amenazas** |
+| | O1. 24 territorios indígenas en Costa Rica como universo de expansión | A1. Obsolescencia de dispositivos Android en comunidades (presupuesto de reemplazo inexistente) |
+| | O2. Alineación con Convenio 169 OIT, Ley 6172 y principios CARE — marco legal favorable | A2. Pérdida acelerada de lenguas indígenas: hablantes de bribri < 3000, maleku < 600 |
+| | O3. Interés CONARE y MEP en herramientas educativas para pueblos indígenas | A3. Riesgo de apropiación cultural si los controles de acceso presentan brechas |
+| | O4. Modelo replicable para comunidades indígenas en Centroamérica (UNESCO) | A4. Rotación de personal de salud (ATAP) dificulta adopción — requiere onboarding continuo |
+| | O5. Datos de salud exportables a EDUS/CCSS mejoran cobertura sanitaria oficial | A5. Resistencia potencial de autoridades tradicionales a digitalización de saberes ceremoniales |
+| | O6. PWA permite distribución sin App Store — reduce fricción de adopción | A6. Cambios regulatorios (LGPD o reforma Ley 8968) pueden requerir rediseño de flujos de datos |
+
+### C.2 Estrategias Cruzadas
+
+| Estrategia | Combinación | Acción |
+|---|---|---|
+| **FO — Ofensiva** | F1 + O1 | Escalar la PWA offline-first a los 24 territorios usando el mismo stack |
+| **FO — Ofensiva** | F2 + O4 | Posicionar la gobernanza CARE como caso de estudio replicable (UNESCO/CONARE) |
+| **DO — Reorientación** | D2 + O6 | Aprovechar distribución PWA para interfaces ultra-simplificadas sin store |
+| **DO — Reorientación** | D5 + O5 | Coordinar con CCSS para obtener especificación EDUS durante Sprint-04 |
+| **FA — Defensiva** | F6 + A2 | Acelerar módulo i18n para documentar lenguas en riesgo de extinción |
+| **FA — Defensiva** | F2 + A3 | Fortalecer auditoría (RF-SAB-07) y revocación (RF-SAB-06) como controles anti-apropiación |
+| **DA — Supervivencia** | D1 + A1 | Diseñar para Android 8+ / RAM 2GB; optimizar bundle < 500KB |
+| **DA — Supervivencia** | D6 + A5 | Priorizar sesiones de validación presencial con Consejo de mayores antes de Sprint-04 |
+
+---
+
+## Anexo D: Diagrama de Ishikawa — Causa-Efecto
+
+> Análisis de causa raíz para el problema central: **"Riesgo de fracaso en la adopción del sistema por las comunidades indígenas"**. Aplicamos las 6M adaptadas al contexto del proyecto.
+
+### D.1 Diagrama de Ishikawa
+
+```mermaid
+flowchart LR
+    subgraph EFECTO
+        E["⚠️ Baja adopción del<br/>sistema por comunidades"]
+    end
+
+    subgraph METODO["🔧 Método"]
+        M1["Flujos de consentimiento<br/>no validados presencialmente"]
+        M2["Proceso de onboarding<br/>sin protocolo estandarizado"]
+        M3["Resolución de conflictos<br/>de sync requiere intervención manual"]
+    end
+
+    subgraph MAQUINA["🖥️ Máquina / Infraestructura"]
+        MA1["Sin servidor CouchDB<br/>de producción"]
+        MA2["Dispositivos Android<br/>obsoletos (< 2GB RAM)"]
+        MA3["Conectividad intermitente<br/>o inexistente"]
+    end
+
+    subgraph MANO["👥 Mano de Obra"]
+        MO1["Equipo de 3 personas<br/>con carga académica"]
+        MO2["Rotación de ATAP<br/>en puestos de salud"]
+        MO3["Docentes sin formación<br/>digital previa"]
+    end
+
+    subgraph MATERIAL["📦 Material / Datos"]
+        MT1["Catálogos base<br/>(territorios, medicamentos)<br/>aún no poblados"]
+        MT2["Mapeo EDUS no<br/>especificado oficialmente"]
+        MT3["Contenido multilingüe<br/>requiere traducción humana"]
+    end
+
+    subgraph MEDIO["🌍 Medio Ambiente"]
+        MD1["Pérdida acelerada<br/>de lenguas indígenas"]
+        MD2["Distancia geográfica<br/>a territorios"]
+        MD3["Resistencia cultural<br/>a digitalización"]
+    end
+
+    subgraph MEDICION["📊 Medición"]
+        ME1["Sin métricas de adopción<br/>definidas aún"]
+        ME2["Sin baseline de<br/>alfabetización digital"]
+        ME3["Tiempo de tarea<br/>(RNF-03: ≤2min)<br/>no validado con usuarios"]
+    end
+
+    M1 --> E
+    M2 --> E
+    M3 --> E
+    MA1 --> E
+    MA2 --> E
+    MA3 --> E
+    MO1 --> E
+    MO2 --> E
+    MO3 --> E
+    MT1 --> E
+    MT2 --> E
+    MT3 --> E
+    MD1 --> E
+    MD2 --> E
+    MD3 --> E
+    ME1 --> E
+    ME2 --> E
+    ME3 --> E
+```
+
+### D.2 Causas Priorizadas (Pareto)
+
+| # | Causa raíz | Categoría | Impacto | Frecuencia | RPN | Mitigación propuesta |
+|---|---|---|---|---|---|---|
+| 1 | Conectividad intermitente | Máquina | 5 | 5 | 25 | Arquitectura offline-first ya implementada (PouchDB) |
+| 2 | Flujos de consentimiento no validados | Método | 5 | 4 | 20 | Sesiones de validación con comunidades en Sprint-04 |
+| 3 | Dispositivos obsoletos | Máquina | 4 | 4 | 16 | Bundle < 500KB, Android 8+, PWA sin App Store |
+| 4 | Resistencia cultural a digitalización | Medio | 4 | 4 | 16 | Gobernanza CARE: nivel ceremonial nunca sincroniza |
+| 5 | Docentes sin formación digital | Mano de obra | 4 | 3 | 12 | Interfaces ≤6 campos, wizard guiado, capacitación presencial |
+| 6 | Catálogos base no poblados | Material | 3 | 4 | 12 | Tarea T-043: poblar catálogos en Sprint-03 |
+| 7 | Sin métricas de adopción | Medición | 3 | 3 | 9 | Definir KPIs en Sprint-04: MAU, tasa de sync, tiempo de tarea |
+| 8 | Sin servidor CouchDB producción | Máquina | 3 | 3 | 9 | Planificado para Sprint-05 (infraestructura) |
+
+> **RPN** = Risk Priority Number (Impacto × Frecuencia, escala 1-5).
+
+---
+
+## Anexo E: Casa de la Calidad (QFD)
+
+> Despliegue de la Función de Calidad (Quality Function Deployment) que traduce las necesidades de los stakeholders ("Qué") en características técnicas del sistema ("Cómo"), con correlaciones y priorización.
+
+### E.1 Voz del Cliente — Necesidades Priorizadas
+
+| # | Necesidad (Qué) | Stakeholder | Importancia (1-5) | Fuente |
+|---|---|---|---|---|
+| N1 | Funcionar sin internet | Docentes, ATAP | 5 | Entrevistas, RSK-001 |
+| N2 | Proteger saberes según nivel cultural | Autoridades, Portadores | 5 | ADR-009, CARE |
+| N3 | Operar en lengua indígena | Docentes, Estudiantes | 4 | RF-TRANS-02 |
+| N4 | Registrar pacientes de forma sencilla | Auxiliar de salud | 4 | RF-SAL-01, RNF-03 |
+| N5 | Compartir material entre comunidades | Docentes | 3 | RF-EDU-07 |
+| N6 | Exportar datos al sistema CCSS | ATAP, EBAIS | 3 | RF-SAL-06 |
+| N7 | Revocar contenido en cualquier momento | Admin comunitario | 5 | RF-SAB-06 |
+| N8 | Auditar quién accedió a qué | Admin comunitario | 4 | RF-SAB-07 |
+| N9 | Funcionar en dispositivos básicos | Todos los usuarios | 4 | RNF-01 |
+| N10 | Completar tareas en < 2 minutos | Todos los usuarios | 4 | RNF-03 |
+
+### E.2 Características Técnicas (Cómo)
+
+| # | Característica técnica | Unidad / Meta | Dirección |
+|---|---|---|---|
+| T1 | PouchDB local + CouchDB sync | % disponibilidad offline = 100% | ↑ Maximizar |
+| T2 | RBAC + CARE 4 niveles acceso | Niveles = 4 (público → ceremonial) | = Objetivo |
+| T3 | i18next con 4 idiomas nativos | Idiomas soportados ≥ 4 | ↑ Maximizar |
+| T4 | Formularios ≤ 6 campos obligatorios | Campos por formulario ≤ 6 | ↓ Minimizar |
+| T5 | PWA + Service Worker (workbox) | Bundle JS < 500 KB | ↓ Minimizar |
+| T6 | AES-256 reposo + TLS 1.3 tránsito | Cifrado = 100% datos médicos | ↑ Maximizar |
+| T7 | LOG_ACCESO_SABER inmutable | Registros auditables = 100% | ↑ Maximizar |
+| T8 | Exportación CSV/HL7 FHIR | Campos mapeados a EDUS ≥ 80% | ↑ Maximizar |
+| T9 | Android 8+ / RAM 2GB mínimo | Dispositivos compatibles ≥ 90% | ↑ Maximizar |
+| T10 | Revocación con prioridad de sync | Latencia revocación < 1 sync cycle | ↓ Minimizar |
+
+### E.3 Matriz de Relaciones (Necesidades × Características)
+
+| | T1 Offline | T2 CARE | T3 i18n | T4 ≤6 campos | T5 PWA | T6 Cifrado | T7 Auditoría | T8 EDUS | T9 Android 8+ | T10 Revocación |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **N1** Funcionar sin internet | ●● | | | | ●● | | | | ● | |
+| **N2** Proteger saberes | | ●● | | | | ● | ●● | | | ●● |
+| **N3** Lengua indígena | | | ●● | | | | | | | |
+| **N4** Registro sencillo | | | ● | ●● | | | | | ● | |
+| **N5** Compartir material | ● | ● | ● | | ● | | | | | |
+| **N6** Exportar a CCSS | | | | | | ● | | ●● | | |
+| **N7** Revocar contenido | ● | ●● | | | | | ●● | | | ●● |
+| **N8** Auditar acceso | | ● | | | | | ●● | | | |
+| **N9** Dispositivos básicos | | | | ● | ●● | | | | ●● | |
+| **N10** Tareas < 2 min | ● | | | ●● | ● | | | | ● | |
+
+> **Leyenda:** ●● = Relación fuerte (9 pts) · ● = Relación moderada (3 pts) · vacío = Sin relación
+
+### E.4 Priorización Técnica
+
+| Característica técnica | Puntuación ponderada | Prioridad |
+|---|---|---|
+| T1 PouchDB offline sync | (5×9)+(3×3)+(5×3)+(4×3) = 81 | **1** |
+| T2 CARE 4 niveles | (5×9)+(3×3)+(5×9)+(4×3) = 111 | **🥇** |
+| T7 Auditoría inmutable | (5×9)+(5×9)+(4×9) = 126 | **🥇** |
+| T5 PWA < 500KB | (5×9)+(3×3)+(4×9)+(4×3) = 102 | **2** |
+| T10 Revocación rápida | (5×9)+(5×9) = 90 | **2** |
+| T4 ≤6 campos | (4×9)+(4×3)+(4×9) = 84 | **3** |
+| T6 AES-256 | (5×3)+(3×3)+(5×3) = 39 | **4** |
+| T3 i18n 4 idiomas | (4×9)+(4×3)+(3×3) = 57 | **3** |
+| T9 Android 8+ | (4×3)+(4×3)+(4×9) = 60 | **3** |
+| T8 EDUS export | (3×3)+(3×9) = 36 | **4** |
+
+> Las prioridades confirman que **gobernanza cultural (T2)**, **auditoría (T7)** y **offline sync (T1)** son los pilares técnicos del proyecto, alineados con los principios CARE y la realidad del contexto operativo.
+
+---
+
+## Anexo F: Metodología DMAIC — Lean Six Sigma
+
+> Aplicación del ciclo **Definir → Medir → Analizar → Mejorar → Controlar** al proyecto Raíces Vivas, integrando los análisis previos (FODA, Ishikawa, QFD) como insumos en cada fase.
+
+### F.1 Visión General del Ciclo DMAIC
+
+```mermaid
+flowchart LR
+    D["🔵 DEFINIR<br/>Problema + Alcance<br/>+ VOC"]
+    M["🟢 MEDIR<br/>Datos actuales<br/>+ Baseline"]
+    A["🟡 ANALIZAR<br/>Causa raíz<br/>+ Ishikawa"]
+    I["🔴 MEJORAR<br/>Soluciones<br/>+ QFD"]
+    C["🟣 CONTROLAR<br/>Monitoreo<br/>+ Métricas"]
+
+    D --> M --> A --> I --> C
+    C -.->|"Retroalimentación por sprint"| D
+
+    style D fill:#2196F3,color:#fff
+    style M fill:#4CAF50,color:#fff
+    style A fill:#FFC107,color:#000
+    style I fill:#F44336,color:#fff
+    style C fill:#9C27B0,color:#fff
+```
+
+### F.2 Fase 1 — Definir
+
+**Problema:** Las comunidades indígenas de Costa Rica carecen de herramientas digitales adaptadas a su contexto cultural, lingüístico y geográfico para gestionar educación, saberes ancestrales y salud comunitaria.
+
+**Alcance:** 23 requerimientos funcionales distribuidos en 4 módulos (EDU 7, SAB 7, SAL 6, TRANS 3), priorizados por MoSCoW (11 Must, 8 Should, 3 Could, 1 Won't).
+
+**Voz del Cliente (VOC):** Consolidada en la Casa de la Calidad (Anexo E): las 10 necesidades priorizadas por los stakeholders se traducen en 10 características técnicas medibles.
+
+**CTQ (Critical to Quality):**
+
+| CTQ | Métrica | Meta |
+|---|---|---|
+| Disponibilidad offline | % operaciones exitosas sin conexión | 100% |
+| Protección cultural | Saberes ceremoniales sincronizados | 0 |
+| Usabilidad | Tiempo para completar tarea crítica | ≤ 2 min |
+| Cobertura lingüística | Idiomas soportados | ≥ 4 |
+| Integridad de auditoría | Registros de acceso inmutables | 100% |
+
+**Insumo FODA (Anexo C):** Las fortalezas F1 (offline-first) y F2 (CARE) dan sustento al alcance; las debilidades D1 (conectividad) y D6 (validación pendiente) definen las restricciones del proyecto.
+
+### F.3 Fase 2 — Medir
+
+**Baseline actual (Sprint-03):**
+
+| Indicador | Estado actual | Meta Sprint-05 | Método de medición |
+|---|---|---|---|
+| Módulos funcionales | 1 parcial (EDU scaffold) | 3 operativos | Conteo de rutas con componentes funcionales |
+| Entidades del modelo de datos | 38 diseñadas | 38 implementadas | Schema PouchDB vs. Modelo de Datos.md |
+| Cobertura de pruebas | 0% | ≥ 60% | Jest coverage report |
+| Idiomas en i18n | 4 archivos JSON | 4 con ≥ 80% cadenas | `npx i18next-parser` |
+| Tiempo de build | 452 KB / 145 KB gzip | < 500 KB / < 160 KB | Vite build output |
+| Usuarios validados | 0 | ≥ 6 (2 por módulo) | Sesiones de validación documentadas |
+
+**Datos de sincronización (aún no medidos):**
+- Latencia de primera sincronización
+- Tasa de conflictos por sesión
+- Tiempo de resolución de conflictos
+
+> Estos indicadores se medirán cuando el servidor CouchDB esté disponible (Sprint-05).
+
+### F.4 Fase 3 — Analizar
+
+**Herramienta principal:** Diagrama de Ishikawa (Anexo D).
+
+**Hallazgos clave del análisis de causa raíz:**
+
+1. **Causa #1 (RPN 25): Conectividad intermitente** → Ya mitigada por diseño con PouchDB offline-first. Riesgo residual: conflictos de sincronización.
+2. **Causa #2 (RPN 20): Flujos de consentimiento no validados** → Mayor distancia entre diseño y realidad. Requiere validación etnográfica presencial.
+3. **Causa #3 (RPN 16): Dispositivos obsoletos** → Mitigación técnica (bundle < 500KB, Android 8+). Riesgo residual: dispositivos con RAM < 1GB.
+4. **Causa #4 (RPN 16): Resistencia cultural** → El nivel "ceremonial" que **nunca** sincroniza es la mitigación clave. Requiere comunicación clara con autoridades.
+
+**Análisis 5 Porqués — Causa #2 (Consentimiento no validado):**
+
+| Nivel | Pregunta | Respuesta |
+|---|---|---|
+| ¿Por qué? | Los flujos de consentimiento no han sido validados | No se han realizado sesiones presenciales con comunidades |
+| ¿Por qué? | No se han realizado sesiones presenciales | Sprint-02 se enfocó en diseño y documentación |
+| ¿Por qué? | Sprint-02 se enfocó en documentación | El backlog priorizó CU expandidos sobre validación de campo |
+| ¿Por qué? | Se priorizó documentación | La rúbrica académica requirió 12 CU expandidos antes de implementar |
+| **Raíz** | Restricción académica genera desfase entre diseño y validación | **Acción:** Programar validación en Sprint-04 como criterio de aceptación |
+
+### F.5 Fase 4 — Mejorar
+
+**Herramienta principal:** Casa de la Calidad (Anexo E).
+
+**Soluciones priorizadas por QFD:**
+
+| Prioridad | Solución (Cómo) | Sprint | CTQ que atiende | Esfuerzo |
+|---|---|---|---|---|
+| 🥇 | Implementar RBAC + CARE en middleware | Sprint-04 | Protección cultural | Alto |
+| 🥇 | LOG_ACCESO_SABER con registros inmutables | Sprint-04 | Integridad auditoría | Medio |
+| 2 | PouchDB sync con regla "revocación prevalece" | Sprint-03 | Disponibilidad offline | Alto |
+| 2 | PWA con Service Worker y cache de 4 idiomas | Sprint-03 | Usabilidad + Cobertura | Medio |
+| 3 | Formularios wizard (≤6 campos por paso) | Sprint-04 | Usabilidad | Medio |
+| 3 | i18n completo con glossary por idioma | Sprint-04 | Cobertura lingüística | Medio |
+| 4 | Cifrado AES-256 en PouchDB para datos SAL | Sprint-05 | Confidencialidad | Alto |
+| 4 | Exportación CSV/HL7 FHIR con validador | Sprint-05 | Interoperabilidad | Alto |
+
+**Principio Lean aplicado:** Cada mejora se implementa en el sprint más temprano posible que maximice valor para el usuario final, evitando desperdicio (muda) de sobreproducción — no se implementan features que no tienen validación de campo programada.
+
+### F.6 Fase 5 — Controlar
+
+**Mecanismos de control por sprint:**
+
+| Sprint | Control | Herramienta | Frecuencia |
+|---|---|---|---|
+| Sprint-03 | Build exitoso, 0 errores TS | `npx tsc --noEmit` | Cada commit |
+| Sprint-04 | Cobertura tests ≥ 40% | Jest + `--coverage` | Semanal |
+| Sprint-04 | Validación comunitaria documentada | Minutas + fotos | 2 sesiones |
+| Sprint-05 | Sync sin pérdida de datos | Test de conflictos PouchDB | Pre-release |
+| Sprint-05 | Tiempo de tarea ≤ 2 min | Sesiones de usabilidad cronometradas | 3 sesiones |
+| Continuo | Revocación propagada en ≤ 1 ciclo sync | Log de sincronización | Cada sync |
+| Continuo | 0 saberes ceremoniales en servidor | Query `sync_status != 'local_only'` + `nivel_acceso = 'ceremonial'` | Diaria |
+
+**Dashboard de métricas propuesto:**
+
+| Métrica | Indicador | Semáforo |
+|---|---|---|
+| Disponibilidad offline | % operaciones exitosas sin conexión | 🟢 ≥ 99% · 🟡 90-98% · 🔴 < 90% |
+| Protección ceremonial | Saberes ceremoniales en servidor | 🟢 = 0 · 🔴 > 0 |
+| Usabilidad | Tiempo promedio por tarea | 🟢 ≤ 2min · 🟡 2-4min · 🔴 > 4min |
+| Cobertura lingüística | % cadenas traducidas por idioma | 🟢 ≥ 80% · 🟡 50-79% · 🔴 < 50% |
+| Cobertura de pruebas | % líneas cubiertas | 🟢 ≥ 60% · 🟡 40-59% · 🔴 < 40% |
+| Adopción | Usuarios activos mensuales (MAU) | 🟢 ≥ 10 · 🟡 4-9 · 🔴 < 4 |
+
+> **Ciclo de retroalimentación:** Al final de cada sprint, las métricas de la fase Controlar retroalimentan a la fase Definir del siguiente ciclo DMAIC. Este loop continuo es la esencia de la mejora Lean Six Sigma aplicada al desarrollo ágil.
+
+---
+
 ## Referencias
 
 - [[01-Proyecto/Charter|Charter del Proyecto]]
