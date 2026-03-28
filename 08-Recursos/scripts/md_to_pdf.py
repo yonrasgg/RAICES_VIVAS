@@ -407,7 +407,6 @@ pre code {
 .mermaid-diagram {
     text-align: center;
     margin: 16pt auto;
-    page-break-inside: avoid;
     max-width: 100%;
 }
 
