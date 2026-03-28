@@ -445,25 +445,6 @@ gantt
 
 ---
 
-> [!bug]- 🔍 DIAGNÓSTICO (borrar después)
->
-> ### Test A: SELECT * de una tarea
-> ```sqlseal
-> SELECT * FROM files WHERE path LIKE '05-Sprints/Sprint-01/T-001%' LIMIT 1
-> ```
->
-> ### Test B: title explícito
-> ```sqlseal
-> SELECT name, title, status FROM files WHERE type = 'task' LIMIT 3
-> ```
->
-> ### Test C: Misma query que falla abajo
-> ```sqlseal
-> SELECT id, title, assignee, status FROM files WHERE (type = 'task' OR type = 'subtask') AND status != 'done' AND path LIKE '05-Sprints%' LIMIT 3
-> ```
-
----
-
 ## 🏃 Tareas Pendientes (Top 10)
 
 ```sqlseal
