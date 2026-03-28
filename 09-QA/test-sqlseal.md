@@ -39,9 +39,9 @@ FROM tarifas
 ## 3. CSV: sprint-plan.csv
 
 ```sqlseal
-TABLE plan = file(08-Recursos/Datos/sprint-plan.csv)
+TABLE sp = file(08-Recursos/Datos/sprint-plan.csv)
 SELECT sprint, persona, horas_plan, horas_real
-FROM plan
+FROM sp
 WHERE horas_plan > 0
 ORDER BY sprint, persona
 ```
