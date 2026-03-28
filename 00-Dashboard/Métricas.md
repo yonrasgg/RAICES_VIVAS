@@ -18,54 +18,15 @@ tags:
 
 ## 1. Resumen Ejecutivo
 
-```dataviewjs
-const allTasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
-const done = allTasks.where(t => t.status === "done").length;
-const total = allTasks.length;
-const pct = total > 0 ? Math.round((done/total)*100) : 0;
-const inProgress = allTasks.where(t => t.status === "in-progress").length;
-const blocked = allTasks.where(t => t.status === "blocked").length;
-
-const rf = dv.pages('"03-Requerimientos/Funcionales"').where(r => r.type === "requirement/functional").length;
-const rnf = dv.pages('"03-Requerimientos/No Funcionales"').where(r => r.type === "requirement/non-functional").length;
-
-const risks = dv.pages('"01-Proyecto/Riesgos"').where(r => r.type === "risk");
-const openRisks = risks.where(r => r.status === "open").length;
-
-const adrs = dv.pages('"01-Proyecto/Decisiones"').where(d => d.type === "adr");
-const acceptedAdrs = adrs.where(d => d.status === "accepted").length;
-
-dv.table(
-  ["📊 Métrica", "Valor", "Indicador"],
-  [
-    ["Progreso general", `${pct}% (${done}/${total} tareas)`, pct >= 80 ? "🟢" : pct >= 50 ? "🟡" : "🔴"],
-    ["Tareas en progreso", `${inProgress}`, inProgress <= 5 ? "🟢" : "🟡"],
-    ["Tareas bloqueadas", `${blocked}`, blocked === 0 ? "🟢" : "🔴"],
-    ["Requerimientos funcionales", `${rf}`, "📋"],
-    ["Requerimientos no funcionales", `${rnf}`, "🔒"],
-    ["Total requerimientos", `${rf + rnf}`, "📦"],
-    ["Riesgos abiertos", `${openRisks} / ${risks.length}`, openRisks <= 3 ? "🟢" : "🟡"],
-    ["Decisiones aceptadas", `${acceptedAdrs} / ${adrs.length}`, "🏗️"],
-  ]
-);
-
-// Sprint actual — dinámico
-const sprintPages = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint);
-const sprintGroups = {};
-for (const t of sprintPages) {
-  const s = String(t.sprint);
-  if (!sprintGroups[s]) sprintGroups[s] = { active: 0, total: 0 };
-  sprintGroups[s].total++;
-  if (t.status !== "done") sprintGroups[s].active++;
-}
-const sortedSprints = Object.entries(sprintGroups).sort((a, b) => a[0].localeCompare(b[0]));
-let currentSprint = sortedSprints.length ? sortedSprints[sortedSprints.length - 1][0] : "N/A";
-let label = "";
-for (const [name, data] of sortedSprints) {
-  if (data.active > 0) { currentSprint = name; label = "en curso"; break; }
-  label = "completado";
-}
-dv.paragraph(`> **🏃 Sprint actual:** ${currentSprint} (${label})`);
+```sqlseal
+SELECT
+  ROUND(100.0 * SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' THEN 1 ELSE 0 END) / MAX(1, SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' THEN 1 ELSE 0 END))) || '% (' || SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' THEN 1 ELSE 0 END) || '/' || SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' THEN 1 ELSE 0 END) || ')' as "🎯 Progreso",
+  SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='in-progress' THEN 1 ELSE 0 END) as "🔄 En curso",
+  SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='blocked' THEN 1 ELSE 0 END) as "🚫 Bloq.",
+  SUM(CASE WHEN type='requirement/functional' THEN 1 ELSE 0 END) || ' RF · ' || SUM(CASE WHEN type='requirement/non-functional' THEN 1 ELSE 0 END) || ' RNF' as "📋 Reqs",
+  SUM(CASE WHEN type='risk' AND status='open' THEN 1 ELSE 0 END) || ' / ' || SUM(CASE WHEN type='risk' THEN 1 ELSE 0 END) as "⚠️ Riesgos",
+  SUM(CASE WHEN type='adr' AND status='accepted' THEN 1 ELSE 0 END) || ' / ' || SUM(CASE WHEN type='adr' THEN 1 ELSE 0 END) as "🏗️ ADR"
+FROM files
 ```
 
 ---
@@ -84,24 +45,15 @@ labelColors: true
 
 > *Gráfico de referencia actualizado al cierre de Sprint-02 (2026-03-26). Incluye T-032→T-042 (casos de uso). La tabla dinámica abajo siempre está actualizada.*
 
-```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
-const statuses = {};
-for (const t of tasks) {
-  const s = t.status || "desconocido";
-  statuses[s] = (statuses[s] || 0) + 1;
-}
-const icons = {"done": "✅", "todo": "📋", "in-progress": "🔄", "review": "👀", "blocked": "🚫"};
-const headers = ["Estado", "Cantidad", "Porcentaje", "Barra Visual"];
-const total = tasks.length;
-const rows = [];
-for (const [status, count] of Object.entries(statuses).sort()) {
-  const icon = icons[status] || "❓";
-  const pct = Math.round((count/total)*100);
-  const bar = "█".repeat(Math.round(pct/5)) + "░".repeat(20 - Math.round(pct/5));
-  rows.push([`${icon} ${status}`, count, `${pct}%`, bar]);
-}
-dv.table(headers, rows);
+```sqlseal
+SELECT
+  CASE WHEN status = 'done' THEN '✅' WHEN status = 'todo' THEN '📋' WHEN status = 'in-progress' THEN '🔄' WHEN status = 'review' THEN '👀' WHEN status = 'blocked' THEN '🚫' ELSE '❓' END || ' ' || status as "Estado",
+  COUNT(*) as "Cantidad",
+  ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM files WHERE (type='task' OR type='subtask') AND path LIKE '05-Sprints%')) || '%' as "Porcentaje"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
+GROUP BY status
+ORDER BY status ASC
 ```
 
 ---
@@ -140,92 +92,54 @@ beginAtZero: true
 
 ### 3.3 Detalle Dinámico por Responsable
 
-```dataviewjs
-const parseH = (v) => {
-  if (!v) return 0;
-  if (typeof v === "number") return v;
-  if (typeof v === "object" && v !== null && typeof v.as === "function") return v.as("hours");
-  const m = String(v).match(/(\d+)/);
-  return m ? parseInt(m[1]) : 0;
-};
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
-const people = {};
-const totalTasks = tasks.length;
-for (const t of tasks) {
-  const a = t.assignee || "Sin asignar";
-  if (!people[a]) people[a] = {total: 0, done: 0, inProgress: 0, todo: 0, estH: 0, actH: 0, doneEstH: 0, doneActH: 0};
-  people[a].total++;
-  const est = parseH(t.effort);
-  const act = parseH(t.effort_actual);
-  const real = act || est;
-  people[a].estH += est;
-  people[a].actH += real;
-  if (t.status === "done") { people[a].done++; people[a].doneEstH += est; people[a].doneActH += real; }
-  else if (t.status === "in-progress") people[a].inProgress++;
-  else people[a].todo++;
-}
-const headers = ["👤 Integrante", "Asignadas", "✅ Done", "🔄 Curso", "📋 Pend.", "% Colaboración", "⏱️ Est.", "⏱️ Real", "% Eficiencia"];
-const rows = [];
-for (const [person, d] of Object.entries(people).sort()) {
-  const pctColab = totalTasks > 0 ? Math.round((d.total / totalTasks) * 100) : 0;
-  const pctEfic = d.total > 0 ? Math.round((d.done / d.total) * 100) : 0;
-  const bar = "█".repeat(Math.round(pctColab / 5)) + "░".repeat(20 - Math.round(pctColab / 5));
-  rows.push([
-    person, d.total, d.done, d.inProgress, d.todo,
-    `${bar} ${pctColab}%`,
-    `${d.estH}h`,
-    `${d.actH}h`,
-    `${pctEfic}%`
-  ]);
-}
-dv.table(headers, rows);
+```sqlseal
+SELECT
+  COALESCE(assignee, 'Sin asignar') as "👤 Integrante",
+  COUNT(*) as "Asignadas",
+  SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "✅ Done",
+  SUM(CASE WHEN status = 'in-progress' THEN 1 ELSE 0 END) as "🔄 Curso",
+  SUM(CASE WHEN status NOT IN ('done', 'in-progress') THEN 1 ELSE 0 END) as "📋 Pend.",
+  ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM files WHERE (type='task' OR type='subtask') AND path LIKE '05-Sprints%')) || '%' as "% Colab.",
+  SUM(CAST(REPLACE(effort, 'h', '') AS INTEGER)) || 'h' as "⏱️ Est.",
+  SUM(CAST(REPLACE(COALESCE(effort_actual, effort), 'h', '') AS INTEGER)) || 'h' as "⏱️ Real",
+  ROUND(100.0 * SUM(CASE WHEN status='done' THEN 1 ELSE 0 END) / MAX(1, COUNT(*))) || '%' as "% Efic."
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
+GROUP BY assignee
+ORDER BY assignee ASC
 ```
 
 ---
 
 ## 4. Tareas por Fase
 
-```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
-const phases = {};
-for (const t of tasks) {
-  const p = t.phase || "sin fase";
-  if (!phases[p]) phases[p] = {total: 0, done: 0};
-  phases[p].total++;
-  if (t.status === "done") phases[p].done++;
-}
-const order = ["investigación", "análisis", "requerimientos", "integración", "gestión", "diseño", "implementación", "testing"];
-const headers = ["📍 Fase", "Total", "Done", "% Completado", "Barra"];
-const rows = [];
-const sorted = Object.entries(phases).sort((a,b) => order.indexOf(a[0]) - order.indexOf(b[0]));
-for (const [phase, data] of sorted) {
-  const pct = Math.round((data.done / data.total) * 100);
-  const bar = "█".repeat(Math.round(pct/5)) + "░".repeat(20 - Math.round(pct/5));
-  rows.push([phase, data.total, data.done, `${pct}%`, bar]);
-}
-dv.table(headers, rows);
+```sqlseal
+SELECT
+  COALESCE(phase, 'sin fase') as "📍 Fase",
+  COUNT(*) as "Total",
+  SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "Done",
+  ROUND(100.0 * SUM(CASE WHEN status='done' THEN 1 ELSE 0 END) / MAX(1, COUNT(*))) || '%' as "% Completado"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
+GROUP BY phase
+ORDER BY phase ASC
 ```
 
 ---
 
 ## 5. Tareas por Módulo
 
-```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
-const modules = {};
-for (const t of tasks) {
-  const m = t.module || "sin módulo";
-  if (!modules[m]) modules[m] = {total: 0, done: 0};
-  modules[m].total++;
-  if (t.status === "done") modules[m].done++;
-}
-const headers = ["🧩 Módulo", "Tareas", "Done", "Pendiente", "% Completado"];
-const rows = [];
-for (const [mod, data] of Object.entries(modules).sort()) {
-  const pct = Math.round((data.done / data.total) * 100);
-  rows.push([mod, data.total, data.done, data.total - data.done, `${pct}%`]);
-}
-dv.table(headers, rows);
+```sqlseal
+SELECT
+  COALESCE(module, 'sin módulo') as "🧩 Módulo",
+  COUNT(*) as "Tareas",
+  SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "Done",
+  COUNT(*) - SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "Pendiente",
+  ROUND(100.0 * SUM(CASE WHEN status='done' THEN 1 ELSE 0 END) / MAX(1, COUNT(*))) || '%' as "% Completado"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
+GROUP BY module
+ORDER BY module ASC
 ```
 
 ---
@@ -234,28 +148,26 @@ dv.table(headers, rows);
 
 ### 6.1 Por Módulo
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   module as "Módulo",
-  length(rows) as "Total RF",
-  length(filter(rows, (r) => r.priority = "must")) as "Must",
-  length(filter(rows, (r) => r.priority = "should")) as "Should",
-  length(filter(rows, (r) => r.priority = "could")) as "Could"
-FROM "03-Requerimientos/Funcionales"
-WHERE type = "requirement/functional"
+  COUNT(*) as "Total RF",
+  SUM(CASE WHEN priority = 'must' THEN 1 ELSE 0 END) as "Must",
+  SUM(CASE WHEN priority = 'should' THEN 1 ELSE 0 END) as "Should",
+  SUM(CASE WHEN priority = 'could' THEN 1 ELSE 0 END) as "Could"
+FROM files
+WHERE type = 'requirement/functional' AND path LIKE '03-Requerimientos/Funcionales%'
 GROUP BY module
 ```
 
 ### 6.2 Por Prioridad (MoSCoW)
 
-```dataview
-TABLE WITHOUT ID
-  priority as "Prioridad",
-  length(rows) as "Cantidad"
-FROM "03-Requerimientos"
-WHERE type = "requirement/functional" OR type = "requirement/non-functional"
+```sqlseal
+SELECT priority as "Prioridad", COUNT(*) as "Cantidad"
+FROM files
+WHERE (type = 'requirement/functional' OR type = 'requirement/non-functional') AND path LIKE '03-Requerimientos%'
 GROUP BY priority
-SORT priority ASC
+ORDER BY priority ASC
 ```
 
 ---
@@ -266,80 +178,37 @@ SORT priority ASC
 
 ### 7.1 Indicadores de Proceso
 
-```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
-const total = tasks.length;
-const done = tasks.where(t => t.status === "done").length;
-const blocked = tasks.where(t => t.status === "blocked").length;
-const review = tasks.where(t => t.status === "review").length;
-const inProgress = tasks.where(t => t.status === "in-progress").length;
-
-// ── Lean Six Sigma Metrics ──
-const throughput = done; // Tareas completadas (output)
-const wip = inProgress; // Work In Progress
-const defectRate = total > 0 ? ((blocked / total) * 100).toFixed(1) : 0; // % bloqueadas
-const firstPassYield = total > 0 ? (((done) / total) * 100).toFixed(1) : 0; // % completadas sin retrabajo
-const reworkRate = total > 0 ? ((review / total) * 100).toFixed(1) : 0; // % en revisión
-
-// Cycle time estimado (promedio horas por tarea completada)
-const parseH = (v) => {
-  if (!v) return 0;
-  if (typeof v === "number") return v;
-  if (typeof v === "object" && v !== null && typeof v.as === "function") return v.as("hours");
-  const m = String(v).match(/(\d+)/);
-  return m ? parseInt(m[1]) : 0;
-};
-const doneTasks = tasks.where(t => t.status === "done" && t.effort);
-let totalEffort = 0;
-for (const t of doneTasks) totalEffort += parseH(t.effort_actual) || parseH(t.effort);
-const avgCycleTime = doneTasks.length > 0 ? (totalEffort / doneTasks.length).toFixed(1) : "N/A";
-
-dv.table(
-  ["📏 Métrica LSS", "Valor", "Meta", "Semáforo", "Descripción"],
-  [
-    ["**Throughput**", `${throughput} tareas`, "≥ 80% por sprint", throughput >= total * 0.8 ? "🟢" : throughput >= total * 0.5 ? "🟡" : "🔴", "Tareas completadas (salida del proceso)"],
-    ["**WIP (Work In Progress)**", `${wip} tareas`, "≤ 5", wip <= 5 ? "🟢" : wip <= 8 ? "🟡" : "🔴", "Tareas simultáneamente en curso (limitar para flujo)"],
-    ["**Defect Rate**", `${defectRate}%`, "< 5%", parseFloat(defectRate) < 5 ? "🟢" : parseFloat(defectRate) < 10 ? "🟡" : "🔴", "% de tareas bloqueadas/defectuosas"],
-    ["**First Pass Yield (FPY)**", `${firstPassYield}%`, "> 90%", parseFloat(firstPassYield) > 90 ? "🟢" : parseFloat(firstPassYield) > 70 ? "🟡" : "🔴", "% completadas sin retrabajo"],
-    ["**Rework Rate**", `${reworkRate}%`, "< 10%", parseFloat(reworkRate) < 10 ? "🟢" : parseFloat(reworkRate) < 20 ? "🟡" : "🔴", "% de tareas que requieren revisión/retrabajo"],
-    ["**Cycle Time (promedio)**", `${avgCycleTime}h`, "< 4h", avgCycleTime !== "N/A" && parseFloat(avgCycleTime) < 4 ? "🟢" : "🟡", "Horas promedio por tarea completada"],
-  ]
-);
+```sqlseal
+SELECT
+  SUM(CASE WHEN status='done' THEN 1 ELSE 0 END) as "📊 Throughput",
+  SUM(CASE WHEN status='in-progress' THEN 1 ELSE 0 END) as "🔄 WIP",
+  ROUND(100.0 * SUM(CASE WHEN status='blocked' THEN 1 ELSE 0 END) / MAX(1, COUNT(*)), 1) || '%' as "🚫 Defect Rate",
+  ROUND(100.0 * SUM(CASE WHEN status='done' THEN 1 ELSE 0 END) / MAX(1, COUNT(*)), 1) || '%' as "✅ FPY",
+  ROUND(100.0 * SUM(CASE WHEN status='review' THEN 1 ELSE 0 END) / MAX(1, COUNT(*)), 1) || '%' as "👀 Rework",
+  CASE
+    WHEN COUNT(*) > 0 AND SUM(CASE WHEN status='done' AND effort IS NOT NULL THEN 1 ELSE 0 END) > 0
+    THEN ROUND(1.0 * SUM(CASE WHEN status='done' AND effort IS NOT NULL THEN CAST(REPLACE(COALESCE(effort_actual, effort), 'h', '') AS INTEGER) ELSE 0 END) / MAX(1, SUM(CASE WHEN status='done' AND effort IS NOT NULL THEN 1 ELSE 0 END)), 1) || 'h'
+    ELSE 'N/A'
+  END as "⏱️ Cycle Time"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
 ```
 
 ### 7.2 Tablero de Calidad (Quality Scorecard)
 
-```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
-const total = tasks.length;
-const done = tasks.where(t => t.status === "done").length;
-const blocked = tasks.where(t => t.status === "blocked").length;
-
-// Process Capability
-const sigma = total > 0 ? ((1 - blocked / total) * 100).toFixed(2) : 100;
-let sigmaLevel = "< 3σ";
-if (parseFloat(sigma) >= 99.9997) sigmaLevel = "6σ";
-else if (parseFloat(sigma) >= 99.98) sigmaLevel = "5σ";
-else if (parseFloat(sigma) >= 99.4) sigmaLevel = "4σ";
-else if (parseFloat(sigma) >= 93.3) sigmaLevel = "3σ";
-else if (parseFloat(sigma) >= 69.1) sigmaLevel = "2σ";
-else sigmaLevel = "1σ";
-
-// Schedule Variance
-const sprintTasks = dv.pages('"05-Sprints/Sprint-01"').where(t => t.type === "task" || t.type === "subtask");
-const sprintTotal = sprintTasks.length;
-const sprintDone = sprintTasks.where(t => t.status === "done").length;
-const sv = sprintTotal > 0 ? (((sprintDone / sprintTotal) - 1) * 100).toFixed(1) : 0;
-
-dv.table(
-  ["📊 Indicador", "Valor", "Interpretación"],
-  [
-    ["Yield del Proceso", `${sigma}%`, `Nivel Sigma: **${sigmaLevel}**`],
-    ["Schedule Variance (SV)", `${sv}%`, parseFloat(sv) >= 0 ? "✅ Adelantado o a tiempo" : "⚠️ Retrasado"],
-    ["Tareas sin defecto", `${total - blocked} / ${total}`, `${blocked} bloqueada(s)`],
-    ["Ratio Done/Total", `${done}/${total}`, `${total > 0 ? Math.round((done/total)*100) : 0}%`],
-  ]
-);
+```sqlseal
+SELECT
+  ROUND(100.0 * (1.0 - 1.0 * SUM(CASE WHEN status='blocked' THEN 1 ELSE 0 END) / MAX(1, COUNT(*))), 2) || '%' as "🏭 Yield",
+  CASE
+    WHEN ROUND(100.0 * (1.0 - 1.0 * SUM(CASE WHEN status='blocked' THEN 1 ELSE 0 END) / MAX(1, COUNT(*))), 2) >= 99.4 THEN '≥ 4σ'
+    WHEN ROUND(100.0 * (1.0 - 1.0 * SUM(CASE WHEN status='blocked' THEN 1 ELSE 0 END) / MAX(1, COUNT(*))), 2) >= 93.3 THEN '3σ'
+    ELSE '< 3σ'
+  END as "📏 Sigma",
+  SUM(CASE WHEN status='done' THEN 1 ELSE 0 END) || ' / ' || COUNT(*) as "✅ Done/Total",
+  ROUND(100.0 * SUM(CASE WHEN status='done' THEN 1 ELSE 0 END) / MAX(1, COUNT(*))) || '%' as "📊 Ratio",
+  COUNT(*) - SUM(CASE WHEN status='blocked' THEN 1 ELSE 0 END) || ' / ' || COUNT(*) as "🛡️ Sin Defecto"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
 ```
 
 ### 7.3 Vista DMAIC del Proyecto
@@ -389,38 +258,18 @@ tension: 0.3
 
 ### 8.2 Detalle Dinámico
 
-```dataviewjs
-const parseH = (v) => {
-  if (!v) return 0;
-  if (typeof v === "number") return v;
-  if (typeof v === "object" && v !== null && typeof v.as === "function") return v.as("hours");
-  const m = String(v).match(/(\d+)/);
-  return m ? parseInt(m[1]) : 0;
-};
-const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint);
-const sprints = {};
-for (const t of tasks) {
-  const s = String(t.sprint);
-  if (!sprints[s]) sprints[s] = { planned: 0, done: 0, points: 0, donePoints: 0 };
-  sprints[s].planned++;
-  const estPts = parseH(t.effort) || 1;
-  const actPts = parseH(t.effort_actual);
-  const pts = actPts || estPts;
-  sprints[s].points += estPts;
-  if (t.status === "done") {
-    sprints[s].done++;
-    sprints[s].donePoints += pts;
-  }
-}
-const headers = ["Sprint", "Planificadas", "Completadas", "% Completado", "Story Points (plan/done)", "Velocidad"];
-const rows = Object.entries(sprints)
-  .sort((a, b) => a[0].localeCompare(b[0]))
-  .map(([name, d]) => {
-    const pct = d.planned > 0 ? Math.round((d.done / d.planned) * 100) : 0;
-    const bar = "█".repeat(Math.round(pct/5)) + "░".repeat(20 - Math.round(pct/5));
-    return [name, d.planned, d.done, `${bar} ${pct}%`, `${d.points} / ${d.donePoints}`, `${d.donePoints} pts`];
-  });
-dv.table(headers, rows);
+```sqlseal
+SELECT
+  sprint as "Sprint",
+  COUNT(*) as "Planificadas",
+  SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "Completadas",
+  ROUND(100.0 * SUM(CASE WHEN status='done' THEN 1 ELSE 0 END) / MAX(1, COUNT(*))) || '%' as "% Completado",
+  SUM(CAST(REPLACE(effort, 'h', '') AS INTEGER)) || ' / ' || SUM(CASE WHEN status='done' THEN CAST(REPLACE(COALESCE(effort_actual, effort), 'h', '') AS INTEGER) ELSE 0 END) as "SP (plan/done)",
+  SUM(CASE WHEN status='done' THEN CAST(REPLACE(COALESCE(effort_actual, effort), 'h', '') AS INTEGER) ELSE 0 END) || ' pts' as "Velocidad"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%' AND sprint IS NOT NULL AND sprint != ''
+GROUP BY sprint
+ORDER BY sprint ASC
 ```
 
 ---
@@ -429,23 +278,12 @@ dv.table(headers, rows);
 
 > [!note]- 📈 Burndown Sprint 01 (expandir)
 >
-> ```dataviewjs
-> const tasks = dv.pages('"05-Sprints/Sprint-01"').where(t => (t.type === "task" || t.type === "subtask") && t.completed);
-> const byDate = {};
-> for (const t of tasks) {
->   const d = t.completed.toString().slice(0, 10);
->   byDate[d] = (byDate[d] || 0) + 1;
-> }
-> const sorted = Object.entries(byDate).sort();
-> let cumulative = 0;
-> const headers = ["Fecha", "Completadas ese día", "Acumulado"];
-> const rows = [];
-> for (const [date, count] of sorted) {
->   cumulative += count;
->   rows.push([date, count, cumulative]);
-> }
-> if (rows.length === 0) dv.paragraph("*No hay tareas con fecha `completed:` aún.*");
-> else dv.table(headers, rows);
+> ```sqlseal
+> SELECT completed as "Fecha", COUNT(*) as "Completadas ese día", SUM(COUNT(*)) OVER (ORDER BY completed) as "Acumulado"
+> FROM files
+> WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints/Sprint-01%' AND completed IS NOT NULL AND completed != ''
+> GROUP BY completed
+> ORDER BY completed ASC
 > ```
 
 ---
@@ -454,31 +292,29 @@ dv.table(headers, rows);
 
 > [!note]- 📋 Cobertura completa de validación (expandir)
 >
-> ```dataview
-> TABLE WITHOUT ID
->   id as "ID",
->   title as "Requerimiento",
->   validation as "Validación",
->   status as "Estado"
-> FROM "03-Requerimientos"
-> WHERE (type = "requirement/functional" OR type = "requirement/non-functional")
-> SORT id ASC
+> ```sqlseal
+> SELECT name as "ID", title as "Requerimiento", validation as "Validación", status as "Estado"
+> FROM files
+> WHERE (type = 'requirement/functional' OR type = 'requirement/non-functional') AND path LIKE '03-Requerimientos%'
+> ORDER BY name ASC
 > ```
 
 ---
 
 ## 11. Gestión de Riesgos — Resumen
 
-```dataviewjs
-const risks = dv.pages('"01-Proyecto/Riesgos"').where(r => r.type === "risk");
-const headers = ["ID", "Riesgo", "Prob.", "Impacto", "Severidad", "Estado", "Responsable"];
-const rows = [];
-for (const r of risks.sort(r => r.severity, "desc")) {
-  const sev = String(r.severity).toLowerCase();
-  const sevIcon = (sev === "crítico" || sev === "critico") ? "🔴" : (sev === "alto") ? "🔴" : (sev === "medio") ? "🟠" : (sev === "bajo") ? "🟡" : "⚪";
-  rows.push([r.id, r.title, r.probability, r.impact, `${sevIcon} ${r.severity}`, r.status, r.owner]);
-}
-dv.table(headers, rows);
+```sqlseal
+SELECT
+  name as "ID",
+  title as "Riesgo",
+  probability as "Prob.",
+  impact as "Impacto",
+  CASE WHEN severity IN ('crítico', 'critico') THEN '🔴 ' WHEN severity = 'alto' THEN '🔴 ' WHEN severity = 'medio' THEN '🟠 ' WHEN severity = 'bajo' THEN '🟡 ' ELSE '⚪ ' END || severity as "Severidad",
+  status as "Estado",
+  owner as "Responsable"
+FROM files
+WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+ORDER BY severity DESC
 ```
 
 ```chart
@@ -495,41 +331,20 @@ labelColors: true
 
 ## 12. Resumen Financiero
 
-```dataviewjs
-const parseH = (v) => {
-  if (!v) return 0;
-  if (typeof v === "number") return v;
-  if (typeof v === "object" && v !== null && typeof v.as === "function") return v.as("hours");
-  const m = String(v).match(/(\d+)/);
-  return m ? parseInt(m[1]) : 0;
-};
-const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500 };
-const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
-const costos = {};
-for (const t of tasks) {
-  const person = t.assignee || "Sin asignar";
-  const est = parseH(t.effort);
-  const act = parseH(t.effort_actual);
-  const hours = act || est;
-  const tarifa = tarifas[person] || 5000;
-  if (!costos[person]) costos[person] = { estH: 0, actH: 0, estCost: 0, actCost: 0 };
-  costos[person].estH += est;
-  costos[person].actH += hours;
-  costos[person].estCost += est * tarifa;
-  costos[person].actCost += hours * tarifa;
-}
-let grandEst = 0, grandAct = 0;
-const headers = ["👤 Integrante", "H. Est.", "H. Real", "Tarifa (₡/h)", "Costo Est. (₡)", "Costo Real (₡)", "Real (USD)"];
-const rows = [];
-for (const [person, data] of Object.entries(costos).sort()) {
-  const tarifa = tarifas[person] || 5000;
-  grandEst += data.estCost;
-  grandAct += data.actCost;
-  rows.push([person, `${data.estH}h`, `${data.actH}h`, `₡${tarifa.toLocaleString()}`, `₡${data.estCost.toLocaleString()}`, `₡${data.actCost.toLocaleString()}`, `$${Math.round(data.actCost / 535).toLocaleString()}`]);
-}
-rows.push(["**TOTAL**", "", "", "", `**₡${grandEst.toLocaleString()}**`, `**₡${grandAct.toLocaleString()}**`, `**$${Math.round(grandAct/535).toLocaleString()}**`]);
-dv.table(headers, rows);
-dv.paragraph(`> 💰 Ver detalle completo: [[01-Proyecto/Finanzas|Gestión Financiera del Proyecto]]`);
+```sqlseal
+SELECT
+  COALESCE(t.assignee, 'Sin asignar') as "👤 Integrante",
+  SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER)) || 'h' as "H. Est.",
+  SUM(CAST(REPLACE(COALESCE(t.effort_actual, t.effort), 'h', '') AS INTEGER)) || 'h' as "H. Real",
+  '₡' || c.tarifa_hora as "Tarifa (₡/h)",
+  '₡' || SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Est. (₡)",
+  '₡' || SUM(CAST(REPLACE(COALESCE(t.effort_actual, t.effort), 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Real (₡)",
+  '$' || ROUND(SUM(CAST(REPLACE(COALESCE(t.effort_actual, t.effort), 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) / 535.0) as "Real (USD)"
+FROM files t
+LEFT JOIN file(08-Recursos/Datos/finanzas-config.csv) c ON t.assignee = c.persona
+WHERE (t.type = 'task' OR t.type = 'subtask') AND t.path LIKE '05-Sprints%' AND t.effort IS NOT NULL AND t.effort != ''
+GROUP BY t.assignee
+ORDER BY t.assignee ASC
 ```
 
 ```chart
