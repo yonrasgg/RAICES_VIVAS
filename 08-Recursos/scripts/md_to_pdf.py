@@ -371,6 +371,7 @@ blockquote {
     line-height: 1.6;
     color: #333;
     font-style: italic;
+    page-break-after: avoid;
 }
 
 blockquote p {
@@ -408,6 +409,7 @@ pre code {
     text-align: center;
     margin: 16pt auto;
     max-width: 100%;
+    page-break-before: avoid;
 }
 
 .mermaid-diagram img {
