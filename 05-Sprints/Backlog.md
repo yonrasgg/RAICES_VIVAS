@@ -21,6 +21,10 @@ kanban-plugin: basic
 - [ ] [[05-Sprints/Stories/RV-58|RV-58: Registro de consentimiento informado]] @Elkin 🏷️ Sprint-04 (5 SP)
 - [ ] [[05-Sprints/Stories/RV-59|RV-59: Gestión de brigadas de salud]] @Santiago 🏷️ Sprint-05 (3 SP)
 - [ ] [[05-Sprints/Stories/RV-60|RV-60: Gobernanza cultural y control comunitario]] @Geovanny 🏷️ Sprint-04 (5 SP)
+- [ ] [[05-Sprints/Stories/RV-61|RV-61: Compartir material entre comunidades del mismo pueblo]] @Elkin 🏷️ Sprint-04 (5 SP)
+- [ ] [[05-Sprints/Stories/RV-62|RV-62: Revocar contenido por decisión comunitaria]] @Geovanny 🏷️ Sprint-04 (5 SP)
+- [ ] [[05-Sprints/Stories/RV-63|RV-63: Consultar registro de auditoría de acceso]] @Elkin 🏷️ Sprint-04 (3 SP)
+- [ ] [[05-Sprints/Stories/RV-64|RV-64: Exportar expediente a EDUS (CCSS)]] @Santiago 🏷️ Sprint-05 (5 SP)
 
 ## 🔄 En Progreso
 
@@ -32,7 +36,7 @@ kanban-plugin: basic
 ## ✅ Completado (Sprint 02 — Casos de Uso)
 
 - [x] [[05-Sprints/Sprint-02/T-032|T-032: Clasificar actores del sistema]] @Geovanny ✅ 2026-03-28
-- [x] [[05-Sprints/Sprint-02/T-033|T-033: Lista general de 19 casos de uso]] @Elkin ✅ 2026-03-28
+- [x] [[05-Sprints/Sprint-02/T-033|T-033: Lista general de 23 casos de uso]] @Elkin ✅ 2026-03-28
 - [x] [[05-Sprints/Sprint-02/T-034|T-034: Documentar CU-EDU-01 y CU-EDU-03]] @Geovanny ✅ 2026-03-29
 - [x] [[05-Sprints/Sprint-02/T-035|T-035: Documentar CU-SAB-01 y CU-SAB-04]] @Elkin ✅ 2026-03-29
 - [x] [[05-Sprints/Sprint-02/T-036|T-036: Documentar CU-SAL-01 y CU-SAL-02]] @Santiago ✅ 2026-03-29

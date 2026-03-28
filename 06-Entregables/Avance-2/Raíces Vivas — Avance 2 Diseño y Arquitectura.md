@@ -564,9 +564,211 @@ El sistema Raíces Vivas comprende **23 casos de uso** derivados de los 23 reque
 
 ---
 
+### 4.9 CU-EDU-07: Compartir material entre comunidades del mismo pueblo
+
+| Campo | Detalle |
+|-------|---------|
+| **Caso de uso** | CU-EDU-07 — Compartir material educativo entre comunidades del mismo pueblo |
+| **Actor principal** | Docente comunitario |
+| **Objetivo** | Publicar material educativo local en un repositorio compartido por pueblo indígena, permitiendo que docentes de otras comunidades del mismo pueblo accedan y reutilicen el contenido |
+| **Precondiciones** | 1) El docente está autenticado con rol "Docente comunitario". 2) Existe material educativo propio previamente cargado (CU-EDU-03). 3) El docente pertenece a un pueblo con al menos dos comunidades registradas. |
+| **Disparador** | El docente selecciona "Compartir con mi pueblo" desde el detalle de un material educativo |
+
+**Escenario principal:**
+
+| Paso | Actor | Sistema |
+|------|-------|---------|
+| 1 | Selecciona material educativo propio | Muestra detalle del material con opción "Compartir con mi pueblo" |
+| 2 | Selecciona "Compartir con mi pueblo" | Muestra panel de publicación: pueblo destino (auto-detectado), permisos (lectura / lectura+adaptación), nota de contexto |
+| 3 | Selecciona permisos de uso y agrega nota de contexto | — |
+| 4 | Confirma publicación | Valida que el material cumpla requisitos mínimos (título, idioma, formato) |
+| 5 | — | Publica en repositorio compartido del pueblo, marcando origen (comunidad, docente, fecha) |
+| 6 | — | Notifica a docentes de otras comunidades del pueblo sobre nuevo material disponible |
+| 7 | — | Almacena localmente y marca para sincronización al repositorio central |
+
+**Flujo alterno A — Descarga por otro docente:**
+
+| Paso | Detalle |
+|------|---------|
+| A1 | Un docente de otra comunidad del mismo pueblo accede al repositorio compartido |
+| A2 | Busca/filtra material por asignatura, idioma o comunidad de origen |
+| A3 | Descarga material a su colección local con atribución de autoría original |
+| A4 | Si permisos lo permiten, adapta el material a su contexto comunitario |
+
+**Flujo alterno B — Sin conectividad:**
+
+| Paso | Detalle |
+|------|---------|
+| B1 | El docente marca material para compartir sin conexión |
+| B2 | El sistema almacena la intención de publicación localmente |
+| B3 | Al restaurarse conectividad, sincroniza automáticamente al repositorio del pueblo |
+
+| Campo | Detalle |
+|-------|---------|
+| **Excepciones** | E1: Material sin idioma ni título → bloqueo con mensaje de campos obligatorios. E2: Nombre duplicado en repositorio del pueblo → alerta con sugerencia de renombrar. E3: Sin conexión → flujo alterno B (sincronización diferida). E4: Material referencia contenido restringido SAB → bloqueo; requiere verificación de permisos de gobernanza. |
+| **Prioridad** | Media (Should) — identificado en ENT-001 como necesidad de las 3 comunidades maleku |
+| **Cuándo estará disponible** | Sprint-04 (mayo 2026) |
+| **Frecuencia de uso** | Media — estimado: 5-10 materiales compartidos/mes por pueblo activo |
+| **Canal para el actor** | PWA en tablet o computadora |
+| **Actores secundarios** | Docentes de otras comunidades del mismo pueblo (consumen material); Admin comunitario (puede moderar contenido compartido) |
+| **Canales para actores secundarios** | PWA — notificación de nuevo material disponible |
+| **Aspectos pendientes** | Definir política de moderación del repositorio compartido; mecanismo de versionado cuando un docente adapta material de otro; integración con CU-EDU-04 para organización automática por asignatura; límites de almacenamiento por pueblo |
+
+---
+
+### 4.10 CU-SAB-06: Revocar contenido por decisión comunitaria
+
+| Campo | Detalle |
+|-------|---------|
+| **Caso de uso** | CU-SAB-06 — Revocar contenido por decisión comunitaria |
+| **Actor principal** | Administrador comunitario |
+| **Objetivo** | Retirar o archivar un saber ancestral registrado cuando la comunidad decide que no debe permanecer visible, garantizando trazabilidad de la decisión y aplicando eliminación lógica (soft-delete) |
+| **Precondiciones** | 1) El admin comunitario está autenticado con rol "Admin comunitario". 2) Existe un saber registrado en estado "Publicado" o "Restringido". 3) Existe decisión documentada de la autoridad comunitaria competente (Consejo de mayores, Awá o asamblea). |
+| **Disparador** | El admin selecciona "Revocar contenido" desde el panel de gobernanza del módulo SAB |
+
+**Escenario principal:**
+
+| Paso | Actor | Sistema |
+|------|-------|---------|
+| 1 | Selecciona "Revocar contenido" en panel de gobernanza | Muestra lista de saberes activos filtrable por categoría, territorio, nivel de acceso |
+| 2 | Selecciona el saber a revocar | Muestra detalle: título, portador, nivel actual, fecha de registro, consentimiento asociado |
+| 3 | Selecciona motivo de revocación (catálogo: decisión comunitaria, solicitud del portador, apropiación indebida detectada, otro) | — |
+| 4 | Ingresa referencia de autorización: autoridad (Consejo/Awá/Asamblea), fecha de decisión, identificador de acta | Valida que los campos de autorización estén completos |
+| 5 | Describe justificación narrativa | — |
+| 6 | Confirma revocación | Aplica soft-delete: cambia estado a "Revocado", oculta de búsquedas y listados públicos |
+| 7 | — | Registra en log de auditoría: quién, cuándo, qué, motivo, referencia de autorización |
+| 8 | — | Identifica contenido derivado (adaptaciones, referencias) y notifica a responsables |
+| 9 | — | Genera confirmación con número de registro de revocación |
+
+**Flujo alterno A — Contenido con derivados:**
+
+| Paso | Detalle |
+|------|---------|
+| 6a | El sistema detecta que el saber tiene contenido derivado (adaptaciones, citas, materiales educativos que lo referencian) |
+| 6b | Muestra lista de contenido derivado con responsables |
+| 6c | El admin decide: revocar en cascada (oculta todos los derivados) o revocar solo el original (los derivados muestran aviso de fuente revocada) |
+
+**Flujo alterno B — Sin conectividad:**
+
+| Paso | Detalle |
+|------|---------|
+| B1 | Revocación se aplica localmente con prioridad alta de sincronización |
+| B2 | Al restaurarse conectividad, se propaga la revocación al servidor central y a otros nodos |
+| B3 | Conflicto: si otro nodo modificó el saber antes de recibir la revocación → la revocación prevalece (principio de soberanía comunitaria) |
+
+| Campo | Detalle |
+|-------|---------|
+| **Excepciones** | E1: Intento de revocar sin referencia de autorización → bloqueo (toda revocación requiere trazabilidad). E2: Saber ya revocado → mensaje informativo con fecha y motivo de revocación previa. E3: Sin conexión → flujo alterno B (revocación local con sincronización prioritaria). E4: Conflicto de sincronización → la revocación siempre prevalece sobre ediciones. |
+| **Prioridad** | Alta (Must) — responde a trauma documentado de apropiación cultural (ENT-002, ENT-004) |
+| **Cuándo estará disponible** | Sprint-04 (mayo 2026) |
+| **Frecuencia de uso** | Baja — excepcional (estimado: 1-2 revocaciones/año por comunidad) |
+| **Canal para el actor** | PWA en computadora (preferente por la criticidad del proceso) |
+| **Actores secundarios** | Consejo de mayores (autoriza revocación de nivel restringido); Awá (autoriza revocación de nivel ceremonial); Portador del saber (notificado de la revocación) |
+| **Canales para actores secundarios** | Presencial en reunión comunitaria; decisiones registradas posteriormente en el sistema |
+| **Aspectos pendientes** | Protocolo de restauración post-revocación (¿es reversible?); política de retención de datos revocados (¿cuánto tiempo se conservan en estado soft-delete?); integración con CU-SAB-07 para auditoría automática; notificación a investigadores externos que tenían acceso previamente autorizado |
+
+---
+
+### 4.11 CU-SAB-07: Consultar registro de auditoría de acceso
+
+| Campo | Detalle |
+|-------|---------|
+| **Caso de uso** | CU-SAB-07 — Consultar registro de auditoría de acceso a saberes ancestrales |
+| **Actor principal** | Administrador comunitario |
+| **Objetivo** | Consultar, filtrar y exportar el registro inmutable de todos los accesos a saberes ancestrales, permitiendo a la comunidad verificar quién accedió a qué contenido y cuándo |
+| **Precondiciones** | 1) El admin comunitario está autenticado con rol "Admin comunitario". 2) Existen registros de auditoría en el sistema (generados automáticamente por accesos a saberes). |
+| **Disparador** | El admin selecciona "Auditoría de acceso" en el panel de gobernanza del módulo SAB |
+
+**Escenario principal:**
+
+| Paso | Actor | Sistema |
+|------|-------|---------|
+| 1 | Selecciona "Auditoría de acceso" | Muestra dashboard de auditoría: resumen de accesos últimos 30 días, alertas de acceso inusual |
+| 2 | Aplica filtros: rango de fechas, saber específico, usuario, tipo de acción (lectura, descarga, modificación, revocación) | Actualiza listado filtrado con resultados paginados |
+| 3 | Selecciona un registro de auditoría | Muestra detalle: timestamp, usuario, acción, saber accedido, IP/dispositivo, resultado (exitoso/denegado) |
+| 4 | — | Permite navegación al saber referenciado (si aún existe y el admin tiene acceso) |
+| 5 | Selecciona "Exportar" | Genera reporte en CSV con los registros filtrados |
+| 6 | — | Descarga el archivo; registra la propia exportación en el log de auditoría |
+
+**Flujo alterno A — Detección de acceso inusual:**
+
+| Paso | Detalle |
+|------|---------|
+| 1a | El dashboard muestra alertas automáticas: accesos fuera de horario habitual, múltiples descargas en poco tiempo, intentos denegados repetidos |
+| 1b | El admin revisa la alerta y marca como "revisada" o "requiere acción" |
+| 1c | Si requiere acción → el admin puede restringir acceso del usuario directamente desde la auditoría |
+
+| Campo | Detalle |
+|-------|---------|
+| **Excepciones** | E1: Sin registros en el rango de fechas → mensaje informativo "No se encontraron registros". E2: Exportación excede 10,000 registros → se ofrece exportación asincrónica con notificación al completar. E3: Sin conexión → muestra solo registros almacenados localmente con aviso de datos parciales. E4: Intento de modificar o eliminar registros de auditoría → bloqueo (log inmutable). |
+| **Prioridad** | Media (Should) — complementa CU-SAB-06 como herramienta de supervisión comunitaria |
+| **Cuándo estará disponible** | Sprint-04 (mayo 2026) |
+| **Frecuencia de uso** | Baja-media — estimado: 2-4 consultas/mes por comunidad, con picos tras eventos de acceso masivo |
+| **Canal para el actor** | PWA en computadora (preferente por volumen de datos tabulares) |
+| **Actores secundarios** | Consejo de mayores (puede solicitar reportes de auditoría); Awá (puede solicitar auditoría específica de saberes ceremoniales) |
+| **Canales para actores secundarios** | Reporte impreso o PDF exportado para revisión en reuniones comunitarias presenciales |
+| **Aspectos pendientes** | Definir período de retención de logs (¿indefinido o con purga?); alertas automáticas configurables por comunidad; integración con sistema de permisos para acción directa desde auditoría; formato de reporte para presentación a asambleas comunitarias |
+
+---
+
+### 4.12 CU-SAL-06: Exportar expediente a EDUS (CCSS)
+
+| Campo | Detalle |
+|-------|---------|
+| **Caso de uso** | CU-SAL-06 — Exportar expediente clínico al sistema EDUS de la CCSS |
+| **Actor principal** | Auxiliar de salud (ATAP) |
+| **Objetivo** | Generar un archivo de exportación estructurado (CSV/HL7) con los datos clínicos de un paciente, mapeados a los campos del sistema EDUS de la CCSS, eliminando la transcripción manual que actualmente toma 3+ horas |
+| **Precondiciones** | 1) El auxiliar está autenticado con rol "Personal salud". 2) El paciente tiene historial clínico registrado (CU-SAL-02). 3) Los campos obligatorios de EDUS están completos en el expediente local. |
+| **Disparador** | El auxiliar selecciona "Exportar a EDUS" desde el expediente de un paciente |
+
+**Escenario principal:**
+
+| Paso | Actor | Sistema |
+|------|-------|---------|
+| 1 | Abre el expediente del paciente y selecciona "Exportar a EDUS" | Muestra panel de exportación: rango de fechas, tipo de datos (consultas, medicamentos, signos vitales) |
+| 2 | Selecciona rango de fechas y tipo de datos a exportar | — |
+| 3 | — | Ejecuta mapeo de campos locales → campos EDUS según tabla de correspondencia |
+| 4 | — | Muestra previsualización: datos mapeados, campos vacíos o con formato incompatible resaltados en amarillo |
+| 5 | Revisa previsualización y corrige campos incompatibles si los hay | — |
+| 6 | Selecciona formato de exportación (CSV estándar CCSS / HL7 FHIR) | — |
+| 7 | Confirma exportación | Genera archivo cifrado con los datos exportados |
+| 8 | — | Descarga archivo al dispositivo; registra exportación en log de auditoría (qué datos, cuándo, quién, destino) |
+| 9 | — | Muestra confirmación con resumen: registros exportados, campos mapeados, advertencias |
+
+**Flujo alterno A — Exportación acumulativa:**
+
+| Paso | Detalle |
+|------|---------|
+| A1 | El auxiliar selecciona "Exportación acumulativa" (varios pacientes de una brigada) |
+| A2 | Selecciona pacientes de la brigada o selecciona todos los pacientes atendidos en un rango de fechas |
+| A3 | El sistema genera un archivo consolidado con los expedientes de todos los pacientes seleccionados |
+| A4 | Cada expediente se separa como un registro individual dentro del archivo consolidado |
+
+**Flujo alterno B — Campos incompletos:**
+
+| Paso | Detalle |
+|------|---------|
+| 4a | El sistema detecta que campos obligatorios de EDUS están vacíos en el expediente local |
+| 4b | Muestra lista de campos faltantes con indicación de dónde completarlos |
+| 4c | El auxiliar completa los campos desde el panel de exportación o navega al expediente |
+| 4d | Regresa a previsualización con campos actualizados |
+
+| Campo | Detalle |
+|-------|---------|
+| **Excepciones** | E1: Campos obligatorios de EDUS incompletos → flujo alterno B (no se permite exportar sin campos mínimos). E2: Formato de campo incompatible (ej. fecha en formato diferente) → conversión automática con advertencia visual. E3: Archivo excede tamaño máximo de EDUS → se ofrece dividir en lotes. E4: Sin conexión → exportación local; el archivo se genera para transferencia manual (USB u otro medio). |
+| **Prioridad** | Baja (Could) — alta demanda expresada en ENT-003 pero requiere validación con la CCSS |
+| **Cuándo estará disponible** | Sprint-05 (junio 2026) |
+| **Frecuencia de uso** | Media — estimado: 1 exportación acumulativa post-brigada (20-50 pacientes) + exportaciones individuales esporádicas |
+| **Canal para el actor** | PWA en computadora (requiere revisión detallada de campos y acceso a formularios EDUS) |
+| **Actores secundarios** | Médico EBAIS (valida datos exportados antes de ingreso a EDUS); Paciente (titular de los datos exportados, requiere consentimiento implícito por Ley 8968) |
+| **Canales para actores secundarios** | EDUS (sistema destino de la CCSS, acceso web institucional); presencial para validación médica |
+| **Aspectos pendientes** | Obtener especificación oficial de campos EDUS de la CCSS; validar formato de exportación aceptado; protocolo de consentimiento de datos de salud para exportación interinstitucional (Ley 8968); tabla de mapeo campo-a-campo pendiente de definir con personal EBAIS; cifrado requerido para datos en tránsito |
+
+---
+
 ## 5. Diagrama de Casos de Uso
 
-> Diagrama UML de casos de uso representado en Mermaid, agrupando los 19 casos por módulo (subsistema) y mostrando las relaciones entre actores y casos de uso.
+> Diagrama UML de casos de uso representado en Mermaid, agrupando los 23 casos por módulo (subsistema) y mostrando las relaciones entre actores y casos de uso.
 
 ```mermaid
 graph TB
@@ -585,6 +787,7 @@ graph TB
         CU_EDU_04(["CU-EDU-04<br>Organizar material<br>por asignatura"])
         CU_EDU_05(["CU-EDU-05<br>Realizar ejercicio<br>de práctica"])
         CU_EDU_06(["CU-EDU-06<br>Consultar progreso<br>de estudiante"])
+        CU_EDU_07(["CU-EDU-07<br>Compartir material<br>entre comunidades"])
     end
 
     %% === MÓDULO SAB ===
@@ -594,6 +797,8 @@ graph TB
         CU_SAB_03(["CU-SAB-03<br>Buscar saberes<br>por filtros"])
         CU_SAB_04(["CU-SAB-04<br>Configurar restricción<br>de acceso"])
         CU_SAB_05(["CU-SAB-05<br>Registrar<br>consentimiento"])
+        CU_SAB_06(["CU-SAB-06<br>Revocar contenido<br>por decisión comunitaria"])
+        CU_SAB_07(["CU-SAB-07<br>Consultar registro<br>de auditoría"])
     end
 
     %% === MÓDULO SAL ===
@@ -603,6 +808,7 @@ graph TB
         CU_SAL_03(["CU-SAL-03<br>Programar<br>cita médica"])
         CU_SAL_04(["CU-SAL-04<br>Gestionar brigada<br>de salud"])
         CU_SAL_05(["CU-SAL-05<br>Configurar alerta<br>de seguimiento"])
+        CU_SAL_06(["CU-SAL-06<br>Exportar expediente<br>a EDUS"])
     end
 
     %% === MÓDULO TRANS ===
@@ -626,15 +832,19 @@ graph TB
     DOC --> CU_EDU_03
     DOC --> CU_EDU_04
     DOC --> CU_EDU_06
+    DOC --> CU_EDU_07
     GC --> CU_SAB_01
     ADMC --> CU_SAB_02
     ADMC --> CU_SAB_04
     ADMC --> CU_SAB_05
+    ADMC --> CU_SAB_06
+    ADMC --> CU_SAB_07
     AUX --> CU_SAL_01
     AUX --> CU_SAL_02
     AUX --> CU_SAL_03
     AUX --> CU_SAL_04
     AUX --> CU_SAL_05
+    AUX --> CU_SAL_06
     ADM --> CU_TRANS_01
     ADMC --> CU_TRANS_03
 
@@ -648,6 +858,8 @@ graph TB
     CU_SAB_03 -.-> AUX
     CM -.-> CU_SAB_04
     AWA -.-> CU_SAB_04
+    CM -.-> CU_SAB_06
+    AWA -.-> CU_SAB_06
     AWA -.-> CU_SAB_01
     RPI -.-> CU_TRANS_01
     COUCH -.-> CU_TRANS_01
@@ -656,11 +868,14 @@ graph TB
     CU_SAB_01 -- "«include»" --> CU_SAB_05
     CU_SAL_02 -- "«include»" --> CU_SAL_01
     CU_EDU_06 -- "«include»" --> CU_EDU_05
+    CU_SAB_06 -- "«include»" --> CU_SAB_07
 
     %% === RELACIONES EXTEND ===
     CU_SAL_05 -. "«extend»" .-> CU_SAL_02
     CU_EDU_04 -. "«extend»" .-> CU_EDU_03
     CU_SAB_02 -. "«extend»" .-> CU_SAB_01
+    CU_EDU_07 -. "«extend»" .-> CU_EDU_03
+    CU_SAL_06 -. "«extend»" .-> CU_SAL_02
 
     %% === ESTILOS ===
     classDef actor fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
@@ -686,6 +901,9 @@ graph TB
 | CU-SAL-05 → CU-SAL-02 | Alerta de seguimiento | Registrar historial | `«extend»` | Opcionalmente, al registrar historial se puede configurar alerta |
 | CU-EDU-04 → CU-EDU-03 | Organizar material | Cargar material | `«extend»` | Opcionalmente, al cargar material se puede organizar por asignatura |
 | CU-SAB-02 → CU-SAB-01 | Clasificar saber | Registrar saber | `«extend»` | Opcionalmente, al registrar se puede clasificar inmediatamente |
+| CU-EDU-07 → CU-EDU-03 | Compartir material | Cargar material | `«extend»` | Opcionalmente, al cargar material se puede compartir con el pueblo |
+| CU-SAB-06 → CU-SAB-07 | Revocar contenido | Auditoría de acceso | `«include»` | Toda revocación **genera** registro en el log de auditoría |
+| CU-SAL-06 → CU-SAL-02 | Exportar expediente | Registrar historial | `«extend»` | Opcionalmente, desde el historial se puede exportar a EDUS |
 
 ---
 
@@ -701,31 +919,35 @@ graph TB
 | 4 | RF-EDU-04 | CU-EDU-04 | EDU | Docente comunitario | Should | Sprint-04 | — |
 | 5 | RF-EDU-05 | CU-EDU-05 | EDU | Estudiante | Should | Sprint-04 | — |
 | 6 | RF-EDU-06 | CU-EDU-06 | EDU | Docente comunitario | Could | Sprint-05 | — |
-| 7 | RF-SAB-01 | CU-SAB-01 | SAB | Guía cultural | Must | Sprint-04 | ✅ §4.3 |
-| 8 | RF-SAB-02 | CU-SAB-02 | SAB | Admin comunitario | Should | Sprint-04 | — |
-| 9 | RF-SAB-03 | CU-SAB-03 | SAB | Usuario autorizado | Should | Sprint-04 | — |
-| 10 | RF-SAB-04 | CU-SAB-04 | SAB | Admin comunitario | Must | Sprint-04 | ✅ §4.4 |
-| 11 | RF-SAB-05 | CU-SAB-05 | SAB | Admin comunitario | Must | Sprint-04 | — |
-| 12 | RF-SAL-01 | CU-SAL-01 | SAL | Auxiliar de salud | Must | Sprint-03 | ✅ §4.5 |
-| 13 | RF-SAL-02 | CU-SAL-02 | SAL | Auxiliar de salud | Must | Sprint-04 | ✅ §4.6 |
-| 14 | RF-SAL-03 | CU-SAL-03 | SAL | Auxiliar de salud | Should | Sprint-04 | — |
-| 15 | RF-SAL-04 | CU-SAL-04 | SAL | Auxiliar de salud | Could | Sprint-05 | — |
-| 16 | RF-SAL-05 | CU-SAL-05 | SAL | Auxiliar de salud | Should | Sprint-05 | — |
-| 17 | RF-TRANS-01 | CU-TRANS-01 | TRANS | Sistema / Usuario | Must | Sprint-03 | ✅ §4.7 |
-| 18 | RF-TRANS-02 | CU-TRANS-02 | TRANS | Usuario autenticado | Must | Sprint-03 | ✅ §4.8 |
-| 19 | RF-TRANS-03 | CU-TRANS-03 | TRANS | Admin comunitario | Must | Sprint-04 | — |
+| 7 | RF-EDU-07 | CU-EDU-07 | EDU | Docente comunitario | Should | Sprint-04 | ✅ §4.9 |
+| 8 | RF-SAB-01 | CU-SAB-01 | SAB | Guía cultural | Must | Sprint-04 | ✅ §4.3 |
+| 9 | RF-SAB-02 | CU-SAB-02 | SAB | Admin comunitario | Should | Sprint-04 | — |
+| 10 | RF-SAB-03 | CU-SAB-03 | SAB | Usuario autorizado | Should | Sprint-04 | — |
+| 11 | RF-SAB-04 | CU-SAB-04 | SAB | Admin comunitario | Must | Sprint-04 | ✅ §4.4 |
+| 12 | RF-SAB-05 | CU-SAB-05 | SAB | Admin comunitario | Must | Sprint-04 | — |
+| 13 | RF-SAB-06 | CU-SAB-06 | SAB | Admin comunitario | Must | Sprint-04 | ✅ §4.10 |
+| 14 | RF-SAB-07 | CU-SAB-07 | SAB | Admin comunitario | Should | Sprint-04 | ✅ §4.11 |
+| 15 | RF-SAL-01 | CU-SAL-01 | SAL | Auxiliar de salud | Must | Sprint-03 | ✅ §4.5 |
+| 16 | RF-SAL-02 | CU-SAL-02 | SAL | Auxiliar de salud | Must | Sprint-04 | ✅ §4.6 |
+| 17 | RF-SAL-03 | CU-SAL-03 | SAL | Auxiliar de salud | Should | Sprint-04 | — |
+| 18 | RF-SAL-04 | CU-SAL-04 | SAL | Auxiliar de salud | Could | Sprint-05 | — |
+| 19 | RF-SAL-05 | CU-SAL-05 | SAL | Auxiliar de salud | Should | Sprint-05 | — |
+| 20 | RF-SAL-06 | CU-SAL-06 | SAL | Auxiliar de salud | Could | Sprint-05 | ✅ §4.12 |
+| 21 | RF-TRANS-01 | CU-TRANS-01 | TRANS | Sistema / Usuario | Must | Sprint-03 | ✅ §4.7 |
+| 22 | RF-TRANS-02 | CU-TRANS-02 | TRANS | Usuario autenticado | Must | Sprint-03 | ✅ §4.8 |
+| 23 | RF-TRANS-03 | CU-TRANS-03 | TRANS | Admin comunitario | Must | Sprint-04 | — |
 
 ### 6.2 Cobertura por Prioridad
 
 | MoSCoW | Total RF | Total CU | CU Documentados | Cobertura |
 |--------|----------|----------|-----------------|-----------|
-| Must | 10 | 10 | 8 (80%) | ✅ Completa para MVP |
-| Should | 6 | 6 | 0 | Listados, no expandidos |
-| Could | 2 | 2 | 0 | Listados, Sprint-05 |
+| Must | 11 | 11 | 9 (82%) | ✅ Completa para MVP |
+| Should | 8 | 8 | 3 (38%) | 3 expandidos, 5 listados |
+| Could | 3 | 3 | 1 (33%) | 1 expandido, 2 listados |
 | Won't | 0 | 0 | 0 | N/A |
-| **Total** | **19** | **19** | **8** | **100% trazabilidad** |
+| **Total** | **23** | **23** | **12** | **100% trazabilidad** |
 
-> **Nota:** Se priorizó la documentación expandida de los 8 casos de uso de prioridad **Must** que componen el MVP del sistema. Los 11 restantes (Should/Could) están identificados y trazados, y serán documentados en formato expandido conforme se aborden en Sprint-04 y Sprint-05.
+> **Nota:** Se documentaron en formato expandido 12 casos de uso: los 9 de prioridad **Must** correspondientes al MVP, 3 de prioridad **Should** y 1 **Could**, seleccionados por su complejidad o relevancia cultural. Los 11 restantes están identificados y trazados, y serán documentados en formato expandido conforme se aborden en Sprint-04 y Sprint-05.
 
 ---
 
@@ -733,15 +955,17 @@ graph TB
 
 ### 7.1 Conclusiones
 
-1. **Complejidad multi-dominio confirmada.** El análisis de 19 casos de uso evidenció que Raíces Vivas no es un sistema CRUD convencional; integra educación, patrimonio cultural y salud, cada uno con reglas de negocio, actores y restricciones propios. La decisión de separar en módulos (EDU, SAB, SAL, TRANS) fue acertada y se valida con la distribución natural de los casos de uso.
+1. **Complejidad multi-dominio confirmada.** El análisis de 23 casos de uso evidenció que Raíces Vivas no es un sistema CRUD convencional; integra educación, patrimonio cultural y salud, cada uno con reglas de negocio, actores y restricciones propios. La decisión de separar en módulos (EDU, SAB, SAL, TRANS) fue acertada y se valida con la distribución natural de los casos de uso.
 
 2. **La gobernanza cultural atraviesa todo el sistema.** Los principios CARE no solo afectan al módulo SAB; están presentes en los flujos de sincronización (CU-TRANS-01 excluye datos ceremoniales), en el registro de salud (CU-SAL-02 aplica encriptación por rol), y en la configuración de acceso (CU-SAB-04). Esto confirma que la gobernanza debe implementarse como un módulo transversal, no como una funcionalidad aislada.
 
-3. **El diseño offline-first impacta todos los casos de uso.** Cada escenario principal documenta un flujo alterno de operación sin conexión. Esto fue consistente en los 8 casos expandidos: todos almacenan localmente, marcan para sincronización y manejan conflictos. La arquitectura PouchDB/CouchDB elegida en ADR-008 soporta nativamente este patrón.
+3. **El diseño offline-first impacta todos los casos de uso.** Cada escenario principal documenta un flujo alterno de operación sin conexión. Esto fue consistente en los 12 casos expandidos: todos almacenan localmente, marcan para sincronización y manejan conflictos. La arquitectura PouchDB/CouchDB elegida en ADR-008 soporta nativamente este patrón.
 
 4. **Los actores secundarios tienen influencia crítica sin acceso directo.** El Consejo de mayores y el Awá no operan el sistema, pero su autorización es **bloqueante** para casos de uso con nivel de acceso restringido/ceremonial. Este patrón de "autoridad delegada" requiere un diseño de workflows que trasciende la interacción digital.
 
-5. **La trazabilidad RF ↔ CU es completa (19:19).** Cada requerimiento funcional tiene un caso de uso correspondiente, y cada caso de uso tiene al menos un requerimiento que lo origina. No se identificaron requerimientos huérfanos ni casos de uso sin fundamento funcional.
+5. **La trazabilidad RF ↔ CU es completa (23:23).** Cada requerimiento funcional tiene un caso de uso correspondiente, y cada caso de uso tiene al menos un requerimiento que lo origina. No se identificaron requerimientos huérfanos ni casos de uso sin fundamento funcional.
+
+6. **La investigación de campo reveló necesidades críticas de protección cultural.** Los 4 nuevos casos de uso (CU-EDU-07, CU-SAB-06, CU-SAB-07, CU-SAL-06) emergieron directamente del análisis de entrevistas y observaciones. La revocación de contenido (CU-SAB-06) y la auditoría de acceso (CU-SAB-07) responden al trauma documentado de apropiación cultural indebida; la exportación a EDUS (CU-SAL-06) aborda la ineficiencia de transcripción manual de 3+ horas; y el repositorio compartido (CU-EDU-07) atiende la necesidad de las 3 comunidades maleku de intercambiar material didáctico.
 
 ### 7.2 Recomendaciones
 
@@ -754,6 +978,10 @@ graph TB
 4. **Priorizar la creación de catálogos base antes de los formularios.** Múltiples casos de uso dependen de catálogos (centros educativos, territorios, categorías de saberes, medicamentos). Se recomienda crear un caso de uso de "Gestión de Catálogos" transversal y poblar los datos maestros durante Sprint-03 para desbloquear el trabajo de Sprint-04.
 
 5. **Diseñar wireframes orientados a usabilidad con alfabetización digital básica.** El RNF-03 establece que toda acción crítica debe completarse en ≤2 minutos con ≤6 campos obligatorios. Los casos de uso documentados muestran formularios con 5-7 campos; se recomienda validar la complejidad con usuarios reales y considerar un asistente guiado (wizard) para los flujos más complejos como CU-SAB-01.
+
+6. **Validar los nuevos mecanismos de protección cultural con las comunidades.** CU-SAB-06 (revocación) y CU-SAB-07 (auditoría) fueron identificados a partir de casos de apropiación cultural documentados en las entrevistas. Se recomienda presentar los flujos propuestos al Consejo de mayores de Talamanca y Guatuso para confirmar que el proceso de revocación y la granularidad de auditoría son adecuados para la gobernanza comunitaria real.
+
+7. **Coordinar con la CCSS la especificación de campos EDUS para CU-SAL-06.** La exportación de expedientes (CU-SAL-06) requiere una tabla de mapeo campo-a-campo entre el sistema local y EDUS. Se recomienda programar una reunión con personal EBAIS durante Sprint-03 para obtener la especificación oficial y validar los formatos de exportación aceptados (CSV vs. HL7 FHIR).
 
 ---
 
