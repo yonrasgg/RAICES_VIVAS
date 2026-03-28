@@ -22,36 +22,20 @@ author: Geovanny
 
 > Incluye módulos EDU, SAB, SAL y TRANS (transversales reclasificados desde NF el 2026-03-11).
 
-```dataview
-TABLE WITHOUT ID
-  id as "ID",
-  module as "Módulo",
-  wbs as "WBS",
-  title as "Descripción",
-  priority as "MoSCoW",
-  actor as "Actor",
-  source as "Fuente",
-  validation as "Validación",
-  status as "Estado"
-FROM "03-Requerimientos/Funcionales"
-WHERE type = "requirement/functional"
-SORT wbs ASC
+```sqlseal
+SELECT id as "ID", module as "Módulo", wbs as "WBS", title as "Descripción", priority as "MoSCoW", actor as "Actor", source as "Fuente", validation as "Validación", status as "Estado"
+FROM files
+WHERE type = 'requirement/functional' AND path LIKE '03-Requerimientos/Funcionales%'
+ORDER BY wbs ASC
 ```
 
 ### Requerimientos No Funcionales — Completo
 
-```dataview
-TABLE WITHOUT ID
-  id as "ID",
-  category as "Categoría",
-  wbs as "WBS",
-  title as "Descripción",
-  priority as "MoSCoW",
-  metric as "Métrica",
-  status as "Estado"
-FROM "03-Requerimientos/No Funcionales"
-WHERE type = "requirement/non-functional"
-SORT wbs ASC
+```sqlseal
+SELECT id as "ID", category as "Categoría", wbs as "WBS", title as "Descripción", priority as "MoSCoW", metric as "Métrica", status as "Estado"
+FROM files
+WHERE type = 'requirement/non-functional' AND path LIKE '03-Requerimientos/No Funcionales%'
+ORDER BY wbs ASC
 ```
 
 ### Resumen por Prioridad
@@ -75,41 +59,28 @@ SORT wbs ASC
 
 ### Cobertura de Tareas por Requerimiento
 
-```dataviewjs
-const tasks = dv.pages('"05-Sprints"').where(p => p.type === "task" || p.type === "subtask");
-const reqs = dv.pages('"03-Requerimientos"').where(p => p.type && p.type.startsWith("requirement"));
-
-const rows = reqs.map(req => {
-  const name = req.file.name;
-  const linkedTasks = tasks.where(t => {
-    const r = t.requirement;
-    if (!r || r === "N/A") return false;
-    if (Array.isArray(r)) return r.map(String).includes(name);
-    return String(r) === name;
-  });
-  const total = linkedTasks.length;
-  const done = linkedTasks.where(t => t.status === "done").length;
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-  const bar = total > 0 ? `${"█".repeat(Math.round(pct/10))}${"░".repeat(10 - Math.round(pct/10))} ${pct}%` : "";
-  const coverage = total > 0 ? `${done}/${total} ${bar}` : "⚠️ Sin tareas";
-  return [req.file.link, req.module || req.category || "—", req.priority || "—", req.status, coverage];
-});
-
-dv.table(["Requerimiento", "Módulo", "MoSCoW", "Estado", "Cobertura (done/total)"], rows);
+```sqlseal
+SELECT
+  r.name as "Requerimiento",
+  COALESCE(r.module, r.category, '—') as "Módulo",
+  COALESCE(r.priority, '—') as "MoSCoW",
+  r.status as "Estado",
+  COUNT(t.name) as "Tareas",
+  SUM(CASE WHEN t.status = 'done' THEN 1 ELSE 0 END) as "Done"
+FROM files r
+LEFT JOIN files t ON (t.requirement = r.name OR t.requirement LIKE '%' || r.name || '%') AND (t.type = 'task' OR t.type = 'subtask') AND t.path LIKE '05-Sprints%'
+WHERE r.type LIKE 'requirement%' AND r.path LIKE '03-Requerimientos%'
+GROUP BY r.name
+ORDER BY r.name ASC
 ```
 
 ### Vinculación Jira (Epics → Stories)
 
-```dataview
-TABLE WITHOUT ID
-  key as "Jira Key",
-  summary as "Epic / Story",
-  issuetype as "Tipo",
-  parent as "Parent",
-  status as "Estado"
-FROM "05-Sprints/Epics" OR "05-Sprints/Stories"
-WHERE type = "epic" OR type = "story"
-SORT key ASC
+```sqlseal
+SELECT key as "Jira Key", summary as "Epic / Story", issuetype as "Tipo", parent as "Parent", status as "Estado"
+FROM files
+WHERE (type = 'epic' OR type = 'story') AND (path LIKE '05-Sprints/Epics%' OR path LIKE '05-Sprints/Stories%')
+ORDER BY key ASC
 ```
 
 ### Trazabilidad RF ↔ Casos de Uso (Avance 2)

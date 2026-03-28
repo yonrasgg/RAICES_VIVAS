@@ -66,30 +66,21 @@ gantt
 
 ## Tareas del Sprint
 
-```dataview
-TABLE WITHOUT ID
-  id as "ID",
-  title as "Tarea",
-  assignee as "👤",
-  status as "Estado",
-  priority as "Prioridad",
-  due as "Fecha Límite"
-FROM "05-Sprints/Sprint-02"
-WHERE type = "task" OR type = "subtask"
-SORT due ASC, id ASC
+```sqlseal
+SELECT id as "ID", title as "Tarea", assignee as "👤", status as "Estado", priority as "Prioridad", due as "Fecha Límite"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints/Sprint-02%'
+ORDER BY due ASC, id ASC
 ```
 
 ## Distribución por Responsable
 
-```dataview
-TABLE WITHOUT ID
-  assignee as "👤 Responsable",
-  length(rows) as "Tareas",
-  length(filter(rows, (r) => r.status = "done")) as "✅ Done"
-FROM "05-Sprints/Sprint-02"
-WHERE type = "task" OR type = "subtask"
+```sqlseal
+SELECT assignee as "👤 Responsable", COUNT(*) as "Tareas", SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as "✅ Done"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints/Sprint-02%'
 GROUP BY assignee
-SORT assignee ASC
+ORDER BY assignee ASC
 ```
 
 ## 🔗 Mapa de Dependencias
@@ -140,46 +131,53 @@ graph LR
 
 ## 🚧 Tareas con Bloqueos Activos
 
-```dataviewjs
-const tasks = dv.pages('"05-Sprints/Sprint-02"')
-  .where(t => (t.type === "task" || t.type === "subtask") && t.blocked_by && t.blocked_by.length > 0);
+```sqlseal
+TEMPLATE
+{{#if data.length}}
+| Tarea Bloqueada | Estado | Responsable | Bloqueada por |
+|---|---|---|---|
+{{#each data}}
+| {{this.tarea}} | {{this.estado}} | {{this.responsable}} | {{this.bloqueada_por}} |
+{{/each}}
+{{else}}
+✅ **No hay bloqueos activos** — todas las dependencias previas están resueltas.
+{{/if}}
 
-const rows = [];
-for (const t of tasks) {
-  const blockers = t.blocked_by.map(String);
-  const blockerPages = dv.pages('"05-Sprints/Sprint-02"')
-    .where(p => blockers.includes(String(p.id)));
-  const pendingBlockers = blockerPages.where(p => p.status !== "done");
-  
-  if (pendingBlockers.length > 0) {
-    const blockerList = pendingBlockers.map(p => `${p.id} (${p.status})`).join(", ");
-    rows.push([t.file.link, t.status, t.assignee, blockerList]);
-  }
-}
-
-if (rows.length > 0) {
-  dv.table(["Tarea Bloqueada", "Estado", "Responsable", "Bloqueada por (pendientes)"], rows);
-} else {
-  dv.paragraph("✅ **No hay bloqueos activos** — todas las dependencias previas están resueltas.");
-}
+SELECT
+  name as tarea,
+  status as estado,
+  assignee as responsable,
+  blocked_by as bloqueada_por
+FROM files
+WHERE path LIKE '05-Sprints/Sprint-02%'
+  AND (type = 'task' OR type = 'subtask')
+  AND blocked_by IS NOT NULL AND blocked_by != ''
+ORDER BY id ASC
 ```
 
 ## ⚠️ Impedimentos Activos
 
-```dataviewjs
-const tasks = dv.pages('"05-Sprints/Sprint-02"')
-  .where(t => t.impediments && t.impediments.length > 0);
+```sqlseal
+TEMPLATE
+{{#if data.length}}
+| Tarea | Responsable | Impedimento |
+|---|---|---|
+{{#each data}}
+| {{this.tarea}} | {{this.responsable}} | {{this.impedimento}} |
+{{/each}}
+{{else}}
+✅ **Sin impedimentos registrados.**
+{{/if}}
 
-if (tasks.length > 0) {
-  const rows = tasks.map(t => [
-    t.file.link,
-    t.assignee,
-    t.impediments.join("; ")
-  ]);
-  dv.table(["Tarea", "Responsable", "Impedimento"], rows);
-} else {
-  dv.paragraph("✅ **Sin impedimentos registrados.**");
-}
+SELECT
+  name as tarea,
+  assignee as responsable,
+  impediments as impedimento
+FROM files
+WHERE path LIKE '05-Sprints/Sprint-02%'
+  AND (type = 'task' OR type = 'subtask')
+  AND impediments IS NOT NULL AND impediments != ''
+ORDER BY id ASC
 ```
 
 ## Capacidad del Equipo

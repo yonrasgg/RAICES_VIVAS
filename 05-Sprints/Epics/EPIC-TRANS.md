@@ -57,11 +57,11 @@ labels:
 
 ## Stories Asociadas
 
-```dataview
-TABLE summary as "Título", status as "Estado", assignee as "Responsable", customfield_10016 as "SP"
-FROM "05-Sprints/Stories"
-WHERE type = "story" AND contains(tags, "modulo/transversal")
-SORT key ASC
+```sqlseal
+SELECT name as "Story", summary as "Título", status as "Estado", assignee as "Responsable", customfield_10016 as "SP"
+FROM files
+WHERE type = 'story' AND tags LIKE '%modulo/transversal%' AND path LIKE '05-Sprints/Stories%'
+ORDER BY key ASC
 ```
 
 ## ADRs Relacionados

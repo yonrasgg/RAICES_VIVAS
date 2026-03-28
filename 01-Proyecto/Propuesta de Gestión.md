@@ -331,66 +331,47 @@ Tags activos del proyecto:
 
 ### 5.1 Dashboard Home - Tabla de Requerimientos por Módulo
 
-```dataview
-TABLE
-  id as "ID",
-  title as "Título",
-  priority as "Prioridad",
-  status as "Estado",
-  actor as "Actor"
-FROM "03-Requerimientos"
-WHERE type = "requirement/functional"
-SORT module ASC, priority ASC
+```sqlseal
+SELECT name as "RF", id as "ID", title as "Título", priority as "Prioridad", status as "Estado", actor as "Actor"
+FROM files
+WHERE type = 'requirement/functional' AND path LIKE '03-Requerimientos%'
+ORDER BY module ASC, priority ASC
 ```
 
 ### 5.2 Conteo de Requerimientos por Estado
 
-```dataview
-TABLE
-  length(rows) as "Cantidad"
-FROM "03-Requerimientos"
-WHERE type = "requirement/functional" OR type = "requirement/non-functional"
+```sqlseal
+SELECT status as "Estado", COUNT(*) as "Cantidad"
+FROM files
+WHERE (type = 'requirement/functional' OR type = 'requirement/non-functional') AND path LIKE '03-Requerimientos%'
 GROUP BY status
 ```
 
 ### 5.3 Tareas Pendientes (vista tipo Jira)
 
-```dataview
-TABLE
-  status as "Estado",
-  priority as "Prioridad",
-  assignee as "Responsable",
-  due as "Fecha límite",
-  sprint as "Sprint"
-FROM "05-Sprints"
-WHERE (type = "task" OR type = "subtask") AND status != "done"
-SORT priority ASC
+```sqlseal
+SELECT name as "Tarea", status as "Estado", priority as "Prioridad", assignee as "Responsable", due as "Fecha límite", sprint as "Sprint"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND status != 'done' AND path LIKE '05-Sprints%'
+ORDER BY priority ASC
 ```
 
 ### 5.4 Matriz de Trazabilidad Dinámica
 
-```dataview
-TABLE
-  id as "ID",
-  module as "Módulo",
-  wbs as "WBS",
-  priority as "MoSCoW",
-  source as "Fuente",
-  validation as "Validación",
-  status as "Estado"
-FROM "03-Requerimientos"
-SORT wbs ASC
+```sqlseal
+SELECT name as "Req", id as "ID", module as "Módulo", wbs as "WBS", priority as "MoSCoW", source as "Fuente", validation as "Validación", status as "Estado"
+FROM files
+WHERE path LIKE '03-Requerimientos%'
+ORDER BY wbs ASC
 ```
 
 ### 5.5 Timeline de Reuniones
 
-```dataview
-TABLE
-  date as "Fecha",
-  attendees as "Asistentes",
-  decisions as "Decisiones"
-FROM "07-Reuniones"
-SORT date DESC
+```sqlseal
+SELECT name as "Reunión", "date" as "Fecha", attendees as "Asistentes", decisions as "Decisiones"
+FROM files
+WHERE path LIKE '07-Reuniones%'
+ORDER BY "date" DESC
 ```
 
 ---
@@ -553,14 +534,11 @@ Cada directorio principal tiene un `_index.md` o nota MOC que sirve como tabla d
 - Usar frontmatter `due:` en tareas
 - Dataview query para mostrar próximos deadlines:
 
-```dataview
-TABLE
-  title as "Entregable",
-  due as "Fecha",
-  status as "Estado"
-FROM ""
-WHERE due AND due >= date(today)
-SORT due ASC
+```sqlseal
+SELECT name as "Nota", title as "Entregable", due as "Fecha", status as "Estado"
+FROM files
+WHERE due IS NOT NULL AND due != '' AND due >= date('now')
+ORDER BY due ASC
 LIMIT 10
 ```
 
