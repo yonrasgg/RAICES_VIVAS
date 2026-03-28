@@ -20,8 +20,8 @@ tags:
 ## 1. Resumen de Costos del Proyecto
 
 ```sqlseal
-TABLE tasks FROM file("05-Sprints")
-TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
+TABLE tasks = file(05-Sprints)
+TABLE config = file(08-Recursos/Datos/finanzas-config.csv)
 
 SELECT
   t.assignee as "👤 Integrante",
@@ -63,7 +63,7 @@ ORDER BY SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT
 ### 2.2 Horas Invertidas por Sprint — Plan vs Real (Dinámico)
 
 ```sqlseal
-TABLE tasks FROM file("05-Sprints")
+TABLE tasks = file(05-Sprints)
 
 SELECT
   t.sprint as "Sprint",
@@ -88,8 +88,8 @@ ORDER BY t.sprint ASC
 ### 2.3 Costo Acumulado por Integrante — Plan vs Real
 
 ```sqlseal
-TABLE tasks FROM file("05-Sprints")
-TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
+TABLE tasks = file(05-Sprints)
+TABLE config = file(08-Recursos/Datos/finanzas-config.csv)
 
 SELECT
   t.assignee as "👤 Integrante",
@@ -112,8 +112,8 @@ ORDER BY SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT
 ### 2.4 Costo por Sprint (Dinámico)
 
 ```sqlseal
-TABLE tasks FROM file("05-Sprints")
-TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
+TABLE tasks = file(05-Sprints)
+TABLE config = file(08-Recursos/Datos/finanzas-config.csv)
 
 SELECT
   t.sprint as "Sprint",
@@ -157,8 +157,8 @@ beginAtZero: true
 ### 2.5 Indicadores Financieros (Dinámico)
 
 ```sqlseal
-TABLE tasks FROM file("05-Sprints")
-TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
+TABLE tasks = file(05-Sprints)
+TABLE config = file(08-Recursos/Datos/finanzas-config.csv)
 
 SELECT
   SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER)) || 'h' as "H. Plan",

@@ -334,8 +334,8 @@ labelColors: true
 ## 12. Resumen Financiero
 
 ```sqlseal
-TABLE t FROM file("05-Sprints")
-TABLE c FROM file("08-Recursos/Datos/finanzas-config.csv")
+TABLE t = file(05-Sprints)
+TABLE c = file(08-Recursos/Datos/finanzas-config.csv)
 
 SELECT
   COALESCE(t.assignee, 'Sin asignar') as "👤 Integrante",
