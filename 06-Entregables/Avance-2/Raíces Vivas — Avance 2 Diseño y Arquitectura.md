@@ -1,6 +1,6 @@
 ---
 type: document
-title: "Raíces Vivas — Avance 2: Casos de Uso"
+title: Raíces Vivas — Avance 2 - Casos de Uso
 project: raices-vivas
 avance: 2
 sprint: Sprint-02
@@ -13,7 +13,7 @@ tags:
   - diseño
 created: 2026-03-26
 updated: 2026-03-26
-banner_src: "08-Recursos/Imágenes/cover-entregables.png"
+banner_src: 08-Recursos/Imágenes/cover-entregables.png
 banner_src_x: 0.47714
 banner_src_y: 0.42
 ---

@@ -332,6 +332,9 @@ labelColors: true
 ## 12. Resumen Financiero
 
 ```sqlseal
+TABLE t FROM file("05-Sprints")
+TABLE c FROM file("08-Recursos/Datos/finanzas-config.csv")
+
 SELECT
   COALESCE(t.assignee, 'Sin asignar') as "👤 Integrante",
   SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER)) || 'h' as "H. Est.",
@@ -340,9 +343,9 @@ SELECT
   '₡' || SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Est. (₡)",
   '₡' || SUM(CAST(REPLACE(COALESCE(t.effort_actual, t.effort), 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Real (₡)",
   '$' || ROUND(SUM(CAST(REPLACE(COALESCE(t.effort_actual, t.effort), 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) / 535.0) as "Real (USD)"
-FROM files t
-LEFT JOIN file(08-Recursos/Datos/finanzas-config.csv) c ON t.assignee = c.persona
-WHERE (t.type = 'task' OR t.type = 'subtask') AND t.path LIKE '05-Sprints%' AND t.effort IS NOT NULL AND t.effort != ''
+FROM t
+LEFT JOIN c ON t.assignee = c.persona
+WHERE (t.type = 'task' OR t.type = 'subtask') AND t.effort IS NOT NULL AND t.effort != ''
 GROUP BY t.assignee
 ORDER BY t.assignee ASC
 ```
