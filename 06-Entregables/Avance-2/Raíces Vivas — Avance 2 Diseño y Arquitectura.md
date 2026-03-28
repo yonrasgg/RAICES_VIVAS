@@ -990,11 +990,71 @@ graph TB
 
 > Los siguientes artefactos de arquitectura fueron desarrollados durante Sprint-02 y complementan el análisis de casos de uso. El detalle completo se encuentra en la carpeta `04-Arquitectura/`.
 
-### A.1 Diagrama de Contexto (C4 — Level 1)
+### A.1 Diagramas de Contexto (C4 — Level 1 y Level 2)
 
 > Documento completo: [[04-Arquitectura/Visión General]]
 
 El diagrama C4 Level 1 muestra el sistema Raíces Vivas en su contexto, con los 5 actores primarios, 3 módulos funcionales y 4 sistemas externos. El diagrama Level 2 descompone los módulos en servicios internos.
+
+#### C4 — Nivel 1: Contexto del Sistema
+
+```mermaid
+graph TB
+    subgraph Usuarios["👥 Usuarios"]
+        DOC["👩‍🏫 Docente Comunitario"]
+        EST["🎓 Estudiante"]
+        LID["🏛️ Líder Comunal / Admin"]
+        SAL["🏥 Personal de Salud"]
+        POR["👴 Portador de Saber"]
+    end
+    
+    RV["🌿 Raíces Vivas<br/>Sistema Integral"]
+    
+    DOC -->|Gestiona contenidos,<br/>registra estudiantes| RV
+    EST -->|Accede materiales,<br/>practica ejercicios| RV
+    LID -->|Administra permisos,<br/>controla gobernanza| RV
+    SAL -->|Registra pacientes,<br/>programa citas| RV
+    POR -->|Documenta saberes<br/>con consentimiento| RV
+    
+    subgraph Externos["🌐 Sistemas Externos"]
+        MEP["📋 MEP<br/>(referencia curricular)"]
+        CCSS["🏥 CCSS<br/>(referencia salud)"]
+        SYNC["☁️ Servicio de Sync<br/>(offline → online)"]
+    end
+    
+    RV -.->|Alineación curricular| MEP
+    RV -.->|Estándares de salud| CCSS
+    RV <-->|Sincronización| SYNC
+```
+
+#### C4 — Nivel 2: Módulos y Servicios Transversales
+
+```mermaid
+graph TB
+    subgraph RV["🌿 Raíces Vivas"]
+        EDU["📚 Módulo Educativo<br/>(EDU)"]
+        SAB["🏛️ Módulo Saberes<br/>Ancestrales (SAB)"]
+        SAL_M["🏥 Módulo Salud<br/>Comunitaria (SAL)"]
+        
+        subgraph CROSS["⚙️ Servicios Transversales"]
+            AUTH["🔐 Autenticación<br/>y Roles"]
+            SYNC["🔄 Sincronización<br/>Offline/Online"]
+            I18N["🌍 Motor<br/>Multilingüe"]
+            AUDIT["📋 Auditoría<br/>y Logs"]
+        end
+    end
+    
+    EDU --> AUTH
+    EDU --> SYNC
+    EDU --> I18N
+    SAB --> AUTH
+    SAB --> SYNC
+    SAB --> I18N
+    SAB --> AUDIT
+    SAL_M --> AUTH
+    SAL_M --> SYNC
+    SAL_M --> AUDIT
+```
 
 ### A.2 Modelos Entidad-Relación
 
