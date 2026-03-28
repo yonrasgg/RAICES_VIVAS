@@ -29,7 +29,7 @@ LIMIT 10
 ## 2. CSV: finanzas-config.csv
 
 ```sqlseal
-TABLE tarifas = file('08-Recursos/Datos/finanzas-config.csv')
+TABLE tarifas = file(08-Recursos/Datos/finanzas-config.csv)
 SELECT persona, rol, tarifa_hora, tarifa_hora_usd, dedicacion_semanal
 FROM tarifas
 ```
@@ -39,7 +39,7 @@ FROM tarifas
 ## 3. CSV: sprint-plan.csv
 
 ```sqlseal
-TABLE plan = file('08-Recursos/Datos/sprint-plan.csv')
+TABLE plan = file(08-Recursos/Datos/sprint-plan.csv)
 SELECT sprint, persona, horas_plan, horas_real
 FROM plan
 WHERE horas_plan > 0
@@ -51,7 +51,7 @@ ORDER BY sprint, persona
 ## 4. CSV: encuestas-edu (existente)
 
 ```sqlseal
-TABLE edu = file('08-Recursos/Datos/encuestas-edu-respuestas.csv')
+TABLE edu = file(08-Recursos/Datos/encuestas-edu-respuestas.csv)
 SELECT respondent_id, A1_territorio, A2_pueblo, A6_dominio_tec
 FROM edu
 LIMIT 5
@@ -62,7 +62,7 @@ LIMIT 5
 ## 5. Prueba JOIN: tareas × tarifas
 
 ```sqlseal
-TABLE tarifas = file('08-Recursos/Datos/finanzas-config.csv')
+TABLE tarifas = file(08-Recursos/Datos/finanzas-config.csv)
 SELECT
   f.name,
   f.assignee,
@@ -81,35 +81,33 @@ LIMIT 10
 
 ```sqlseal
 TEMPLATE
+{{#each data}}
+> **Progreso**: {{this.done}}/{{this.total}} tareas completadas
+{{/each}}
 SELECT
   COUNT(*) as total,
   SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as done
 FROM files
 WHERE path LIKE '05-Sprints%' AND (type = 'task' OR type = 'subtask')
----
-<% const r = rows[0]; const pct = r.total > 0 ? Math.round(r.done * 100 / r.total) : 0; %>
-<% const emoji = pct >= 80 ? '🟢' : pct >= 50 ? '🟡' : '🔴'; %>
-
-> <%= emoji %> **Progreso**: <%= r.done %>/<%= r.total %> tareas completadas (**<%= pct %>%**)
 ```
 
 ---
 
 ## 7. Prueba SQLSeal Charts
 
-```sqlseal-charts
-SELECT assignee, COUNT(*) as count
-FROM files
-WHERE path LIKE '05-Sprints%' AND (type = 'task' OR type = 'subtask')
-GROUP BY assignee
----
+```sqlseal
+CHART
 {
   series: [{
     type: 'pie',
     radius: '60%',
-    data: data.map(r => ({ name: r[0], value: r[1] }))
+    encode: { value: 'count', itemName: 'assignee' }
   }]
 }
+SELECT assignee, COUNT(*) as count
+FROM files
+WHERE path LIKE '05-Sprints%' AND (type = 'task' OR type = 'subtask')
+GROUP BY assignee
 ```
 
 ---
@@ -134,8 +132,8 @@ LIMIT 5
 | §3 | 8 filas: Sprint-01 y Sprint-02 con horas > 0 |
 | §4 | 5 filas de encuesta educación |
 | §5 | Hasta 10 tareas con JOIN a tarifa por persona |
-| §6 | Texto formateado: "🟢/🟡/🔴 Progreso: X/Y tareas completadas (Z%)" |
-| §7 | Gráfico de pie: distribución de tareas por persona |
+| §6 | Texto Handlebars: "Progreso: X/Y tareas completadas" |
+| §7 | Gráfico ECharts de pie: distribución de tareas por persona |
 | §8 | Notas con type = "test" |
 
 > **Si alguna sección muestra error o tabla vacía**, anotar aquí cuál y el mensaje de error.
