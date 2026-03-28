@@ -16,17 +16,21 @@ tags:
 
 # Sprint 02 Review — Casos de Uso y Arquitectura
 
+> [!warning] **BORRADOR — Sprint-02 aún en progreso**
+> Este documento fue generado prematuramente. Sprint-02 tiene 22 tareas: **0 done**, 2 in-progress (ADRs), 20 todo. Los estados marcados como "✅ Completado" abajo reflejan la *planificación* no la realidad. Actualizar este review cuando Sprint-02 se complete.
+> **Última revisión de estados: 2026-03-28**
+
 ## Objetivo del Sprint
 
 > Producir la documentación de casos de uso del sistema Raíces Vivas (19 CU, 8 expandidos) junto con el diseño de arquitectura: diagrama de contexto (C4), modelos entidad-relación por módulo, decisión de stack tecnológico, y gobernanza cultural.
 
 ## ¿Se cumplió el objetivo?
 
-- [x] Sí, completamente
+- [ ] Sí, completamente
 - [ ] Parcialmente
 - [ ] No
 
-> **Nota:** Todos los artefactos de diseño y documentación de casos de uso fueron completados. Los 8 casos de uso expandidos cubren todos los módulos (EDU, SAB, SAL, TRANS) con el formato de 14 campos requerido por la rúbrica. La arquitectura C4, modelos ER y decisiones ADR están documentados y aceptados.
+> **Nota:** Sprint-02 aún está en progreso. Solo ADR-008 y ADR-009 han sido creados (in-progress, pendiente aprobación formal). Los demás entregables (diagramas C4, modelos ER, wireframes, casos de uso, documento Avance 2) están en estado *todo*. El documento de Avance 2 contiene contenido-guía/mockup que debe validarse y formalizarse.
 
 ## Lo que se completó
 

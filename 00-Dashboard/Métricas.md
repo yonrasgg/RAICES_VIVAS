@@ -38,12 +38,12 @@ type: doughnut
 labels: [Done, In Progress, Todo, Review, Blocked]
 series:
   - title: Estado de Tareas
-    data: [41, 0, 1, 0, 0]
+    data: [20, 2, 20, 0, 0]
 width: 50%
 labelColors: true
 ```
 
-> *Gráfico de referencia actualizado al cierre de Sprint-02 (2026-03-26). Incluye T-032→T-042 (casos de uso). La tabla dinámica abajo siempre está actualizada.*
+> *Gráfico de referencia actualizado 2026-03-28. Sprint-01 completo (20/20). Sprint-02 en progreso (0/22 done, 2 in-progress, 20 todo). La tabla dinámica abajo siempre está actualizada.*
 
 ```sqlseal
 SELECT
@@ -72,6 +72,8 @@ width: 50%
 labelColors: true
 ```
 
+> *Distribución total de tareas (Sprint-01 + Sprint-02). Actualizado 2026-03-28.*
+
 ### 3.2 Horas por Integrante (Bar Chart)
 
 ```chart
@@ -79,16 +81,16 @@ type: bar
 labels: [Geovanny, Elkin, Santiago]
 series:
   - title: Horas Planificadas
-    data: [80, 56, 59]
+    data: [45, 27, 29]
   - title: Horas Completadas
-    data: [86, 57, 60]
+    data: [51, 28, 29]
 width: 70%
 labelColors: true
 fill: true
 beginAtZero: true
 ```
 
-> *Actualizado al cierre de Sprint-02 (2026-03-26). Incluye T-032→T-042 (casos de uso). La tabla dinámica abajo siempre está actualizada.*
+> *Solo tareas con status=done. Sprint-01 completo. Sprint-02 aún en progreso. La tabla dinámica abajo siempre está actualizada. Actualizado 2026-03-28.*
 
 ### 3.3 Detalle Dinámico por Responsable
 
@@ -248,7 +250,7 @@ series:
   - title: Planificadas
     data: [20, 22, 0, 0, 0]
   - title: Completadas
-    data: [20, 21, 0, 0, 0]
+    data: [20, 0, 0, 0, 0]
 width: 80%
 labelColors: true
 fill: false
@@ -355,12 +357,14 @@ type: bar
 labels: [Geovanny, Elkin, Santiago]
 series:
   - title: Costo (miles ₡)
-    data: [740, 371, 390]
+    data: [434, 182, 189]
 width: 60%
 labelColors: true
 fill: true
 beginAtZero: true
 ```
+
+> *Solo tareas done. Geovanny: 51h×₡8500=₡433,500. Elkin: 28h×₡6500=₡182,000. Santiago: 29h×₡6500=₡188,500. Actualizado 2026-03-28.*
 
 ---
 
@@ -380,4 +384,4 @@ beginAtZero: true
 
 ---
 
-*Métricas dinámicas · Dataview JS + Charts + Lean Six Sigma + Jira Sync · Última actualización: 2026-03-26*
+*Métricas dinámicas · SQLSeal + Charts + Lean Six Sigma + Jira Sync · Última actualización: 2026-03-28*
