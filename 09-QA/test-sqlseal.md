@@ -123,6 +123,30 @@ LIMIT 5
 
 ---
 
+## 9. Diagnóstico: columnas disponibles en `files`
+
+```sqlseal
+SELECT * FROM files WHERE type = 'task' AND path LIKE '05-Sprints/Sprint-01/T-001%' LIMIT 1
+```
+
+---
+
+## 10. Diagnóstico: intentar SELECT title
+
+```sqlseal
+SELECT name, title, summary FROM files WHERE type = 'task' AND path LIKE '05-Sprints/Sprint-01/T-001%' LIMIT 1
+```
+
+---
+
+## 11. Diagnóstico: Riesgos con title
+
+```sqlseal
+SELECT name, title FROM files WHERE type = 'risk' LIMIT 1
+```
+
+---
+
 ## Resultado esperado
 
 | Sección | Debe mostrar |
