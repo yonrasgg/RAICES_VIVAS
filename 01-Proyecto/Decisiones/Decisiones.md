@@ -21,43 +21,44 @@ project: raices-vivas
 
 ## 📊 Resumen Ejecutivo
 
-```dataviewjs
-const adrs = dv.pages('"01-Proyecto/Decisiones"').where(a => a.type === "adr");
-const accepted = adrs.where(a => a.status === "accepted").length;
-const proposed = adrs.where(a => a.status === "proposed").length;
-const superseded = adrs.where(a => a.status === "superseded").length;
-const deprecated = adrs.where(a => a.status === "deprecated").length;
-const total = adrs.length;
-
-dv.table(
-  ["📊 Métrica", "Valor"],
-  [
-    ["📝 Total ADRs", total],
-    ["✅ Aceptadas", accepted],
-    ["🔄 Propuestas", proposed],
-    ["🔀 Superseded", superseded],
-    ["⛔ Deprecated", deprecated],
-  ]
-);
+```sqlseal
+TEMPLATE
+{{#each data}}
+| 📊 Métrica | Valor |
+|---|---|
+| 📝 Total ADRs | {{this.total}} |
+| ✅ Aceptadas | {{this.accepted}} |
+| 🔄 Propuestas | {{this.proposed}} |
+| 🔀 Superseded | {{this.superseded}} |
+| ⛔ Deprecated | {{this.deprecated}} |
+{{/each}}
+SELECT
+  COUNT(*) as total,
+  SUM(CASE WHEN status = 'accepted' THEN 1 ELSE 0 END) as accepted,
+  SUM(CASE WHEN status = 'proposed' THEN 1 ELSE 0 END) as proposed,
+  SUM(CASE WHEN status = 'superseded' THEN 1 ELSE 0 END) as superseded,
+  SUM(CASE WHEN status = 'deprecated' THEN 1 ELSE 0 END) as deprecated
+FROM files
+WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
 ```
 
 ---
 
 ## 📑 Tabla Completa de ADRs
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   id AS "ID",
-  file.link AS "Decisión",
+  name AS "Decisión",
   status AS "Estado",
   category AS "Categoría",
   module AS "Módulo",
   impact AS "Impacto",
   source AS "Origen",
   date AS "Fecha"
-FROM "01-Proyecto/Decisiones"
-WHERE type = "adr"
-SORT id ASC
+FROM files
+WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
+ORDER BY id ASC
 ```
 
 ---
@@ -65,43 +66,43 @@ SORT id ASC
 ## 🏷️ Por Categoría
 
 ### Tecnología
-```dataview
-LIST
-FROM "01-Proyecto/Decisiones"
-WHERE type = "adr" AND category = "tecnología"
-SORT id ASC
+```sqlseal
+SELECT id, name AS "Decisión", title AS "Título"
+FROM files
+WHERE type = 'adr' AND category = 'tecnología' AND path LIKE '01-Proyecto/Decisiones%'
+ORDER BY id ASC
 ```
 
 ### Proceso
-```dataview
-LIST
-FROM "01-Proyecto/Decisiones"
-WHERE type = "adr" AND category = "proceso"
-SORT id ASC
+```sqlseal
+SELECT id, name AS "Decisión", title AS "Título"
+FROM files
+WHERE type = 'adr' AND category = 'proceso' AND path LIKE '01-Proyecto/Decisiones%'
+ORDER BY id ASC
 ```
 
 ### Diseño
-```dataview
-LIST
-FROM "01-Proyecto/Decisiones"
-WHERE type = "adr" AND category = "diseño"
-SORT id ASC
+```sqlseal
+SELECT id, name AS "Decisión", title AS "Título"
+FROM files
+WHERE type = 'adr' AND category = 'diseño' AND path LIKE '01-Proyecto/Decisiones%'
+ORDER BY id ASC
 ```
 
 ### Arquitectura
-```dataview
-LIST
-FROM "01-Proyecto/Decisiones"
-WHERE type = "adr" AND category = "arquitectura"
-SORT id ASC
+```sqlseal
+SELECT id, name AS "Decisión", title AS "Título"
+FROM files
+WHERE type = 'adr' AND category = 'arquitectura' AND path LIKE '01-Proyecto/Decisiones%'
+ORDER BY id ASC
 ```
 
 ### Gobernanza
-```dataview
-LIST
-FROM "01-Proyecto/Decisiones"
-WHERE type = "adr" AND category = "gobernanza"
-SORT id ASC
+```sqlseal
+SELECT id, name AS "Decisión", title AS "Título"
+FROM files
+WHERE type = 'adr' AND category = 'gobernanza' AND path LIKE '01-Proyecto/Decisiones%'
+ORDER BY id ASC
 ```
 
 ---
@@ -131,29 +132,30 @@ SORT id ASC
 
 ## ⚠️ ADRs con Riesgos Asociados
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   id AS "ADR",
   title AS "Decisión",
   related_risks AS "Riesgos Vinculados"
-FROM "01-Proyecto/Decisiones"
-WHERE type = "adr" AND related_risks AND length(related_risks) > 0
-SORT id ASC
+FROM files
+WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
+  AND related_risks IS NOT NULL AND related_risks != ''
+ORDER BY id ASC
 ```
 
 ---
 
 ## 📅 Línea Temporal
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   id AS "ID",
   title AS "Decisión",
   date AS "Fecha",
   status AS "Estado"
-FROM "01-Proyecto/Decisiones"
-WHERE type = "adr"
-SORT date ASC
+FROM files
+WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
+ORDER BY date ASC
 ```
 
 ---

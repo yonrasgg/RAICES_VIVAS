@@ -21,80 +21,83 @@ project: raices-vivas
 
 ## 📊 Resumen Ejecutivo
 
-```dataviewjs
-const risks = dv.pages('"01-Proyecto/Riesgos"').where(r => r.type === "risk");
-const open = risks.where(r => r.status === "open").length;
-const mitigated = risks.where(r => r.status === "mitigated").length;
-const closed = risks.where(r => r.status === "closed").length;
-const accepted = risks.where(r => r.status === "accepted").length;
-const total = risks.length;
-const critical = risks.where(r => r.severity === "crítico").length;
-const high = risks.where(r => r.severity === "alto").length;
-
-dv.table(
-  ["📊 Métrica", "Valor"],
-  [
-    ["⚠️ Total Riesgos", total],
-    ["🔴 Abiertos", open],
-    ["🟡 Aceptados", accepted],
-    ["🟢 Mitigados", mitigated],
-    ["⚫ Cerrados", closed],
-    ["🔥 Severidad Crítica", critical],
-    ["🟠 Severidad Alta", high],
-  ]
-);
+```sqlseal
+TEMPLATE
+{{#each data}}
+| 📊 Métrica | Valor |
+|---|---|
+| ⚠️ Total Riesgos | {{this.total}} |
+| 🔴 Abiertos | {{this.open_count}} |
+| 🟡 Aceptados | {{this.accepted}} |
+| 🟢 Mitigados | {{this.mitigated}} |
+| ⚫ Cerrados | {{this.closed}} |
+| 🔥 Severidad Crítica | {{this.critical}} |
+| 🟠 Severidad Alta | {{this.high}} |
+{{/each}}
+SELECT
+  COUNT(*) as total,
+  SUM(CASE WHEN status = 'open' THEN 1 ELSE 0 END) as open_count,
+  SUM(CASE WHEN status = 'accepted' THEN 1 ELSE 0 END) as accepted,
+  SUM(CASE WHEN status = 'mitigated' THEN 1 ELSE 0 END) as mitigated,
+  SUM(CASE WHEN status = 'closed' THEN 1 ELSE 0 END) as closed,
+  SUM(CASE WHEN severity = 'crítico' THEN 1 ELSE 0 END) as critical,
+  SUM(CASE WHEN severity = 'alto' THEN 1 ELSE 0 END) as high
+FROM files
+WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
 ```
 
 ---
 
 ## 📑 Tabla Completa de Riesgos
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   id AS "ID",
-  file.link AS "Riesgo",
+  name AS "Riesgo",
   status AS "Estado",
   severity AS "Severidad",
   category AS "Categoría",
   owner AS "Responsable",
   source AS "Origen",
   review_date AS "Próxima Revisión"
-FROM "01-Proyecto/Riesgos"
-WHERE type = "risk"
-SORT id ASC
+FROM files
+WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+ORDER BY id ASC
 ```
 
 ---
 
 ## 🔴 Riesgos Abiertos (requieren atención)
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   id AS "ID",
-  file.link AS "Riesgo",
+  name AS "Riesgo",
   severity AS "Severidad",
   probability AS "Probabilidad",
   impact AS "Impacto",
   owner AS "Responsable",
   strategy AS "Estrategia"
-FROM "01-Proyecto/Riesgos"
-WHERE type = "risk" AND (status = "open" OR status = "accepted")
-SORT severity DESC
+FROM files
+WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+  AND (status = 'open' OR status = 'accepted')
+ORDER BY severity DESC
 ```
 
 ---
 
 ## 🟢 Riesgos Mitigados / Cerrados
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   id AS "ID",
-  file.link AS "Riesgo",
+  name AS "Riesgo",
   status AS "Estado",
   severity AS "Severidad"
-FROM "01-Proyecto/Riesgos"
-WHERE type = "risk" AND (status = "mitigated" OR status = "closed")
-SORT id ASC
+FROM files
+WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+  AND (status = 'mitigated' OR status = 'closed')
+ORDER BY id ASC
 ```
 
 ---
@@ -102,35 +105,35 @@ SORT id ASC
 ## 🏷️ Por Categoría
 
 ### Técnico
-```dataview
-LIST
-FROM "01-Proyecto/Riesgos"
-WHERE type = "risk" AND category = "técnico"
-SORT id ASC
+```sqlseal
+SELECT id, name AS "Riesgo", title AS "Título"
+FROM files
+WHERE type = 'risk' AND category = 'técnico' AND path LIKE '01-Proyecto/Riesgos%'
+ORDER BY id ASC
 ```
 
 ### Recurso
-```dataview
-LIST
-FROM "01-Proyecto/Riesgos"
-WHERE type = "risk" AND category = "recurso"
-SORT id ASC
+```sqlseal
+SELECT id, name AS "Riesgo", title AS "Título"
+FROM files
+WHERE type = 'risk' AND category = 'recurso' AND path LIKE '01-Proyecto/Riesgos%'
+ORDER BY id ASC
 ```
 
 ### Calidad
-```dataview
-LIST
-FROM "01-Proyecto/Riesgos"
-WHERE type = "risk" AND category = "calidad"
-SORT id ASC
+```sqlseal
+SELECT id, name AS "Riesgo", title AS "Título"
+FROM files
+WHERE type = 'risk' AND category = 'calidad' AND path LIKE '01-Proyecto/Riesgos%'
+ORDER BY id ASC
 ```
 
 ### Calendario
-```dataview
-LIST
-FROM "01-Proyecto/Riesgos"
-WHERE type = "risk" AND category = "calendario"
-SORT id ASC
+```sqlseal
+SELECT id, name AS "Riesgo", title AS "Título"
+FROM files
+WHERE type = 'risk' AND category = 'calendario' AND path LIKE '01-Proyecto/Riesgos%'
+ORDER BY id ASC
 ```
 
 ---
@@ -158,14 +161,15 @@ SORT id ASC
 
 ## 🔗 Riesgos con Decisiones Vinculadas
 
-```dataview
-TABLE WITHOUT ID
+```sqlseal
+SELECT
   id AS "RSK",
   title AS "Riesgo",
   related_decisions AS "ADRs Vinculados"
-FROM "01-Proyecto/Riesgos"
-WHERE type = "risk" AND related_decisions AND length(related_decisions) > 0
-SORT id ASC
+FROM files
+WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+  AND related_decisions IS NOT NULL AND related_decisions != ''
+ORDER BY id ASC
 ```
 
 ---
