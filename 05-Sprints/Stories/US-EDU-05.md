@@ -46,3 +46,12 @@ Como docente comunitario, necesito ver el progreso de mis estudiantes en un dash
 ## Sprint Estimado
 
 Sprint-04
+
+## Navegación
+
+| Relación | Enlace |
+|----------|--------|
+| **Epic** | [[RV-1]] |
+| **Requerimiento** | [[RF-EDU-05]] |
+| **Sprint** | [[Sprint-04-Planning]] |
+| **Backlog** | [[Backlog]] |

@@ -21,5 +21,7 @@
   "obsidian-auto-link-title",
   "obsidian-latex-suite",
   "drawio-obsidian",
-  "jira-sync"
+  "jira-sync",
+  "sqlseal",
+  "sqlseal-charts"
 ]

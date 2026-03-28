@@ -46,3 +46,12 @@ Como auxiliar de salud, necesito recibir alertas automáticas cuando un paciente
 ## Sprint Estimado
 
 Sprint-05
+
+## Navegación
+
+| Relación | Enlace |
+|----------|--------|
+| **Epic** | [[RV-3]] |
+| **Requerimiento** | [[RF-SAL-05]] |
+| **Sprint** | [[Sprint-04-Planning]] |
+| **Backlog** | [[Backlog]] |

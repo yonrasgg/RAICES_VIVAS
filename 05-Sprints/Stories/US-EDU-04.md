@@ -46,3 +46,12 @@ Como docente comunitario, necesito un módulo de ejercicios interactivos en leng
 ## Sprint Estimado
 
 Sprint-04
+
+## Navegación
+
+| Relación | Enlace |
+|----------|--------|
+| **Epic** | [[RV-1]] |
+| **Requerimiento** | [[RF-EDU-04]] |
+| **Sprint** | [[Sprint-04-Planning]] |
+| **Backlog** | [[Backlog]] |

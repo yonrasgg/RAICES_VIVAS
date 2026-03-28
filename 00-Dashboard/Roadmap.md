@@ -143,3 +143,15 @@ SORT due ASC
 ---
 
 *Roadmap dinámico · Mermaid + Dataview + Jira Sync · Última actualización: 2026-03-26 (Sprint-02 completado)*
+
+## Navegación
+
+| Sprint | Enlace |
+|--------|--------|
+| **Sprint 01** | [[Sprint-01-Planning]] |
+| **Sprint 02** | [[Sprint-02-Planning]] |
+| **Sprint 03** | [[Sprint-03-Planning]] |
+| **Sprint 04** | [[Sprint-04-Planning]] |
+| **Sprint 05** | [[Sprint-05-Planning]] |
+| **Backlog** | [[Backlog]] |
+| **Dashboard** | [[Home]] |

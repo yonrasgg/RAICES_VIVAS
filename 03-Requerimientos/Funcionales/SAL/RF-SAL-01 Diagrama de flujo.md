@@ -27,3 +27,5 @@ L --> M[Confirmar registro exitoso]
 
 M --> N[Fin]
 ```
+
+> Diagrama de flujo correspondiente a [[RF-SAL-01|RF-SAL-01: Registro de pacientes]].

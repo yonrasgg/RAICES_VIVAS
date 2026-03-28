@@ -67,3 +67,11 @@ block-beta
 ```
 
 > **Lectura:** Eje X = Interés (izquierda bajo, derecha alto) · Eje Y = Poder (abajo bajo, arriba alto). Coordenadas (Interés, Poder) entre 0 y 1.
+
+## Navegación
+
+| Recurso | Enlace |
+|---------|--------|
+| **Charter** | [[Charter]] |
+| **Equipo** | [[Equipo]] |
+| **Alcance** | [[Alcance]] |

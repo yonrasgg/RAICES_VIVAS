@@ -38,6 +38,10 @@ El sistema debe permitir registrar pacientes con un ID interno, nombre, edad, te
 
 > Registro mínimo para dar continuidad a la atención entre visitas.
 
+## Diagrama de Flujo
+
+![[RF-SAL-01 Diagrama de flujo]]
+
 ## Criterios de Aceptación
 
 - [ ] ID interno único por paciente

@@ -47,3 +47,12 @@ Como auxiliar de salud, necesito programar citas y registrar brigadas de salud, 
 ## Sprint Estimado
 
 Sprint-04
+
+## Navegación
+
+| Relación | Enlace |
+|----------|--------|
+| **Epic** | [[RV-3]] |
+| **Requerimiento** | [[RF-SAL-03]] |
+| **Sprint** | [[Sprint-04-Planning]] |
+| **Backlog** | [[Backlog]] |

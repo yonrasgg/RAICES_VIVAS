@@ -139,3 +139,26 @@ GROUP BY phase
 - Configurar vault completamente antes de iniciar trabajo
 - Usar Kanban board activamente
 - Reunión semanal con minuta documentada
+
+## Índice de Tareas
+
+- [[T-001]]
+- [[T-002]]
+- [[T-003]]
+- [[T-004]]
+- [[T-005]]
+- [[T-006]]
+- [[T-007]]
+- [[T-008]]
+- [[T-009]]
+- [[T-010]]
+- [[T-011]]
+- [[T-012]]
+- [[T-013]]
+- [[T-014]]
+- [[T-015]]
+- [[T-016]]
+- [[T-017]]
+- [[T-018]]
+- [[T-019]]
+- [[T-020]]
