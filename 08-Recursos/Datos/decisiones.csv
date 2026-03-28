@@ -1,0 +1,18 @@
+id,title,status,category,module,impact,deciders,source,date,superseded_by,related_requirements,related_risks,created,updated
+ADR-001,Obsidian como sistema central de gestión del proyecto,accepted,tecnología,proyecto,alto,Geovanny;Elkin;Santiago,MIN-001,2026-02-25,,,RSK-001;RSK-003;RSK-005,2026-02-25,2026-03-01
+ADR-002,Git + GitHub para control de versiones y colaboración,accepted,tecnología,proyecto,alto,Geovanny;Elkin;Santiago,MIN-001,2026-02-25,,,RSK-002;RSK-006,2026-02-25,2026-03-01
+ADR-003,GitHub Projects para gestión ágil en fases posteriores,superseded,proceso,proyecto,medio,Geovanny;Elkin;Santiago,MIN-001,2026-02-25,ADR-007,,RSK-004,2026-02-25,2026-03-01
+ADR-004,Estructura del vault con carpetas numeradas y convenciones de naming,accepted,proceso,proyecto,alto,Geovanny;Elkin;Santiago,MIN-001,2026-02-25,,,,2026-02-25,2026-03-01
+ADR-005,Frontmatter YAML estandarizado por tipo de nota,accepted,proceso,proyecto,alto,Geovanny;Elkin;Santiago,MIN-001,2026-02-25,,,RSK-005,2026-02-25,2026-03-01
+ADR-006,Templates automatizados con Templater + QuickAdd,accepted,tecnología,proyecto,alto,Geovanny;Elkin;Santiago,MIN-001,2026-02-25,,,RSK-001;RSK-005,2026-02-25,2026-03-01
+ADR-007,Migrar gestión de proyecto de GitHub Projects a Jira Cloud,accepted,proceso,transversal,alto,Geovanny;Elkin;Santiago,MIN-002,2026-03-05,,,,2026-03-02,2026-03-05
+ADR-008,Selección de Stack Tecnológico para Raíces Vivas,accepted,tecnología,transversal,alto,Geovanny;Elkin;Santiago,MIN-002,2026-03-07,,RNF-01;RNF-02;RNF-03;RNF-04;RF-TRANS-01;RF-TRANS-02,RSK-004;RSK-005;RSK-009;RSK-012,2026-03-07,2026-03-26
+ADR-009,Gobernanza Cultural y Protocolos de Consentimiento para Datos Indígenas,accepted,gobernanza,transversal,alto,Geovanny;Elkin;Santiago,MIN-002,2026-03-07,,RF-SAB-04;RF-SAB-05;RNF-03;RNF-04,RSK-001;RSK-005;RSK-007;RSK-013,2026-03-07,2026-03-26
+ADR-010,Mermaid como formato oficial para diagramas técnicos,accepted,tecnología,proyecto,medio,Geovanny;Elkin;Santiago,MIN-002,2026-03-07,,,,2026-03-07,2026-03-07
+ADR-011,Convenciones de modelado ER — 3NF y snake_case,accepted,diseño,transversal,medio,Geovanny;Elkin;Santiago,MIN-002,2026-03-07,,RF-EDU-01;RF-SAB-01;RF-SAL-01,RSK-007,2026-03-07,2026-03-14
+ADR-012,Excalidraw como herramienta primaria de wireframing,accepted,diseño,transversal,medio,Geovanny;Elkin;Santiago,MIN-002,2026-03-07,,RNF-04,RSK-011,2026-03-07,2026-03-19
+ADR-013,Walkthrough interno como método de validación en Sprint-02,accepted,proceso,transversal,medio,Geovanny;Elkin;Santiago,MIN-003,2026-03-21,,RNF-04,RSK-014,2026-03-21,2026-03-21
+ADR-014,Límites de contenido multimedia por restricciones de conectividad territorial,accepted,arquitectura,transversal,alto,Geovanny;Elkin;Santiago,MIN-004,2026-03-14,,RNF-01;RNF-02;RF-TRANS-02,RSK-009,2026-03-14,2026-03-14
+ADR-015,EPIC-TRANS y distribución de sprints futuros (03-05),accepted,proceso,transversal,alto,Geovanny;Elkin;Santiago,MIN-005,2026-03-17,,RF-TRANS-01;RF-TRANS-02;RF-TRANS-03;RNF-01;RNF-02;RNF-03;RNF-04,RSK-011;RSK-012,2026-03-17,2026-03-17
+ADR-016,Instrumentos de validación — SUS adaptado + WCAG 2.1 AA,accepted,proceso,transversal,medio,Geovanny;Elkin;Santiago,MIN-005,2026-03-17,,RNF-04,RSK-014,2026-03-17,2026-03-19
+ADR-017,Migración de Dataview a SQLSeal + SQLSeal Charts,accepted,tecnología,transversal,alto,Geovanny;Elkin;Santiago,,2026-03-27,,,RSK-005,2026-03-27,2026-03-27
