@@ -23,6 +23,7 @@ tags:
   - encuesta
   - saberes
   - instrumento
+methodology: "[[Enfoque-Metodológico]]"
 ---
 
 ← [[02-Investigación/Encuestas/Enfoque-Metodológico|Volver a Metodología]]

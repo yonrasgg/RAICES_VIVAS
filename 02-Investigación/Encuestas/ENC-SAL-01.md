@@ -23,6 +23,7 @@ tags:
   - encuesta
   - salud
   - instrumento
+methodology: "[[Enfoque-Metodológico]]"
 ---
 
 ← [[02-Investigación/Encuestas/Enfoque-Metodológico|Volver a Metodología]]

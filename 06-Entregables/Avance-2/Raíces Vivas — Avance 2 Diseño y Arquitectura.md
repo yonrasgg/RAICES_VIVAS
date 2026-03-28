@@ -47,6 +47,19 @@ El presente avance se centra en el análisis de **casos de uso** del sistema: id
 | Anexo A | Contexto arquitectónico (C4, ER, stack) | Complementario |
 | Anexo B | Contribuciones del equipo | Criterio 10 (4 pts) |
 
+### 1.2 Investigación de Base
+
+Los requerimientos funcionales y casos de uso de este avance se fundamentan en la investigación de campo realizada durante el Sprint-01, siguiendo el [[Enfoque-Metodológico]] del proyecto. Las fuentes primarias incluyen:
+
+| Módulo | Entrevistas | Encuestas | Observaciones | Contexto |
+|--------|------------|-----------|---------------|----------|
+| **EDU** | [[ENT-001]] (líder educativo Maleku) | [[ENC-EDU-01]] (35 resp.) | [[OBS-001]] (Guatuso) | [[Educación]] |
+| **SAB** | [[ENT-002]], [[ENT-004]] (portadores Bribri, Boruca) | [[ENC-SAB-01]] (40 resp.) | [[OBS-002]], [[OBS-003]] (Talamanca, Boruca) | [[Saberes Ancestrales]] |
+| **SAL** | [[ENT-003]] (auxiliar salud Cabécar) | [[ENC-SAL-01]] (30 resp.) | [[OBS-002]], [[OBS-003]] (Talamanca, Boruca) | [[Salud Comunitaria]] |
+| **TRANS** | [[ENT-001]]–[[ENT-004]] (transversal) | — | — | [[Bibliografía]] §6 |
+
+> **Referencia completa:** La [[Bibliografía]] contiene 30 fuentes documentales organizadas por categoría temática.
+
 ---
 
 ## 2. Identificación y Clasificación de Actores
