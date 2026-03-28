@@ -12,7 +12,7 @@ tags:
   - arquitectura
   - diseño
 created: 2026-03-26
-updated: 2026-03-26
+updated: 2026-03-28
 banner_src: "08-Recursos/Imágenes/cover-entregables.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
@@ -970,6 +970,7 @@ graph TB
 ### 7.2 Recomendaciones
 
 1. **Implementar los casos Must del módulo TRANS primero (Sprint-03).** CU-TRANS-01 (sincronización) y CU-TRANS-02 (idioma) son dependencias transversales para todos los demás módulos. Sin sincronización offline/online funcional, los módulos EDU, SAB y SAL no pueden operar en territorios con conectividad limitada.
+   > **Actualización 2026-03-28:** El scaffold de implementación de Sprint-03 está completo. El proyecto `app/` (Vite 8 + React 19 + TypeScript 5.9) incluye PouchDB sync, i18next con 4 idiomas, React Router, componentes base (AppShell, Header, SyncIndicator, BottomNav) y las páginas del módulo EDU (Dashboard, Materiales, Docentes). Build de producción exitoso: 97 módulos, 452 KB JS (145 KB gzip). CU-TRANS-01 y CU-TRANS-02 están IN PROGRESS.
 
 2. **Validar los flujos de consentimiento con comunidades reales antes de implementar.** CU-SAB-01 y CU-SAB-04 incluyen flujos de autorización comunitaria (Consejo de mayores, Awá) que fueron diseñados teóricamente. Se recomienda realizar al menos 2 sesiones de validación con líderes de Guatuso y Talamanca durante Sprint-03 para confirmar que los flujos reflejan la realidad de la gobernanza indígena.
 
@@ -1012,9 +1013,10 @@ Se diseñaron modelos ER para cada módulo:
 
 | Capa | Tecnología |
 |------|-----------|
-| Frontend | React 18 + TypeScript + Tailwind CSS |
-| Offline DB | PouchDB (cliente) ↔ CouchDB (servidor) |
-| i18n | i18next (es, bri, cab, ngb) |
+| Frontend | React 19.2 + TypeScript 5.9 + Tailwind CSS v4 |
+| Build | Vite 8 + workbox-build (PWA offline) |
+| Offline DB | PouchDB 9 (cliente) ↔ CouchDB (servidor) |
+| i18n | i18next 26 + react-i18next 17 (es, bri, cab, ngb) |
 | Backend | Node.js + Express |
 | Multimedia | Opus (audio), WebP (imágenes), HLS (video) |
 | Seguridad | AES-256 reposo, TLS 1.3 tránsito, RBAC + CARE 4 niveles |
@@ -1081,5 +1083,5 @@ Principios CARE aplicados: Collective Benefit, Authority to Control, Responsibil
 
 ---
 
-*Documento generado el 2026-03-26 · Equipo Raíces Vivas · CENFOTEC*
+*Documento generado el 2026-03-26 · Actualizado 2026-03-28 · Equipo Raíces Vivas · CENFOTEC*
 *Curso: SOFT-09 — Introducción a la Ingeniería del Software — Prof. Johnny Marin*

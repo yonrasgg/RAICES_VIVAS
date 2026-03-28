@@ -164,6 +164,22 @@ PALETTES = {
         "detail": (38, 50, 48),
         "text": (240, 245, 242),
     },
+    "rf_trans": {
+        "bg": (18, 35, 42),         # azul verde profundo
+        "primary": (60, 190, 180),  # turquesa transparencia
+        "secondary": (100, 220, 160),# verde claro apertura
+        "accent": (240, 195, 60),   # dorado confianza
+        "detail": (35, 55, 60),
+        "text": (238, 245, 242),
+    },
+    "entregables": {
+        "bg": (28, 20, 35),         # púrpura oscuro logro
+        "primary": (180, 130, 220), # violeta entrega
+        "secondary": (140, 190, 230),# azul cielo progreso
+        "accent": (245, 200, 65),   # dorado hito
+        "detail": (48, 38, 58),
+        "text": (245, 240, 250),
+    },
 }
 
 
@@ -1288,6 +1304,186 @@ def cover_rf_sal(path):
     print(f"  ✓ {path}")
 
 
+def cover_rf_trans(path):
+    """RF Transparencia — flujo de datos, flechas, apertura, texto centrado."""
+    p = PALETTES["rf_trans"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (12, 28, 35))
+
+    # Ondas de flujo (transparencia, información fluyendo)
+    draw_wave_band(draw, HEIGHT // 4, 12, p["primary"], 2, 6)
+    draw_wave_band(draw, 3 * HEIGHT // 4 - 10, 12, p["secondary"], 2, 6)
+
+    # Flechas de dirección (flujo abierto)
+    for ax, ay in [(180, 150), (WIDTH - 180, 150), (300, HEIGHT - 130),
+                   (WIDTH - 300, HEIGHT - 130), (WIDTH // 2 - 300, 120),
+                   (WIDTH // 2 + 300, HEIGHT - 120)]:
+        sz = 20
+        draw.polygon([(ax, ay - sz), (ax + sz * 2, ay), (ax, ay + sz)],
+                     fill=p["primary"])
+
+    # Círculos concéntricos (rendición de cuentas)
+    draw_concentric_circles(draw, 120, HEIGHT // 2, 45, 5, p["secondary"], 2)
+    draw_concentric_circles(draw, WIDTH - 120, HEIGHT // 2, 45, 5, p["secondary"], 2)
+
+    # Hojas (conexión con naturaleza)
+    for _ in range(18):
+        lx = random.randint(0, WIDTH)
+        ly = random.randint(0, HEIGHT)
+        size = random.randint(10, 28)
+        angle = random.uniform(0, 2 * math.pi)
+        c = random.choice([p["primary"], p["secondary"], p["detail"]])
+        draw_leaf_pattern(draw, lx, ly, size, c, angle)
+
+    # Zigzag (conexión datos)
+    draw_zigzag_line(draw, HEIGHT // 2 - 60, 6, 20, p["detail"], 2)
+    draw_zigzag_line(draw, HEIGHT // 2 + 60, 6, 20, p["detail"], 2)
+
+    draw_border_pattern(draw, p, "diamonds")
+
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 100)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    label = "Transparencia"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    for off in range(8, 0, -2):
+        glow = tuple(max(0, min(255, c + 40 - off * 4)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow)
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=(0, 0, 0))
+    draw.text((tx, ty), label, font=big_font, fill=p["text"])
+
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    subtitle = "Requerimientos Funcionales · Módulo TRANS"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sx = (WIDTH - (bbox2[2] - bbox2[0])) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=(0, 0, 0))
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
+def cover_entregables(path):
+    """Entregables — documentos, hitos, progreso, texto centrado."""
+    p = PALETTES["entregables"]
+    img = Image.new("RGB", (WIDTH, HEIGHT))
+    draw = ImageDraw.Draw(img)
+    draw_gradient_bg(draw, WIDTH, HEIGHT, p["bg"], (20, 15, 28))
+
+    # Pirámides escalonadas (hitos alcanzados)
+    draw_stepped_pyramid(draw, WIDTH // 4, HEIGHT - 40, 5, 120, 25, p["detail"])
+    draw_stepped_pyramid(draw, 3 * WIDTH // 4, HEIGHT - 40, 5, 120, 25, p["detail"])
+
+    # Triángulos (progreso ascendente)
+    draw_triangles_row(draw, HEIGHT - 55, 35, 28, p["secondary"])
+    draw_triangles_row(draw, 0, 22, 32, p["detail"], True)
+
+    # Soles (logros brillantes)
+    draw_sun_symbol(draw, 160, 130, 25, 10, p["accent"])
+    draw_sun_symbol(draw, WIDTH - 160, 130, 25, 10, p["accent"])
+    draw_sun_symbol(draw, WIDTH // 2, 80, 18, 8, p["accent"])
+
+    # Documentos estilizados (entregables)
+    for bx in [250, WIDTH - 250]:
+        by = HEIGHT // 2
+        for i in range(4):
+            c = random.choice([p["primary"], p["secondary"], p["detail"]])
+            draw.rectangle([bx - 25, by - 40 + i * 14, bx + 25, by - 30 + i * 14], fill=c, outline=p["accent"])
+        # líneas de texto en documento
+        for j in range(3):
+            draw.line([(bx - 18, by + 10 + j * 8), (bx + 18, by + 10 + j * 8)],
+                      fill=p["secondary"], width=1)
+
+    # Hojas (naturaleza del proyecto)
+    for _ in range(20):
+        lx = random.randint(0, WIDTH)
+        ly = random.randint(0, HEIGHT)
+        size = random.randint(8, 22)
+        angle = random.uniform(0, 2 * math.pi)
+        c = random.choice([p["primary"], p["secondary"], p["detail"]])
+        draw_leaf_pattern(draw, lx, ly, size, c, angle)
+
+    # Rombos Bribri
+    draw_diamond_band(draw, 18, 10, 25, p["accent"])
+    draw_diamond_band(draw, HEIGHT - 18, 10, 25, p["accent"])
+
+    draw_border_pattern(draw, p, "diamonds")
+
+    fonts_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf",
+    ]
+    big_font = sub_font = None
+    for fpath in fonts_bold:
+        try:
+            big_font = ImageFont.truetype(fpath, 100)
+            sub_font = ImageFont.truetype(
+                fpath.replace("-Bold", "-Regular").replace("Bold", "Regular"), 28)
+            break
+        except (OSError, IOError):
+            continue
+    if not big_font:
+        big_font = ImageFont.load_default()
+        sub_font = ImageFont.load_default()
+
+    label = "Entregables"
+    bbox = draw.textbbox((0, 0), label, font=big_font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    tx = (WIDTH - tw) // 2
+    ty = HEIGHT // 2 - th // 2 - 18
+    for off in range(8, 0, -2):
+        glow = tuple(max(0, min(255, c + 40 - off * 4)) for c in p["primary"][:3])
+        draw.text((tx - off, ty), label, font=big_font, fill=glow)
+        draw.text((tx + off, ty), label, font=big_font, fill=glow)
+        draw.text((tx, ty - off), label, font=big_font, fill=glow)
+        draw.text((tx, ty + off), label, font=big_font, fill=glow)
+    draw.text((tx + 4, ty + 4), label, font=big_font, fill=(0, 0, 0))
+    draw.text((tx, ty), label, font=big_font, fill=p["text"])
+
+    line_y = ty + th + 10
+    line_w = tw + 80
+    line_x = (WIDTH - line_w) // 2
+    draw.line([(line_x, line_y), (line_x + line_w, line_y)], fill=p["accent"], width=3)
+
+    subtitle = "Avances y Documentos · Raíces Vivas"
+    bbox2 = draw.textbbox((0, 0), subtitle, font=sub_font)
+    sx = (WIDTH - (bbox2[2] - bbox2[0])) // 2
+    sy = line_y + 12
+    draw.text((sx + 2, sy + 2), subtitle, font=sub_font, fill=(0, 0, 0))
+    draw.text((sx, sy), subtitle, font=sub_font, fill=p["accent"])
+
+    img.save(path, quality=92)
+    print(f"  ✓ {path}")
+
+
 def cover_rnf(path):
     """RNF — Requerimientos No Funcionales, transversal, engranajes, escudos, candados."""
     p = PALETTES["rnf"]
@@ -1883,6 +2079,8 @@ if __name__ == "__main__":
         "cover-rf-edu.png": cover_rf_edu,
         "cover-rf-sab.png": cover_rf_sab,
         "cover-rf-sal.png": cover_rf_sal,
+        "cover-rf-trans.png": cover_rf_trans,
+        "cover-entregables.png": cover_entregables,
         "cover-rnf.png": cover_rnf,
         "cover-tareas.png": cover_tareas,
         "cover-reuniones.png": cover_reuniones,
