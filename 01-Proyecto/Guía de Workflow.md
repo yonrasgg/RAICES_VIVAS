@@ -214,7 +214,7 @@ Es el bloque YAML al inicio de cada nota, entre `---`. **Es la base de datos del
 
 ```mermaid
 flowchart LR
-    FM["🏷️ Frontmatter YAML<br/>(type, status, effort...)"] -->|Dataview lee| DV["⚙️ Dataview Engine<br/>(dv.pages, WHERE, SORT)"]
+    FM["🏷️ Frontmatter YAML<br/>(type, status, effort...)"] -->|Dataview lee| SS["⚙️ SQLSeal Engine<br/>(SQL queries, JOIN, GROUP BY)"]
     DV -->|Genera| DASH["📊 Dashboard<br/>Home.md"]
     DV -->|Genera| MET["📈 Métricas<br/>Métricas.md"]
     DV -->|Genera| WK["📅 Weekly Note<br/>2026-W09.md"]
@@ -353,7 +353,7 @@ tags:                         # 🟡 RECOMENDADO — Checklist plugin busca tag 
   - avance-2                  #   → Filtro por avance
 ```
 
-> **Auto-ID:** Al crear con QuickAdd, Templater ejecuta `dv.pages('"05-Sprints"')` para encontrar el `T-XXX` más alto y calcula el siguiente. El archivo se renombra automáticamente. **Nunca crear T-XXX.md manualmente.**
+> **Auto-ID:** Al crear con QuickAdd, Templater ejecuta `app.vault.getFiles()` para encontrar el `T-XXX` más alto y calcula el siguiente. El archivo se renombra automáticamente. **Nunca crear T-XXX.md manualmente.**
 
 > **⚠️ Error frecuente — `effort` sin comillas:**
 > Si escribes `effort: 8h` (sin comillas), Dataview lo parsea como un objeto `Duration`, no como string. El dashboard mostrará `0h` porque `parseInt("8h")` falla sobre un Duration. **Siempre** escribir `effort: "8h"`.
@@ -490,7 +490,7 @@ tags:                         # 🟡 RECOMENDADO
 ```yaml
 # ── Identidad ──────────────────────────────────────────────
 type: risk                    # 🔴 REQUERIDO
-id: RSK-001                   # 🔴 REQUERIDO — Auto-generado via dv.pages() + Templater
+id: RSK-001                   # 🔴 REQUERIDO — Auto-generado via app.vault + Templater
 title: "Dependencia en un solo integrante"  # 🔴 REQUERIDO
 
 # ── Evaluación ─────────────────────────────────────────────
@@ -546,7 +546,7 @@ review_date: 2026-03-15       # 🔴 REQUERIDO — Próxima revisión (auto: +14
 ```yaml
 # ── Identidad ──────────────────────────────────────────────
 type: adr                     # 🔴 REQUERIDO — Dataview filtra por "adr" (NO "decision")
-id: ADR-001                   # 🔴 REQUERIDO — Auto-generado via dv.pages() + Templater
+id: ADR-001                   # 🔴 REQUERIDO — Auto-generado via app.vault + Templater
 title: "Obsidian como sistema central"  # 🔴 REQUERIDO
 
 # ── Evaluación ─────────────────────────────────────────────
@@ -864,7 +864,7 @@ WHERE type = "requirement/functional"
 GROUP BY module
 
 // Horas por responsable (Dataview JS)
-dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask")
+app.vault.getFiles().filter(f => f.path.startsWith('05-Sprints/'))
 ```
 
 > **Regla:** Si una tabla del Dashboard está vacía o muestra datos incorrectos, revisa el `type` y los campos en el frontmatter de las notas afectadas.
@@ -1132,7 +1132,7 @@ sequenceDiagram
     Note over M: - [ ] Diseñar wireframe → @Elkin 📅 2026-03-10
     M->>QA: Seleccionar línea → Ctrl+P → "📋 Promover"
     QA->>TP: Ejecuta _template-tarea-from-minuta.md
-    TP->>TP: Auto-ID: dv.pages() → T-026
+    TP->>TP: Auto-ID: app.vault → T-026
     TP->>TP: Extrae: título, @Persona, 📅 fecha
     TP->>TP: Detecta source: MIN-002
     TP->>T: Crea T-026.md con frontmatter completo
@@ -1198,7 +1198,7 @@ Al crear una tarea (por cualquier método), el template Templater ejecuta:
 
 ```javascript
 // Consulta TODAS las tareas existentes en 05-Sprints/
-const taskPages = dv.pages('"05-Sprints"').where(p => p.type === "task" && p.id);
+const files = app.vault.getFiles().filter(f => f.path.startsWith('05-Sprints/') && f.basename.match(/^T-\d+$/));
 
 // Extrae el número más alto
 const ids = taskPages.map(p => parseInt(String(p.id).replace("T-", "")))

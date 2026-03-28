@@ -9,9 +9,9 @@
 //   - [ ] Riesgo: descripción del riesgo
 // ══════════════════════════════════════════════════════════════
 
-// ── Auto-ID: calcula el siguiente RSK-XXX consecutivo ──
-const riskPages = dv.pages('"01-Proyecto/Riesgos"').where(p => p.type === "risk" && p.id);
-const ids = riskPages.map(p => parseInt(String(p.id).replace("RSK-", "").replace("RISK-", ""))).filter(n => !isNaN(n));
+// ── Auto-ID: calcula el siguiente RSK-XXX consecutivo (via app.vault) ──
+const files = app.vault.getFiles().filter(f => f.path.startsWith("01-Proyecto/Riesgos/") && f.basename.match(/^RSK-\d+$/));
+const ids = files.map(f => parseInt(f.basename.replace("RSK-", ""))).filter(n => !isNaN(n));
 const maxId = ids.length > 0 ? Math.max(...ids) : 0;
 const nextId = `RSK-${String(maxId + 1).padStart(3, "0")}`;
 

@@ -19,80 +19,32 @@ tags:
 
 ## 1. Resumen de Costos del Proyecto
 
-```dataviewjs
-// ── Costos de Recursos Humanos ──
-const team = [
-  { nombre: "Geovanny", rol: "Project Lead / Arquitecto", horas: 0, tarifa: 8500 },
-  { nombre: "Elkin", rol: "Líder Investigación / Analista", horas: 0, tarifa: 6500 },
-  { nombre: "Santiago", rol: "Líder QA / Analista", horas: 0, tarifa: 6500 },
-  { nombre: "Equipo", rol: "Tareas colectivas", horas: 0, tarifa: 7167 }
-];
+```sqlseal
+TABLE tasks FROM file("05-Sprints") WHERE type = 'task' OR type = 'subtask'
+TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
 
-// Helper: parsear horas (maneja Luxon Duration + strings "8h")
-const parseH = (v) => {
-  if (!v) return 0;
-  if (typeof v === "number") return v;
-  if (typeof v === "object" && v !== null) {
-    if (typeof v.as === "function") return v.as("hours");
-    if (v.hours !== undefined) return v.hours;
-  }
-  const m = String(v).match(/(\d+)/);
-  return m ? parseInt(m[1]) : 0;
-};
-
-// Calcular horas reales (effort_actual para done, effort para pendientes)
-const tasks = dv.pages('"05-Sprints"').where(t => t.type === "task" || t.type === "subtask");
-for (const t of tasks) {
-  const est = parseH(t.effort);
-  const act = parseH(t.effort_actual);
-  const hours = (t.status === "done" && act > 0) ? act : est;
-  const assignee = String(t.assignee || "").toLowerCase();
-  if (assignee.includes("geovanny")) team[0].horas += hours;
-  else if (assignee.includes("elkin")) team[1].horas += hours;
-  else if (assignee.includes("santiago")) team[2].horas += hours;
-  else team[3].horas += hours;
-}
-
-const totalHoras = team.reduce((s, m) => s + m.horas, 0);
-const totalRH = team.reduce((s, m) => s + (m.horas * m.tarifa), 0);
-
-// ── Costos de Herramientas ──
-const tools = [
-  { nombre: "Obsidian", costo: 0, periodo: "Gratuito (uso personal)" },
-  { nombre: "GitHub (Free tier)", costo: 0, periodo: "Gratuito" },
-  { nombre: "Git", costo: 0, periodo: "Open Source" },
-  { nombre: "Mermaid / Charts", costo: 0, periodo: "Open Source" },
-  { nombre: "Draw.io / Diagrams", costo: 0, periodo: "Open Source" },
-  { nombre: "VS Code", costo: 0, periodo: "Open Source" },
-  { nombre: "Node.js / Python", costo: 0, periodo: "Open Source" }
-];
-const totalTools = tools.reduce((s, t) => s + t.costo, 0);
-
-// ── Costos Administrativos Potenciales ──
-const admin = [
-  { concepto: "Registro de marca (RNPI)", costo: 150000, nota: "Por clase, ante Registro Nacional" },
-  { concepto: "Publicación en La Gaceta", costo: 30000, nota: "Edicto obligatorio para marcas" },
-  { concepto: "Constitución de Asociación", costo: 75000, nota: "Ante Registro Nacional de Asociaciones" },
-  { concepto: "Personería Jurídica", costo: 15000, nota: "Certificación de representante legal" },
-  { concepto: "Patente Municipal", costo: 25000, nota: "Varía según cantón y actividad" },
-  { concepto: "Certificación MEIC (PYME)", costo: 0, nota: "Trámite gratuito en línea" },
-  { concepto: "Permiso Sanitario (Min. Salud)", costo: 35000, nota: "Si aplica por tipo de actividad" }
-];
-const totalAdmin = admin.reduce((s, a) => s + a.costo, 0);
-
-const totalGeneral = totalRH + totalTools + totalAdmin;
-
-dv.header(3, "📊 Resumen General");
-dv.table(
-  ["Categoría", "Monto (₡)", "Porcentaje"],
-  [
-    ["👥 Recursos Humanos", `₡${totalRH.toLocaleString()}`, `${totalGeneral > 0 ? Math.round((totalRH/totalGeneral)*100) : 0}%`],
-    ["🔧 Herramientas", `₡${totalTools.toLocaleString()}`, `${totalGeneral > 0 ? Math.round((totalTools/totalGeneral)*100) : 0}%`],
-    ["📋 Administrativo / Legal", `₡${totalAdmin.toLocaleString()}`, `${totalGeneral > 0 ? Math.round((totalAdmin/totalGeneral)*100) : 0}%`],
-    ["**TOTAL**", `**₡${totalGeneral.toLocaleString()}**`, "**100%**"]
-  ]
-);
+SELECT
+  t.assignee as "👤 Integrante",
+  MAX(c.rol) as "Rol",
+  SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER)) as "H. Plan",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER)) as "H. Real",
+  MAX(CAST(c.tarifa_hora AS INTEGER)) as "Tarifa ₡/h",
+  SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Plan ₡",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Real ₡"
+FROM tasks t
+LEFT JOIN config c ON t.assignee = c.persona
+WHERE t.effort IS NOT NULL
+GROUP BY t.assignee
+ORDER BY SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) DESC
 ```
+
+#### 📊 Resumen General
+
+| Categoría | Monto Estimado | Nota |
+|-----------|---------------|------|
+| 👥 **Recursos Humanos** | *Dinámico — ver tabla arriba* | Horas × Tarifa por rol |
+| 🔧 **Herramientas** | ₡0 | 100% Open Source (ver §3) |
+| 📋 **Administrativo / Legal** | ~₡330,000 | Registro, constitución, patente (ver §4) |
 
 ---
 
@@ -110,194 +62,74 @@ dv.table(
 
 ### 2.2 Horas Invertidas por Sprint — Plan vs Real (Dinámico)
 
-```dataviewjs
-const parseH = (v) => {
-  if (!v) return 0;
-  if (typeof v === "number") return v;
-  if (typeof v === "object" && v !== null) {
-    if (typeof v.as === "function") return v.as("hours");
-    if (v.hours !== undefined) return v.hours;
-  }
-  const m = String(v).match(/(\d+)/);
-  return m ? parseInt(m[1]) : 0;
-};
-const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint && t.effort);
-const matrix = {};
+```sqlseal
+TABLE tasks FROM file("05-Sprints") WHERE (type = 'task' OR type = 'subtask') AND sprint IS NOT NULL AND effort IS NOT NULL
 
-for (const t of tasks) {
-  const sprint = String(t.sprint);
-  const person = t.assignee || "Sin asignar";
-  const est = parseH(t.effort);
-  const act = parseH(t.effort_actual);
-  const real = (t.status === "done" && act > 0) ? act : est;
-  if (!matrix[sprint]) matrix[sprint] = {};
-  if (!matrix[sprint][person]) matrix[sprint][person] = { plan: 0, real: 0 };
-  matrix[sprint][person].plan += est;
-  matrix[sprint][person].real += real;
-}
-
-const people = [...new Set(tasks.map(t => t.assignee || "Sin asignar"))].sort();
-const headers = ["Sprint"];
-for (const p of people) headers.push(`${p} (P/R)`);
-headers.push("Total Plan", "Total Real", "Δ");
-
-const rows = [];
-const totals = {};
-for (const p of people) totals[p] = { plan: 0, real: 0 };
-let grandPlan = 0, grandReal = 0;
-
-for (const [sprint, data] of Object.entries(matrix).sort()) {
-  const row = [sprint];
-  let sPlan = 0, sReal = 0;
-  for (const p of people) {
-    const d = data[p] || { plan: 0, real: 0 };
-    row.push(`${d.plan}h / ${d.real}h`);
-    sPlan += d.plan; sReal += d.real;
-    totals[p].plan += d.plan; totals[p].real += d.real;
-  }
-  const delta = sReal - sPlan;
-  row.push(`**${sPlan}h**`, `**${sReal}h**`, `${delta >= 0 ? "+" : ""}${delta}h`);
-  rows.push(row);
-  grandPlan += sPlan; grandReal += sReal;
-}
-
-const totalRow = ["**TOTAL**"];
-for (const p of people) totalRow.push(`**${totals[p].plan}h / ${totals[p].real}h**`);
-const gDelta = grandReal - grandPlan;
-totalRow.push(`**${grandPlan}h**`, `**${grandReal}h**`, `**${gDelta >= 0 ? "+" : ""}${gDelta}h**`);
-rows.push(totalRow);
-
-dv.table(headers, rows);
-dv.paragraph(`> **📊 Varianza de horas:** ${gDelta >= 0 ? "+" : ""}${gDelta}h (${grandPlan > 0 ? ((gDelta/grandPlan)*100).toFixed(1) : 0}%) · Formato: Plan / Real`);
+SELECT
+  t.sprint as "Sprint",
+  SUM(CASE WHEN t.assignee = 'Geovanny' THEN CAST(REPLACE(t.effort,'h','') AS INTEGER) ELSE 0 END) || 'h / ' ||
+  SUM(CASE WHEN t.assignee = 'Geovanny' THEN CAST(REPLACE(CASE WHEN t.status='done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END,'h','') AS INTEGER) ELSE 0 END) || 'h' as "Geovanny (P/R)",
+  SUM(CASE WHEN t.assignee = 'Elkin' THEN CAST(REPLACE(t.effort,'h','') AS INTEGER) ELSE 0 END) || 'h / ' ||
+  SUM(CASE WHEN t.assignee = 'Elkin' THEN CAST(REPLACE(CASE WHEN t.status='done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END,'h','') AS INTEGER) ELSE 0 END) || 'h' as "Elkin (P/R)",
+  SUM(CASE WHEN t.assignee = 'Santiago' THEN CAST(REPLACE(t.effort,'h','') AS INTEGER) ELSE 0 END) || 'h / ' ||
+  SUM(CASE WHEN t.assignee = 'Santiago' THEN CAST(REPLACE(CASE WHEN t.status='done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END,'h','') AS INTEGER) ELSE 0 END) || 'h' as "Santiago (P/R)",
+  SUM(CASE WHEN t.assignee NOT IN ('Geovanny','Elkin','Santiago') THEN CAST(REPLACE(t.effort,'h','') AS INTEGER) ELSE 0 END) || 'h / ' ||
+  SUM(CASE WHEN t.assignee NOT IN ('Geovanny','Elkin','Santiago') THEN CAST(REPLACE(CASE WHEN t.status='done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END,'h','') AS INTEGER) ELSE 0 END) || 'h' as "Equipo (P/R)",
+  SUM(CAST(REPLACE(t.effort,'h','') AS INTEGER)) || 'h' as "Total Plan",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER)) || 'h' as "Total Real"
+FROM tasks t
+GROUP BY t.sprint
+ORDER BY t.sprint ASC
 ```
+
+> **📊 Formato:** Plan / Real por integrante. Varianza positiva = más horas reales que planificadas.
 
 ### 2.3 Costo Acumulado por Integrante — Plan vs Real
 
-```dataviewjs
-const parseH = (v) => {
-  if (!v) return 0;
-  if (typeof v === "number") return v;
-  if (typeof v === "object" && v !== null) {
-    if (typeof v.as === "function") return v.as("hours");
-    if (v.hours !== undefined) return v.hours;
-  }
-  const m = String(v).match(/(\d+)/);
-  return m ? parseInt(m[1]) : 0;
-};
-const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500, "Equipo": 7167 };
-const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
-const costos = {};
+```sqlseal
+TABLE tasks FROM file("05-Sprints") WHERE (type = 'task' OR type = 'subtask') AND effort IS NOT NULL
+TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
 
-for (const t of tasks) {
-  const person = t.assignee || "Sin asignar";
-  const est = parseH(t.effort);
-  const act = parseH(t.effort_actual);
-  const real = (t.status === "done" && act > 0) ? act : est;
-  const tarifa = tarifas[person] || 7000;
-  if (!costos[person]) costos[person] = { planH: 0, realH: 0, planCost: 0, realCost: 0 };
-  costos[person].planH += est;
-  costos[person].realH += real;
-  costos[person].planCost += est * tarifa;
-  costos[person].realCost += real * tarifa;
-}
-
-const headers = ["👤 Integrante", "H. Plan", "H. Real", "Tarifa (₡/h)", "Costo Plan (₡)", "Costo Real (₡)", "Δ Costo (₡)", "Real (USD)"];
-const rows = [];
-let gPlan = 0, gReal = 0;
-
-for (const [person, d] of Object.entries(costos).sort()) {
-  const tarifa = tarifas[person] || 7000;
-  gPlan += d.planCost;
-  gReal += d.realCost;
-  const delta = d.realCost - d.planCost;
-  rows.push([
-    person,
-    `${d.planH}h`,
-    `${d.realH}h`,
-    `₡${tarifa.toLocaleString()}`,
-    `₡${d.planCost.toLocaleString()}`,
-    `₡${d.realCost.toLocaleString()}`,
-    `${delta >= 0 ? "+" : ""}₡${delta.toLocaleString()}`,
-    `$${Math.round(d.realCost / 535).toLocaleString()}`
-  ]);
-}
-const gDelta = gReal - gPlan;
-rows.push([
-  "**TOTAL**", "", "", "",
-  `**₡${gPlan.toLocaleString()}**`,
-  `**₡${gReal.toLocaleString()}**`,
-  `**${gDelta >= 0 ? "+" : ""}₡${gDelta.toLocaleString()}**`,
-  `**$${Math.round(gReal/535).toLocaleString()}**`
-]);
-
-dv.table(headers, rows);
+SELECT
+  t.assignee as "👤 Integrante",
+  SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER)) || 'h' as "H. Plan",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER)) || 'h' as "H. Real",
+  MAX(CAST(c.tarifa_hora AS INTEGER)) as "Tarifa (₡/h)",
+  SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Plan (₡)",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Real (₡)",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) - SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Δ Costo (₡)",
+  ROUND(SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) / 535.0) as "Real (USD)"
+FROM tasks t
+LEFT JOIN config c ON t.assignee = c.persona
+GROUP BY t.assignee
+ORDER BY SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) DESC
 ```
 
 > **Nota:** Las tareas asignadas a "Equipo" (trabajo colectivo) se costean a tarifa promedio: ₡7,167/h = (₡8,500 + ₡6,500 + ₡6,500) ÷ 3.
 
 ### 2.4 Costo por Sprint (Dinámico)
 
-```dataviewjs
-const parseH = (v) => {
-  if (!v) return 0;
-  if (typeof v === "number") return v;
-  if (typeof v === "object" && v !== null) {
-    if (typeof v.as === "function") return v.as("hours");
-    if (v.hours !== undefined) return v.hours;
-  }
-  const m = String(v).match(/(\d+)/);
-  return m ? parseInt(m[1]) : 0;
-};
-const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500, "Equipo": 7167 };
-const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.sprint && t.effort);
-const sprints = {};
+```sqlseal
+TABLE tasks FROM file("05-Sprints") WHERE (type = 'task' OR type = 'subtask') AND sprint IS NOT NULL AND effort IS NOT NULL
+TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
 
-for (const t of tasks) {
-  const sprint = String(t.sprint);
-  const person = t.assignee || "Sin asignar";
-  const est = parseH(t.effort);
-  const act = parseH(t.effort_actual);
-  const real = (t.status === "done" && act > 0) ? act : est;
-  const tarifa = tarifas[person] || 7000;
-  if (!sprints[sprint]) sprints[sprint] = { tasks: 0, done: 0, planH: 0, realH: 0, planCost: 0, realCost: 0 };
-  sprints[sprint].tasks++;
-  if (t.status === "done") sprints[sprint].done++;
-  sprints[sprint].planH += est;
-  sprints[sprint].realH += real;
-  sprints[sprint].planCost += est * tarifa;
-  sprints[sprint].realCost += real * tarifa;
-}
-
-const headers = ["Sprint", "Tareas", "Done", "H. Plan", "H. Real", "Costo Plan (₡)", "Costo Real (₡)", "Δ (₡)", "CPI"];
-const rows = [];
-let gPH = 0, gRH = 0, gPC = 0, gRC = 0, gT = 0, gD = 0;
-
-for (const [sprint, d] of Object.entries(sprints).sort()) {
-  const delta = d.realCost - d.planCost;
-  const cpi = d.realCost > 0 ? (d.planCost / d.realCost).toFixed(2) : "N/A";
-  gPH += d.planH; gRH += d.realH; gPC += d.planCost; gRC += d.realCost;
-  gT += d.tasks; gD += d.done;
-  rows.push([
-    sprint, d.tasks, d.done,
-    `${d.planH}h`, `${d.realH}h`,
-    `₡${d.planCost.toLocaleString()}`, `₡${d.realCost.toLocaleString()}`,
-    `${delta >= 0 ? "+" : ""}₡${delta.toLocaleString()}`,
-    cpi
-  ]);
-}
-const gDelta = gRC - gPC;
-const gCPI = gRC > 0 ? (gPC / gRC).toFixed(2) : "N/A";
-rows.push([
-  "**TOTAL**", `**${gT}**`, `**${gD}**`,
-  `**${gPH}h**`, `**${gRH}h**`,
-  `**₡${gPC.toLocaleString()}**`, `**₡${gRC.toLocaleString()}**`,
-  `**${gDelta >= 0 ? "+" : ""}₡${gDelta.toLocaleString()}**`,
-  `**${gCPI}**`
-]);
-
-dv.table(headers, rows);
-dv.paragraph(`> **📊 CPI (Cost Performance Index):** ${gCPI} · Varianza: ${gDelta >= 0 ? "+" : ""}₡${gDelta.toLocaleString()} (${gPC > 0 ? ((gDelta/gPC)*100).toFixed(1) : 0}%) · CPI > 1 = bajo presupuesto · CPI < 1 = sobre presupuesto`);
+SELECT
+  t.sprint as "Sprint",
+  COUNT(*) as "Tareas",
+  SUM(CASE WHEN t.status = 'done' THEN 1 ELSE 0 END) as "Done",
+  SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER)) || 'h' as "H. Plan",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER)) || 'h' as "H. Real",
+  SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Plan (₡)",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Real (₡)",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) - SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Δ (₡)",
+  ROUND(CAST(SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) AS REAL) / NULLIF(SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)), 0), 2) as "CPI"
+FROM tasks t
+LEFT JOIN config c ON t.assignee = c.persona
+GROUP BY t.sprint
+ORDER BY t.sprint ASC
 ```
+
+> **📊 CPI (Cost Performance Index):** CPI > 1 = bajo presupuesto · CPI < 1 = sobre presupuesto
 
 ```chart
 type: bar
@@ -321,56 +153,25 @@ beginAtZero: true
 
 ### 2.5 Indicadores Financieros (Dinámico)
 
-```dataviewjs
-const parseH = (v) => {
-  if (!v) return 0;
-  if (typeof v === "number") return v;
-  if (typeof v === "object" && v !== null) {
-    if (typeof v.as === "function") return v.as("hours");
-    if (v.hours !== undefined) return v.hours;
-  }
-  const m = String(v).match(/(\d+)/);
-  return m ? parseInt(m[1]) : 0;
-};
-const tarifas = { "Geovanny": 8500, "Elkin": 6500, "Santiago": 6500, "Equipo": 7167 };
-const tasks = dv.pages('"05-Sprints"').where(t => (t.type === "task" || t.type === "subtask") && t.effort);
-let planH = 0, realH = 0, planC = 0, realC = 0, done = 0;
+```sqlseal
+TABLE tasks FROM file("05-Sprints") WHERE (type = 'task' OR type = 'subtask') AND effort IS NOT NULL
+TABLE config FROM file("08-Recursos/Datos/finanzas-config.csv")
 
-for (const t of tasks) {
-  const est = parseH(t.effort);
-  const act = parseH(t.effort_actual);
-  const real = (t.status === "done" && act > 0) ? act : est;
-  const tarifa = tarifas[t.assignee] || 7000;
-  planH += est;
-  realH += real;
-  planC += est * tarifa;
-  realC += real * tarifa;
-  if (t.status === "done") done++;
-}
-
-const total = tasks.length;
-const deltaC = realC - planC;
-const deltaH = realH - planH;
-const cpi = realC > 0 ? (planC / realC).toFixed(2) : "N/A";
-const spi = total > 0 ? (done / total).toFixed(2) : "N/A";
-const pctDone = total > 0 ? Math.round((done / total) * 100) : 0;
-const pctVar = planC > 0 ? ((deltaC / planC) * 100).toFixed(1) : 0;
-
-dv.table(
-  ["📏 Indicador", "Valor", "Meta", "Semáforo"],
-  [
-    ["**Horas planificadas**", `${planH}h`, "-", "📋"],
-    ["**Horas ejecutadas (reales)**", `${realH}h`, "-", "📋"],
-    ["**Varianza de horas**", `${deltaH >= 0 ? "+" : ""}${deltaH}h (${planH > 0 ? ((deltaH/planH)*100).toFixed(1) : 0}%)`, "< ±10%", Math.abs(deltaH/planH) < 0.1 ? "🟢" : "🟡"],
-    ["**Costo planificado (EV)**", `₡${planC.toLocaleString()}`, "-", "📋"],
-    ["**Costo real (AC)**", `₡${realC.toLocaleString()} ($${Math.round(realC/535).toLocaleString()})`, "-", "📋"],
-    ["**Varianza de costo (CV)**", `${deltaC >= 0 ? "+" : ""}₡${deltaC.toLocaleString()} (${pctVar}%)`, "< ±10%", Math.abs(parseFloat(pctVar)) < 10 ? "🟢" : "🟡"],
-    ["**CPI (Cost Performance Index)**", cpi, "> 0.95", parseFloat(cpi) >= 0.95 ? "🟢" : parseFloat(cpi) >= 0.85 ? "🟡" : "🔴"],
-    ["**SPI (Schedule Performance)**", `${spi} (${pctDone}% done)`, "> 0.90", parseFloat(spi) >= 0.9 ? "🟢" : "🟡"],
-    ["**Tareas completadas**", `${done} / ${total}`, "-", pctDone >= 95 ? "🟢" : pctDone >= 70 ? "🟡" : "🔴"],
-  ]
-);
+SELECT
+  SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER)) || 'h' as "H. Plan",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER)) || 'h' as "H. Real",
+  (SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER)) - SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER))) || 'h' as "Δ Horas",
+  SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Plan (EV) ₡",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "Costo Real (AC) ₡",
+  SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) - SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) as "CV ₡",
+  ROUND(CAST(SUM(CAST(REPLACE(t.effort, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)) AS REAL) / NULLIF(SUM(CAST(REPLACE(CASE WHEN t.status = 'done' AND t.effort_actual IS NOT NULL AND t.effort_actual != '' THEN t.effort_actual ELSE t.effort END, 'h', '') AS INTEGER) * CAST(c.tarifa_hora AS INTEGER)), 0), 2) as "CPI",
+  ROUND(CAST(SUM(CASE WHEN t.status = 'done' THEN 1 ELSE 0 END) AS REAL) / NULLIF(COUNT(*), 0), 2) as "SPI",
+  SUM(CASE WHEN t.status = 'done' THEN 1 ELSE 0 END) || ' / ' || COUNT(*) as "Completadas"
+FROM tasks t
+LEFT JOIN config c ON t.assignee = c.persona
 ```
+
+> **Referencia:** CPI > 0.95 🟢 · CPI 0.85–0.95 🟡 · CPI < 0.85 🔴 · SPI > 0.90 🟢 · SPI < 0.90 🟡
 
 ---
 

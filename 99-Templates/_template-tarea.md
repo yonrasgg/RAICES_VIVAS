@@ -1,7 +1,7 @@
 <%*
-// ── Auto-ID: calcula el siguiente T-XXX consecutivo ──
-const taskPages = dv.pages('"05-Sprints"').where(p => p.type === "task" && p.id);
-const ids = taskPages.map(p => parseInt(String(p.id).replace("T-", ""))).filter(n => !isNaN(n));
+// ── Auto-ID: calcula el siguiente T-XXX consecutivo (via app.vault) ──
+const files = app.vault.getFiles().filter(f => f.path.startsWith("05-Sprints/") && f.basename.match(/^T-\d+$/));
+const ids = files.map(f => parseInt(f.basename.replace("T-", ""))).filter(n => !isNaN(n));
 const maxId = ids.length > 0 ? Math.max(...ids) : 0;
 const nextId = `T-${String(maxId + 1).padStart(3, "0")}`;
 
@@ -117,28 +117,20 @@ impediments: []
 
 ### 🚫 Esta tarea bloquea:
 
-```dataview
-TABLE WITHOUT ID
-  file.link as "Tarea",
-  status as "Estado",
-  assignee as "Responsable",
-  due as "Fecha límite"
-FROM "05-Sprints"
-WHERE contains(blocked_by, this.id)
-SORT due ASC
+```sqlseal
+SELECT name as "Tarea", status as "Estado", assignee as "Responsable", due as "Fecha límite"
+FROM files
+WHERE path LIKE '05-Sprints%' AND blocked_by LIKE '%' || @id || '%'
+ORDER BY due ASC
 ```
 
 ### ⛔ Esta tarea está bloqueada por:
 
-```dataview
-TABLE WITHOUT ID
-  file.link as "Tarea",
-  status as "Estado",
-  assignee as "Responsable",
-  due as "Fecha límite"
-FROM "05-Sprints"
-WHERE contains(this.blocked_by, file.name)
-SORT due ASC
+```sqlseal
+SELECT name as "Tarea", status as "Estado", assignee as "Responsable", due as "Fecha límite"
+FROM files
+WHERE path LIKE '05-Sprints%' AND INSTR(@blocked_by, name) > 0
+ORDER BY due ASC
 ```
 
 ### ⚠️ Impedimentos Activos

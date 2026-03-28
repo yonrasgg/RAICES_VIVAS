@@ -86,9 +86,15 @@ ORDER BY name ASC
 
 ## Progreso
 
-> **Stories completadas:** `$= dv.pages('"05-Sprints/Stories"').where(p => p.type === "story" && p.parent === "RV-1" && p.status === "done").length` / `$= dv.pages('"05-Sprints/Stories"').where(p => p.type === "story" && p.parent === "RV-1").length`
-
-> **Tareas completadas:** `$= dv.pages('"05-Sprints"').where(p => (p.type === "task" || p.type === "subtask") && p.parent === "RV-1" && p.status === "done").length` / `$= dv.pages('"05-Sprints"').where(p => (p.type === "task" || p.type === "subtask") && p.parent === "RV-1").length`
+```sqlseal
+SELECT
+  SUM(CASE WHEN type = 'story' AND status = 'done' THEN 1 ELSE 0 END) || ' / ' ||
+  SUM(CASE WHEN type = 'story' THEN 1 ELSE 0 END) as "📖 Stories",
+  SUM(CASE WHEN (type = 'task' OR type = 'subtask') AND status = 'done' THEN 1 ELSE 0 END) || ' / ' ||
+  SUM(CASE WHEN type = 'task' OR type = 'subtask' THEN 1 ELSE 0 END) as "📋 Tareas"
+FROM files
+WHERE parent = @key AND path LIKE '05-Sprints%'
+```
 
 ## Historial de Cambios
 

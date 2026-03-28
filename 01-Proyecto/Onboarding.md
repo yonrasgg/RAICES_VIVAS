@@ -598,7 +598,7 @@ El frontmatter (bloque YAML entre `---` al inicio de cada nota) es la **base de 
 
 ```mermaid
 flowchart LR
-    FM["🏷️ Tú editas el frontmatter<br/>(type, status, effort,<br/>completed, due...)"] -->|Dataview lee<br/>los campos| DV["⚙️ Dataview Engine<br/>(dv.pages, WHERE, SORT)"]
+    FM["🏷️ Tú editas el frontmatter<br/>(type, status, effort,<br/>completed, due...)"] -->|Dataview lee<br/>los campos| SS["⚙️ SQLSeal Engine<br/>(SQL queries, JOIN, GROUP BY)"]
     DV -->|Genera tablas<br/>y KPIs| DASH["📊 Dashboard<br/>Home.md · Métricas.md"]
     DV -->|Filtra por<br/>week_start ↔ week_end| WK["📅 Weekly Note<br/>(snapshot de esa semana)"]
 

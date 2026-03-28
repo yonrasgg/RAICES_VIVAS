@@ -2,13 +2,13 @@
 // ══════════════════════════════════════════════════════════════
 // 🏗️ Nuevo ADR (Architecture Decision Record)
 // ══════════════════════════════════════════════════════════════
-// Auto-ID: ADR-XXX calculado via dv.pages()
+// Auto-ID: ADR-XXX calculado via app.vault
 // Destino: 01-Proyecto/Decisiones/
 // ══════════════════════════════════════════════════════════════
 
-// ── Auto-ID: calcula el siguiente ADR-XXX consecutivo ──
-const adrPages = dv.pages('"01-Proyecto/Decisiones"').where(p => p.type === "adr" && p.id);
-const ids = adrPages.map(p => parseInt(String(p.id).replace("ADR-", ""))).filter(n => !isNaN(n));
+// ── Auto-ID: calcula el siguiente ADR-XXX consecutivo (via app.vault) ──
+const files = app.vault.getFiles().filter(f => f.path.startsWith("01-Proyecto/Decisiones/") && f.basename.match(/^ADR-\d+$/));
+const ids = files.map(f => parseInt(f.basename.replace("ADR-", ""))).filter(n => !isNaN(n));
 const maxId = ids.length > 0 ? Math.max(...ids) : 0;
 const nextId = `ADR-${String(maxId + 1).padStart(3, "0")}`;
 

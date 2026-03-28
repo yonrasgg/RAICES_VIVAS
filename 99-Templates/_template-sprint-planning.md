@@ -51,13 +51,9 @@ end: '<% tp.system.prompt("Fecha fin del sprint (YYYY-MM-DD)") %>'
 
 ## Tareas del Sprint (Dataview)
 
-```dataview
-TABLE
-  status as "Estado",
-  priority as "Prioridad",
-  assignee as "Responsable",
-  requirement as "Requerimiento"
-FROM "05-Sprints"
-WHERE (type = "task" OR type = "subtask") AND sprint = "Sprint-<% tp.frontmatter.sprint %>"
-SORT priority ASC
+```sqlseal
+SELECT name as "ID", status as "Estado", priority as "Prioridad", assignee as "Responsable", requirement as "Requerimiento"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND sprint = 'Sprint-<% tp.frontmatter.sprint %>' AND path LIKE '05-Sprints%'
+ORDER BY priority ASC
 ```

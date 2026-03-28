@@ -24,7 +24,7 @@ author: Equipo Raíces Vivas
 | Plugin | Propósito | Por qué |
 |--------|-----------|---------|
 | **Dataview** | Queries, tablas dinámicas, dashboards | Es el "SQL de Obsidian". Consulta frontmatter para generar RTM, KPIs, métricas en tiempo real |
-| **Templater** | Templates con lógica JavaScript | Prompts interactivos, Auto-ID de tareas (`dv.pages`), auto-rename de archivos, cálculo de tags |
+| **Templater** | Templates con lógica JavaScript | Prompts interactivos, Auto-ID de tareas (`app.vault`), auto-rename de archivos, cálculo de tags |
 | **QuickAdd** | 10 macros de creación rápida | Crear tareas, minutas, RF, RNF, riesgos, ADRs, sprint plannings/reviews, y promover action items |
 | **Tasks** | Checkboxes con metadata (emoji format) | `📅` due, `✅` done, `❌` cancelled, `⏫` priority. Statuses custom: `[/]` In Progress, `[-]` Cancelled |
 | **Kanban** | Tableros Kanban (Backlog) | Visualización: Backlog → In Progress → Review → Done |
@@ -237,7 +237,7 @@ tags:
 ```yaml
 ---
 type: task
-id: T-026                     # Auto-generado via dv.pages() + Templater (NUNCA manual)
+id: T-026                     # Auto-generado via app.vault + Templater (NUNCA manual)
 title: "Diseñar wireframe login"
 status: todo                  # todo | in-progress | review | done | blocked
 priority: high                # critical | high | medium | low
@@ -259,7 +259,7 @@ tags:
 ---
 ```
 
-> **Auto-ID:** El campo `id` se calcula automáticamente al crear la tarea. Templater ejecuta `dv.pages('"05-Sprints"')` para encontrar el máximo ID existente y asignar `max + 1`. El archivo se renombra automáticamente a `T-XXX.md`.
+> **Auto-ID:** El campo `id` se calcula automáticamente al crear la tarea. Templater ejecuta `app.vault.getFiles()` para encontrar el máximo ID existente y asignar `max + 1`. El archivo se renombra automáticamente a `T-XXX.md`.
 >
 > **Source:** Cuando una tarea nace de un Action Item de una minuta, el campo `source` registra la minuta origen para trazabilidad bidireccional.
 
@@ -447,7 +447,7 @@ Secciones principales: Compromisos (Must/Should/Could), Capacidad del Equipo, Ri
 ```yaml
 ---
 type: task
-id: T-XXX              # Auto-generado via dv.pages() + Templater
+id: T-XXX              # Auto-generado via app.vault + Templater
 title: ""
 status: todo           # todo | in-progress | review | done | blocked
 priority: medium       # critical | high | medium | low

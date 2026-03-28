@@ -107,17 +107,11 @@ labels:
 
 ## Subtareas / Tasks
 
-```dataview
-TABLE
-  key as "Jira",
-  title as "Tarea",
-  status as "Estado",
-  assignee as "Responsable",
-  sprint as "Sprint",
-  priority as "Prioridad"
-FROM "05-Sprints"
-WHERE (type = "task" OR type = "subtask") AND parent = this.key
-SORT sprint ASC, id ASC
+```sqlseal
+SELECT name as "Tarea", key_ as "Jira", title as "Título", status as "Estado", assignee as "Responsable", sprint as "Sprint", priority as "Prioridad"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND parent = @key AND path LIKE '05-Sprints%'
+ORDER BY sprint ASC, name ASC
 ```
 
 ## Trazabilidad

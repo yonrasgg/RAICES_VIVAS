@@ -81,48 +81,42 @@ labels:
 
 ## User Stories Vinculadas
 
-```dataview
-TABLE
-  key as "Jira",
-  title as "Historia",
-  status as "Estado",
-  story_points as "SP",
-  priority as "Prioridad"
-FROM "05-Sprints/Stories"
-WHERE type = "story" AND parent = this.key
-SORT key ASC
+```sqlseal
+SELECT name as "Story", key_ as "Jira", title as "Historia", status as "Estado", story_points as "SP", priority as "Prioridad"
+FROM files
+WHERE type = 'story' AND parent = @key AND path LIKE '05-Sprints/Stories%'
+ORDER BY key_ ASC
 ```
 
 ## Tareas Directas (bajo este Epic)
 
-```dataview
-TABLE
-  key as "Jira",
-  title as "Tarea",
-  status as "Estado",
-  assignee as "Responsable",
-  sprint as "Sprint"
-FROM "05-Sprints"
-WHERE (type = "task" OR type = "subtask") AND parent = this.key
-SORT sprint ASC, id ASC
+```sqlseal
+SELECT name as "Tarea", key_ as "Jira", title as "Título", status as "Estado", assignee as "Responsable", sprint as "Sprint"
+FROM files
+WHERE (type = 'task' OR type = 'subtask') AND parent = @key AND path LIKE '05-Sprints%'
+ORDER BY sprint ASC, name ASC
 ```
 
 ## Requerimientos Funcionales
 
-```dataview
-TABLE
-  id as "RF",
-  title as "Título",
-  priority as "Prioridad",
-  status as "Estado"
-FROM "03-Requerimientos/Funcionales"
-WHERE type = "requirement/functional" AND module = this.module
-SORT id ASC
+```sqlseal
+SELECT name as "RF", title as "Título", priority as "Prioridad", status as "Estado"
+FROM files
+WHERE type = 'requirement/functional' AND module = @module AND path LIKE '03-Requerimientos/Funcionales%'
+ORDER BY name ASC
 ```
 
 ## Progreso
 
-> **Completadas:** `$= dv.pages('"05-Sprints"').where(p => (p.type === "task" || p.type === "story") && p.parent === dv.current().key && p.status === "done").length` / `$= dv.pages('"05-Sprints"').where(p => (p.type === "task" || p.type === "story") && p.parent === dv.current().key).length`
+```sqlseal
+SELECT
+  SUM(CASE WHEN type = 'story' AND status = 'done' THEN 1 ELSE 0 END) || ' / ' ||
+  SUM(CASE WHEN type = 'story' THEN 1 ELSE 0 END) as "📖 Stories",
+  SUM(CASE WHEN (type = 'task' OR type = 'subtask') AND status = 'done' THEN 1 ELSE 0 END) || ' / ' ||
+  SUM(CASE WHEN type = 'task' OR type = 'subtask' THEN 1 ELSE 0 END) as "📋 Tareas"
+FROM files
+WHERE parent = @key AND path LIKE '05-Sprints%'
+```
 
 ## Historial de Cambios
 

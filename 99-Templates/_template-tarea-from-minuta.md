@@ -9,9 +9,9 @@
 //   - [ ] Texto de la tarea → @Persona 📅 YYYY-MM-DD
 // ══════════════════════════════════════════════════════════════
 
-// ── Auto-ID: calcula el siguiente T-XXX consecutivo ──
-const taskPages = dv.pages('"05-Sprints"').where(p => p.type === "task" && p.id);
-const ids = taskPages.map(p => parseInt(String(p.id).replace("T-", ""))).filter(n => !isNaN(n));
+// ── Auto-ID: calcula el siguiente T-XXX consecutivo (via app.vault) ──
+const files = app.vault.getFiles().filter(f => f.path.startsWith("05-Sprints/") && f.basename.match(/^T-\d+$/));
+const ids = files.map(f => parseInt(f.basename.replace("T-", ""))).filter(n => !isNaN(n));
 const maxId = ids.length > 0 ? Math.max(...ids) : 0;
 const nextId = `T-${String(maxId + 1).padStart(3, "0")}`;
 
