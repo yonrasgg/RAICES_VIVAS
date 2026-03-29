@@ -486,7 +486,6 @@ h2:not(:first-of-type) {
 @media print {
     body { color: black; }
     a { color: black; text-decoration: none; }
-    .mermaid-diagram img { max-height: none; }
 }
 """
 
