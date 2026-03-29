@@ -6,14 +6,14 @@ type: sprint-planning
 title: "Sprint 02 — Avance 2: Diseño y Arquitectura"
 sprint: Sprint-02
 avance: Avance-2
-status: in-progress
+status: done
 goal: "Diseñar la arquitectura del sistema, crear modelos ER por módulo y definir el stack tecnológico"
 started: 2026-02-28
 due: 2026-04-01
-completed: ""
+completed: 2026-03-29
 team: [Geovanny, Elkin, Santiago]
 created: 2026-02-27
-updated: 2026-03-26
+updated: 2026-03-29
 tags:
   - sprint
   - planning
@@ -33,7 +33,7 @@ tags:
 | **Inicio** | 2026-02-28 |
 | **Fin** | 2026-04-01 |
 | **Duración** | ~32 días (4.5 semanas) |
-| **Estado** | 🔄 En progreso |
+| **Estado** | ✅ Completado (entregado 2026-03-29) |
 
 ## Timeline del Sprint
 
@@ -61,7 +61,7 @@ gantt
     T-030 Entrevistas (Elk) [RV-32]        :        t30, 2026-03-23, 2026-03-30
     T-031 Gobernanza cultural (Eq) [RV-33] :        t31, 2026-03-01, 2026-03-15
     Ajustes post-validación (Equipo)   :        v3, 2026-03-28, 2026-04-01
-    ENTREGA AVANCE 2                   :milestone, m2, 2026-04-01, 0d
+    ENTREGA AVANCE 2 (real 29/03)  :milestone, m2, 2026-03-29, 0d
 ```
 
 ## Tareas del Sprint

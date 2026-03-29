@@ -12,7 +12,7 @@ tags:
   - arquitectura
   - diseño
 created: 2026-03-26
-updated: 2026-03-28
+updated: 2026-03-29
 banner_src: "08-Recursos/Imágenes/cover-entregables.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
@@ -2097,5 +2097,5 @@ flowchart LR
 
 ---
 
-*Documento generado el 2026-03-26 · Actualizado 2026-03-28 · Equipo Raíces Vivas · CENFOTEC*
+*Documento creado el 2026-03-26 · Actualizado 2026-03-29 · Equipo Raíces Vivas · CENFOTEC*
 *Curso: SOFT-09 — Introducción a la Ingeniería del Software — Prof. Johnny Marin*

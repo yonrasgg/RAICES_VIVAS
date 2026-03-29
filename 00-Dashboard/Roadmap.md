@@ -35,8 +35,8 @@ gantt
     Decisión stack (ADR)    :done,   b3, 2026-03-01, 2026-03-14
     Prototipos UI/UX        :done,   b4, 2026-03-10, 2026-03-25
     Validación con usuarios :done,   b5, 2026-03-20, 2026-03-25
-    Compilación Avance 2    :active, b6, 2026-03-21, 2026-04-01
-    AVANCE 2                :milestone, m2, 2026-04-01, 0d
+    Compilación Avance 2    :done,   b6, 2026-03-21, 2026-03-29
+    AVANCE 2                :milestone, m2, 2026-03-29, 0d
 
     section 💻 Implementación
     Sprint-03 EDU piloto + sync  :        c1, 2026-04-01, 2026-04-30
@@ -113,7 +113,7 @@ gantt
     T-029 Preparar instrumentos (San) [RV-31]:done,  v1, 2026-03-18, 2026-03-22
     T-030 Planificar entrevistas (Elk) [RV-32]:done, v2, 2026-03-20, 2026-03-25
     T-031 Gobernanza cultural (Equipo) [RV-33]:done, v3, 2026-03-07, 2026-03-14
-    ENTREGA AVANCE 2                   :milestone, m2, 2026-04-01, 0d
+    ENTREGA AVANCE 2                   :milestone, m2, 2026-03-29, 0d
 ```
 
 ---
@@ -123,7 +123,7 @@ gantt
 | # | Milestone | Fecha Objetivo | Estado | Responsable |
 |---|-----------|---------------|--------|-------------|
 | M1 | Avance 1 — Requerimientos | 2026-02-25 | ✅ Entregado | Equipo |
-| M2 | Avance 2 — Arquitectura | 2026-04-01 | 🔄 En progreso | Equipo |
+| M2 | Avance 2 — Arquitectura | 2026-03-29 | ✅ Entregado | Equipo |
 | M3 | Entrega Final | 2026-06-30 | ⏳ Pendiente | Equipo |
 
 ## Entregas Próximas
@@ -142,7 +142,7 @@ ORDER BY due ASC
 
 ---
 
-*Roadmap dinámico · Mermaid + SQLSeal + Jira Sync · Última actualización: 2026-03-26 (Sprint-02 completado)*
+*Roadmap dinámico · Mermaid + SQLSeal + Jira Sync · Última actualización: 2026-03-29 (Sprint-02 completado, Avance 2 entregado)*
 
 ## Navegación
 

@@ -49,6 +49,9 @@ marker: default, 9.78, -83.45, [[#Cabécar (Bajo Chirripó)]]
 marker: default, 10.45, -83.82, [[#Bribri (Kéköldi)]]
 marker: default, 8.52, -82.88, [[#Guaymí de Abrojos Montezuma]]
 marker: default, 9.50, -83.30, [[#Cabécar (China Kichá)]]
+marker: green, 10.6689, -84.8238, [[02-Investigación/Observaciones/OBS-001|OBS-001 Maleku — Guatuso]]
+marker: green, 9.4569, -82.9556, [[02-Investigación/Observaciones/OBS-002|OBS-002 Bribri — Talamanca Alta]]
+marker: green, 9.0169, -83.3211, [[02-Investigación/Observaciones/OBS-003|OBS-003 Boruca-Térraba — Buenos Aires]]
 ```
 
 ---

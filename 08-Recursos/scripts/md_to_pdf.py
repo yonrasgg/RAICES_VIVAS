@@ -27,13 +27,34 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 SRC = ROOT / "06-Entregables" / "Avance-2" / "Raíces Vivas — Avance 2 Diseño y Arquitectura.md"
 OUT = SRC.with_suffix(".pdf")
 MERMAID_CACHE = ROOT / "08-Recursos" / "scripts" / ".mermaid_cache"
+LOGO_PATH = ROOT / "08-Recursos" / "Imágenes" / "logo-cenfotec-web.png"
+ACTOR_DIAGRAM_PATH = ROOT / "08-Recursos" / "Imágenes" / "diagram_actor_modulo.png"
+USECASE_DIAGRAM_PATH = ROOT / "08-Recursos" / "Imágenes" / "diagram_usecase.png"
 
 # ── Mermaid rendering ─────────────────────────────────────────────────────
 MERMAID_CACHE.mkdir(parents=True, exist_ok=True)
 
 
+def _embed_prerendered(path, index, label):
+    """Return base64-embedded img tag for a pre-rendered diagram PNG."""
+    png_data = path.read_bytes()
+    b64 = base64.b64encode(png_data).decode("ascii")
+    print(f"  Using pre-rendered {label} for diagram {index}")
+    return f'<div class="mermaid-diagram"><img src="data:image/png;base64,{b64}" alt="Diagram {index}" /></div>'
+
+
 def render_mermaid(code: str, index: int) -> str:
     """Render a Mermaid diagram to PNG using mmdc CLI, with caching."""
+    # Use pre-rendered UML diagram for Actor ↔ Módulo (stick figures)
+    if "Actores Primarios" in code and "Módulos del Sistema" in code:
+        if ACTOR_DIAGRAM_PATH.exists():
+            return _embed_prerendered(ACTOR_DIAGRAM_PATH, index, "UML actor diagram")
+
+    # Use pre-rendered UML Use Case diagram (stick figures + ellipses)
+    if "CU_EDU_01" in code and "CU_SAB_01" in code and "CU_SAL_01" in code:
+        if USECASE_DIAGRAM_PATH.exists():
+            return _embed_prerendered(USECASE_DIAGRAM_PATH, index, "UML use case diagram")
+
     digest = hashlib.sha256(code.encode()).hexdigest()[:12]
     png_file = MERMAID_CACHE / f"diagram_{index}_{digest}.png"
 
@@ -150,7 +171,7 @@ CSS = """
 body {
     font-family: 'Noto Sans', 'DejaVu Sans', 'Liberation Sans', Arial, sans-serif;
     font-size: 12pt;
-    line-height: 2; /* APA v7: double spacing */
+    line-height: 1.5;
     color: #1a1a1a;
     text-align: justify;
     hyphens: auto;
@@ -169,15 +190,21 @@ body {
     height: 100vh;
     text-align: center;
     padding: 3cm 2cm;
-    background: linear-gradient(180deg, #1a3a2a 0%, #2d5a3d 40%, #1a3a2a 100%);
-    color: white;
+    background: white;
+    color: #1a1a1a;
+}
+
+.cover-page .cover-logo {
+    width: 200px;
+    height: auto;
+    margin-bottom: 30px;
 }
 
 .cover-page .cover-decoration {
-    width: 120px;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #c9a96e, transparent);
-    margin: 20px auto;
+    width: 200px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #0057b8, transparent);
+    margin: 16px auto;
     border-radius: 2px;
 }
 
@@ -186,8 +213,8 @@ body {
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
-    margin-top: 40px;
-    color: #e8d5b0;
+    margin-top: 10px;
+    color: #0057b8;
 }
 
 .cover-page h1 {
@@ -195,14 +222,14 @@ body {
     font-weight: 700;
     line-height: 1.2;
     margin: 30px 0 10px;
-    color: white;
+    color: #1a1a1a;
     letter-spacing: 1px;
 }
 
 .cover-page .subtitle {
     font-size: 16pt;
     font-weight: 400;
-    color: #c9a96e;
+    color: #0057b8;
     margin-bottom: 30px;
     font-style: italic;
 }
@@ -214,7 +241,7 @@ body {
 }
 
 .cover-page .meta-group .label {
-    color: #a0c4a0;
+    color: #0057b8;
     font-size: 10pt;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -222,14 +249,14 @@ body {
 }
 
 .cover-page .meta-group .value {
-    color: white;
+    color: #333;
     font-size: 12pt;
 }
 
 .cover-page .meta-group .authors {
     font-size: 13pt;
     font-weight: 700;
-    color: #f0e6d0;
+    color: #1a1a1a;
 }
 
 /* ── TOC ───────────────────────────────────────────────────────── */
@@ -251,10 +278,19 @@ body {
 }
 
 .toc-page li {
-    line-height: 1.8;
+    line-height: 1.6;
     border-bottom: 1px dotted #ccc;
-    padding: 2px 0;
+    padding: 1px 0;
     font-size: 11pt;
+}
+
+.toc-page li a {
+    color: #1a3a2a;
+    text-decoration: none;
+}
+
+.toc-page li a:hover {
+    text-decoration: underline;
 }
 
 .toc-page li.toc-h2 {
@@ -280,7 +316,7 @@ h1 {
     font-size: 22pt;
     font-weight: 700;
     text-align: center;
-    margin: 30pt 0 20pt;
+    margin: 18pt 0 10pt;
     color: #1a3a2a;
     page-break-after: avoid;
 }
@@ -289,18 +325,18 @@ h2 { /* APA Level 1: Centered, Bold */
     font-size: 16pt;
     font-weight: 700;
     text-align: center;
-    margin: 24pt 0 12pt;
+    margin: 16pt 0 8pt;
     color: #1a3a2a;
     page-break-after: avoid;
     border-bottom: 2px solid #2d5a3d;
-    padding-bottom: 6pt;
+    padding-bottom: 4pt;
 }
 
 h3 { /* APA Level 2: Flush Left, Bold */
     font-size: 13pt;
     font-weight: 700;
     text-align: left;
-    margin: 18pt 0 8pt;
+    margin: 12pt 0 6pt;
     color: #2d5a3d;
     page-break-after: avoid;
 }
@@ -310,7 +346,7 @@ h4 { /* APA Level 3: Flush Left, Bold Italic */
     font-weight: 700;
     font-style: italic;
     text-align: left;
-    margin: 14pt 0 6pt;
+    margin: 10pt 0 4pt;
     color: #3a6b4a;
     page-break-after: avoid;
 }
@@ -327,9 +363,9 @@ h5 { /* APA Level 4 */
 table {
     border-collapse: collapse;
     width: 100%;
-    margin: 12pt 0;
+    margin: 8pt 0;
     font-size: 9pt;
-    line-height: 1.4;
+    line-height: 1.3;
     page-break-inside: auto;
 }
 
@@ -363,12 +399,12 @@ tr:nth-child(even) td {
 
 /* ── Blockquotes (notes / callouts) ────────────────────────────── */
 blockquote {
-    margin: 12pt 0;
-    padding: 10pt 16pt;
+    margin: 6pt 0;
+    padding: 6pt 12pt;
     border-left: 4px solid #2d5a3d;
     background-color: #f0f5f0;
     font-size: 10pt;
-    line-height: 1.6;
+    line-height: 1.4;
     color: #333;
     font-style: italic;
     page-break-after: avoid;
@@ -407,7 +443,7 @@ pre code {
 /* ── Mermaid diagrams ──────────────────────────────────────────── */
 .mermaid-diagram {
     text-align: center;
-    margin: 16pt auto;
+    margin: 8pt auto;
     max-width: 100%;
     page-break-before: avoid;
 }
@@ -430,9 +466,9 @@ pre code {
 
 /* ── Lists ─────────────────────────────────────────────────────── */
 ul, ol {
-    margin: 8pt 0;
+    margin: 4pt 0;
     padding-left: 24pt;
-    line-height: 1.6;
+    line-height: 1.4;
 }
 
 li {
@@ -443,7 +479,7 @@ li {
 hr {
     border: none;
     border-top: 1px solid #ccc;
-    margin: 16pt 0;
+    margin: 8pt 0;
 }
 
 /* ── Strong / emphasis ─────────────────────────────────────────── */
@@ -490,15 +526,25 @@ h2:not(:first-of-type) {
 """
 
 
+def _logo_b64() -> str:
+    """Return the CENFOTEC logo as a base64 data URI."""
+    if LOGO_PATH.exists():
+        data = base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
+        return f"data:image/png;base64,{data}"
+    return ""
+
+
 def build_cover_page() -> str:
-    return """
+    logo_src = _logo_b64()
+    logo_tag = f'<img class="cover-logo" src="{logo_src}" alt="Universidad CENFOTEC" />' if logo_src else ''
+    return f"""
 <div class="cover-page">
-    <div class="university">Universidad CENFOTEC</div>
+    {logo_tag}
     <div class="cover-decoration"></div>
     <h1>Raíces Vivas</h1>
     <div class="subtitle">Sistema Integral de Apoyo a Comunidades Indígenas</div>
     <div class="cover-decoration"></div>
-    <div class="subtitle" style="font-size: 14pt; color: #e8d5b0; font-style: normal; font-weight: 700;">
+    <div class="subtitle" style="font-size: 14pt; color: #0057b8; font-style: normal; font-weight: 700;">
         Avance 2 — Diseño y Arquitectura:<br>Casos de Uso
     </div>
     <div class="meta-group">
@@ -514,31 +560,47 @@ def build_cover_page() -> str:
         <div class="value">Johnny Marín Sánchez</div>
         <div style="height: 10px"></div>
         <div class="label">Fecha</div>
-        <div class="value">Marzo de 2026</div>
+        <div class="value">Abril de 2026</div>
     </div>
 </div>
 """
 
 
-def build_toc(html_body: str) -> str:
-    """Generate a Table of Contents from h2/h3/h4 headings."""
-    heading_pattern = re.compile(r'<(h[234])[^>]*>(.*?)</\1>', re.DOTALL)
+def build_toc(html_body: str) -> tuple[str, str]:
+    """Generate a Table of Contents from h2/h3/h4 headings with anchor links."""
+    heading_pattern = re.compile(r'<(h[234])([^>]*)>(.*?)</\1>', re.DOTALL)
     entries = []
+    counter = 0
+    new_body = html_body
     for match in heading_pattern.finditer(html_body):
         level = match.group(1)
-        text = re.sub(r'<[^>]+>', '', match.group(2)).strip()
+        attrs = match.group(2)
+        inner = match.group(3)
+        text = re.sub(r'<[^>]+>', '', inner).strip()
         if text and text != "Tabla de Contenido":
-            entries.append((level, text))
+            counter += 1
+            anchor_id = f"sec-{counter}"
+            # Inject id into the heading if not already present
+            if 'id=' not in attrs:
+                old_tag = match.group(0)
+                new_tag = f'<{level} id="{anchor_id}"{attrs}>{inner}</{level}>'
+                new_body = new_body.replace(old_tag, new_tag, 1)
+            else:
+                # Extract existing id
+                id_match = re.search(r'id="([^"]+)"', attrs)
+                if id_match:
+                    anchor_id = id_match.group(1)
+            entries.append((level, text, anchor_id))
 
     if not entries:
-        return ""
+        return "", html_body
 
     lines = ['<div class="toc-page">', '<h2>Tabla de Contenido</h2>', '<ul>']
-    for level, text in entries:
+    for level, text, anchor_id in entries:
         css_class = f"toc-{level}"
-        lines.append(f'<li class="{css_class}">{text}</li>')
+        lines.append(f'<li class="{css_class}"><a href="#{anchor_id}">{text}</a></li>')
     lines.extend(['</ul>', '</div>'])
-    return "\n".join(lines)
+    return "\n".join(lines), new_body
 
 
 # ── Main conversion ──────────────────────────────────────────────
@@ -577,8 +639,8 @@ def main():
     )
     html_body = md.convert(content)
 
-    # 6. Build TOC
-    toc_html = build_toc(html_body)
+    # 6. Build TOC (also injects anchor ids into headings)
+    toc_html, html_body = build_toc(html_body)
 
     # 7. Assemble full HTML
     cover = build_cover_page()

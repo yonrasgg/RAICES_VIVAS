@@ -38,12 +38,12 @@ type: doughnut
 labels: [Done, In Progress, Todo, Review, Blocked]
 series:
   - title: Estado de Tareas
-    data: [20, 2, 20, 0, 0]
+    data: [42, 0, 0, 0, 0]
 width: 50%
 labelColors: true
 ```
 
-> *Gráfico de referencia actualizado 2026-03-28. Sprint-01 completo (20/20). Sprint-02 en progreso (0/22 done, 2 in-progress, 20 todo). La tabla dinámica abajo siempre está actualizada.*
+> *Gráfico de referencia actualizado 2026-03-29. Sprint-01 completo (20/20). Sprint-02 completo (22/22). La tabla dinámica abajo siempre está actualizada.*
 
 ```sqlseal
 SELECT
@@ -72,7 +72,7 @@ width: 50%
 labelColors: true
 ```
 
-> *Distribución total de tareas (Sprint-01 + Sprint-02). Actualizado 2026-03-28.*
+> *Distribución total de tareas (Sprint-01 + Sprint-02). Actualizado 2026-03-29.*
 
 ### 3.2 Horas por Integrante (Bar Chart)
 
@@ -81,16 +81,16 @@ type: bar
 labels: [Geovanny, Elkin, Santiago]
 series:
   - title: Horas Planificadas
-    data: [45, 27, 29]
+    data: [80, 56, 59]
   - title: Horas Completadas
-    data: [51, 28, 29]
+    data: [86, 57, 59]
 width: 70%
 labelColors: true
 fill: true
 beginAtZero: true
 ```
 
-> *Solo tareas con status=done. Sprint-01 completo. Sprint-02 aún en progreso. La tabla dinámica abajo siempre está actualizada. Actualizado 2026-03-28.*
+> *Solo tareas con status=done. Sprint-01 y Sprint-02 completos (42/42). La tabla dinámica abajo siempre está actualizada. Actualizado 2026-03-29.*
 
 ### 3.3 Detalle Dinámico por Responsable
 
@@ -233,8 +233,8 @@ flowchart LR
 |-----------|--------|--------------------------|
 | **Define** | ✅ Completada | Charter, Alcance, Stakeholders, Equipo definidos |
 | **Measure** | ✅ Completada | RTM, métricas baseline, requerimientos priorizados |
-| **Analyze** | 🔄 En curso | Riesgos identificados (RSK-001..006), ADRs (ADR-001..006) |
-| **Improve** | 🔄 En curso | Sprints 1-2 completados · Sprint 3+ pendiente |
+| **Analyze** | ✅ Completada | Riesgos identificados (RSK-001..014), ADRs (ADR-001..017) |
+| **Improve** | 🔄 En curso | Sprint 01–02 completados (42/42) · Sprint 03–05 pendiente |
 | **Control** | 🔄 Continuo | Dashboards, QA checks, Linter, RTM dinámica |
 
 ---
@@ -250,7 +250,7 @@ series:
   - title: Planificadas
     data: [20, 22, 0, 0, 0]
   - title: Completadas
-    data: [20, 0, 0, 0, 0]
+    data: [20, 22, 0, 0, 0]
 width: 80%
 labelColors: true
 fill: false
@@ -315,7 +315,7 @@ SELECT
   status as "Estado",
   owner as "Responsable"
 FROM files
-WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND name LIKE 'RSK%'
 ORDER BY severity DESC
 ```
 
@@ -357,14 +357,14 @@ type: bar
 labels: [Geovanny, Elkin, Santiago]
 series:
   - title: Costo (miles ₡)
-    data: [434, 182, 189]
+    data: [731, 370, 384]
 width: 60%
 labelColors: true
 fill: true
 beginAtZero: true
 ```
 
-> *Solo tareas done. Geovanny: 51h×₡8500=₡433,500. Elkin: 28h×₡6500=₡182,000. Santiago: 29h×₡6500=₡188,500. Actualizado 2026-03-28.*
+> *Solo tareas done. Sprint-01 + Sprint-02 completos. Actualizado 2026-03-29.*
 
 ---
 

@@ -29,7 +29,7 @@ SELECT
   SUM(CASE WHEN status = 'superseded' THEN 1 ELSE 0 END) as "🔀 Superseded",
   SUM(CASE WHEN status = 'deprecated' THEN 1 ELSE 0 END) as "⛔ Deprecated"
 FROM files
-WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND name LIKE 'ADR%'
 ```
 
 ---
@@ -47,7 +47,7 @@ SELECT
   source AS "Origen",
   date AS "Fecha"
 FROM files
-WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND name LIKE 'ADR%'
 ORDER BY name ASC
 ```
 
@@ -59,7 +59,7 @@ ORDER BY name ASC
 ```sqlseal
 SELECT name AS "Decisión", title AS "Título"
 FROM files
-WHERE type = 'adr' AND category = 'tecnología' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND category = 'tecnología' AND name LIKE 'ADR%'
 ORDER BY name ASC
 ```
 
@@ -67,7 +67,7 @@ ORDER BY name ASC
 ```sqlseal
 SELECT name AS "Decisión", title AS "Título"
 FROM files
-WHERE type = 'adr' AND category = 'proceso' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND category = 'proceso' AND name LIKE 'ADR%'
 ORDER BY name ASC
 ```
 
@@ -75,7 +75,7 @@ ORDER BY name ASC
 ```sqlseal
 SELECT name AS "Decisión", title AS "Título"
 FROM files
-WHERE type = 'adr' AND category = 'diseño' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND category = 'diseño' AND name LIKE 'ADR%'
 ORDER BY name ASC
 ```
 
@@ -83,7 +83,7 @@ ORDER BY name ASC
 ```sqlseal
 SELECT name AS "Decisión", title AS "Título"
 FROM files
-WHERE type = 'adr' AND category = 'arquitectura' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND category = 'arquitectura' AND name LIKE 'ADR%'
 ORDER BY name ASC
 ```
 
@@ -91,7 +91,7 @@ ORDER BY name ASC
 ```sqlseal
 SELECT name AS "Decisión", title AS "Título"
 FROM files
-WHERE type = 'adr' AND category = 'gobernanza' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND category = 'gobernanza' AND name LIKE 'ADR%'
 ORDER BY name ASC
 ```
 
@@ -128,7 +128,7 @@ SELECT
   title AS "Decisión",
   related_risks AS "Riesgos Vinculados"
 FROM files
-WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND name LIKE 'ADR%'
   AND related_risks IS NOT NULL AND related_risks != ''
 ORDER BY name ASC
 ```
@@ -144,7 +144,7 @@ SELECT
   date AS "Fecha",
   status AS "Estado"
 FROM files
-WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND name LIKE 'ADR%'
 ORDER BY date ASC
 ```
 

@@ -17,8 +17,8 @@ tags:
 SELECT
   SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' THEN 1 ELSE 0 END) || '/' || SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' THEN 1 ELSE 0 END) || ' (' || ROUND(100.0 * SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' THEN 1 ELSE 0 END) / MAX(1, SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' THEN 1 ELSE 0 END))) || '%)' as "🎯 Progreso",
   SUM(CASE WHEN type='requirement/functional' AND path LIKE '03-Requerimientos%' THEN 1 ELSE 0 END) || ' RF · ' || SUM(CASE WHEN type='requirement/non-functional' AND path LIKE '03-Requerimientos%' THEN 1 ELSE 0 END) || ' RNF' as "📋 Reqs",
-  SUM(CASE WHEN type='risk' AND path LIKE '01-Proyecto/Riesgos%' AND status='open' THEN 1 ELSE 0 END) || ' / ' || SUM(CASE WHEN type='risk' AND path LIKE '01-Proyecto/Riesgos%' THEN 1 ELSE 0 END) as "⚠️ Riesgos (abiertos/total)",
-  SUM(CASE WHEN type='adr' AND path LIKE '01-Proyecto/Decisiones%' AND status='accepted' THEN 1 ELSE 0 END) || ' / ' || SUM(CASE WHEN type='adr' AND path LIKE '01-Proyecto/Decisiones%' THEN 1 ELSE 0 END) as "🏗️ ADR (aceptadas/total)",
+  SUM(CASE WHEN type='risk' AND name LIKE 'RSK%' AND status='open' THEN 1 ELSE 0 END) || ' / ' || SUM(CASE WHEN type='risk' AND name LIKE 'RSK%' THEN 1 ELSE 0 END) as "⚠️ Riesgos (abiertos/total)",
+  SUM(CASE WHEN type='adr' AND name LIKE 'ADR%' AND status='accepted' THEN 1 ELSE 0 END) || ' / ' || SUM(CASE WHEN type='adr' AND name LIKE 'ADR%' THEN 1 ELSE 0 END) as "🏗️ ADR (aceptadas/total)",
   SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='blocked' THEN 1 ELSE 0 END) as "🚫 Bloqueadas"
 FROM files
 ```
@@ -462,7 +462,7 @@ LIMIT 10
 ```sqlseal
 SELECT name as "ID", title as "Riesgo", probability as "Prob.", impact as "Impacto", severity as "Severidad", owner as "Responsable", status as "Estado"
 FROM files
-WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND name LIKE 'RSK%'
 ORDER BY severity DESC
 ```
 
@@ -473,7 +473,7 @@ ORDER BY severity DESC
 ```sqlseal
 SELECT name as "ID", title as "Decisión", status as "Estado", "date" as "Fecha"
 FROM files
-WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND name LIKE 'ADR%'
 ORDER BY name ASC
 ```
 

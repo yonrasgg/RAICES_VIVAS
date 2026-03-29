@@ -31,7 +31,7 @@ SELECT
   SUM(CASE WHEN severity = 'crítico' THEN 1 ELSE 0 END) as "🔥 Crítico",
   SUM(CASE WHEN severity = 'alto' THEN 1 ELSE 0 END) as "🟠 Alto"
 FROM files
-WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND name LIKE 'RSK%'
 ```
 
 ---
@@ -49,7 +49,7 @@ SELECT
   source AS "Origen",
   review_date AS "Próxima Revisión"
 FROM files
-WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND name LIKE 'RSK%'
 ORDER BY name ASC
 ```
 
@@ -67,7 +67,7 @@ SELECT
   owner AS "Responsable",
   strategy AS "Estrategia"
 FROM files
-WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND name LIKE 'RSK%'
   AND (status = 'open' OR status = 'accepted')
 ORDER BY severity DESC
 ```
@@ -83,7 +83,7 @@ SELECT
   status AS "Estado",
   severity AS "Severidad"
 FROM files
-WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND name LIKE 'RSK%'
   AND (status = 'mitigated' OR status = 'closed')
 ORDER BY name ASC
 ```
@@ -96,7 +96,7 @@ ORDER BY name ASC
 ```sqlseal
 SELECT name AS "Riesgo", title AS "Título"
 FROM files
-WHERE type = 'risk' AND category = 'técnico' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND category = 'técnico' AND name LIKE 'RSK%'
 ORDER BY name ASC
 ```
 
@@ -104,7 +104,7 @@ ORDER BY name ASC
 ```sqlseal
 SELECT name AS "Riesgo", title AS "Título"
 FROM files
-WHERE type = 'risk' AND category = 'recurso' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND category = 'recurso' AND name LIKE 'RSK%'
 ORDER BY name ASC
 ```
 
@@ -112,7 +112,7 @@ ORDER BY name ASC
 ```sqlseal
 SELECT name AS "Riesgo", title AS "Título"
 FROM files
-WHERE type = 'risk' AND category = 'calidad' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND category = 'calidad' AND name LIKE 'RSK%'
 ORDER BY name ASC
 ```
 
@@ -120,7 +120,7 @@ ORDER BY name ASC
 ```sqlseal
 SELECT name AS "Riesgo", title AS "Título"
 FROM files
-WHERE type = 'risk' AND category = 'calendario' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND category = 'calendario' AND name LIKE 'RSK%'
 ORDER BY name ASC
 ```
 
@@ -139,7 +139,7 @@ ORDER BY name ASC
 | [[RSK-007]] | Complejidad módulo SAB (saberes + CARE) | [[MIN-002]], [[MIN-004]] | Abierto |
 | [[RSK-008]] | Datos simulados no reflejan realidad territorial | [[MIN-002]], [[MIN-003]], [[MIN-004]] | Abierto |
 | [[RSK-009]] | 7 territorios sin conectividad estable | [[MIN-004]] | Abierto |
-| [[RSK-010]] | Plazo ajustado para Avance 2 | [[MIN-003]] | Abierto |
+| [[RSK-010]] | Plazo ajustado para Avance 2 | [[MIN-003]] | Cerrado |
 | [[RSK-011]] | 32 SP ambiciosos con carga académica | [[MIN-005]] | Abierto |
 | [[RSK-012]] | Sync engine — mayor riesgo técnico | [[MIN-005]] | Abierto |
 | [[RSK-013]] | Coordinación logística CONAI para entrevistas | [[MIN-005]] | Abierto |
@@ -155,7 +155,7 @@ SELECT
   title AS "Riesgo",
   related_decisions AS "ADRs Vinculados"
 FROM files
-WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND name LIKE 'RSK%'
   AND related_decisions IS NOT NULL AND related_decisions != ''
 ORDER BY name ASC
 ```

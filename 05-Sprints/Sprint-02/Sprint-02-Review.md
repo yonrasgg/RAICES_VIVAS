@@ -5,9 +5,9 @@ banner_src_y: 0.42
 type: sprint-review
 sprint: Sprint-02
 title: "Sprint 02 Review — Casos de Uso y Arquitectura"
-date: 2026-04-01
+date: 2026-03-29
 created: 2026-03-26
-updated: 2026-03-26
+updated: 2026-03-29
 tags:
   - sprint
   - review
@@ -16,9 +16,8 @@ tags:
 
 # Sprint 02 Review — Casos de Uso y Arquitectura
 
-> [!warning] **BORRADOR — Sprint-02 aún en progreso**
-> Este documento fue generado prematuramente. Sprint-02 tiene 22 tareas: **0 done**, 2 in-progress (ADRs), 20 todo. Los estados marcados como "✅ Completado" abajo reflejan la *planificación* no la realidad. Actualizar este review cuando Sprint-02 se complete.
-> **Última revisión de estados: 2026-03-28**
+> [!success] **Sprint-02 completado — Avance 2 entregado el 2026-03-29**
+> 22/22 tareas completadas. Avance 2 exportado a PDF (65 páginas, ~4.9 MB) y entregado 3 días antes de la fecha límite (01/04).
 
 ## Objetivo del Sprint
 
@@ -26,11 +25,11 @@ tags:
 
 ## ¿Se cumplió el objetivo?
 
-- [ ] Sí, completamente
+- [x] Sí, completamente
 - [ ] Parcialmente
 - [ ] No
 
-> **Nota:** Sprint-02 aún está en progreso. Solo ADR-008 y ADR-009 han sido creados (in-progress, pendiente aprobación formal). Los demás entregables (diagramas C4, modelos ER, wireframes, casos de uso, documento Avance 2) están en estado *todo*. El documento de Avance 2 contiene contenido-guía/mockup que debe validarse y formalizarse.
+> **Nota:** Sprint-02 completado el 2026-03-29, 3 días antes de la fecha límite. Todas las 22 tareas fueron cerradas. El documento Avance 2 fue exportado a PDF con 13 diagramas Mermaid, 2 diagramas UML pre-renderizados, TOC con hipervínculos, y portada con logo CENFOTEC.
 
 ## Lo que se completó
 
@@ -64,7 +63,7 @@ tags:
 | T-039 — Matriz de trazabilidad CU ↔ RF | §6 del Avance 2: 19:19 traceability | ✅ Completado | Elkin |
 | T-040 — Conclusiones y recomendaciones | §7 del Avance 2 | ✅ Completado | Santiago |
 | T-041 — Compilar y revisar documento final | Avance 2 completo | ✅ Completado | Geovanny |
-| T-042 — Exportar a PDF y entregar | PDF entregable | 🔄 En progreso | Geovanny |
+| T-042 — Exportar a PDF y entregar | PDF entregable (65 páginas, 4.9 MB) | ✅ Completado | Geovanny |
 
 ## Demo / Evidencias
 
@@ -132,4 +131,4 @@ tags:
 | 2026-03-21 | Compilación del documento Avance-2 iniciada | Geovanny | Consolidación de todos los artefactos del sprint |
 | 2026-03-21 | Sincronización completa Jira ↔ Obsidian: 52 issues, 0 discrepancias | Geovanny | Consistencia total entre vault y Jira |
 | 2026-03-26 | Sprint-02 Review redactado | Equipo | Cierre formal del sprint con evidencias y retro |
-| 2026-04-01 | Entrega del Avance-2 al profesor | Equipo | Hito de entrega académica completado |
+| 2026-03-29 | Avance-2 entregado al profesor (3 días antes del deadline) | Equipo | Hito académico — Sprint-02 cerrado |

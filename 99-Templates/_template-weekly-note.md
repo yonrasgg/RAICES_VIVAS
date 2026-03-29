@@ -89,7 +89,7 @@ SELECT
   SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' AND completed >= @week_start AND completed <= @week_end THEN 1 ELSE 0 END) as "✅ Semana",
   SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND (status='in-progress' OR status='review') THEN 1 ELSE 0 END) as "🔄 En curso",
   SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='blocked' THEN 1 ELSE 0 END) as "🚫 Bloqueadas",
-  SUM(CASE WHEN type='adr' AND path LIKE '01-Proyecto/Decisiones%' AND "date" >= @week_start AND "date" <= @week_end THEN 1 ELSE 0 END) as "🏗️ ADR",
+  SUM(CASE WHEN type='adr' AND name LIKE 'ADR%' AND "date" >= @week_start AND "date" <= @week_end THEN 1 ELSE 0 END) as "🏗️ ADR",
   SUM(CASE WHEN type='meeting' AND path LIKE '07-Reuniones%' AND "date" >= @week_start AND "date" <= @week_end THEN 1 ELSE 0 END) as "📝 Reuniones",
   SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' THEN 1 ELSE 0 END) || '/' || SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' THEN 1 ELSE 0 END) || ' (' || ROUND(100.0 * SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' AND status='done' THEN 1 ELSE 0 END) / MAX(1, SUM(CASE WHEN (type='task' OR type='subtask') AND path LIKE '05-Sprints%' THEN 1 ELSE 0 END))) || '%)' as "📈 Progreso"
 FROM files
@@ -102,7 +102,7 @@ FROM files
 ```sqlseal
 SELECT name AS "ID", title AS "Riesgo", severity AS "Severidad", status AS "Estado"
 FROM files
-WHERE type = 'risk' AND status = 'open' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND status = 'open' AND name LIKE 'RSK%'
 ORDER BY severity DESC
 ```
 

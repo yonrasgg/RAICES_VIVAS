@@ -66,7 +66,7 @@ WHERE (type = 'task' OR type = 'subtask') AND path LIKE '05-Sprints%'
 ```sqlseal
 SELECT name AS "ID", title AS "Riesgo", severity AS "Severidad", status AS "Estado"
 FROM files
-WHERE type = 'risk' AND status = 'open' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND status = 'open' AND name LIKE 'RSK%'
 ORDER BY severity DESC
 ```
 

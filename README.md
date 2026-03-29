@@ -30,11 +30,12 @@ Todo el trabajo se enmarca dentro de las comunidades indígenas de Costa Rica, a
 
 ## 🧩 Módulos del Sistema
 
-| Módulo | Código | Descripción |
-|--------|--------|-------------|
-| **Educativo** | `EDU` | Apoyo educativo bilingüe e intercultural. Gestión de contenidos curriculares adaptados, seguimiento estudiantil y herramientas para docentes en territorios indígenas. |
-| **Saberes Ancestrales** | `SAB` | Documentación, preservación y transmisión de conocimiento tradicional. Registro de prácticas, medicina tradicional, historias orales y artesanías. |
-| **Salud Comunitaria** | `SAL` | Gestión básica de registros de salud, citas médicas, seguimiento de pacientes y coordinación con servicios itinerantes en comunidades remotas. |
+| Módulo | Código | RF | CU | Descripción |
+|--------|--------|----|----|-------------|
+| **Educativo** | `EDU` | 7 | 7 | Apoyo educativo bilingüe e intercultural. Gestión de contenidos curriculares adaptados, seguimiento estudiantil y herramientas para docentes en territorios indígenas. |
+| **Saberes Ancestrales** | `SAB` | 7 | 6 | Documentación, preservación y transmisión de conocimiento tradicional. Registro de prácticas, medicina tradicional, historias orales y artesanías. |
+| **Salud Comunitaria** | `SAL` | 6 | 7 | Gestión básica de registros de salud, citas médicas, seguimiento de pacientes y coordinación con servicios itinerantes en comunidades remotas. |
+| **Transversal** | `TRANS` | 3 | 3 | Funcionalidades compartidas entre módulos: autenticación, auditoría, configuración multilingüe y sincronización offline. |
 
 ---
 
@@ -161,8 +162,8 @@ RAICES_VIVAS/
 │   ├── Onboarding.md              Guía paso a paso para nuevos integrantes
 │   ├── Glosario.md                Terminología del proyecto
 │   ├── Propuesta de Gestión.md    Propuesta inicial del plan de proyecto
-│   ├── Decisiones/                Registros de decisiones (ADR)
-│   └── Riesgos/                   Registro y seguimiento de riesgos
+│   ├── Decisiones/                ADR-001 a ADR-017 (17 registros de decisión)
+│   └── Riesgos/                   RSK-001 a RSK-014 (14 riesgos identificados)
 │
 ├── 02-Investigación/          ← Investigación y contexto
 │   ├── Contexto/                  Documentos de contexto sociocultural
@@ -178,11 +179,12 @@ RAICES_VIVAS/
 ├── 03-Requerimientos/         ← Especificación de requerimientos
 │   ├── _RTM.md                    Matriz de Trazabilidad (RTM)
 │   ├── Funcionales/
-│   │   ├── EDU/                       RF-EDU-01 a RF-EDU-06
-│   │   ├── SAB/                       RF-SAB-01 a RF-SAB-05
-│   │   └── SAL/                       RF-SAL-01 a RF-SAL-05
+│   │   ├── EDU/                       RF-EDU-01 a RF-EDU-07 (7 requerimientos)
+│   │   ├── SAB/                       RF-SAB-01 a RF-SAB-07 (7 requerimientos)
+│   │   ├── SAL/                       RF-SAL-01 a RF-SAL-06 (6 requerimientos)
+│   │   └── TRANS/                     RF-TRANS-01 a RF-TRANS-03 (3 requerimientos)
 │   └── No Funcionales/
-│       └── RF-TRANS-01 a RF-TRANS-03           Rendimiento, seguridad, usabilidad...
+│       └── RNF-01 a RNF-04                    Rendimiento, seguridad, usabilidad, accesibilidad
 │
 ├── 04-Arquitectura/           ← Diseño y arquitectura
 │   ├── Visión General.md          Arquitectura de alto nivel
@@ -194,29 +196,31 @@ RAICES_VIVAS/
 │
 ├── 05-Sprints/                ← Ejecución ágil + Jerarquía Jira
 │   ├── Backlog.md                 Backlog del producto (tablero Kanban)
-│   ├── Epics/                     Notas de Epics vinculados a Jira (RV-1, RV-2, RV-3)
-│   ├── Stories/                   Notas de User Stories vinculadas a Jira (RV-4..RV-9)
+│   ├── Epics/                     Epics: RV-1, RV-2, RV-3, EPIC-TRANS
+│   ├── Stories/                   User Stories: RV-4→RV-9, RV-55→RV-64, US-* (23 stories)
 │   ├── Sprint-01/                 Sprint 1 (cerrado): 20 tareas → Done
-│   ├── Sprint-02/                 Sprint 2 (activo): 11 issues → To Do
-│   ├── Sprint-03/                 (planificado)
+│   ├── Sprint-02/                 Sprint 2 (cerrado): 22 tareas (T-021→T-042) + Review
+│   ├── Sprint-03/                 Sprint 3 (planificado)
 │   ├── Sprint-04/                 (planificado)
 │   └── Sprint-05/                 (planificado)
 │
 ├── 06-Entregables/            ← Documentos de entrega
-│   ├── Avance-1/                  Primer avance del proyecto
-│   ├── Avance-2/                  Segundo avance
+│   ├── Avance-1/                  Primer avance: Propuesta del proyecto
+│   ├── Avance-2/                  Segundo avance: Diseño y Arquitectura (PDF + HTML)
 │   └── Presentaciones/            Slides y material de presentación
 │
 ├── 07-Reuniones/              ← Minutas de reunión
-│   └── MIN-001.md                 Minuta de ejemplo
+│   └── MIN-001 a MIN-005          5 minutas de reuniones del equipo
 │
 ├── 08-Recursos/               ← Recursos del proyecto
 │   ├── Datos/                     Datasets y datos de referencia
-│   ├── Imágenes/                  Covers, diagramas, capturas
+│   ├── Imágenes/                  29 archivos: covers, logos, diagramas UML pre-renderizados
 │   ├── PDFs/                      Documentos de referencia
 │   └── scripts/                   Scripts de automatización
+│       ├── md_to_pdf.py               Pipeline MD→PDF (WeasyPrint + Mermaid + UML)
 │       ├── generate_covers.py         Generador de banners del vault
-│       └── generate_covers.py         Generador de imágenes de portada
+│       ├── extract-frontmatter-to-csv.py  Extractor de frontmatter a CSV
+│       └── setup-hooks.sh             Configuración de Git hooks
 │
 ├── 09-QA/                     ← Control de calidad
 │   └── README.md                  Lineamientos de QA
@@ -235,9 +239,9 @@ RAICES_VIVAS/
 │   ├── _template-weekly-note.md
 │   └── ... (variantes from-minuta)
 │
-└── Daily Notes/               ← Notas semanales de seguimiento
-    ├── 2026-W09.md
-    └── 2026-W10.md
+└── Daily Notes/               ← Notas diarias y semanales de seguimiento
+    ├── 2026-03-01 … 2026-03-21    9 notas diarias
+    └── 2026-W09 … 2026-W12        4 notas semanales
 ```
 
 ---
@@ -246,13 +250,46 @@ RAICES_VIVAS/
 
 El proyecto se gestiona con un enfoque **ágil adaptado** para contexto académico:
 
-- **5 sprints** de duración variable
+- **5 sprints** de duración variable (2 completados, 3 planificados)
+- **4 módulos** funcionales: EDU, SAB, SAL, TRANS
+- **23 casos de uso** documentados con notación UML
+- **23 requerimientos funcionales** + **4 no funcionales**
 - **Backlog** priorizado con MoSCoW
-- **Daily/Weekly notes** para seguimiento
-- **Minutas** de cada reunión de equipo
-- **Decisiones** documentadas como ADR (Architecture Decision Records)
-- **Riesgos** gestionados con probabilidad, impacto y estrategias de mitigación
+- **Daily/Weekly notes** para seguimiento (9 diarias + 4 semanales)
+- **5 minutas** de reuniones de equipo
+- **17 ADRs** (Architecture Decision Records)
+- **14 riesgos** gestionados con probabilidad, impacto y estrategias de mitigación
 - **RTM** (Requirements Traceability Matrix) para trazabilidad completa
+
+---
+
+## 📄 Pipeline de Generación de PDF (Avance 2)
+
+El documento **Avance 2 — Diseño y Arquitectura** se genera automáticamente desde Markdown:
+
+```bash
+source .venv/bin/activate
+python 08-Recursos/scripts/md_to_pdf.py
+```
+
+**Stack de generación:**
+
+| Componente | Versión | Función |
+|---|---|---|
+| WeasyPrint | 68.1 | Renderizado HTML → PDF con CSS paged media |
+| Mermaid CLI | 11.12.0 | 11 diagramas renderizados como PNG (@scale 4) |
+| CairoSVG | 2.9.0 | 2 diagramas UML pre-renderizados (SVG → PNG) |
+| Python Markdown | — | Conversión MD → HTML con extensiones |
+
+**Características del PDF:**
+
+- 📑 ~65 páginas, ~4.9 MB
+- 🗂️ Tabla de contenido con hipervínculos de navegación
+- 📊 13 diagramas Mermaid (ER, flujo, arquitectura, Ishikawa, QFD…)
+- 🎭 2 diagramas UML con stick figures (Actores ↔ Módulos, Casos de Uso)
+- 🏛️ Portada con logo CENFOTEC
+- 📐 CSS optimizado para impresión APA con control de page-breaks
+- 📎 Anexos Lean Six Sigma: FODA, Ishikawa, QFD, DMAIC
 
 ---
 
@@ -283,6 +320,29 @@ El proyecto se gestiona con un enfoque **ágil adaptado** para contexto académi
       </a>
       <br/>
       <sub>Repositorio remoto, sincronización del equipo, backup en la nube</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="150">
+      <a href="https://weasyprint.org/">
+        <strong>🖨️ WeasyPrint</strong>
+      </a>
+      <br/>
+      <sub>Generación de PDF desde HTML/CSS con paged media</sub>
+    </td>
+    <td align="center" width="150">
+      <a href="https://mermaid.js.org/">
+        <strong>🧜 Mermaid</strong>
+      </a>
+      <br/>
+      <sub>Diagramas ER, flujo, arquitectura, Gantt renderizados como PNG</sub>
+    </td>
+    <td align="center" width="150">
+      <a href="https://www.atlassian.com/software/jira">
+        <strong>📋 Jira</strong>
+      </a>
+      <br/>
+      <sub>Gestión de sprints, epics, stories y tareas sincronizadas con Obsidian</sub>
     </td>
   </tr>
 </table>

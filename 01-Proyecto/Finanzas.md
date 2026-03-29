@@ -139,20 +139,20 @@ type: bar
 labels: [Sprint-01, Sprint-02]
 series:
   - title: Geovanny (₡K)
-    data: [434, 0]
+    data: [434, 297]
   - title: Elkin (₡K)
-    data: [182, 0]
+    data: [182, 188]
   - title: Santiago (₡K)
-    data: [189, 0]
+    data: [189, 195]
   - title: Equipo (₡K)
-    data: [43, 0]
+    data: [43, 78]
 width: 70%
 labelColors: true
 fill: true
 beginAtZero: true
 ```
 
-> *Costos en miles de colones (₡). Solo tareas con status=done. Sprint-02 aún sin tareas completadas. Actualizado 2026-03-28.*
+> *Costos en miles de colones (₡). Sprint-01 y Sprint-02 completos (42/42 tareas done). Actualizado 2026-03-29.*
 
 ### 2.5 Indicadores Financieros (Dinámico)
 

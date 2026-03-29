@@ -28,13 +28,13 @@ kanban-plugin: basic
 
 ## 🔄 En Progreso
 
-- [ ] [[05-Sprints/Sprint-02/T-042|T-042: Exportar PDF y entregar Avance 2]] @Geovanny 📅 2026-04-01
 
 ## 👀 En Revisión
 
 
 ## ✅ Completado (Sprint 02 — Casos de Uso)
 
+- [x] [[05-Sprints/Sprint-02/T-042|T-042: Exportar PDF y entregar Avance 2]] @Geovanny ✅ 2026-03-29
 - [x] [[05-Sprints/Sprint-02/T-032|T-032: Clasificar actores del sistema]] @Geovanny ✅ 2026-03-28
 - [x] [[05-Sprints/Sprint-02/T-033|T-033: Lista general de 23 casos de uso]] @Elkin ✅ 2026-03-28
 - [x] [[05-Sprints/Sprint-02/T-034|T-034: Documentar CU-EDU-01 y CU-EDU-03]] @Geovanny ✅ 2026-03-29

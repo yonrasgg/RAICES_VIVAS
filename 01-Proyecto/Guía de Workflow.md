@@ -1365,7 +1365,7 @@ flowchart TD
 ```sqlseal
 SELECT name AS "ID", title AS "Título", status AS "Estado", category AS "Categoría", impact AS "Impacto", "date" AS "Fecha"
 FROM files
-WHERE type = 'adr' AND path LIKE '01-Proyecto/Decisiones%'
+WHERE type = 'adr' AND name LIKE 'ADR%'
 ORDER BY name ASC
 ```
 
@@ -1439,7 +1439,7 @@ flowchart TD
 ```sqlseal
 SELECT name AS "ID", title AS "Título", severity AS "Severidad", status AS "Estado", owner AS "Owner", review_date AS "Revisión"
 FROM files
-WHERE type = 'risk' AND path LIKE '01-Proyecto/Riesgos%'
+WHERE type = 'risk' AND name LIKE 'RSK%'
 ORDER BY
   CASE severity WHEN 'crítico' THEN 0 WHEN 'alto' THEN 1 WHEN 'medio' THEN 2 ELSE 3 END ASC
 ```
