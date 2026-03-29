@@ -414,7 +414,10 @@ pre code {
 
 .mermaid-diagram img {
     max-width: 100%;
+    max-height: 580pt;
     height: auto;
+    width: auto;
+    object-fit: contain;
 }
 
 .mermaid-fallback {

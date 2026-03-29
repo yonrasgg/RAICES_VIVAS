@@ -1816,11 +1816,7 @@ graph LR
 ### D.1 Diagrama de Ishikawa
 
 ```mermaid
-flowchart LR
-    subgraph EFECTO
-        E["⚠️ Baja adopción del<br/>sistema por comunidades"]
-    end
-
+flowchart TB
     subgraph METODO["🔧 Método"]
         M1["Flujos de consentimiento<br/>no validados presencialmente"]
         M2["Proceso de onboarding<br/>sin protocolo estandarizado"]
@@ -1857,24 +1853,12 @@ flowchart LR
         ME3["Tiempo de tarea<br/>(RNF-03: ≤2min)<br/>no validado con usuarios"]
     end
 
-    M1 --> E
-    M2 --> E
-    M3 --> E
-    MA1 --> E
-    MA2 --> E
-    MA3 --> E
-    MO1 --> E
-    MO2 --> E
-    MO3 --> E
-    MT1 --> E
-    MT2 --> E
-    MT3 --> E
-    MD1 --> E
-    MD2 --> E
-    MD3 --> E
-    ME1 --> E
-    ME2 --> E
-    ME3 --> E
+    METODO --> E["⚠️ Baja adopción del<br/>sistema por comunidades"]
+    MAQUINA --> E
+    MANO --> E
+    MATERIAL --> E
+    MEDIO --> E
+    MEDICION --> E
 ```
 
 ### D.2 Causas Priorizadas (Pareto)
