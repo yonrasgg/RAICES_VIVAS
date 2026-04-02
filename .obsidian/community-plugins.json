@@ -22,5 +22,6 @@
   "drawio-obsidian",
   "jira-sync",
   "sqlseal",
-  "sqlseal-charts"
+  "sqlseal-charts",
+  "obsidian-leaflet-plugin"
 ]
