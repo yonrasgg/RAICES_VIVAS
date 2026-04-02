@@ -1,7 +1,4 @@
 ---
-banner_src: "08-Recursos/Imágenes/cover-arquitectura.png"
----
----
 type: document
 title: "Modelo de Datos — Raíces Vivas"
 project: raices-vivas
