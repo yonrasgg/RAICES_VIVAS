@@ -10,7 +10,7 @@ issuetype: Story
 project: RV
 parent: RV-47
 title: "Sincronización offline/online bidireccional"
-status: todo
+status: done
 priority: must
 assignee: "Geovanny"
 module: transversal
@@ -19,7 +19,7 @@ story_points: 8
 customfield_10016: 8
 sprint: Sprint-03
 created: 2026-03-26
-updated: 2026-03-26
+updated: 2026-04-19
 tags:
   - story
   - modulo/transversal

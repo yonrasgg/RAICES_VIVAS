@@ -4,7 +4,7 @@ title: "Gestión Financiera — Raíces Vivas"
 project: raices-vivas
 status: active
 created: 2026-03-01
-updated: 2026-03-26
+updated: 2026-04-19
 banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
@@ -136,23 +136,23 @@ ORDER BY t.sprint ASC
 
 ```chart
 type: bar
-labels: [Sprint-01, Sprint-02]
+labels: [Sprint-01, Sprint-02, Sprint-03]
 series:
   - title: Geovanny (₡K)
-    data: [434, 297]
+    data: [434, 306, 136]
   - title: Elkin (₡K)
-    data: [182, 188]
+    data: [182, 189, 59]
   - title: Santiago (₡K)
-    data: [189, 195]
+    data: [189, 202, 72]
   - title: Equipo (₡K)
-    data: [43, 78]
+    data: [43, 79, 0]
 width: 70%
 labelColors: true
 fill: true
 beginAtZero: true
 ```
 
-> *Costos en miles de colones (₡). Sprint-01 y Sprint-02 completos (42/42 tareas done). Actualizado 2026-03-29.*
+> *Costos en miles de colones (₡). Sprint-01 (20/20), Sprint-02 (22/22) completos. Sprint-03 parcial (10/16 done). Actualizado 2026-04-19.*
 
 ### 2.5 Indicadores Financieros (Dinámico)
 

@@ -14,7 +14,7 @@ owner: "Geovanny"
 assignee: "Geovanny"
 module: educacion
 created: 2026-02-03
-updated: 2026-03-29
+updated: 2026-04-19
 tags:
   - epic
   - modulo/edu

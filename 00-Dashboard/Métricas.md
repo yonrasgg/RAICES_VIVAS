@@ -357,14 +357,14 @@ type: bar
 labels: [Geovanny, Elkin, Santiago]
 series:
   - title: Costo (miles ₡)
-    data: [731, 370, 384]
+    data: [876, 429, 462]
 width: 60%
 labelColors: true
 fill: true
 beginAtZero: true
 ```
 
-> *Solo tareas done. Sprint-01 + Sprint-02 completos. Actualizado 2026-03-29.*
+> *Solo tareas con effort_actual. Sprint-01 (20/20), Sprint-02 (22/22) completos, Sprint-03 parcial (10/16 done). Actualizado 2026-04-19.*
 
 ---
 

@@ -10,7 +10,7 @@ issuetype: Story
 project: RV
 parent: RV-47
 title: "Interfaz multilingüe con selección de idioma"
-status: todo
+status: done
 priority: must
 assignee: "Elkin"
 module: transversal
@@ -19,7 +19,7 @@ story_points: 5
 customfield_10016: 5
 sprint: Sprint-03
 created: 2026-03-26
-updated: 2026-03-26
+updated: 2026-04-19
 tags:
   - story
   - modulo/transversal

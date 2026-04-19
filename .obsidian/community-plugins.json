@@ -18,5 +18,7 @@
   "obsidian-auto-link-title",
   "jira-sync",
   "sqlseal",
-  "sqlseal-charts"
+  "sqlseal-charts",
+  "obsidian-charts",
+  "drawio-obsidian"
 ]

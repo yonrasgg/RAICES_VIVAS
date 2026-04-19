@@ -15,7 +15,7 @@ assignee: "Geovanny"
 owner: "Geovanny"
 module: transversal
 created: 2026-03-26
-updated: 2026-03-29
+updated: 2026-04-19
 tags:
   - epic
   - modulo/transversal

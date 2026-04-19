@@ -39,7 +39,7 @@ gantt
     AVANCE 2                :milestone, m2, 2026-03-29, 0d
 
     section 💻 Implementación
-    Sprint-03 EDU piloto + sync  :        c1, 2026-04-01, 2026-04-30
+    Sprint-03 EDU piloto + sync  :active,  c1, 2026-04-01, 2026-04-23
     Sprint-04 SAB + SAL + motor  :        c2, 2026-05-01, 2026-05-31
     Sprint-05 integración + test :        c3, 2026-06-01, 2026-06-30
     ENTREGA FINAL           :milestone, m3, 2026-06-30, 0d
@@ -118,13 +118,53 @@ gantt
 
 ---
 
+## Gantt Detallado — Avance 3 (Sprint 03)
+
+```mermaid
+gantt
+    title Avance 3 — Implementación Piloto EDU + Sync + i18n
+    dateFormat YYYY-MM-DD
+    axisFormat %d/%m
+    todayMarker stroke-width:3px,stroke:#f66,opacity:0.8
+
+    section ⚙️ Setup & Sync
+    T-043 Config React + Vite (Geo)         :done,   t43, 2026-04-01, 2026-04-01
+    T-044 Sync PouchDB ↔ CouchDB (Geo)      :done,   t44, 2026-04-02, 2026-04-05
+    T-045 Indicador visual sync (Geo)        :done,   t45, 2026-04-06, 2026-04-07
+
+    section 🌐 Internacionalización
+    T-046 Traducciones es + bri (Elk)        :done,   t46, 2026-04-07, 2026-04-08
+    T-047 Selector idioma persist. (Elk)     :done,   t47, 2026-04-09, 2026-04-10
+
+    section 📚 Módulo EDU
+    T-048 CRUD Materiales (Geo)              :done,   t48, 2026-04-10, 2026-04-12
+    T-049 Gestión Docentes (San)             :done,   t49, 2026-04-11, 2026-04-13
+    T-050 Dashboard EDU métricas (San)       :done,   t50, 2026-04-13, 2026-04-14
+
+    section ✅ Testing
+    T-051 Pruebas sync offline (San)         :done,   t51, 2026-04-14, 2026-04-15
+    T-052 Pruebas i18n (Elk)                 :done,   t52, 2026-04-13, 2026-04-14
+
+    section 📦 Documentación & Cierre
+    T-053 Redactar Avance 3 (Geo)            :active, t53, 2026-04-15, 2026-04-19
+    T-054 Exportar PDF (Geo)                 :        t54, 2026-04-19, 2026-04-20
+    T-055 Presentación final (Elk)           :        t55, 2026-04-20, 2026-04-21
+    T-056 Sprint-03 Review (Equipo)          :        t56, 2026-04-21, 2026-04-22
+    T-057 QA vault + frontmatter (San)       :        t57, 2026-04-20, 2026-04-22
+    T-058 Sync Jira y cierre (Geo)           :        t58, 2026-04-22, 2026-04-23
+    ENTREGA AVANCE 3                    :milestone, m3, 2026-04-23, 0d
+```
+
+---
+
 ## Milestones
 
 | # | Milestone | Fecha Objetivo | Estado | Responsable |
 |---|-----------|---------------|--------|-------------|
 | M1 | Avance 1 — Requerimientos | 2026-02-25 | ✅ Entregado | Equipo |
 | M2 | Avance 2 — Arquitectura | 2026-03-29 | ✅ Entregado | Equipo |
-| M3 | Entrega Final | 2026-06-30 | ⏳ Pendiente | Equipo |
+| M3 | Avance 3 — Implementación | 2026-04-23 | 🔄 En curso | Equipo |
+| M4 | Entrega Final | 2026-06-30 | ⏳ Pendiente | Equipo |
 
 ## Entregas Próximas
 
@@ -142,7 +182,7 @@ ORDER BY due ASC
 
 ---
 
-*Roadmap dinámico · Mermaid + SQLSeal + Jira Sync · Última actualización: 2026-03-29 (Sprint-02 completado, Avance 2 entregado)*
+*Roadmap dinámico · Mermaid + SQLSeal + Jira Sync · Última actualización: 2026-04-19 (Sprint-03 activo, Avance 3 en curso)*
 
 ## Navegación
 
