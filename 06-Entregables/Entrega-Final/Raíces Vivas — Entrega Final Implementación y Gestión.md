@@ -174,6 +174,16 @@ Se identificaron **23 casos de uso** distribuidos en 4 módulos, trazados 1:1 co
 
 > Documentación completa de los 23 CU (12 expandidos), diagrama UML y matriz de trazabilidad RF ↔ CU: [[06-Entregables/Avance-2/Raíces Vivas — Avance 2 Diseño y Arquitectura|Avance 2, §3-§6]].
 
+#### 1.3.4 Diagrama UML de Casos de Uso
+
+El siguiente diagrama UML agrupa los 23 casos de uso por módulo (subsistema), mostrando las relaciones entre los 8 actores y los casos de uso de cada módulo:
+
+![[Raíces Vivas — Avance 2 Diseño y Arquitectura#5. Diagrama de Casos de Uso]]
+
+#### 1.3.5 Referencia Cruzada RF ↔ CU
+
+![[Raíces Vivas — Avance 2 Diseño y Arquitectura#6. Referencia Cruzada: Requerimientos Funcionales ↔ Casos de Uso]]
+
 ---
 
 ## Capítulo 2 — Diseño de la Solución
@@ -225,6 +235,12 @@ El modelo entidad-relación contempla **38 entidades** distribuidas en 4 módulo
 | **Total** | | **38** | 5 diagramas ER + vista integrada inter-módulos |
 
 > Diagramas completos: [[04-Arquitectura/Modelo de Datos|Modelo de Datos]] y [[06-Entregables/Avance-2/Raíces Vivas — Avance 2 Diseño y Arquitectura|Avance 2, Anexo A.2]].
+
+##### Vista Integrada Inter-Módulos
+
+El siguiente diagrama muestra las relaciones entre los cuatro módulos y las entidades compartidas:
+
+![[Modelo de Datos#Diagrama ER — Vista Integrada (Inter-Módulos)]]
 
 #### Gobernanza cultural: principios CARE como arquitectura
 
@@ -335,9 +351,19 @@ El Work Breakdown Structure descompone el sistema en 4 módulos y 16 paquetes de
 
 | Sprint | Período | Foco | Entregable | Estado |
 |--------|---------|------|-----------|--------|
-| Sprint-01 | 2026-02-14 → 2026-02-28 | Análisis, investigación de campo | Avance 1 — Análisis y Requerimientos | ✅ Cerrado |
-| Sprint-02 | 2026-02-28 → 2026-04-01 | Diseño, casos de uso, arquitectura | Avance 2 — Diseño y Arquitectura | ✅ Cerrado |
-| Sprint-03 | 2026-04-03 → 2026-04-23 | Implementación MVP, gestión, entrega final | Avance 3 — Entrega Final | 🔄 Activo |
+| Sprint-01 | 2026-02-03 → 2026-02-25 | Análisis, investigación de campo | Avance 1 — Análisis y Requerimientos | ✅ Cerrado |
+| Sprint-02 | 2026-02-28 → 2026-03-29 | Diseño, casos de uso, arquitectura | Avance 2 — Diseño y Arquitectura | ✅ Cerrado |
+| Sprint-03 | 2026-04-01 → 2026-04-23 | Implementación MVP, gestión, entrega final | Avance 3 — Entrega Final | 🔄 Activo |
+
+#### Cronograma Maestro (Gantt)
+
+El siguiente cronograma muestra la línea de tiempo completa del proyecto, desde la investigación inicial hasta la proyección de entrega final:
+
+![[Roadmap#Timeline General del Proyecto]]
+
+#### Milestones
+
+![[Roadmap#Milestones]]
 
 #### Metodología
 
@@ -362,6 +388,8 @@ ORDER BY name ASC
 
 ##### Sprint-01 (20 tareas)
 
+![[Roadmap#Gantt Detallado — Avance 1 (Sprint 01)]]
+
 ```sqlseal
 SELECT name AS "ID", title AS "Tarea", assignee AS "👤", status AS "Estado", effort_actual AS "⏱️"
 FROM files
@@ -371,6 +399,10 @@ ORDER BY name ASC
 
 ##### Sprint-02 (22 tareas)
 
+![[Roadmap#Gantt Detallado — Avance 2 (Sprint 02)]]
+
+![[Sprint-02-Planning#🔗 Mapa de Dependencias]]
+
 ```sqlseal
 SELECT name AS "ID", title AS "Tarea", assignee AS "👤", status AS "Estado", effort_actual AS "⏱️"
 FROM files
@@ -379,6 +411,8 @@ ORDER BY name ASC
 ```
 
 ##### Sprint-03 (16 tareas)
+
+![[Roadmap#Gantt Detallado — Avance 3 (Sprint 03)]]
 
 ```sqlseal
 SELECT name AS "ID", title AS "Tarea", assignee AS "👤", status AS "Estado", effort_actual AS "⏱️"
@@ -537,14 +571,41 @@ ORDER BY name ASC
 
 ### Anexo D — Análisis Estratégicos
 
-Los siguientes análisis complementarios fueron elaborados durante Sprint-02 y fundamentan las decisiones de diseño y priorización del proyecto:
+Los siguientes análisis complementarios fueron elaborados durante Sprint-02 y fundamentan las decisiones de diseño y priorización del proyecto.
 
-- **Análisis FODA** — Factores internos (fortalezas/debilidades) y externos (oportunidades/amenazas), con estrategias cruzadas FO/DO/FA/DA.
-- **Diagrama de Ishikawa** — Análisis de causa raíz para el riesgo de baja adopción comunitaria, con las 6M adaptadas y priorización Pareto (8 causas, RPN 9-25).
-- **Casa de la Calidad (QFD)** — 10 necesidades de stakeholders × 10 características técnicas, con priorización ponderada que confirmó gobernanza cultural, auditoría y offline-sync como pilares técnicos.
-- **Ciclo DMAIC (Lean Six Sigma)** — Definir → Medir → Analizar → Mejorar → Controlar aplicado al ciclo de desarrollo, con CTQs medibles y mecanismos de control por sprint.
+#### D.1 Análisis FODA
 
-> Documentación completa: [[06-Entregables/Avance-2/Raíces Vivas — Avance 2 Diseño y Arquitectura|Avance 2, Anexos C-F]].
+![[Raíces Vivas — Avance 2 Diseño y Arquitectura#Anexo C: Análisis FODA del Proyecto]]
+
+#### D.2 Diagrama de Ishikawa — Causa-Efecto
+
+![[Raíces Vivas — Avance 2 Diseño y Arquitectura#Anexo D: Diagrama de Ishikawa — Causa-Efecto]]
+
+#### D.3 Casa de la Calidad (QFD)
+
+![[Raíces Vivas — Avance 2 Diseño y Arquitectura#Anexo E: Casa de la Calidad (QFD)]]
+
+#### D.4 Ciclo DMAIC — Lean Six Sigma
+
+![[Raíces Vivas — Avance 2 Diseño y Arquitectura#Anexo F: Metodología DMAIC — Lean Six Sigma]]
+
+### Anexo E — Diagramas Entidad-Relación por Módulo
+
+#### E.1 Entidades Transversales
+
+![[Modelo de Datos#Diagrama ER — Entidades Transversales (TRANS)]]
+
+#### E.2 Módulo Educativo
+
+![[Modelo de Datos#Diagrama ER — Módulo Educativo (EDU)]]
+
+#### E.3 Módulo Saberes Ancestrales
+
+![[Modelo de Datos#Diagrama ER — Módulo Saberes Ancestrales (SAB)]]
+
+#### E.4 Módulo Salud Comunitaria
+
+![[Modelo de Datos#Diagrama ER — Módulo Salud Comunitaria (SAL)]]
 
 ---
 
