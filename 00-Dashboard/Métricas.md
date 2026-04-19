@@ -38,12 +38,12 @@ type: doughnut
 labels: [Done, In Progress, Todo, Review, Blocked]
 series:
   - title: Estado de Tareas
-    data: [42, 0, 0, 0, 0]
+    data: [52, 1, 5, 0, 0]
 width: 50%
 labelColors: true
 ```
 
-> *Gráfico de referencia actualizado 2026-03-29. Sprint-01 completo (20/20). Sprint-02 completo (22/22). La tabla dinámica abajo siempre está actualizada.*
+> *Gráfico de referencia actualizado 2026-04-19. Sprint-01 (20/20), Sprint-02 (22/22) completos. Sprint-03 en curso (10/16). La tabla dinámica abajo siempre está actualizada.*
 
 ```sqlseal
 SELECT
@@ -67,12 +67,12 @@ type: pie
 labels: [Geovanny, Elkin, Santiago, Equipo]
 series:
   - title: Tareas Asignadas
-    data: [16, 11, 11, 4]
+    data: [23, 15, 15, 5]
 width: 50%
 labelColors: true
 ```
 
-> *Distribución total de tareas (Sprint-01 + Sprint-02). Actualizado 2026-03-29.*
+> *Distribución total de tareas (Sprint-01 + Sprint-02 + Sprint-03). Actualizado 2026-04-19.*
 
 ### 3.2 Horas por Integrante (Bar Chart)
 
@@ -81,16 +81,16 @@ type: bar
 labels: [Geovanny, Elkin, Santiago]
 series:
   - title: Horas Planificadas
-    data: [80, 56, 59]
+    data: [105, 68, 73]
   - title: Horas Completadas
-    data: [86, 57, 59]
+    data: [103, 66, 71]
 width: 70%
 labelColors: true
 fill: true
 beginAtZero: true
 ```
 
-> *Solo tareas con status=done. Sprint-01 y Sprint-02 completos (42/42). La tabla dinámica abajo siempre está actualizada. Actualizado 2026-03-29.*
+> *Solo tareas con status=done. Sprint-01 (20), Sprint-02 (22), Sprint-03 parcial (10 done). Total 52/58. Actualizado 2026-04-19.*
 
 ### 3.3 Detalle Dinámico por Responsable
 
@@ -234,7 +234,7 @@ flowchart LR
 | **Define** | ✅ Completada | Charter, Alcance, Stakeholders, Equipo definidos |
 | **Measure** | ✅ Completada | RTM, métricas baseline, requerimientos priorizados |
 | **Analyze** | ✅ Completada | Riesgos identificados (RSK-001..014), ADRs (ADR-001..017) |
-| **Improve** | 🔄 En curso | Sprint 01–02 completados (42/42) · Sprint 03–05 pendiente |
+| **Improve** | 🔄 En curso | Sprint 01–02 completados (42/42) · Sprint 03 activo (10/16) |
 | **Control** | 🔄 Continuo | Dashboards, QA checks, Linter, RTM dinámica |
 
 ---
@@ -248,9 +248,9 @@ type: line
 labels: [Sprint-01, Sprint-02, Sprint-03, Sprint-04, Sprint-05]
 series:
   - title: Planificadas
-    data: [20, 22, 0, 0, 0]
+    data: [20, 22, 16, 0, 0]
   - title: Completadas
-    data: [20, 22, 0, 0, 0]
+    data: [20, 22, 10, 0, 0]
 width: 80%
 labelColors: true
 fill: false
@@ -321,11 +321,11 @@ ORDER BY severity DESC
 
 ```chart
 type: polarArea
-labels: [RSK-001, RSK-002, RSK-003, RSK-004, RSK-005, RSK-006]
+labels: [RSK-001, RSK-002, RSK-003, RSK-004, RSK-005, RSK-006, RSK-007, RSK-008, RSK-009, RSK-010, RSK-011, RSK-012, RSK-013, RSK-014]
 series:
-  - title: Severidad
-    data: [12, 6, 9, 4, 6, 8]
-width: 50%
+  - title: Severidad (prob × impacto)
+    data: [12, 9, 12, 6, 9, 8, 12, 12, 16, 9, 12, 12, 12, 12]
+width: 60%
 labelColors: true
 ```
 
