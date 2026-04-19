@@ -13,7 +13,7 @@ due: 2026-05-31
 completed:
 team: [Geovanny, Elkin, Santiago]
 created: 2026-03-26
-updated: 2026-03-26
+updated: 2026-04-19
 tags:
   - sprint
   - planning
