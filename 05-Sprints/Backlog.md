@@ -6,10 +6,8 @@ kanban-plugin: basic
 
 # 📦 Product Backlog — Raíces Vivas
 
-## 📋 Backlog (Sprint 03+)
+## 📋 Backlog (Sprint 04+)
 
-- [ ] [[05-Sprints/Stories/RV-48|RV-48: Sync offline/online bidireccional]] @Geovanny 🏷️ Sprint-03 (8 SP)
-- [ ] [[05-Sprints/Stories/RV-49|RV-49: Interfaz multilingüe i18n]] @Elkin 🏷️ Sprint-03 (5 SP)
 - [ ] [[05-Sprints/Stories/RV-50|RV-50: Motor de práctica educativa]] @Geovanny 🏷️ Sprint-04 (5 SP)
 - [ ] [[05-Sprints/Stories/RV-51|RV-51: Seguimiento académico docente]] @Santiago 🏷️ Sprint-04 (3 SP)
 - [ ] [[05-Sprints/Stories/RV-52|RV-52: Búsqueda de saberes con filtros]] @Elkin 🏷️ Sprint-04 (3 SP)
@@ -26,13 +24,30 @@ kanban-plugin: basic
 - [ ] [[05-Sprints/Stories/RV-63|RV-63: Consultar registro de auditoría de acceso]] @Elkin 🏷️ Sprint-04 (3 SP)
 - [ ] [[05-Sprints/Stories/RV-64|RV-64: Exportar expediente a EDUS (CCSS)]] @Santiago 🏷️ Sprint-05 (5 SP)
 
-## 🔄 En Progreso
+## 🔄 En Progreso (Sprint 03)
 
+- [ ] [[05-Sprints/Sprint-03/T-053|T-053: Redactar documento Avance 3]] @Geovanny 🏷️ Sprint-03
+- [ ] [[05-Sprints/Sprint-03/T-054|T-054: Compilar y exportar PDF Avance 3]] @Geovanny 🏷️ Sprint-03
+- [ ] [[05-Sprints/Sprint-03/T-055|T-055: Crear presentación final Sprint-03]] @Elkin 🏷️ Sprint-03
+- [ ] [[05-Sprints/Sprint-03/T-056|T-056: Sprint-03 Review y retrospectiva]] @Equipo 🏷️ Sprint-03
+- [ ] [[05-Sprints/Sprint-03/T-057|T-057: QA final — validación vault + frontmatter]] @Santiago 🏷️ Sprint-03
+- [ ] [[05-Sprints/Sprint-03/T-058|T-058: Sincronizar Jira y cerrar Sprint-03]] @Geovanny 🏷️ Sprint-03
 
 ## 👀 En Revisión
 
 
-## ✅ Completado (Sprint 02 — Casos de Uso)
+## ✅ Completado (Sprint 03 — Implementación + Testing)
+
+- [x] [[05-Sprints/Sprint-03/T-043|T-043: Configurar entorno dev React + Vite]] @Geovanny ✅ 2026-04-01
+- [x] [[05-Sprints/Sprint-03/T-044|T-044: Implementar sync PouchDB ↔ CouchDB]] @Geovanny ✅ 2026-04-05
+- [x] [[05-Sprints/Sprint-03/T-045|T-045: Indicador visual de estado de sync]] @Geovanny ✅ 2026-04-07
+- [x] [[05-Sprints/Sprint-03/T-046|T-046: Completar traducciones es + bri]] @Elkin ✅ 2026-04-08
+- [x] [[05-Sprints/Sprint-03/T-047|T-047: Selector de idioma con persistencia]] @Elkin ✅ 2026-04-10
+- [x] [[05-Sprints/Sprint-03/T-048|T-048: Vista CRUD Materiales Educativos]] @Geovanny ✅ 2026-04-12
+- [x] [[05-Sprints/Sprint-03/T-049|T-049: Vista Gestión de Docentes]] @Santiago ✅ 2026-04-13
+- [x] [[05-Sprints/Sprint-03/T-050|T-050: Vista Dashboard EDU métricas]] @Santiago ✅ 2026-04-14
+- [x] [[05-Sprints/Sprint-03/T-051|T-051: Pruebas sync offline/online]] @Santiago ✅ 2026-04-15
+- [x] [[05-Sprints/Sprint-03/T-052|T-052: Pruebas interfaz multilingüe]] @Elkin ✅ 2026-04-14
 
 - [x] [[05-Sprints/Sprint-02/T-042|T-042: Exportar PDF y entregar Avance 2]] @Geovanny ✅ 2026-03-29
 - [x] [[05-Sprints/Sprint-02/T-032|T-032: Clasificar actores del sistema]] @Geovanny ✅ 2026-03-28

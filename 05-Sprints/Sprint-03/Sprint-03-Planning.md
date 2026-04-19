@@ -6,14 +6,14 @@ type: sprint-planning
 title: "Sprint 03 — Implementación Piloto EDU + Transversal"
 sprint: Sprint-03
 avance: Avance-3
-status: planned
+status: active
 goal: "Implementar el módulo EDU piloto con sincronización offline y soporte multilingüe"
 started: 2026-04-01
-due: 2026-04-30
+due: 2026-04-23
 completed:
 team: [Geovanny, Elkin, Santiago]
 created: 2026-03-26
-updated: 2026-03-26
+updated: 2026-04-19
 tags:
   - sprint
   - planning
@@ -31,29 +31,39 @@ tags:
 | Campo | Valor |
 |-------|-------|
 | **Inicio** | 2026-04-01 |
-| **Fin** | 2026-04-30 |
-| **Duración** | 30 días (4.3 semanas) |
-| **Estado** | 📋 Planificado |
+| **Fin** | 2026-04-23 |
+| **Duración** | 23 días (3.3 semanas) |
+| **Estado** | 🏃 Activo |
 
 ## Compromisos del Sprint
 
-### Must (Críticos)
+### Must (Críticos — Implementación)
 
-- [ ] [[US-TRANS-01]] — Sincronización offline/online bidireccional (8 SP — Geovanny)
-- [ ] [[US-TRANS-02]] — Interfaz multilingüe con selección de idioma (5 SP — Elkin)
-- [ ] Ejecutar T-021 — Diagrama C4 en Mermaid (carry-over Sprint-02)
-- [ ] Ejecutar T-022/23/24 — Modelos ER en Mermaid (carry-over Sprint-02)
+- [x] [[T-043]] — Configurar entorno de desarrollo React + Vite + TailwindCSS (Geovanny, 2h)
+- [x] [[T-044]] — Implementar sincronización PouchDB ↔ CouchDB (Geovanny, 6h)
+- [x] [[T-045]] — Indicador visual de estado de sincronización (Geovanny, 3h)
+- [x] [[T-046]] — Completar traducciones español + bribri (Elkin, 4h)
+- [x] [[T-047]] — Selector de idioma con persistencia (Elkin, 3h)
+- [x] [[T-048]] — Vista CRUD de Materiales Educativos (Geovanny, 5h)
+- [x] [[T-049]] — Vista Gestión de Docentes (Santiago, 4h)
+
+### Must (Críticos — Testing)
+
+- [x] [[T-051]] — Pruebas de sincronización offline/online (Santiago, 3h)
+- [x] [[T-052]] — Pruebas de interfaz multilingüe (Elkin, 2h)
 
 ### Should (Importantes)
 
-- [ ] Ejecutar T-026/27/28 — Wireframes en Excalidraw (carry-over Sprint-02)
-- [ ] Ejecutar T-029 — Instrumentos de validación completos
-- [ ] Setup RPi + CouchDB en ambiente de desarrollo
+- [x] [[T-050]] — Vista Dashboard EDU con métricas (Santiago, 4h)
+- [ ] [[T-053]] — Redactar documento Avance 3 (Geovanny, 6h)
+- [ ] [[T-054]] — Compilar y exportar PDF Avance 3 (Geovanny, 2h)
+- [ ] [[T-055]] — Crear presentación final Sprint-03 (Elkin, 3h)
 
-### Could (Si hay tiempo)
+### Must (Críticos — Gestión)
 
-- [ ] Ejecutar T-030 — Primera ronda de entrevistas de validación
-- [ ] Pruebas de sincronización en conexión 2G simulada
+- [ ] [[T-056]] — Sprint-03 Review y retrospectiva (Equipo, 2h)
+- [ ] [[T-057]] — QA final — validación vault + frontmatter (Santiago, 3h)
+- [ ] [[T-058]] — Sincronizar Jira y cerrar Sprint-03 (Geovanny, 1h)
 
 ## Capacidad del Equipo
 
