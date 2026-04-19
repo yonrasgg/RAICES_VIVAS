@@ -162,11 +162,11 @@ gantt
     T-052 Pruebas i18n (Elk)                 :done,   t52, 2026-04-13, 2026-04-14
 
     section 📦 Documentación & Cierre
-    T-053 Redactar Avance 3 (Geo)            :active, t53, 2026-04-15, 2026-04-19
+    T-053 Redactar Avance 3 (Geo)            :done,   t53, 2026-04-16, 2026-04-19
     T-054 Exportar PDF (Geo)                 :        t54, 2026-04-19, 2026-04-20
     T-055 Presentación final (Elk)           :        t55, 2026-04-20, 2026-04-21
     T-056 Sprint-03 Review (Equipo)          :        t56, 2026-04-21, 2026-04-22
-    T-057 QA vault + frontmatter (San)       :        t57, 2026-04-20, 2026-04-22
+    T-057 QA vault + frontmatter (San)       :active, t57, 2026-04-19, 2026-04-22
     T-058 Sync Jira y cierre (Geo)           :        t58, 2026-04-22, 2026-04-23
     ENTREGA AVANCE 3                    :milestone, m3, 2026-04-23, 0d
 ```
