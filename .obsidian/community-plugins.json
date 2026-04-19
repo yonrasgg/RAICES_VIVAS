@@ -10,18 +10,13 @@
   "buttons",
   "tag-wrangler",
   "folder-notes",
-  "obsidian-charts",
   "obsidian-checklist-plugin",
-  "highlightr-plugin",
   "obsidian-banners",
   "multi-column-markdown",
   "obsidian-meta-bind-plugin",
   "periodic-notes",
   "obsidian-auto-link-title",
-  "obsidian-latex-suite",
-  "drawio-obsidian",
   "jira-sync",
   "sqlseal",
-  "sqlseal-charts",
-  "obsidian-leaflet-plugin"
+  "sqlseal-charts"
 ]

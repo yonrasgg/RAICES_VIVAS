@@ -1,18 +1,1 @@
-{
-  "cssTheme": "Shiba Inu",
-  "accentColor": "#494ffd",
-  "baseFontSizeAction": true,
-  "enabledCssSnippets": [
-    "dashboard-hero"
-  ],
-  "nativeMenus": false,
-<<<<<<< HEAD
-  "baseFontSize": 12,
-=======
-  "baseFontSize": 15,
->>>>>>> origin/main
-  "textFontFamily": "Arial",
-  "interfaceFontFamily": "Ubuntu Mono",
-  "theme": "obsidian",
-  "showViewHeader": true
-}
+{}
