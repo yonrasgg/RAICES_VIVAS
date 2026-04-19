@@ -156,8 +156,9 @@ El script `08-Recursos/scripts/setup-hooks.sh` está disponible como referencia 
 | `Epics/` | Notas de Epics Jira: `RV-1.md`, `RV-2.md`, `RV-3.md` | `_template-epic.md` |
 | `Stories/` | Notas de User Stories Jira: `RV-4.md`..`RV-9.md` | `_template-user-story.md` |
 | `Sprint-01/` | Sprint 1 (cerrado): Planning + 20 tareas `T-001`..`T-020` | `_template-tarea.md` |
-| `Sprint-02/` | Sprint 2 (activo): Planning + 5 tareas `T-021`..`T-025` | `_template-tarea.md` |
-| `Sprint-03/` a `Sprint-05/` | Sprints futuros (vacíos) | `_template-sprint-planning.md` |
+| `Sprint-02/` | Sprint 2 (cerrado): Planning + 22 tareas `T-021`..`T-042` | `_template-tarea.md` |
+| `Sprint-03/` | Sprint 3 (activo): Planning + 16 tareas `T-043`..`T-058` | `_template-tarea.md` |
+| `Sprint-04/` a `Sprint-05/` | Sprints futuros (planificados) | `_template-sprint-planning.md` |
 
 > ⚠️ **REGLA ABSOLUTA:** Toda nota con `type: task` o `type: subtask` **DEBE** estar en `05-Sprints/Sprint-XX/`. Las queries del Dashboard filtran `FROM "05-Sprints"`. Una tarea fuera de esta ruta es **INVISIBLE** para el sistema.
 
@@ -166,7 +167,8 @@ El script `08-Recursos/scripts/setup-hooks.sh` está disponible como referencia 
 | Carpeta | Contenido |
 |---------|-----------|
 | `Avance-1/` | Documento integrado del Avance 1 (entregado 2026-02-25) |
-| `Avance-2/` | Documento del Avance 2 (en progreso) |
+| `Avance-2/` | Documento del Avance 2 (entregado 2026-03-29) |
+| `Entrega-Final/` | Avance 3 / Entrega Final (en curso) |
 | `Presentaciones/` | Slides y presentaciones formales |
 
 ### 📝 `07-Reuniones/` — Minutas

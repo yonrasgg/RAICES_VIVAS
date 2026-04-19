@@ -46,22 +46,36 @@ gantt
 
     section 🏗️ Diseño
     T-021 Diagrama contexto (Geo) [RV-12]  :done, t21, 2026-02-28, 2026-03-07
-    T-025 Stack tecnológico (Equipo) [RV-30]:        t25, 2026-03-01, 2026-03-07
-    T-022 Modelo ER EDU (Elk) [RV-39]      :        t22, 2026-03-03, 2026-03-14
-    T-023 Modelo ER SAB (San) [RV-40]      :        t23, 2026-03-03, 2026-03-14
-    T-024 Modelo ER SAL (Geo) [RV-41]      :        t24, 2026-03-03, 2026-03-14
+    T-025 Stack tecnológico (Equipo) [RV-30]:done, t25, 2026-03-01, 2026-03-14
+    T-022 Modelo ER EDU (Elk) [RV-39]      :done, t22, 2026-03-03, 2026-03-14
+    T-023 Modelo ER SAB (San) [RV-40]      :done, t23, 2026-03-03, 2026-03-14
+    T-024 Modelo ER SAL (Geo) [RV-41]      :done, t24, 2026-03-03, 2026-03-14
 
     section 🎨 Prototipos
-    T-026 Wireframes EDU (Geo) [RV-42]     :        t26, 2026-03-10, 2026-03-18
-    T-027 Wireframes SAB (Elk) [RV-43]     :        t27, 2026-03-12, 2026-03-20
-    T-028 Wireframes SAL (San) [RV-44]     :        t28, 2026-03-14, 2026-03-22
+    T-026 Wireframes EDU (Geo) [RV-42]     :done, t26, 2026-03-10, 2026-03-19
+    T-027 Wireframes SAB (Elk) [RV-43]     :done, t27, 2026-03-12, 2026-03-20
+    T-028 Wireframes SAL (San) [RV-44]     :done, t28, 2026-03-14, 2026-03-22
 
     section ✅ Validación
-    T-029 Instrumentos (San) [RV-31]       :        t29, 2026-03-18, 2026-03-22
-    T-030 Entrevistas (Elk) [RV-32]        :        t30, 2026-03-23, 2026-03-30
-    T-031 Gobernanza cultural (Eq) [RV-33] :        t31, 2026-03-01, 2026-03-15
-    Ajustes post-validación (Equipo)   :        v3, 2026-03-28, 2026-04-01
-    ENTREGA AVANCE 2 (real 29/03)  :milestone, m2, 2026-03-29, 0d
+    T-029 Instrumentos (San) [RV-31]       :done, t29, 2026-03-18, 2026-03-22
+    T-030 Entrevistas (Elk) [RV-32]        :done, t30, 2026-03-23, 2026-03-25
+    T-031 Gobernanza cultural (Eq) [RV-33] :done, t31, 2026-03-07, 2026-03-14
+
+    section 📝 Casos de Uso
+    T-032 Clasificar actores (Geo) [RV-55] :done, t32, 2026-03-26, 2026-03-28
+    T-033 Lista 23 CU (Elk) [RV-56]        :done, t33, 2026-03-26, 2026-03-28
+    T-034 Doc CU-EDU (Geo) [RV-57]         :done, t34, 2026-03-28, 2026-03-29
+    T-035 Doc CU-SAB (Elk) [RV-58]         :done, t35, 2026-03-28, 2026-03-29
+    T-036 Doc CU-SAL (San) [RV-59]         :done, t36, 2026-03-28, 2026-03-29
+    T-037 Doc CU-TRANS (San) [RV-60]       :done, t37, 2026-03-28, 2026-03-29
+    T-038 Diagrama UML CU (Geo) [RV-61]    :done, t38, 2026-03-28, 2026-03-29
+    T-039 Matriz CU↔RF (Elk) [RV-62]       :done, t39, 2026-03-28, 2026-03-29
+    T-040 Conclusiones (San) [RV-63]        :done, t40, 2026-03-28, 2026-03-29
+
+    section 📦 Compilación
+    T-041 Compilar Avance 2 (Geo) [RV-64]  :done, t41, 2026-03-29, 2026-03-29
+    T-042 Exportar PDF (Geo) [RV-65]        :done, t42, 2026-03-29, 2026-03-29
+    ENTREGA AVANCE 2                        :milestone, m2, 2026-03-29, 0d
 ```
 
 ## Tareas del Sprint
@@ -98,6 +112,17 @@ graph LR
     T029["T-029<br/>Instrumentos<br/>🔴 San"]
     T030["T-030<br/>Entrevistas<br/>🔴 Elk"]
     T031["T-031<br/>Gobernanza ADR<br/>🔵 Equipo"]
+    T032["T-032<br/>Clasificar actores<br/>🟢 Geo"]
+    T033["T-033<br/>Lista 23 CU<br/>🟡 Elk"]
+    T034["T-034<br/>Doc CU-EDU<br/>🟢 Geo"]
+    T035["T-035<br/>Doc CU-SAB<br/>🟡 Elk"]
+    T036["T-036<br/>Doc CU-SAL<br/>🟠 San"]
+    T037["T-037<br/>Doc CU-TRANS<br/>🟠 San"]
+    T038["T-038<br/>Diagrama UML CU<br/>🟢 Geo"]
+    T039["T-039<br/>Matriz CU↔RF<br/>🟡 Elk"]
+    T040["T-040<br/>Conclusiones<br/>🟠 San"]
+    T041["T-041<br/>Compilar Avance 2<br/>🟢 Geo"]
+    T042["T-042<br/>Exportar PDF<br/>🟢 Geo"]
 
     T021 -->|bloquea| T022
     T021 -->|bloquea| T023
@@ -113,6 +138,27 @@ graph LR
     T028 -->|bloquea| T029
     T029 -->|bloquea| T030
 
+    T032 -->|bloquea| T034
+    T032 -->|bloquea| T035
+    T032 -->|bloquea| T036
+    T032 -->|bloquea| T037
+    T033 -->|bloquea| T034
+    T033 -->|bloquea| T035
+    T033 -->|bloquea| T036
+    T033 -->|bloquea| T037
+    T034 -->|bloquea| T038
+    T035 -->|bloquea| T038
+    T036 -->|bloquea| T038
+    T037 -->|bloquea| T038
+    T034 -->|bloquea| T039
+    T035 -->|bloquea| T039
+    T036 -->|bloquea| T039
+    T037 -->|bloquea| T039
+    T038 -->|bloquea| T041
+    T039 -->|bloquea| T041
+    T040 -->|bloquea| T041
+    T041 -->|bloquea| T042
+
     style T021 fill:#4CAF50,color:#fff
     style T025 fill:#2196F3,color:#fff
     style T022 fill:#FFC107,color:#000
@@ -124,10 +170,22 @@ graph LR
     style T029 fill:#f44336,color:#fff
     style T030 fill:#f44336,color:#fff
     style T031 fill:#2196F3,color:#fff
+    style T032 fill:#4CAF50,color:#fff
+    style T033 fill:#FFC107,color:#000
+    style T034 fill:#4CAF50,color:#fff
+    style T035 fill:#FFC107,color:#000
+    style T036 fill:#FF9800,color:#fff
+    style T037 fill:#FF9800,color:#fff
+    style T038 fill:#4CAF50,color:#fff
+    style T039 fill:#FFC107,color:#000
+    style T040 fill:#FF9800,color:#fff
+    style T041 fill:#4CAF50,color:#fff
+    style T042 fill:#4CAF50,color:#fff
 ```
 
 > **Ruta crítica:** T-021 → T-022/T-023/T-024 → T-026/T-027/T-028 → T-029 → T-030
-> T-025 y T-031 pueden ejecutarse en paralelo con la ruta crítica.
+> **Ruta CU:** T-032/T-033 → T-034..T-037 → T-038/T-039 → T-041 → T-042
+> T-025, T-031 y T-040 pueden ejecutarse en paralelo con las rutas principales.
 
 ## 🚧 Tareas con Bloqueos Activos
 
@@ -162,22 +220,26 @@ ORDER BY name ASC
 
 | Integrante | Tareas Asignadas | Horas Estimadas |
 |-----------|-----------------|-----------------|
-| Geovanny | [[T-021]], [[T-024]], [[T-026]] | ~24h |
-| Elkin | [[T-022]], [[T-027]], [[T-030]] | ~20h |
-| Santiago | [[T-023]], [[T-028]], [[T-029]] | ~20h |
-| Equipo | [[T-025]], [[T-031]] | ~12h |
-| **Total** | **11 tareas** | **~76h** |
+| Geovanny | [[T-021]], [[T-024]], [[T-026]], [[T-032]], [[T-034]], [[T-038]], [[T-041]], [[T-042]] | ~35h |
+| Elkin | [[T-022]], [[T-027]], [[T-030]], [[T-033]], [[T-035]], [[T-039]] | ~29h |
+| Santiago | [[T-023]], [[T-028]], [[T-029]], [[T-036]], [[T-037]], [[T-040]] | ~30h |
+| Equipo | [[T-025]], [[T-031]] | ~10h |
+| **Total** | **22 tareas** | **~104h** |
 
 ## Entregables Esperados
 
-- [ ] Diagrama de contexto C4 nivel 1
-- [ ] Modelo ER del módulo EDU
-- [ ] Modelo ER del módulo SAB
-- [ ] Modelo ER del módulo SAL
-- [ ] ADR: Decisión de stack tecnológico
-- [ ] Wireframes iniciales (al menos 3 pantallas por módulo)
-- [ ] Informe de validación con usuarios
-- [ ] Documento Avance 2 compilado
+- [x] Diagrama de contexto C4 nivel 1
+- [x] Modelo ER del módulo EDU
+- [x] Modelo ER del módulo SAB
+- [x] Modelo ER del módulo SAL
+- [x] ADR: Decisión de stack tecnológico
+- [x] Wireframes iniciales (al menos 3 pantallas por módulo)
+- [x] Informe de validación con usuarios
+- [x] Clasificación de actores y lista de 23 casos de uso
+- [x] Documentación expandida de 8 casos de uso representativos
+- [x] Diagrama UML de casos de uso
+- [x] Matriz de trazabilidad CU ↔ RF
+- [x] Documento Avance 2 compilado y entregado
 
 ## Criterios de Éxito
 

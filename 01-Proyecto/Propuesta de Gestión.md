@@ -125,18 +125,21 @@ RAICES_VIVAS/                          ← Vault root
 │   ├── Sprint-01/ (T-001..T-020)      ← 20 tareas completadas
 │   │   ├── Sprint-01-Planning.md
 │   │   └── T-001.md .. T-020.md       ← Auto-ID, frontmatter completo
-│   ├── Sprint-02/ (T-021..T-025)      ← 5 tareas en progreso
+│   ├── Sprint-02/ (T-021..T-042)      ← 22 tareas completadas
 │   │   ├── Sprint-02-Planning.md
-│   │   └── T-021.md .. T-025.md
-│   ├── Sprint-03/ → Sprint-05/        ← Planificados
+│   │   └── T-021.md .. T-042.md
+│   ├── Sprint-03/ (T-043..T-058)      ← 16 tareas — Sprint activo
+│   │   ├── Sprint-03-Planning.md
+│   │   └── T-043.md .. T-058.md
+│   ├── Sprint-04/ → Sprint-05/        ← Planificados
 │
 ├── 06-Entregables/                    ← Documentos de entrega
 │   ├── Avance-1/                      ← Entrega 1 completada
-│   ├── Avance-2/                      ← Entrega 2 en progreso
+│   ├── Avance-2/                      ← Entrega 2 completada
 │   └── Presentaciones/
 │
 ├── 07-Reuniones/                      ← Minutas y acuerdos
-│   └── MIN-001.md                     ← Action Items → promovibles a tareas
+│   └── MIN-001.md .. MIN-006.md       ← 6 minutas · Action Items → tareas
 │
 ├── 08-Recursos/                       ← Archivos de soporte
 │   ├── PDFs/                          ← Documentos fuente

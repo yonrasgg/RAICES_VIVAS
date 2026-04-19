@@ -1940,7 +1940,7 @@ Los gráficos de colaboración (pie, bar) y velocidad (line) se actualizan en ca
 
 ---
 
-*Guía creada: 2026-02-27 · Última actualización: 2026-03-08*
+*Guía creada: 2026-02-27 · Última actualización: 2026-04-19*
 *Equipo: Geovanny (Project Lead) · Elkin (Líder Investigación — SAB) · Santiago (Líder QA — SAL)*
 *Versión: 9.0 — Migración completa Dataview → SQLSeal. §5.1 reescrita para documentar sintaxis SQLSeal (TABLE alias = file(path), SQL estándar). Todas las referencias actualizadas. Tarifas actualizadas a ₡8,500/₡6,500/₡6,500. Integración Jira Cloud: §4.4.13–14 documentan tipos epic/story. §14 incluye plugin jira-sync. §17 incluye troubleshooting Jira.*
 *Revisar y actualizar cada sprint*

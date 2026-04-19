@@ -458,4 +458,4 @@ labelColors: true
 
 ---
 
-*Última actualización: 2026-03-26*
+*Última actualización: 2026-04-19*

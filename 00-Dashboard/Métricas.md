@@ -384,4 +384,4 @@ beginAtZero: true
 
 ---
 
-*Métricas dinámicas · SQLSeal + Charts + Lean Six Sigma + Jira Sync · Última actualización: 2026-03-28*
+*Métricas dinámicas · SQLSeal + Charts + Lean Six Sigma + Jira Sync · Última actualización: 2026-04-19*

@@ -61,7 +61,7 @@ labels:
 SELECT name as "Story", summary as "Título", status as "Estado", assignee as "Responsable", customfield_10016 as "SP"
 FROM files
 WHERE type = 'story' AND tags LIKE '%modulo/transversal%' AND path LIKE '05-Sprints/Stories%'
-ORDER BY key ASC
+ORDER BY key_ ASC
 ```
 
 ## ADRs Relacionados

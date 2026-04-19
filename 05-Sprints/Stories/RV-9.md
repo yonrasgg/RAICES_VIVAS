@@ -63,7 +63,7 @@ labels:
 
 ```sqlseal
 SELECT
-  key as "Jira",
+  key_ as "Jira",
   title as "Tarea",
   status as "Estado",
   assignee as "Responsable",

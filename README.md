@@ -200,7 +200,7 @@ RAICES_VIVAS/
 │   ├── Stories/                   User Stories: RV-4→RV-9, RV-55→RV-64, US-* (23 stories)
 │   ├── Sprint-01/                 Sprint 1 (cerrado): 20 tareas → Done
 │   ├── Sprint-02/                 Sprint 2 (cerrado): 22 tareas (T-021→T-042) + Review
-│   ├── Sprint-03/                 Sprint 3 (planificado)
+│   ├── Sprint-03/                 Sprint 3 (activo): 16 tareas (T-043→T-058)
 │   ├── Sprint-04/                 (planificado)
 │   └── Sprint-05/                 (planificado)
 │
@@ -210,7 +210,7 @@ RAICES_VIVAS/
 │   └── Presentaciones/            Slides y material de presentación
 │
 ├── 07-Reuniones/              ← Minutas de reunión
-│   └── MIN-001 a MIN-005          5 minutas de reuniones del equipo
+│   └── MIN-001 a MIN-006          6 minutas de reuniones del equipo
 │
 ├── 08-Recursos/               ← Recursos del proyecto
 │   ├── Datos/                     Datasets y datos de referencia
@@ -250,13 +250,13 @@ RAICES_VIVAS/
 
 El proyecto se gestiona con un enfoque **ágil adaptado** para contexto académico:
 
-- **5 sprints** de duración variable (2 completados, 3 planificados)
+- **5 sprints** de duración variable (2 completados, 1 activo, 2 planificados)
 - **4 módulos** funcionales: EDU, SAB, SAL, TRANS
 - **23 casos de uso** documentados con notación UML
 - **23 requerimientos funcionales** + **4 no funcionales**
 - **Backlog** priorizado con MoSCoW
 - **Daily/Weekly notes** para seguimiento (9 diarias + 4 semanales)
-- **5 minutas** de reuniones de equipo
+- **6 minutas** de reuniones de equipo
 - **17 ADRs** (Architecture Decision Records)
 - **14 riesgos** gestionados con probabilidad, impacto y estrategias de mitigación
 - **RTM** (Requirements Traceability Matrix) para trazabilidad completa

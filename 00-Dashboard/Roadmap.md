@@ -40,9 +40,10 @@ gantt
 
     section 💻 Implementación
     Sprint-03 EDU piloto + sync  :active,  c1, 2026-04-01, 2026-04-23
+    AVANCE 3                :milestone, m3, 2026-04-23, 0d
     Sprint-04 SAB + SAL + motor  :        c2, 2026-05-01, 2026-05-31
     Sprint-05 integración + test :        c3, 2026-06-01, 2026-06-30
-    ENTREGA FINAL           :milestone, m3, 2026-06-30, 0d
+    PROYECTO COMPLETO       :milestone, m4, 2026-06-30, 0d
 ```
 
 ---
@@ -113,6 +114,21 @@ gantt
     T-029 Preparar instrumentos (San) [RV-31]:done,  v1, 2026-03-18, 2026-03-22
     T-030 Planificar entrevistas (Elk) [RV-32]:done, v2, 2026-03-20, 2026-03-25
     T-031 Gobernanza cultural (Equipo) [RV-33]:done, v3, 2026-03-07, 2026-03-14
+
+    section 📝 Casos de Uso
+    T-032 Clasificar actores (Geo) [RV-55]   :done, t32, 2026-03-26, 2026-03-28
+    T-033 Lista 23 CU (Elk) [RV-56]          :done, t33, 2026-03-26, 2026-03-28
+    T-034 Doc CU-EDU (Geo) [RV-57]           :done, t34, 2026-03-28, 2026-03-29
+    T-035 Doc CU-SAB (Elk) [RV-58]           :done, t35, 2026-03-28, 2026-03-29
+    T-036 Doc CU-SAL (San) [RV-59]           :done, t36, 2026-03-28, 2026-03-29
+    T-037 Doc CU-TRANS (San) [RV-60]         :done, t37, 2026-03-28, 2026-03-29
+    T-038 Diagrama UML CU (Geo) [RV-61]     :done, t38, 2026-03-28, 2026-03-29
+    T-039 Matriz CU↔RF (Elk) [RV-62]        :done, t39, 2026-03-28, 2026-03-29
+    T-040 Conclusiones (San) [RV-63]         :done, t40, 2026-03-28, 2026-03-29
+
+    section 📦 Compilación
+    T-041 Compilar Avance 2 (Geo) [RV-64]   :done, t41, 2026-03-29, 2026-03-29
+    T-042 Exportar PDF (Geo) [RV-65]         :done, t42, 2026-03-29, 2026-03-29
     ENTREGA AVANCE 2                   :milestone, m2, 2026-03-29, 0d
 ```
 
@@ -164,7 +180,7 @@ gantt
 | M1 | Avance 1 — Requerimientos | 2026-02-25 | ✅ Entregado | Equipo |
 | M2 | Avance 2 — Arquitectura | 2026-03-29 | ✅ Entregado | Equipo |
 | M3 | Avance 3 — Implementación | 2026-04-23 | 🔄 En curso | Equipo |
-| M4 | Entrega Final | 2026-06-30 | ⏳ Pendiente | Equipo |
+| M4 | Proyecto Completo (S04+S05) | 2026-06-30 | ⏳ Pendiente | Equipo |
 
 ## Entregas Próximas
 

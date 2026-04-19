@@ -126,15 +126,15 @@ graph LR
 
 ```sqlseal
 SELECT
-  key as "Key",
+  key_ as "Key",
   summary as "Epic / Story",
   issuetype as "Tipo",
   status as "Estado"
 FROM files
 WHERE (type = 'epic' OR type = 'story') AND (path LIKE '05-Sprints/Epics%' OR path LIKE '05-Sprints/Stories%')
-ORDER BY key ASC
+ORDER BY key_ ASC
 ```
 
 ---
 
-*WBS dinámico · Mermaid + SQLSeal + Jira Sync · Última actualización: 2026-03-05*
+*WBS dinámico · Mermaid + SQLSeal + Jira Sync · Última actualización: 2026-04-19*
