@@ -328,7 +328,7 @@ La estimación se realizó con Story Points (escala Fibonacci) para las User Sto
 | **Equipo** (reuniones) | — | 19 h | 17 h | −2 h |
 | **Total** | | **265 h** | **257 h** | **−8 h (−3 %)** |
 
-La desviación del −3 % refleja una estimación conservadora, consistente con la práctica ágil de no consumir el 100 % de la capacidad para absorber imprevistos.
+Al corte del 19 de abril (52 de 58 tareas completadas, 6 tareas pendientes con 17 h planificadas), la desviación de −3 % es parcial. La holgura restante permite absorber imprevistos en las tareas finales de Sprint-03.
 
 ### 3.3 Desglose Funcional del Trabajo
 
@@ -486,7 +486,7 @@ ORDER BY "date" ASC
 
 3. **La gobernanza cultural no es un módulo: es una decisión arquitectónica transversal.** Los principios CARE impactan la sincronización (datos ceremoniales nunca abandonan el dispositivo), el modelo de datos (consentimiento obligatorio como entidad, no como flag), la auditoría (logs inmutables de acceso a saberes) y la resolución de conflictos (la revocación siempre prevalece). Implementar CARE como un complemento aislado habría generado brechas de seguridad cultural.
 
-4. **La gestión de proyecto con trazabilidad automatizada reduce errores y mejora la auditabilidad.** El uso de Obsidian + SQLSeal permitió mantener un vault con 58 tareas, 17 ADRs, 14 riesgos y 5 reuniones con consultas dinámicas actualizadas en tiempo real, eliminando la desincronización entre documentos que caracteriza a las herramientas tradicionales.
+4. **La gestión de proyecto con trazabilidad automatizada reduce errores y mejora la auditabilidad.** El uso de Obsidian + SQLSeal permitió mantener un vault con 58 tareas, 17 ADRs, 14 riesgos y 6 reuniones con consultas dinámicas actualizadas en tiempo real, eliminando la desincronización entre documentos que caracteriza a las herramientas tradicionales.
 
 5. **Las comunidades indígenas son socias de diseño, no beneficiarias pasivas.** La frase del líder boruca — «Que nos traten como socios, no como beneficiarios» — sintetiza una postura que permeó todo el proyecto. Los cuatro niveles de acceso CARE fueron validados espontáneamente por un portador de saber bribri antes de que el equipo los presentara formalmente. La gobernanza del sistema refleja la gobernanza comunitaria existente (ADI, Consejo de Mayores, Awá), no la reemplaza.
 
@@ -547,7 +547,7 @@ ORDER BY "date" ASC
 | `04-Arquitectura/` | Diagramas, Prototipos, Modelo de Datos, Stack, WBS | 5 documentos |
 | `05-Sprints/` | Backlog, Epics, Stories, Tareas | 4 Epics, 13 Stories, 58 tareas |
 | `06-Entregables/` | Avance 1, Avance 2, Entrega Final | 3 documentos |
-| `07-Reuniones/` | Minutas | 5 minutas |
+| `07-Reuniones/` | Minutas | 6 minutas |
 | `08-Recursos/` | Imágenes, PDFs, Scripts, Datos | Assets del proyecto |
 | `09-QA/` | Pruebas y validación | Plan de pruebas |
 | `99-Templates/` | Templates de Templater | 16 templates |
@@ -556,9 +556,11 @@ ORDER BY "date" ASC
 
 | Miembro | Sprint-01 (20 tareas) | Sprint-02 (22 tareas) | Sprint-03 (16 tareas) | Total |
 |---------|----------------------|----------------------|----------------------|-------|
-| **Geovanny** | Setup vault, templates, requerimientos, Charter, RTM | Diagramas ER/C4, prototipos, stack, export PDF | Sync PouchDB, CRUD EDU, documentación, Jira | 103 h |
-| **Elkin** | Investigación SAB, entrevistas, encuestas, contexto | CU expandidos SAB, traducciones preliminares | Traducciones es + bri, CU SAB multimedia | 66 h |
-| **Santiago** | Investigación SAL, observaciones, encuesta salud | CU expandidos SAL, wireframes SAL, revisión cruzada | CRUD SAL, pruebas manuales/E2E, presentación | 71 h |
+| **Geovanny** | Setup vault, templates, requerimientos, Charter, RTM | Diagramas ER/C4, prototipos, stack, export PDF | Sync PouchDB, CRUD EDU, documentación, Jira | 103 h* |
+| **Elkin** | Investigación SAB, entrevistas, encuestas, contexto | CU expandidos SAB, traducciones preliminares | Traducciones es + bri, CU SAB multimedia | 66 h* |
+| **Santiago** | Investigación SAL, observaciones, encuesta salud | CU expandidos SAL, wireframes SAL, revisión cruzada | CRUD SAL, pruebas manuales/E2E, presentación | 71 h* |
+
+*\*Horas reales al corte 2026-04-19. Sprint-03 en curso (6 tareas / 17 h pendientes).*
 
 ### Anexo C — Decisiones Arquitectónicas (ADR)
 

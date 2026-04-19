@@ -74,8 +74,8 @@ Ver [[Stakeholders]] para detalle completo.
 | Entregable | Fecha Objetivo |
 |-----------|---------------|
 | Avance 1 — Requerimientos | 2026-02-25 ✅ |
-| Avance 2 — Diseño y Arquitectura | 2026-04-01 |
-| Entrega Final | 2026-05-30 |
+| Avance 2 — Diseño y Arquitectura | 2026-03-29 ✅ |
+| Avance 3 — Entrega Final | 2026-04-23 |
 
 ## Riesgos Iniciales
 

@@ -45,7 +45,7 @@ gantt
     todayMarker stroke-width:3px,stroke:#f66,opacity:0.8
 
     section 🏗️ Diseño
-    T-021 Diagrama contexto (Geo) [RV-12]  :active, t21, 2026-02-28, 2026-03-07
+    T-021 Diagrama contexto (Geo) [RV-12]  :done, t21, 2026-02-28, 2026-03-07
     T-025 Stack tecnológico (Equipo) [RV-30]:        t25, 2026-03-01, 2026-03-07
     T-022 Modelo ER EDU (Elk) [RV-39]      :        t22, 2026-03-03, 2026-03-14
     T-023 Modelo ER SAB (San) [RV-40]      :        t23, 2026-03-03, 2026-03-14
