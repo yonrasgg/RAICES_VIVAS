@@ -28,6 +28,20 @@ banner_src_y: 0.42
 
 ---
 
+## Resumen Ejecutivo
+
+El presente documento constituye el segundo avance del proyecto **Raíces Vivas**, un sistema integral diseñado para comunidades indígenas de Costa Rica que articula tres dominios funcionales —educación intercultural bilingüe, preservación de saberes ancestrales y salud comunitaria— bajo una arquitectura unificada *offline-first* con gobernanza cultural basada en los principios CARE (Carroll et al., 2020).
+
+Se documentan **23 casos de uso** derivados de 23 requerimientos funcionales, con trazabilidad completa RF↔CU (100%). De estos, **12 casos** se expanden en formato Cockburn completo (14 campos estructurados), seleccionados por prioridad MoSCoW: los 9 casos *Must* del MVP, 2 casos *Should* de alta relevancia cultural y 1 caso *Could* de interoperabilidad institucional. Los 4 casos adicionales (CU-EDU-07, CU-SAB-06, CU-SAB-07, CU-SAL-06) emergieron directamente de la investigación cualitativa de campo (4 entrevistas semiestructuradas, 3 sesiones de observación, 105 encuestas), evidenciando cómo la triangulación metodológica refina el alcance funcional del sistema.
+
+El análisis identifica **14 actores** (10 humanos, 4 sistemas), organizados en 5 primarios y 5 secundarios, con un patrón distintivo de "autoridad delegada" donde figuras no digitales (Consejo de mayores, Awá) ejercen poder de veto sobre operaciones del sistema. El diagrama UML resultante modela 9 relaciones inter-caso (`«include»` y `«extend»`), y los anexos complementarios aplican herramientas de gestión de calidad —FODA, Ishikawa, QFD (Casa de la Calidad) y DMAIC (Lean Six Sigma)— para análisis estratégico, identificación de causa raíz y priorización técnica.
+
+**Hallazgos clave:** (1) la gobernanza cultural permea todos los módulos, no solo SAB; (2) el patrón offline-first impacta cada escenario documentado; (3) los 38 modelos de entidad-relación incluyen campos de sincronización y cifrado por diseño; y (4) la Casa de la Calidad confirma que gobernanza cultural (T2), auditoría inmutable (T7) y sincronización offline (T1) son los tres pilares técnicos con mayor puntuación ponderada.
+
+**Palabras clave:** casos de uso, arquitectura offline-first, gobernanza de datos indígenas, principios CARE, PouchDB/CouchDB, PWA, Lean Six Sigma, QFD, comunidades indígenas, Costa Rica.
+
+---
+
 ## 1. Introducción
 
 Este documento presenta el segundo avance del proyecto **Raíces Vivas**, un sistema integral de apoyo a comunidades indígenas de Costa Rica en tres ejes: educación intercultural bilingüe (EDU), preservación de saberes ancestrales (SAB) y salud comunitaria (SAL), con un módulo transversal (TRANS) que gestiona conectividad, multilingüismo y gobernanza cultural.
@@ -59,6 +73,56 @@ Los requerimientos funcionales y casos de uso de este avance se fundamentan en l
 | **TRANS** | [[ENT-001]]–[[ENT-004]] (transversal) | — | — | [[Bibliografía]] §6 |
 
 > **Referencia completa:** La [[Bibliografía]] contiene 30 fuentes documentales organizadas por categoría temática.
+
+### 1.3 Marco Teórico-Conceptual
+
+El diseño del sistema Raíces Vivas se fundamenta en un conjunto de marcos teóricos y estándares de ingeniería de software que sustentan las decisiones de modelado, arquitectura y gobernanza. Esta sección explicita los fundamentos que subyacen al trabajo presentado, permitiendo al lector evaluar la rigurosidad técnica de cada artefacto.
+
+#### 1.3.1 Modelado de Casos de Uso — Estándar Cockburn
+
+Los casos de uso se documentan siguiendo la especificación de **Alistair Cockburn** (2001), quien propone un formato estructurado de 14 campos que incluye actor principal, objetivo, precondiciones, disparador, escenario principal, flujos alternos, excepciones, prioridad, frecuencia de uso, canal de interacción y actores secundarios. Este formato fue elegido sobre alternativas más simples (plantilla Jacobson de 4 campos) porque permite capturar la complejidad de contextos multiculturales donde un mismo caso de uso involucra actores digitales y no digitales (e.g., el Awá no opera el sistema pero su autorización es bloqueante). Cockburn (2001, cap. 6) denomina este patrón "stakeholder with veto power" — exactamente el rol del Consejo de mayores en CU-SAB-04 y CU-SAB-06.
+
+#### 1.3.2 Priorización MoSCoW
+
+La priorización de requisitos emplea el método **MoSCoW** (Clegg & Barker, 1994), ampliamente adoptado en metodologías ágiles (DSDM, SAFe). Los cuatro niveles — *Must have*, *Should have*, *Could have*, *Won't have* — permiten delimitar el MVP (Minimum Viable Product) con criterio de negociación explícito: los 11 requerimientos *Must* constituyen el contrato mínimo de entrega, mientras que los *Should* y *Could* representan valor incremental. Esta clasificación se cruzó con la investigación de campo para validar prioridades: por ejemplo, CU-SAB-06 (revocación de contenido) fue elevado a *Must* tras documentar en ENT-002 y ENT-004 casos reales de apropiación cultural indebida.
+
+#### 1.3.3 Arquitectura Offline-First
+
+El patrón arquitectónico **offline-first** (Nicoll, 2019; Nicola Corti, 2020) invierte la premisa del desarrollo web tradicional: en lugar de asumir conectividad y manejar la desconexión como excepción, asume desconexión como estado normal y trata la conectividad como oportunidad de sincronización. Este paradigma es obligatorio en el contexto operativo de Raíces Vivas, donde el 80% del territorio objetivo carece de conectividad estable (RSK-001). La implementación emplea **PouchDB** (cliente) con replicación bidireccional hacia **CouchDB** (servidor), un stack que implementa el **Protocolo de Replicación CouchDB** — un algoritmo de sincronización basado en árboles de revisiones (*revision trees*) con resolución de conflictos determinista (Apache CouchDB, 2024). Cada caso de uso expandido documenta un flujo alterno de operación sin conexión, formalizando este patrón en la capa de análisis.
+
+#### 1.3.4 Principios CARE para Gobernanza de Datos Indígenas
+
+La gobernanza de datos del sistema se rige por los **Principios CARE** (*Collective Benefit, Authority to Control, Responsibility, Ethics*), propuestos por la Global Indigenous Data Alliance (Carroll et al., 2020) como complemento a los principios FAIR (*Findable, Accessible, Interoperable, Reusable*) de datos abiertos. Mientras FAIR optimiza para el acceso, CARE optimiza para la soberanía. En Raíces Vivas, esto se materializa en cuatro niveles de acceso (Público, Comunitario, Restringido, Ceremonial) donde el nivel más alto — Ceremonial — **nunca se sincroniza al servidor central**, permaneciendo exclusivamente en el dispositivo local y el RPi del territorio. Esta decisión arquitectónica (ADR-009) es deliberada: prioriza la soberanía digital de la comunidad sobre la disponibilidad de datos, un trade-off que contradice los principios FAIR pero cumple con el artículo 6 del Convenio 169 de la OIT.
+
+#### 1.3.5 Notación UML y Limitaciones de Mermaid
+
+Los diagramas de este documento emplean **Mermaid** como lenguaje de renderizado, integrado en el ecosistema Markdown/Obsidian del proyecto. Es preciso señalar que Mermaid no implementa la notación UML 2.5 completa (OMG, 2017): carece de los estereotipos gráficos estándar para actores (figura de palito), límites del sistema (rectángulo) y elipses de casos de uso. Para compensar esta limitación, se utilizan subgrafos como sustituto visual de los límites del sistema (*system boundary*) y nodos redondeados para los casos de uso, manteniendo fidelidad semántica mediante etiquetas explícitas de relaciones (`«include»`, `«extend»`). La tabla 5.1 formaliza cada relación con su justificación.
+
+#### 1.3.6 Herramientas de Gestión de Calidad
+
+Los anexos C–F aplican herramientas del ciclo de **Lean Six Sigma** (George et al., 2005) y gestión de calidad:
+
+- **FODA** (Learned et al., 1965): análisis de factores internos/externos con estrategias cruzadas FO/DO/FA/DA.
+- **Diagrama de Ishikawa** (Ishikawa, 1968): análisis de causa raíz con las 6M adaptadas al dominio software, complementado con análisis de los 5 Porqués y priorización Pareto por RPN (*Risk Priority Number*).
+- **Casa de la Calidad / QFD** (Akao, 1990): despliegue de la función de calidad que traduce la Voz del Cliente (10 necesidades) en características técnicas medibles (10 especificaciones), con matriz de relaciones ponderada.
+- **DMAIC** (Define, Measure, Analyze, Improve, Control): ciclo de mejora continua aplicado al ciclo de desarrollo ágil, con retroalimentación por sprint.
+
+La aplicación conjunta de estas herramientas no es decorativa: cada una alimenta a la siguiente. El FODA identifica debilidades (D1: conectividad); Ishikawa descompone sus causas raíz; QFD traduce las necesidades resultantes en métricas técnicas; y DMAIC establece el ciclo de monitoreo. Esta trazabilidad entre herramientas analíticas es característica de un enfoque **Six Sigma maduro** (Pyzdek & Keller, 2014, cap. 12).
+
+### 1.4 Marco Legal Aplicable
+
+El sistema opera en un marco jurídico que combina legislación nacional costarricense con instrumentos internacionales de protección de pueblos indígenas. Las decisiones de diseño —particularmente los niveles de acceso, la encriptación de datos médicos y la política de sincronización— responden directamente a estas obligaciones legales.
+
+| Instrumento | Ámbito | Implicación en el Sistema |
+|---|---|---|
+| **Convenio 169 OIT** (1989) | Internacional — Pueblos indígenas | Art. 6: derecho a consulta; Art. 7: control sobre desarrollo. Justifica el patrón de "autoridad delegada" (Consejo/Awá con poder de veto). |
+| **Ley 6172** — Ley Indígena de CR (1977) | Nacional — Territorios indígenas | Reconoce territorios como autónomos. Fundamenta que los datos generados en territorio indígena son gobernados por la comunidad, no por el operador del sistema. |
+| **Ley 7788** — Biodiversidad (1998) | Nacional — Conocimiento tradicional | Art. 82-84: protección de conocimiento tradicional asociado a biodiversidad. Justifica el nivel de acceso "Restringido" y la encriptación de saberes con clasificación cultural. |
+| **Ley 8968** — Protección de Datos Personales (2011) | Nacional — Datos personales | Regula tratamiento de datos sensibles (salud, etnia). Obliga cifrado AES-256 en reposo para datos del módulo SAL; consentimiento explícito para exportación a EDUS (CU-SAL-06). |
+| **Decreto 37801-MEP** (2013) | Nacional — Educación indígena | Reforma del Subsistema de Educación Indígena. Fundamenta la necesidad de material educativo bilingüe y la estructura de centros educativos en territorios. |
+| **Principios CARE** (Carroll et al., 2020) | Internacional — Gobernanza de datos | Marco ético complementario al legal. Operacionalizado como 4 niveles de acceso (ADR-009): Público → Comunitario → Restringido → Ceremonial. |
+
+> **Nota sobre cumplimiento:** El sistema no reemplaza la consulta comunitaria requerida por el Convenio 169. Los flujos de consentimiento digital (CU-SAB-05) son un **registro** de decisiones tomadas presencialmente por las autoridades comunitarias competentes, no un sustituto del proceso de consulta.
 
 ---
 
@@ -134,6 +198,16 @@ graph LR
     AWA -.-> SAB
     TRAD -.-> TRANS
 ```
+
+#### Lectura del diagrama
+
+El diagrama evidencia tres patrones estructurales relevantes para la arquitectura del sistema:
+
+1. **Correspondencia 1:1 entre actores primarios y módulos dominantes.** Cada módulo funcional tiene un actor operativo principal (Docente→EDU, Guía cultural→SAB, Auxiliar→SAL, Admin→TRANS), lo que valida la decisión de descomposición modular (ADR-005) y simplifica la matriz de permisos RBAC.
+
+2. **El Administrador comunitario es el único actor primario bi-modular** (SAB + TRANS). Esto refleja su doble rol: gobernanza cultural (permisos CARE en SAB) y administración operativa (configuración de gobernanza en TRANS). Arquitectónicamente, esto implica que la capa de autorización debe soportar roles compuestos.
+
+3. **Los actores secundarios con línea punteada representan interacción reactiva.** El Consejo de mayores y el Awá no inician casos de uso — son invocados por el sistema cuando se requiere autorización para contenido restringido/ceremonial. Este patrón de "autoridad delegada sin acceso directo" (Cockburn, 2001) tiene implicaciones de diseño: el sistema debe registrar decisiones tomadas fuera de él (presencialmente) y modelar flujos asíncronos de aprobación.
 
 ---
 
@@ -905,6 +979,16 @@ graph TB
 | CU-SAB-06 → CU-SAB-07 | Revocar contenido | Auditoría de acceso | `«include»` | Toda revocación **genera** registro en el log de auditoría |
 | CU-SAL-06 → CU-SAL-02 | Exportar expediente | Registrar historial | `«extend»` | Opcionalmente, desde el historial se puede exportar a EDUS |
 
+### 5.2 Análisis Estructural del Diagrama
+
+El diagrama de casos de uso revela propiedades estructurales que informan las decisiones de implementación:
+
+**Densidad de relaciones por módulo.** SAB presenta la mayor densidad relacional (4 relaciones: 2 `«include»` + 2 `«extend»`), seguido por EDU (3) y SAL (2). Esta densidad correlaciona con la complejidad de la gobernanza cultural: el módulo SAB no solo gestiona datos, sino que orquesta un protocolo de consentimiento, acceso y revocación que involucra hasta 3 niveles de autoridad humana. En términos de acoplamiento (coupling), SAB→TRANS presenta el acoplamiento inter-módulo más fuerte a través de CU-TRANS-01 (sincronización) y CU-TRANS-03 (gobernanza), lo que valida la decisión de extraer gobernanza como servicio transversal en lugar de embebido en SAB.
+
+**Relaciones `«include»` como dependencias obligatorias.** Las 4 relaciones `«include»` identificadas (SAB-01→SAB-05, SAL-02→SAL-01, EDU-06→EDU-05, SAB-06→SAB-07) definen el **orden de implementación mínimo** dentro de cada sprint: no se puede implementar CU-SAB-01 (registrar saber) sin antes implementar CU-SAB-05 (registrar consentimiento). Esta relación formaliza lo que en la cultura indígena es axiomático: *no hay registro de conocimiento sin consentimiento del portador*.
+
+**Actores secundarios con capacidad de bloqueo.** El Consejo de mayores y el Awá participan como actores secundarios en CU-SAB-04 y CU-SAB-06, pero con semántica de *veto*: su ausencia de aprobación impide la progresión del caso de uso. En UML formal, este patrón se modelaría como una precondición de estado; en la implementación, se traduce en un flujo de aprobación asincrónico con estados `pendiente_aprobacion → aprobado | rechazado`.
+
 ---
 
 ## 6. Referencia Cruzada: Requerimientos Funcionales ↔ Casos de Uso
@@ -949,23 +1033,48 @@ graph TB
 
 > **Nota:** Se documentaron en formato expandido 12 casos de uso: los 9 de prioridad **Must** correspondientes al MVP, 3 de prioridad **Should** y 1 **Could**, seleccionados por su complejidad o relevancia cultural. Los 11 restantes están identificados y trazados, y serán documentados en formato expandido conforme se aborden en Sprint-04 y Sprint-05.
 
+### 6.3 Impacto de Requerimientos No Funcionales en los Casos de Uso
+
+Los 4 requerimientos no funcionales (RNF) del sistema no existen de forma aislada: cada uno impone restricciones transversales que se manifiestan como patrones recurrentes en los 12 casos de uso expandidos. La siguiente matriz documenta cómo cada RNF se materializa en los flujos documentados, evidenciando que la complejidad técnica del sistema no reside solo en la funcionalidad, sino en las propiedades de calidad que deben sostenerse simultáneamente.
+
+| RNF | Descripción | Patrón en Casos de Uso | CU Afectados | Manifestación Concreta |
+|---|---|---|---|---|
+| **RNF-01** | Disponibilidad offline ≥ 99% | Flujo alterno "Sin conectividad" | **12/12** (100%) | Cada CU documenta almacenamiento local + marca para sincronización + manejo de conflictos. PouchDB como capa de persistencia obligatoria. |
+| **RNF-02** | Seguridad — AES-256 reposo, TLS 1.3 tránsito, RBAC | Excepciones de acceso denegado + campos cifrados | **8/12** (67%) | CU-SAL-01/02 cifran datos médicos; CU-SAB-04 aplica RBAC por nivel CARE; CU-TRANS-01 excluye datos ceremoniales de sync. |
+| **RNF-03** | Usabilidad — tarea ≤ 2 min, ≤ 6 campos | Formularios de entrada | **7/12** (58%) | Formularios de registro (CU-EDU-01, CU-SAL-01) con ≤ 6 campos obligatorios; wizard implícito en CU-SAB-01 (registro + consentimiento secuencial). |
+| **RNF-04** | Rendimiento — bundle < 500 KB, Android 8+ | Canal: "PWA en cualquier dispositivo" | **12/12** (100%) | Todos los CU especifican PWA como canal; el límite de bundle condiciona las dependencias de UI permitidas. |
+
+#### Análisis de tensiones inter-RNF
+
+El diseño de los casos de uso revela **tensiones inherentes** entre requerimientos no funcionales que requieren decisiones de trade-off:
+
+1. **Seguridad vs. Disponibilidad offline (RNF-02 × RNF-01).** Los datos cifrados con AES-256 deben ser accesibles sin conexión, lo que implica que las claves de cifrado deben residir en el dispositivo local. CU-TRANS-01 mitiga este riesgo excluyendo datos ceremoniales del sincronizado, reduciendo la superficie de exposición.
+
+2. **Usabilidad vs. Seguridad (RNF-03 × RNF-02).** El requisito de ≤ 6 campos por formulario limita la cantidad de metadata de seguridad que puede solicitarse al usuario. CU-SAB-05 (consentimiento) resuelve esto separando el flujo en pasos secuenciales (wizard) donde la seguridad se aplica por capas sin sobrecargar una sola pantalla.
+
+3. **Rendimiento vs. Multilingüismo (RNF-04 × CU-TRANS-02).** Mantener 4 archivos de traducción i18n dentro del bundle de 500 KB requiere que los namespaces se carguen bajo demanda (*lazy loading*), no precargados. CU-TRANS-02 documenta este patrón en su flujo alterno B (archivo de idioma no disponible offline).
+
+Estas tensiones no son defectos del diseño sino propiedades emergentes de un sistema que debe operar en un contexto de restricciones simultáneas — lo que en ingeniería de software se denomina **conflicto de atributos de calidad** (Bass et al., 2013, cap. 7). La documentación explícita de estos trade-offs permite evaluar las decisiones arquitectónicas con evidencia, no con suposiciones.
+
 ---
 
 ## 7. Conclusiones y Recomendaciones
 
 ### 7.1 Conclusiones
 
-1. **Complejidad multi-dominio confirmada.** El análisis de 23 casos de uso evidenció que Raíces Vivas no es un sistema CRUD convencional; integra educación, patrimonio cultural y salud, cada uno con reglas de negocio, actores y restricciones propios. La decisión de separar en módulos (EDU, SAB, SAL, TRANS) fue acertada y se valida con la distribución natural de los casos de uso.
+1. **Complejidad multi-dominio confirmada.** El análisis de 23 casos de uso evidenció que Raíces Vivas no es un sistema CRUD convencional; integra educación, patrimonio cultural y salud, cada uno con reglas de negocio, actores y restricciones propios. En la taxonomía de Cockburn (2001), el sistema opera en al menos 3 *business scopes* simultáneos, lo que justifica la descomposición modular (EDU, SAB, SAL, TRANS) y la decisión arquitectónica de bases de datos independientes por módulo (ADR-008).
 
-2. **La gobernanza cultural atraviesa todo el sistema.** Los principios CARE no solo afectan al módulo SAB; están presentes en los flujos de sincronización (CU-TRANS-01 excluye datos ceremoniales), en el registro de salud (CU-SAL-02 aplica encriptación por rol), y en la configuración de acceso (CU-SAB-04). Esto confirma que la gobernanza debe implementarse como un módulo transversal, no como una funcionalidad aislada.
+2. **La gobernanza cultural es una propiedad emergente del sistema, no un módulo.** Los principios CARE no solo afectan al módulo SAB; están presentes en los flujos de sincronización (CU-TRANS-01 excluye datos ceremoniales), en el registro de salud (CU-SAL-02 aplica encriptación por rol), y en la configuración de acceso (CU-SAB-04). Esto confirma que la gobernanza cultural opera como un *cross-cutting concern* (Kiczales et al., 1997) que permea todas las capas del sistema — análogo a como la seguridad y el logging se manejan en arquitecturas orientadas a aspectos.
 
-3. **El diseño offline-first impacta todos los casos de uso.** Cada escenario principal documenta un flujo alterno de operación sin conexión. Esto fue consistente en los 12 casos expandidos: todos almacenan localmente, marcan para sincronización y manejan conflictos. La arquitectura PouchDB/CouchDB elegida en ADR-008 soporta nativamente este patrón.
+3. **El patrón offline-first impacta la totalidad de los casos de uso (12/12 = 100%).** Cada escenario principal documenta un flujo alterno de operación sin conexión. Este hallazgo cuantitativo confirma que offline-first no es una *feature* sino un *architectural driver* (Bass et al., 2013): una decisión que condiciona todas las demás. La arquitectura PouchDB/CouchDB con replicación bidireccional (ADR-008) fue seleccionada precisamente porque implementa el patrón de *eventual consistency* que este requisito exige.
 
-4. **Los actores secundarios tienen influencia crítica sin acceso directo.** El Consejo de mayores y el Awá no operan el sistema, pero su autorización es **bloqueante** para casos de uso con nivel de acceso restringido/ceremonial. Este patrón de "autoridad delegada" requiere un diseño de workflows que trasciende la interacción digital.
+4. **El patrón de "autoridad delegada sin acceso digital" es único de contextos indígenas.** El Consejo de mayores y el Awá no operan el sistema, pero su autorización es **bloqueante** para CU-SAB-04 y CU-SAB-06. En la literatura de ingeniería de requerimientos, este patrón —donde un stakeholder con poder de veto interactúa exclusivamente a través de intermediarios humanos— no tiene equivalente directo en sistemas convencionales. Los flujos asíncronos de aprobación (`pendiente → aprobado | rechazado`) formalizan un proceso que en la práctica es presencial y oral, creando un puente entre la gobernanza comunitaria tradicional y el sistema digital.
 
-5. **La trazabilidad RF ↔ CU es completa (23:23).** Cada requerimiento funcional tiene un caso de uso correspondiente, y cada caso de uso tiene al menos un requerimiento que lo origina. No se identificaron requerimientos huérfanos ni casos de uso sin fundamento funcional.
+5. **La trazabilidad RF ↔ CU es completa y bidireccional (23:23).** Cada requerimiento funcional tiene exactamente un caso de uso correspondiente, y viceversa. No se identificaron requerimientos huérfanos (*orphan requirements*) ni casos de uso sin fundamento funcional (*gold-plated use cases*). Esta trazabilidad 1:1 simplifica la validación de cobertura y permite que cambios en un RF propaguen impacto directamente al CU asociado.
 
-6. **La investigación de campo reveló necesidades críticas de protección cultural.** Los 4 nuevos casos de uso (CU-EDU-07, CU-SAB-06, CU-SAB-07, CU-SAL-06) emergieron directamente del análisis de entrevistas y observaciones. La revocación de contenido (CU-SAB-06) y la auditoría de acceso (CU-SAB-07) responden al trauma documentado de apropiación cultural indebida; la exportación a EDUS (CU-SAL-06) aborda la ineficiencia de transcripción manual de 3+ horas; y el repositorio compartido (CU-EDU-07) atiende la necesidad de las 3 comunidades maleku de intercambiar material didáctico.
+6. **La investigación cualitativa amplió el alcance funcional en un 21%.** Los 4 nuevos casos de uso (CU-EDU-07, CU-SAB-06, CU-SAB-07, CU-SAL-06) — que representan un incremento de 19 a 23 RF — emergieron del análisis de entrevistas y observaciones, no de la especulación del equipo. Esto valida el enfoque de **triangulación metodológica** (Denzin, 1978): la misma realidad observada desde múltiples instrumentos produce hallazgos que un solo método no capturaría. En particular, CU-SAB-06 (revocación) responde al trauma de apropiación cultural documentado en ENT-002 y ENT-004, y CU-SAL-06 (exportación EDUS) aborda la ineficiencia de transcripción manual de 3+ horas reportada en ENT-003.
+
+7. **Los conflictos de atributos de calidad están explícitamente documentados.** El análisis de §6.3 identifica 3 tensiones inter-RNF (seguridad vs. disponibilidad, usabilidad vs. seguridad, rendimiento vs. multilingüismo) y sus resoluciones. Esta documentación de trade-offs es consistente con el enfoque ATAM (*Architecture Tradeoff Analysis Method*) de Bass et al. (2013) y demuestra que las decisiones arquitectónicas no son arbitrarias sino evaluadas contra escenarios de calidad concretos.
 
 ### 7.2 Recomendaciones
 
