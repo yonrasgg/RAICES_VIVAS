@@ -4,7 +4,7 @@ title: Raíces Vivas — Avance 2 - Casos de Uso
 project: raices-vivas
 avance: 2
 sprint: Sprint-02
-status: in-progress
+status: completed
 tags:
   - entregable
   - avance-2
@@ -12,7 +12,7 @@ tags:
   - arquitectura
   - diseño
 created: 2026-03-26
-updated: 2026-03-29
+updated: 2026-03-30
 banner_src: "08-Recursos/Imágenes/cover-entregables.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
@@ -52,14 +52,23 @@ El presente avance se centra en el análisis de **casos de uso** del sistema: id
 
 | Sección | Contenido | Criterio de Rúbrica |
 |---------|-----------|-------------------|
+| Resumen | Abstract ejecutivo con palabras clave | Encuadre académico |
+| §1.3 | Marco teórico-conceptual (Cockburn, MoSCoW, CARE, QFD, UML) | Fundamento teórico |
+| §1.4 | Marco legal aplicable (6 instrumentos) | Contexto normativo |
 | §2 | Identificación y clasificación de actores | Criterio 1 (4 pts) |
 | §3 | Lista general de 23 casos de uso | Criterio 2 (4 pts) |
 | §4 | Documentación expandida de 12 casos de uso | Criterios 3-5 (12 pts) |
-| §5 | Diagrama de casos de uso (UML) | Criterio 6 (4 pts) |
-| §6 | Referencia cruzada RF ↔ CU | Criterio 7 (4 pts) |
-| §7 | Conclusiones y recomendaciones | Criterio 8 (4 pts) |
+| §5 | Diagrama de casos de uso (UML) + análisis estructural | Criterio 6 (4 pts) |
+| §6 | Referencia cruzada RF ↔ CU + impacto NFR | Criterio 7 (4 pts) |
+| §7 | Conclusiones y recomendaciones (7+6) | Criterio 8 (4 pts) |
 | Anexo A | Contexto arquitectónico (C4, ER, stack) | Complementario |
 | Anexo B | Contribuciones del equipo | Criterio 10 (4 pts) |
+| Anexo C | Análisis FODA | Herramienta de calidad |
+| Anexo D | Diagrama de Ishikawa | Herramienta de calidad |
+| Anexo E | Casa de la Calidad (QFD) | Herramienta de calidad |
+| Anexo F | Metodología DMAIC — Lean Six Sigma | Herramienta de calidad |
+| Anexo G | Patrones de diseño aplicados (5 patrones) | Profundidad técnica |
+| Refs. | Bibliografía APA 7 (15 fuentes) + instrumentos legales | Rigor académico |
 
 ### 1.2 Investigación de Base
 
@@ -2190,21 +2199,116 @@ flowchart LR
 
 ---
 
-## Referencias
+## Anexo G: Patrones de Diseño Aplicados
 
-- [[01-Proyecto/Charter|Charter del Proyecto]]
-- [[01-Proyecto/Alcance|Alcance]]
-- [[04-Arquitectura/Visión General|Arquitectura General (C4)]]
-- [[04-Arquitectura/Modelo de Datos|Modelo de Datos (ER)]]
-- [[04-Arquitectura/Stack Tecnológico|Stack Tecnológico]]
-- [[04-Arquitectura/WBS|Work Breakdown Structure]]
-- [[ADR-008|ADR-008 — Selección de Stack Tecnológico]]
-- [[ADR-009|ADR-009 — Gobernanza Cultural y Protocolos de Consentimiento]]
-- [[02-Investigación/Contexto/Mapa de Territorios Indígenas|Mapa de Territorios Indígenas]]
-- [[03-Requerimientos/_RTM|Matriz de Trazabilidad de Requerimientos]]
-- [[05-Sprints/Sprint-02/Sprint-02-Review|Sprint-02 Review]]
+Los patrones de diseño no se seleccionaron como ejercicio teórico, sino como soluciones probadas a problemas concretos identificados durante el análisis de casos de uso y la definición de la arquitectura. La siguiente tabla documenta los 5 patrones principales, su contexto de problema y su materialización en el sistema.
+
+### G.1 Catálogo de Patrones
+
+| # | Patrón | Categoría | Problema que resuelve | Implementación en Raíces Vivas |
+|---|---|---|---|---|
+| 1 | **Offline-First / Local-First** | Arquitectónico | Conectividad intermitente o inexistente en territorios indígenas (RNF-01) | PouchDB almacena todos los datos localmente en IndexedDB. Las operaciones CRUD se ejecutan contra la base local; la sincronización con CouchDB remoto ocurre oportunistamente cuando hay conexión. Cada documento incluye `_rev` para detección de conflictos (CRDTs implícitos). |
+| 2 | **Repository** | Estructural (GoF) | Desacoplar la lógica de dominio de la capa de persistencia PouchDB | Cada módulo expone funciones de acceso a datos (`getAll`, `getById`, `upsert`, `remove`) que encapsulan las llamadas a `pouchDb.get()` / `pouchDb.put()`. Los componentes React consumen estas funciones sin conocer la API de PouchDB. |
+| 3 | **Observer / Pub-Sub** | Comportamiento (GoF) | Notificar a la UI del estado de sincronización en tiempo real sin polling | PouchDB emite eventos `change`, `paused`, `active`, `error` durante la replicación. El componente `SyncIndicator` se suscribe a estos eventos y actualiza el estado visual (sincronizado / sincronizando / error / offline) reactivamente. |
+| 4 | **Strategy** | Comportamiento (GoF) | Aplicar reglas de acceso CARE diferenciadas según el nivel de sensibilidad del recurso | El nivel de acceso (`público`, `comunitario`, `restringido`, `ceremonial`) determina qué estrategia de visibilidad y cifrado se aplica: público = sin restricción; comunitario = visible a miembros del territorio; restringido = requiere rol autorizado; ceremonial = excluido de sincronización + cifrado AES-256. |
+| 5 | **Mediator** | Comportamiento (GoF) | Coordinar la comunicación entre módulos independientes (EDU, SAB, SAL) sin acoplamiento directo | El módulo TRANS actúa como mediador: gestiona la sincronización centralizada (CU-TRANS-01), el cambio de idioma global (CU-TRANS-02), y el log de auditoría transversal (CU-TRANS-05). Los módulos de dominio no se comunican entre sí; emiten eventos que TRANS consume y coordina. |
+
+### G.2 Diagrama de Relaciones entre Patrones
+
+```
+┌─────────────────────────────────────────────────────┐
+│                    CAPA DE PRESENTACIÓN              │
+│  React Components ← Observer ← SyncIndicator        │
+│                    ← Strategy ← AccessLevelGuard     │
+├─────────────────────────────────────────────────────┤
+│                    CAPA DE LÓGICA                     │
+│  Módulo EDU ──┐                                      │
+│  Módulo SAB ──┼── Mediator (TRANS) ── Audit Log      │
+│  Módulo SAL ──┘                                      │
+├─────────────────────────────────────────────────────┤
+│                    CAPA DE DATOS                      │
+│  Repository ── PouchDB (local) ←→ CouchDB (remoto)  │
+│                Offline-First pattern                  │
+└─────────────────────────────────────────────────────┘
+```
+
+### G.3 Justificación Arquitectónica
+
+La selección de estos patrones no es arbitraria. Cada patrón aborda un *quality attribute scenario* específico (Bass et al., 2013):
+
+- **Offline-First** responde al escenario: *"El usuario registra datos de salud en una brigada sin cobertura celular; los datos deben persistir y sincronizarse automáticamente cuando recupere conexión"* (RNF-01, CU-SAL-01).
+- **Strategy para CARE** responde al escenario: *"Un investigador externo intenta acceder a un saber ceremonial; el sistema debe denegar el acceso sin revelar la existencia del recurso"* (RNF-02, CU-SAB-04).
+- **Mediator (TRANS)** responde al escenario: *"Un cambio de idioma en el módulo de educación debe reflejarse inmediatamente en salud y saberes sin que los módulos se conozcan entre sí"* (CU-TRANS-02).
+
+La combinación de Repository + Offline-First permite que un cambio futuro de motor de persistencia (e.g., migrar de PouchDB a SQLite via wa-sqlite) solo requiera modificar la capa Repository sin afectar los componentes de UI ni la lógica de dominio — demostrando el principio de **inversión de dependencias** (Martin, 2003).
 
 ---
 
-*Documento creado el 2026-03-26 · Actualizado 2026-03-29 · Equipo Raíces Vivas · CENFOTEC*
+## Referencias
+
+### Documentos internos del proyecto
+
+- Charter del Proyecto (*01-Proyecto/Charter.md*)
+- Alcance (*01-Proyecto/Alcance.md*)
+- Arquitectura General — Modelo C4 (*04-Arquitectura/Visión General.md*)
+- Modelo de Datos Entidad-Relación (*04-Arquitectura/Modelo de Datos.md*)
+- Stack Tecnológico (*04-Arquitectura/Stack Tecnológico.md*)
+- Work Breakdown Structure (*04-Arquitectura/WBS.md*)
+- ADR-008 — Selección de Stack Tecnológico (*01-Proyecto/Decisiones/ADR-008.md*)
+- ADR-009 — Gobernanza Cultural y Protocolos de Consentimiento (*01-Proyecto/Decisiones/ADR-009.md*)
+- Mapa de Territorios Indígenas (*02-Investigación/Contexto/Mapa de Territorios Indígenas.md*)
+- Matriz de Trazabilidad de Requerimientos (*03-Requerimientos/_RTM.md*)
+- Sprint-02 Review (*05-Sprints/Sprint-02/Sprint-02-Review.md*)
+
+### Bibliografía académica (formato APA 7)
+
+Akao, Y. (1990). *Quality function deployment: Integrating customer requirements into product design*. Productivity Press.
+
+Bass, L., Clements, P., & Kazman, R. (2013). *Software architecture in practice* (3.ª ed.). Addison-Wesley.
+
+Carroll, S. R., Garba, I., Figueroa-Rodríguez, O. L., Holbrook, J., Lovett, R., Materechera, S., Parsons, M., Raseroka, K., Rodriguez-Lonebear, D., Rowe, R., Sara, R., Walker, J. D., Anderson, J., & Hudson, M. (2020). The CARE principles for indigenous data governance. *Data Science Journal*, *19*(1), 43. https://doi.org/10.5334/dsj-2020-043
+
+Clegg, D., & Barker, R. (1994). *Case method: Fast-track — A RAD approach*. Addison-Wesley.
+
+Cockburn, A. (2001). *Writing effective use cases*. Addison-Wesley.
+
+Denzin, N. K. (1978). *The research act: A theoretical introduction to sociological methods* (2.ª ed.). McGraw-Hill.
+
+Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). *Design patterns: Elements of reusable object-oriented software*. Addison-Wesley.
+
+George, M. L., Rowlands, D., Price, M., & Maxey, J. (2005). *The Lean Six Sigma pocket toolbook*. McGraw-Hill.
+
+Ishikawa, K. (1968). *Guide to quality control*. JUSE Press (trad. Asian Productivity Organization, 1976).
+
+Kiczales, G., Lamping, J., Mendhekar, A., Maeda, C., Lopes, C. V., Loingtier, J.-M., & Irwin, J. (1997). Aspect-oriented programming. En M. Aksit & S. Matsuoka (Eds.), *ECOOP '97 — Object-Oriented Programming* (LNCS 1241, pp. 220–242). Springer. https://doi.org/10.1007/BFb0053381
+
+Martin, R. C. (2003). *Agile software development: Principles, patterns, and practices*. Prentice Hall.
+
+Nicoll, D. (2019). *Offline first web development*. Packt Publishing.
+
+Object Management Group. (2017). *OMG Unified Modeling Language (UML)* (versión 2.5.1). https://www.omg.org/spec/UML/2.5.1
+
+Pyzdek, T., & Keller, P. A. (2014). *The Six Sigma handbook* (4.ª ed.). McGraw-Hill.
+
+### Instrumentos legales
+
+Asamblea Legislativa de Costa Rica. (1977). Ley N.° 6172 — Ley Indígena. *La Gaceta*, N.° 53.
+
+Asamblea Legislativa de Costa Rica. (1999). Ley N.° 7788 — Ley de Biodiversidad. *La Gaceta*, N.° 101.
+
+Asamblea Legislativa de Costa Rica. (2011). Ley N.° 8968 — Ley de Protección de la Persona frente al Tratamiento de sus Datos Personales. *La Gaceta*, N.° 170.
+
+Organización Internacional del Trabajo. (1989). Convenio N.° 169 sobre Pueblos Indígenas y Tribales (ratificado por Costa Rica mediante Ley N.° 7316, 1992).
+
+Poder Ejecutivo de Costa Rica. (2013). Decreto Ejecutivo N.° 37801-MEP — Reforma de la Educación Indígena. *La Gaceta*, N.° 135.
+
+### Recursos técnicos
+
+Apache Software Foundation. (s. f.). *Apache CouchDB documentation — Replication*. https://docs.couchdb.org/en/stable/replication/
+
+PouchDB Contributors. (s. f.). *PouchDB — The database that syncs*. https://pouchdb.com/
+
+---
+
+*Documento creado el 2026-03-26 · Actualizado 2026-03-30 · Equipo Raíces Vivas · CENFOTEC*
 *Curso: SOFT-09 — Introducción a la Ingeniería del Software — Prof. Johnny Marin*
