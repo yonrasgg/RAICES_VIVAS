@@ -2,9 +2,7 @@
   "obsidian-git",
   "templater-obsidian",
   "obsidian-tasks-plugin",
-  "obsidian-kanban",
   "calendar",
-  "mermaid-tools",
   "homepage",
   "quickadd",
   "buttons",
@@ -17,8 +15,5 @@
   "periodic-notes",
   "obsidian-auto-link-title",
   "jira-sync",
-  "sqlseal",
-  "sqlseal-charts",
-  "obsidian-charts",
-  "drawio-obsidian"
+  "sqlseal"
 ]
