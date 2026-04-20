@@ -6,6 +6,7 @@ const links = [
   { to: '/edu', labelKey: 'nav.edu', icon: '📚' },
   { to: '/sab', labelKey: 'nav.sab', icon: '🌿' },
   { to: '/sal', labelKey: 'nav.sal', icon: '❤️' },
+  { to: '/trans', labelKey: 'nav.trans', icon: '⚙️' },
 ] as const
 
 export default function BottomNav() {

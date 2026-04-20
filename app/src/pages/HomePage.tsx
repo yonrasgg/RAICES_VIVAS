@@ -5,6 +5,7 @@ const modules = [
   { to: '/edu', labelKey: 'nav.edu', icon: '📚', color: 'bg-green-100 text-green-800' },
   { to: '/sab', labelKey: 'nav.sab', icon: '🌿', color: 'bg-amber-100 text-amber-800' },
   { to: '/sal', labelKey: 'nav.sal', icon: '❤️', color: 'bg-rose-100 text-rose-800' },
+  { to: '/trans', labelKey: 'nav.trans', icon: '⚙️', color: 'bg-blue-100 text-blue-800' },
 ] as const
 
 export default function HomePage() {

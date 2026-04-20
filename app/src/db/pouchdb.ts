@@ -7,10 +7,12 @@ PouchDB.plugin(PouchDBFind)
 export const dbEdu = new PouchDB('raices_edu')
 export const dbSab = new PouchDB('raices_sab')
 export const dbSal = new PouchDB('raices_sal')
+export const dbTrans = new PouchDB('raices_trans')
 
 /** Map of module → local PouchDB instance */
 export const databases: Record<string, PouchDB.Database> = {
   edu: dbEdu,
   sab: dbSab,
   sal: dbSal,
+  trans: dbTrans,
 }

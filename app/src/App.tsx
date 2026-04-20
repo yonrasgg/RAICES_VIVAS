@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { startAllSync, stopAllSync } from '@/db/sync'
 import { seedAll } from '@/data/seed'
+import { seedTrans } from '@/data/seedTrans'
 import AppShell from '@/components/layout/AppShell'
 import HomePage from '@/pages/HomePage'
 import EduDashboard from '@/pages/edu/EduDashboard'
@@ -16,10 +17,16 @@ import SalDashboard from '@/pages/sal/SalDashboard'
 import SalPacientes from '@/pages/sal/SalPacientes'
 import SalCitas from '@/pages/sal/SalCitas'
 import SalBrigadas from '@/pages/sal/SalBrigadas'
+import TransDashboard from '@/pages/trans/TransDashboard'
+import TransUsuarios from '@/pages/trans/TransUsuarios'
+import TransRoles from '@/pages/trans/TransRoles'
+import TransSync from '@/pages/trans/TransSync'
+import TransAuditoria from '@/pages/trans/TransAuditoria'
 
 export default function App() {
   useEffect(() => {
     seedAll()
+    seedTrans()
     startAllSync()
     return () => stopAllSync()
   }, [])
@@ -45,6 +52,13 @@ export default function App() {
           <Route path="pacientes" element={<SalPacientes />} />
           <Route path="citas" element={<SalCitas />} />
           <Route path="brigadas" element={<SalBrigadas />} />
+        </Route>
+        <Route path="trans">
+          <Route index element={<TransDashboard />} />
+          <Route path="usuarios" element={<TransUsuarios />} />
+          <Route path="roles" element={<TransRoles />} />
+          <Route path="sync" element={<TransSync />} />
+          <Route path="auditoria" element={<TransAuditoria />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
