@@ -159,7 +159,7 @@ Todo el trabajo se enmarca dentro de las comunidades indígenas de Costa Rica, a
 
 ---
 
-## � Configuración Rápida
+## ⚙️ Configuración Rápida
 
 ### 1. Requisitos Previos
 
@@ -251,7 +251,7 @@ Al abrir Obsidian (o al hacer la primera operación Pull/Push), aparece una **ve
 
 ---
 
-## �🗂️ Estructura del Proyecto
+## 🗂️ Estructura del Proyecto
 
 ```
 RAICES_VIVAS/
@@ -400,6 +400,31 @@ python 08-Recursos/scripts/md_to_pdf.py
 - 🏛️ Portada con logo CENFOTEC
 - 📐 CSS optimizado para impresión APA con control de page-breaks
 - 📎 Anexos Lean Six Sigma: FODA, Ishikawa, QFD, DMAIC
+
+---
+
+## 🚢 Despliegue del Prototipo (GitHub Pages)
+
+El prototipo se publica automáticamente en cada push a `main` que toque `app/**`, mediante el workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml):
+
+```mermaid
+flowchart LR
+  A[push a main<br/>app/**] --> B[GitHub Actions<br/>Node 20]
+  B --> C[npm ci]
+  C --> D[vite build<br/>BASE_PATH=/RAICES_VIVAS/]
+  D --> E[cp index.html 404.html<br/>SPA fallback]
+  E --> F[upload-pages-artifact]
+  F --> G[deploy-pages]
+  G --> H[🌐 yonrasgg.github.io/RAICES_VIVAS]
+```
+
+**Consideraciones técnicas aplicadas:**
+
+- **Subpath-aware base path** — `vite.config.ts` lee `BASE_PATH` del entorno (`/RAICES_VIVAS/` en CI, `/` en dev) para que los assets resuelvan correctamente tanto en `localhost:5173` como en `yonrasgg.github.io/RAICES_VIVAS/`.
+- **BrowserRouter `basename`** — `main.tsx` deriva el basename de `import.meta.env.BASE_URL` para que las rutas (`/edu`, `/sab`, `/sal`, `/trans`) funcionen bajo el subpath sin hash.
+- **SPA fallback** — `404.html` clonado de `index.html` permite navegación directa a rutas internas sin romper.
+- **Events polyfill explícito** — `pouchdb-browser` depende de `events`; se añadió como dep explícita para que el bundler de CI (rolldown) resuelva determinísticamente y no falle con `Class extends value #<Object>`.
+- **Seguridad** — `npm audit` reporta **0 vulnerabilidades** en `app/` y en el root tras la última remediación de Dependabot (14 alertas cerradas).
 
 ---
 
