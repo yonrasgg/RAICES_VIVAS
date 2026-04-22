@@ -129,8 +129,8 @@ export default function HomePage() {
             <TribalIcon name="espiral" size={12} />
             Raíces Vivas
           </p>
-          <h2 className="font-display text-3xl font-semibold leading-tight text-[color:var(--color-cream-100)] sm:text-4xl">
-            {t('app.name')}
+          <h2 className="rv-gold-sculpt-wrap font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
+            <span className="rv-gold-sculpt">{t('app.name')}</span>
           </h2>
           <p className="mt-1 max-w-xl text-sm text-[color:var(--color-cream-100)]/85 sm:text-base">
             {t('app.tagline')}
