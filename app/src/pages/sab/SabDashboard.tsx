@@ -5,6 +5,7 @@ import type { Saber, PortadorSaber, CategoriaSaber } from '@/types/sab'
 import StatCard from '@/components/ui/StatCard'
 import ModuleHeader from '@/components/layout/ModuleHeader'
 import TribalIcon from '@/components/icons/TribalIcon'
+import { sabQuotes } from '@/data/quotes'
 
 const sections = [
   { to: 'catalogo', labelKey: 'sab.catalogo', icon: 'espiral' as const, desc: 'Saberes documentados con niveles CARE.' },
@@ -26,8 +27,7 @@ export default function SabDashboard() {
         title={t('sab.title')}
         subtitle="Gobernanza CARE: Beneficio colectivo · Autoridad · Responsabilidad · Ética"
         cover={`${import.meta.env.BASE_URL}img/cover-rf-sab.png`}
-        quote="Si yo digo quiten eso, se pueda quitar. Esa es la palabra."
-        quoteSource="ENT-003 · portador de saber, Talamanca"
+        quotes={sabQuotes}
       />
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">

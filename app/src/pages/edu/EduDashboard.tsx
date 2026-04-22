@@ -5,6 +5,7 @@ import type { Docente, Estudiante, MaterialEducativo, Ejercicio } from '@/types/
 import StatCard from '@/components/ui/StatCard'
 import ModuleHeader from '@/components/layout/ModuleHeader'
 import TribalIcon from '@/components/icons/TribalIcon'
+import { eduQuotes } from '@/data/quotes'
 
 const sections = [
   { to: 'materiales', labelKey: 'edu.materiales', icon: 'tejido' as const, desc: 'Audios, videos y cuentos en lenguas originarias.' },
@@ -27,8 +28,7 @@ export default function EduDashboard() {
         title={t('edu.title')}
         subtitle="Materiales y prácticas en cuatro lenguas originarias"
         cover={`${import.meta.env.BASE_URL}img/cover-rf-edu.png`}
-        quote="El 87 % de docentes reporta materiales insuficientes en lengua originaria."
-        quoteSource="Análisis de entrevistas · ENT-002"
+        quotes={eduQuotes}
       />
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">

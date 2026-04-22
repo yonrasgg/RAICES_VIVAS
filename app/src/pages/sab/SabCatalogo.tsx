@@ -11,6 +11,7 @@ import Modal from '@/components/ui/Modal'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import EmptyState from '@/components/ui/EmptyState'
+import { sabQuotes } from '@/data/quotes'
 
 type Acceso = Saber['nivel_acceso']
 type Estado = Saber['estado']
@@ -152,8 +153,7 @@ export default function SabCatalogo() {
         title={t('sab.catalogo')}
         subtitle="Saberes documentados bajo gobernanza CARE por portador"
         cover={`${import.meta.env.BASE_URL}img/cover-rf-sab.png`}
-        quote="Si yo digo quiten eso, se pueda quitar. Esa es la palabra."
-        quoteSource="ENT-003 · Portador de saberes, Talamanca"
+        quotes={sabQuotes}
       />
 
       <section className="rv-card overflow-hidden p-0">

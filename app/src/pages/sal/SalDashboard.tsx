@@ -5,6 +5,7 @@ import type { Paciente, Cita, Brigada } from '@/types/sal'
 import StatCard from '@/components/ui/StatCard'
 import ModuleHeader from '@/components/layout/ModuleHeader'
 import TribalIcon from '@/components/icons/TribalIcon'
+import { salQuotes } from '@/data/quotes'
 
 const sections = [
   { to: 'pacientes', labelKey: 'sal.pacientes', icon: 'hoja' as const, desc: 'Historial comunitario por territorio.' },
@@ -27,8 +28,7 @@ export default function SalDashboard() {
         title={t('sal.title')}
         subtitle="Atención comunitaria con historial offline-first"
         cover={`${import.meta.env.BASE_URL}img/cover-rf-sal.png`}
-        quote="Se nos perdieron datos de dos brigadas enteras cuando cruzamos el río."
-        quoteSource="ENT-003 · ATAP, Chirripó"
+        quotes={salQuotes}
       />
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">

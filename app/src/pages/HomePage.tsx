@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useDB } from '@/hooks/useDB'
 import TribalIcon from '@/components/icons/TribalIcon'
+import QuoteRotator from '@/components/QuoteRotator'
+import { homeQuotes } from '@/data/quotes'
 import type { MaterialEducativo } from '@/types/edu'
 import type { Saber } from '@/types/sab'
 import type { Paciente } from '@/types/sal'
@@ -135,12 +137,11 @@ export default function HomePage() {
           <p className="mt-1 max-w-xl text-sm text-[color:var(--color-cream-100)]/85 sm:text-base">
             {t('app.tagline')}
           </p>
-          <blockquote className="mt-4 max-w-xl border-l-2 border-[color:var(--color-ocre-400)] pl-3 text-sm italic text-[color:var(--color-bone-100)] sm:text-base">
-            «Que nos traten como socios, no como beneficiarios».
-            <footer className="mt-1 text-[11px] not-italic text-[color:var(--color-ocre-200)]/90">
-              — ENT-004 · líder comunitario
-            </footer>
-          </blockquote>
+          <QuoteRotator
+            quotes={homeQuotes}
+            blockquoteClassName="mt-4 max-w-xl border-l-2 border-[color:var(--color-ocre-400)] pl-3 text-sm italic text-[color:var(--color-bone-100)] sm:text-base"
+            footerClassName="mt-1 text-[11px] not-italic text-[color:var(--color-ocre-200)]/90"
+          />
         </div>
         <div className="rv-cenefa" aria-hidden />
       </section>

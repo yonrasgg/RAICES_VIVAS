@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import TribalIcon from '@/components/icons/TribalIcon'
+import QuoteRotator, { type RotatingQuote } from '@/components/QuoteRotator'
 
 type Module = 'edu' | 'sab' | 'sal' | 'trans'
 
@@ -7,9 +8,11 @@ interface Props {
   module: Module
   title: string
   subtitle?: string
-  /** Cita corta de campo (entrevista / observación) */
+  /** Cita corta de campo (entrevista / observación) — simple. */
   quote?: string
   quoteSource?: string
+  /** Lista de citas para rotar en el mismo bloque (lazy/scroll visual). */
+  quotes?: RotatingQuote[]
   cover?: string
 }
 
@@ -47,8 +50,14 @@ const moduleMeta: Record<
  * Encabezado de módulo con cenefa tribal, glifo identitario y cita opcional.
  * Se usa al tope de cada dashboard y catálogo.
  */
-export default function ModuleHeader({ module, title, subtitle, quote, quoteSource, cover }: Props): ReactNode {
+export default function ModuleHeader({ module, title, subtitle, quote, quoteSource, quotes, cover }: Props): ReactNode {
   const meta = moduleMeta[module]
+  const rotating: RotatingQuote[] | undefined =
+    quotes && quotes.length > 0
+      ? quotes
+      : quote
+      ? [{ text: quote, source: quoteSource ?? '' }]
+      : undefined
   return (
     <header className="relative overflow-hidden rounded-[var(--radius-tribal-lg)] shadow-[var(--shadow-tribal-sm)]">
       {cover ? (
@@ -92,18 +101,13 @@ export default function ModuleHeader({ module, title, subtitle, quote, quoteSour
           {subtitle && (
             <p className="mt-0.5 text-sm text-[color:var(--color-charcoal-500)]">{subtitle}</p>
           )}
-          {quote && (
-            <blockquote
-              className="mt-2 border-l-2 pl-3 text-xs italic text-[color:var(--color-charcoal-700)] sm:text-sm"
-              style={{ borderColor: meta.accent }}
-            >
-              «{quote}»
-              {quoteSource && (
-                <footer className="mt-0.5 text-[10px] not-italic tracking-wider text-[color:var(--color-charcoal-500)]">
-                  — {quoteSource}
-                </footer>
-              )}
-            </blockquote>
+          {rotating && (
+            <QuoteRotator
+              quotes={rotating}
+              blockquoteClassName="mt-2 border-l-2 pl-3 text-xs italic text-[color:var(--color-charcoal-700)] sm:text-sm"
+              blockquoteStyle={{ borderColor: meta.accent }}
+              footerClassName="mt-0.5 text-[10px] not-italic tracking-wider text-[color:var(--color-charcoal-500)]"
+            />
           )}
         </div>
       </div>

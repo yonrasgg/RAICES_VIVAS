@@ -5,6 +5,7 @@ import type { Usuario, Rol, LogAuditoria, SyncLog } from '@/types/trans'
 import StatCard from '@/components/ui/StatCard'
 import ModuleHeader from '@/components/layout/ModuleHeader'
 import TribalIcon from '@/components/icons/TribalIcon'
+import { transQuotes } from '@/data/quotes'
 
 const sections = [
   { to: 'usuarios', labelKey: 'trans.usuarios', icon: 'rancho' as const, desc: 'Cuentas activas por territorio y rol.' },
@@ -29,8 +30,7 @@ export default function TransDashboard() {
         title={t('trans.title')}
         subtitle="Capa transversal: sincronización, identidades y auditoría"
         cover={`${import.meta.env.BASE_URL}img/cover-rf-trans.png`}
-        quote="El sistema debe trabajar igual con señal o sin señal, todos los días."
-        quoteSource="OBS-002 · observación de campo"
+        quotes={transQuotes}
       />
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
