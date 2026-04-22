@@ -1,5 +1,4 @@
----
-type: document
+tadinoadingype: dadingocument
 title: "Raíces Vivas — Entrega Final: Implementación y Gestión"
 project: raices-vivas
 avance: 3
