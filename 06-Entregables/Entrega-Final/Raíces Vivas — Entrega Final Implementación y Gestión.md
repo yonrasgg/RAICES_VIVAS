@@ -177,13 +177,19 @@ Se identificaron **23 casos de uso** distribuidos en 4 módulos, trazados 1:1 co
 
 > Documentación completa de los 23 CU (12 expandidos), diagrama UML y matriz de trazabilidad RF ↔ CU: [[06-Entregables/Avance-2/Raíces Vivas — Avance 2 Diseño y Arquitectura|Avance 2, §3-§6]].
 
-#### 1.3.4 Diagrama UML de Casos de Uso
+#### 1.3.4 Diagrama Resumen: Actor ↔ Módulo
 
-El siguiente diagrama UML agrupa los 23 casos de uso por módulo (subsistema), mostrando las relaciones entre los 8 actores y los casos de uso de cada módulo:
+El siguiente diagrama UML muestra la relación entre los 10 actores humanos, los 4 sistemas externos y los módulos del sistema (EDU, SAB, SAL, TRANS). Replica la notación pre-renderizada utilizada en el [[06-Entregables/Avance-2/Raíces Vivas — Avance 2 Diseño y Arquitectura|Avance 2, §2.4]]:
 
-![[Raíces Vivas — Avance 2 Diseño y Arquitectura#5. Diagrama de Casos de Uso]]
+![Diagrama UML — Actor ↔ Módulo](../../08-Recursos/Imágenes/diagram_actor_modulo.png)
 
-#### 1.3.5 Referencia Cruzada RF ↔ CU
+#### 1.3.5 Diagrama UML de Casos de Uso
+
+El siguiente diagrama UML agrupa los 23 casos de uso por módulo (subsistema), mostrando las relaciones entre los 8 actores primarios y los casos de uso de cada módulo (notación pre-renderizada conforme al [[06-Entregables/Avance-2/Raíces Vivas — Avance 2 Diseño y Arquitectura|Avance 2, §5]]):
+
+![Diagrama UML de Casos de Uso](../../08-Recursos/Imágenes/diagram_usecase.png)
+
+#### 1.3.6 Referencia Cruzada RF ↔ CU
 
 ![[Raíces Vivas — Avance 2 Diseño y Arquitectura#6. Referencia Cruzada: Requerimientos Funcionales ↔ Casos de Uso]]
 
