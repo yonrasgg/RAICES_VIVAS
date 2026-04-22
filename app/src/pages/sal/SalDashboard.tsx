@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom'
 import { useDB } from '@/hooks/useDB'
 import type { Paciente, Cita, Brigada } from '@/types/sal'
 import StatCard from '@/components/ui/StatCard'
+import ModuleHeader from '@/components/layout/ModuleHeader'
+import TribalIcon from '@/components/icons/TribalIcon'
 
 const sections = [
-  { to: 'pacientes', labelKey: 'sal.pacientes', icon: '🩺' },
-  { to: 'citas', labelKey: 'sal.citas', icon: '📅' },
-  { to: 'brigadas', labelKey: 'sal.brigadas', icon: '🚑' },
+  { to: 'pacientes', labelKey: 'sal.pacientes', icon: 'hoja' as const, desc: 'Historial comunitario por territorio.' },
+  { to: 'citas', labelKey: 'sal.citas', icon: 'ola' as const, desc: 'Agenda respetando tiempos y ceremonias.' },
+  { to: 'brigadas', labelKey: 'sal.brigadas', icon: 'rana' as const, desc: 'Equipos ATAP con ruta y conectividad.' },
 ] as const
 
 export default function SalDashboard() {
@@ -19,27 +21,43 @@ export default function SalDashboard() {
   const citasPendientes = citas.filter((c) => c.estado === 'pendiente').length
 
   return (
-    <div className="mx-auto max-w-lg space-y-6">
-      <h2 className="text-xl font-bold text-green-800">{t('sal.title')}</h2>
+    <div className="space-y-6">
+      <ModuleHeader
+        module="sal"
+        title={t('sal.title')}
+        subtitle="Atención comunitaria con historial offline-first"
+        cover="/img/cover-rf-sal.png"
+        quote="Se nos perdieron datos de dos brigadas enteras cuando cruzamos el río."
+        quoteSource="ENT-003 · ATAP, Chirripó"
+      />
 
-      <div className="grid grid-cols-3 gap-3">
-        <StatCard icon="🩺" label={t('sal.pacientes')} value={pacientes.length} color="bg-rose-50" />
-        <StatCard icon="📅" label={t('sal.pendiente')} value={citasPendientes} color="bg-amber-50" />
-        <StatCard icon="🚑" label={t('sal.brigadas')} value={brigadas.length} color="bg-blue-50" />
-      </div>
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <StatCard icon={<TribalIcon name="hoja" size={22} />} label={t('sal.pacientes')} value={pacientes.length} accent="sal" />
+        <StatCard icon={<TribalIcon name="ola" size={22} />} label={t('sal.pendiente')} value={citasPendientes} accent="sal" />
+        <StatCard icon={<TribalIcon name="rana" size={22} />} label={t('sal.brigadas')} value={brigadas.length} accent="sal" />
+        <StatCard icon={<TribalIcon name="sal" size={22} />} label={t('sal.citas')} value={citas.length} accent="sal" />
+      </section>
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <section className="grid gap-3 sm:grid-cols-3">
         {sections.map((s) => (
           <Link
             key={s.to}
             to={s.to}
-            className="flex flex-col items-center gap-2 rounded-xl bg-white p-6 shadow-sm transition hover:shadow-md"
+            className="rv-card flex items-center gap-4 p-4 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-tribal)]"
           >
-            <span className="text-4xl">{s.icon}</span>
-            <span className="font-medium text-gray-700">{t(s.labelKey)}</span>
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-ocre-50)] text-[color:var(--color-ocre-600)] ring-1 ring-[color:var(--color-ocre-200)]">
+              <TribalIcon name={s.icon} size={26} />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="font-display text-lg font-semibold text-[color:var(--color-jungle-700)]">
+                {t(s.labelKey)}
+              </p>
+              <p className="text-xs text-[color:var(--color-charcoal-500)]">{s.desc}</p>
+            </div>
+            <TribalIcon name="chevron-right" size={18} />
           </Link>
         ))}
-      </div>
+      </section>
     </div>
   )
 }

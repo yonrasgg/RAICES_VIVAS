@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react'
 
-type IconName =
+export type TribalIconName =
   | 'home'
   | 'edu'
   | 'sab'
@@ -24,7 +24,7 @@ type IconName =
   | 'chevron-right'
 
 interface Props extends SVGProps<SVGSVGElement> {
-  name: IconName
+  name: TribalIconName
   size?: number
   title?: string
 }

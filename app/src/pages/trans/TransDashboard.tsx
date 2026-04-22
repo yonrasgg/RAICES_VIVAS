@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import { useDB } from '@/hooks/useDB'
 import type { Usuario, Rol, LogAuditoria, SyncLog } from '@/types/trans'
 import StatCard from '@/components/ui/StatCard'
+import ModuleHeader from '@/components/layout/ModuleHeader'
+import TribalIcon from '@/components/icons/TribalIcon'
 
 const sections = [
-  { to: 'usuarios', labelKey: 'trans.usuarios', icon: '👤' },
-  { to: 'roles', labelKey: 'trans.roles', icon: '🛡️' },
-  { to: 'sync', labelKey: 'trans.syncLog', icon: '🔄' },
-  { to: 'auditoria', labelKey: 'trans.auditoria', icon: '📋' },
+  { to: 'usuarios', labelKey: 'trans.usuarios', icon: 'rancho' as const, desc: 'Cuentas activas por territorio y rol.' },
+  { to: 'roles', labelKey: 'trans.roles', icon: 'esfera' as const, desc: 'Permisos con lógica comunitaria.' },
+  { to: 'sync', labelKey: 'trans.syncLog', icon: 'trans' as const, desc: 'Bitácora de sincronización tablet ⇄ RPi ⇄ nube.' },
+  { to: 'auditoria', labelKey: 'trans.auditoria', icon: 'chacara' as const, desc: 'Eventos de seguridad y acceso a saberes.' },
 ] as const
 
 export default function TransDashboard() {
@@ -21,28 +23,43 @@ export default function TransDashboard() {
   const activos = usuarios.filter((u) => u.activo).length
 
   return (
-    <div className="mx-auto max-w-lg space-y-6">
-      <h2 className="text-xl font-bold text-green-800">{t('trans.title')}</h2>
+    <div className="space-y-6">
+      <ModuleHeader
+        module="trans"
+        title={t('trans.title')}
+        subtitle="Capa transversal: sincronización, identidades y auditoría"
+        cover="/img/cover-rf-trans.png"
+        quote="El sistema debe trabajar igual con señal o sin señal, todos los días."
+        quoteSource="OBS-002 · observación de campo"
+      />
 
-      <div className="grid grid-cols-2 gap-3">
-        <StatCard icon="👤" label={t('trans.usuarios')} value={activos} color="bg-indigo-50" />
-        <StatCard icon="🛡️" label={t('trans.roles')} value={roles.length} color="bg-amber-50" />
-        <StatCard icon="🔄" label={t('trans.syncs')} value={syncLogs.length} color="bg-blue-50" />
-        <StatCard icon="📋" label={t('trans.eventos')} value={auditoria.length} color="bg-rose-50" />
-      </div>
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <StatCard icon={<TribalIcon name="rancho" size={22} />} label={t('trans.usuarios')} value={activos} accent="trans" />
+        <StatCard icon={<TribalIcon name="esfera" size={22} />} label={t('trans.roles')} value={roles.length} accent="trans" />
+        <StatCard icon={<TribalIcon name="trans" size={22} />} label={t('trans.syncs')} value={syncLogs.length} accent="trans" />
+        <StatCard icon={<TribalIcon name="chacara" size={22} />} label={t('trans.eventos')} value={auditoria.length} accent="trans" />
+      </section>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <section className="grid gap-3 sm:grid-cols-2">
         {sections.map((s) => (
           <Link
             key={s.to}
             to={s.to}
-            className="flex flex-col items-center gap-2 rounded-xl bg-white p-6 shadow-sm transition hover:shadow-md"
+            className="rv-card flex items-center gap-4 p-4 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-tribal)]"
           >
-            <span className="text-4xl">{s.icon}</span>
-            <span className="font-medium text-gray-700">{t(s.labelKey)}</span>
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-bone-100)] text-[color:var(--color-jungle-700)] ring-1 ring-[color:var(--color-border-strong)]">
+              <TribalIcon name={s.icon} size={26} />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="font-display text-lg font-semibold text-[color:var(--color-jungle-700)]">
+                {t(s.labelKey)}
+              </p>
+              <p className="text-xs text-[color:var(--color-charcoal-500)]">{s.desc}</p>
+            </div>
+            <TribalIcon name="chevron-right" size={18} />
           </Link>
         ))}
-      </div>
+      </section>
     </div>
   )
 }
