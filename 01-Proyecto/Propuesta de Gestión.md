@@ -1,5 +1,5 @@
 ---
-banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
+
 type: proposal
 title: "Propuesta de Gestión del Proyecto Raíces Vivas en Obsidian"
 project: raices-vivas

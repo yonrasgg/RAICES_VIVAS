@@ -1,5 +1,5 @@
 ---
-banner_src: "08-Recursos/Imágenes/cover-proyecto.png"
+
 type: document
 title: "Guía de Workflow — Vault Raíces Vivas"
 project: raices-vivas
