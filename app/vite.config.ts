@@ -17,4 +17,8 @@ export default defineConfig({
   resolve: {
     alias: { '@': path.resolve(__dirname, 'src') },
   },
+  optimizeDeps: {
+    // Pre-bundle PouchDB so CJS/ESM interop is stable between environments
+    include: ['pouchdb-browser', 'pouchdb-find'],
+  },
 })
