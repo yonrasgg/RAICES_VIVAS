@@ -10,6 +10,116 @@
   I Cuatrimestre 2026
 </p>
 
+<p align="center">
+  <a href="https://yonrasgg.github.io/RAICES_VIVAS/">
+    <img src="https://img.shields.io/badge/🌐_Live_Demo-raíces--vivas-2C7A3E?style=for-the-badge&logoColor=white" alt="Live Demo"/>
+  </a>
+  <a href="https://github.com/yonrasgg/RAICES_VIVAS/actions/workflows/deploy-pages.yml">
+    <img src="https://github.com/yonrasgg/RAICES_VIVAS/actions/workflows/deploy-pages.yml/badge.svg" alt="Deploy Status"/>
+  </a>
+  <img src="https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=white" alt="React"/>
+  <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/Vite-8.0-646CFF?logo=vite&logoColor=white" alt="Vite"/>
+  <img src="https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind"/>
+  <img src="https://img.shields.io/badge/PWA-offline--first-5A0FC8?logo=pwa&logoColor=white" alt="PWA"/>
+  <img src="https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-EF9421" alt="License"/>
+</p>
+
+---
+
+## 🚀 Prototipo Interactivo — `yonrasgg.github.io/RAICES_VIVAS`
+
+> **👉 Probá la demo en vivo: [yonrasgg.github.io/RAICES_VIVAS](https://yonrasgg.github.io/RAICES_VIVAS/)**
+
+Prototipo funcional **offline-first** desplegado en GitHub Pages. Implementa los 4 módulos del sistema (EDU · SAB · SAL · TRANS) con persistencia local via **PouchDB (IndexedDB)**, diseño tribal responsivo y soporte multilingüe (ES · BRI · CAB · NGB).
+
+### 🧭 Recorrido rápido por módulos
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <a href="https://yonrasgg.github.io/RAICES_VIVAS/"><img src="08-Recursos/Imágenes/prototipo/01-home.png" alt="Home"/></a>
+      <br/><sub><strong>🏠 <a href="https://yonrasgg.github.io/RAICES_VIVAS/">Home</a></strong> — Portal tribal con acceso a los 4 módulos</sub>
+    </td>
+    <td width="50%" align="center">
+      <a href="https://yonrasgg.github.io/RAICES_VIVAS/edu"><img src="08-Recursos/Imágenes/prototipo/02-edu-dashboard.png" alt="EDU"/></a>
+      <br/><sub><strong>📚 <a href="https://yonrasgg.github.io/RAICES_VIVAS/edu">Educativo</a></strong> — Materiales, docentes, estudiantes, ejercicios</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <a href="https://yonrasgg.github.io/RAICES_VIVAS/sab"><img src="08-Recursos/Imágenes/prototipo/07-sab-dashboard.png" alt="SAB"/></a>
+      <br/><sub><strong>🏛️ <a href="https://yonrasgg.github.io/RAICES_VIVAS/sab">Saberes Ancestrales</a></strong> — Catálogo, portadores de saberes</sub>
+    </td>
+    <td width="50%" align="center">
+      <a href="https://yonrasgg.github.io/RAICES_VIVAS/sal"><img src="08-Recursos/Imágenes/prototipo/10-sal-dashboard.png" alt="SAL"/></a>
+      <br/><sub><strong>🏥 <a href="https://yonrasgg.github.io/RAICES_VIVAS/sal">Salud Comunitaria</a></strong> — Pacientes, citas, brigadas</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <a href="https://yonrasgg.github.io/RAICES_VIVAS/trans"><img src="08-Recursos/Imágenes/prototipo/14-trans-dashboard.png" alt="TRANS"/></a>
+      <br/><sub><strong>⚙️ <a href="https://yonrasgg.github.io/RAICES_VIVAS/trans">Transversal</a></strong> — Usuarios, roles, sync, auditoría</sub>
+    </td>
+    <td width="50%" align="center">
+      <a href="https://yonrasgg.github.io/RAICES_VIVAS/trans/sync"><img src="08-Recursos/Imágenes/prototipo/17-trans-sync.png" alt="Sync"/></a>
+      <br/><sub><strong>🔄 <a href="https://yonrasgg.github.io/RAICES_VIVAS/trans/sync">Sincronización</a></strong> — Estado offline/online por módulo</sub>
+    </td>
+  </tr>
+</table>
+
+<details>
+<summary><strong>📸 Galería completa — 18 vistas del prototipo</strong></summary>
+
+| # | Vista | Ruta |
+|---|-------|------|
+| 01 | [Home](08-Recursos/Imágenes/prototipo/01-home.png) | `/` |
+| 02 | [EDU · Dashboard](08-Recursos/Imágenes/prototipo/02-edu-dashboard.png) | `/edu` |
+| 03 | [EDU · Materiales](08-Recursos/Imágenes/prototipo/03-edu-materiales.png) | `/edu/materiales` |
+| 04 | [EDU · Docentes](08-Recursos/Imágenes/prototipo/04-edu-docentes.png) | `/edu/docentes` |
+| 05 | [EDU · Estudiantes](08-Recursos/Imágenes/prototipo/05-edu-estudiantes.png) | `/edu/estudiantes` |
+| 06 | [EDU · Ejercicios](08-Recursos/Imágenes/prototipo/06-edu-ejercicios.png) | `/edu/ejercicios` |
+| 07 | [SAB · Dashboard](08-Recursos/Imágenes/prototipo/07-sab-dashboard.png) | `/sab` |
+| 08 | [SAB · Catálogo](08-Recursos/Imágenes/prototipo/08-sab-catalogo.png) | `/sab/catalogo` |
+| 09 | [SAB · Portadores](08-Recursos/Imágenes/prototipo/09-sab-portadores.png) | `/sab/portadores` |
+| 10 | [SAL · Dashboard](08-Recursos/Imágenes/prototipo/10-sal-dashboard.png) | `/sal` |
+| 11 | [SAL · Pacientes](08-Recursos/Imágenes/prototipo/11-sal-pacientes.png) | `/sal/pacientes` |
+| 12 | [SAL · Citas](08-Recursos/Imágenes/prototipo/12-sal-citas.png) | `/sal/citas` |
+| 13 | [SAL · Brigadas](08-Recursos/Imágenes/prototipo/13-sal-brigadas.png) | `/sal/brigadas` |
+| 14 | [TRANS · Dashboard](08-Recursos/Imágenes/prototipo/14-trans-dashboard.png) | `/trans` |
+| 15 | [TRANS · Usuarios](08-Recursos/Imágenes/prototipo/15-trans-usuarios.png) | `/trans/usuarios` |
+| 16 | [TRANS · Roles](08-Recursos/Imágenes/prototipo/16-trans-roles.png) | `/trans/roles` |
+| 17 | [TRANS · Sincronización](08-Recursos/Imágenes/prototipo/17-trans-sync.png) | `/trans/sync` |
+| 18 | [TRANS · Auditoría](08-Recursos/Imágenes/prototipo/18-trans-auditoria.png) | `/trans/auditoria` |
+
+> Screenshots tomados en viewport `1440×900 @2x` sobre el deploy de producción con [`app/capture-screenshots.cjs`](app/capture-screenshots.cjs) (Puppeteer).
+
+</details>
+
+### 🧱 Stack técnico del prototipo
+
+| Capa | Tecnología | Rol |
+|------|------------|-----|
+| **UI** | React 19.2 + TypeScript 5.9 | Componentes tipados, Strict Mode |
+| **Build** | Vite 8 + Rolldown | Bundling ESM, tree-shaking, HMR |
+| **Estilos** | Tailwind CSS 4 | Sistema de diseño tribal, dark mode |
+| **Ruteo** | React Router 7 | SPA con `basename` dinámico para subpath |
+| **Datos** | PouchDB-browser + pouchdb-find | Persistencia local IndexedDB, índices Mango |
+| **Sync** | PouchDB ↔ CouchDB (opt-in) | Replicación offline-first por módulo |
+| **i18n** | i18next + react-i18next | 4 idiomas: `es`, `bri`, `cab`, `ngb` |
+| **PWA** | Manifest + SVG icons | Instalable en móvil/tablet |
+| **Deploy** | GitHub Pages + Actions | CI/CD en cada push a `main` |
+
+### ⚡ Correr el prototipo en local
+
+```bash
+cd app
+npm install
+npm run dev          # http://localhost:5173
+npm run build        # build de producción en ./dist
+npm run preview      # preview del build local
+```
+
 ---
 
 ## 📖 Descripción
