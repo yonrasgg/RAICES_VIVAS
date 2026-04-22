@@ -1895,6 +1895,10 @@ graph LR
 
 ### C.1 Matriz FODA
 
+![Matriz FODA — Raíces Vivas](../../08-Recursos/Imágenes/diagram_foda.png)
+
+**Detalle tabular de la matriz FODA:**
+
 | | **Factores Positivos** | **Factores Negativos** |
 |---|---|---|
 | **Internos** | **Fortalezas** | **Debilidades** |
@@ -1933,51 +1937,9 @@ graph LR
 
 ### D.1 Diagrama de Ishikawa
 
-```mermaid
-flowchart TB
-    subgraph METODO["🔧 Método"]
-        M1["Flujos de consentimiento<br/>no validados presencialmente"]
-        M2["Proceso de onboarding<br/>sin protocolo estandarizado"]
-        M3["Resolución de conflictos<br/>de sync requiere intervención manual"]
-    end
+![Diagrama de Ishikawa — Causa-Efecto (6M)](../../08-Recursos/Imágenes/diagram_ishikawa.png)
 
-    subgraph MAQUINA["🖥️ Máquina / Infraestructura"]
-        MA1["Sin servidor CouchDB<br/>de producción"]
-        MA2["Dispositivos Android<br/>obsoletos (< 2GB RAM)"]
-        MA3["Conectividad intermitente<br/>o inexistente"]
-    end
-
-    subgraph MANO["👥 Mano de Obra"]
-        MO1["Equipo de 3 personas<br/>con carga académica"]
-        MO2["Rotación de ATAP<br/>en puestos de salud"]
-        MO3["Docentes sin formación<br/>digital previa"]
-    end
-
-    subgraph MATERIAL["📦 Material / Datos"]
-        MT1["Catálogos base<br/>(territorios, medicamentos)<br/>aún no poblados"]
-        MT2["Mapeo EDUS no<br/>especificado oficialmente"]
-        MT3["Contenido multilingüe<br/>requiere traducción humana"]
-    end
-
-    subgraph MEDIO["🌍 Medio Ambiente"]
-        MD1["Pérdida acelerada<br/>de lenguas indígenas"]
-        MD2["Distancia geográfica<br/>a territorios"]
-        MD3["Resistencia cultural<br/>a digitalización"]
-    end
-
-    subgraph MEDICION["📊 Medición"]
-        ME1["Sin métricas de adopción<br/>definidas aún"]
-        ME2["Sin baseline de<br/>alfabetización digital"]
-        ME3["Tiempo de tarea<br/>(RNF-03: ≤2min)<br/>no validado con usuarios"]
-    end
-
-    METODO --> E["⚠️ Baja adopción del<br/>sistema por comunidades"]
-    MAQUINA --> E
-    MANO --> E
-    MATERIAL --> E
-    MEDIO --> E
-    MEDICION --> E
-```
+El diagrama sigue la notación clásica de espina de pescado (fishbone) con las **6M** adaptadas al dominio software: **Método, Máquina, Mano de Obra, Material, Medio Ambiente y Medición**. Cada costilla agrupa tres causas raíz identificadas mediante los 5 Porqués y priorizadas por RPN (ver §D.2).
 
 ### D.2 Causas Priorizadas (Pareto)
 
