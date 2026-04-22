@@ -23,6 +23,8 @@ interface ModuleCard {
   tintVar: string
 }
 
+const BASE = import.meta.env.BASE_URL
+
 const modules: ModuleCard[] = [
   {
     to: '/edu',
@@ -30,7 +32,7 @@ const modules: ModuleCard[] = [
     labelKey: 'nav.edu',
     descKey: 'home.moduleDesc.edu',
     icon: 'edu',
-    cover: '/img/cover-educacion.png',
+    cover: `${BASE}img/cover-educacion.png`,
     accentVar: 'var(--color-jungle-500)',
     tintVar: 'var(--color-jungle-100)',
   },
@@ -40,7 +42,7 @@ const modules: ModuleCard[] = [
     labelKey: 'nav.sab',
     descKey: 'home.moduleDesc.sab',
     icon: 'sab',
-    cover: '/img/cover-saberes.png',
+    cover: `${BASE}img/cover-saberes.png`,
     accentVar: 'var(--color-terracotta-500)',
     tintVar: 'var(--color-terracotta-100)',
   },
@@ -50,7 +52,7 @@ const modules: ModuleCard[] = [
     labelKey: 'nav.sal',
     descKey: 'home.moduleDesc.sal',
     icon: 'sal',
-    cover: '/img/cover-salud.png',
+    cover: `${BASE}img/cover-salud.png`,
     accentVar: 'var(--color-ocre-500)',
     tintVar: 'var(--color-ocre-100)',
   },
@@ -60,7 +62,7 @@ const modules: ModuleCard[] = [
     labelKey: 'nav.trans',
     descKey: 'home.moduleDesc.trans',
     icon: 'trans',
-    cover: '/img/cover-arquitectura.png',
+    cover: `${BASE}img/cover-arquitectura.png`,
     accentVar: 'var(--color-jungle-700)',
     tintVar: 'var(--color-bone-100)',
   },
