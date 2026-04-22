@@ -4,7 +4,7 @@ title: "Raíces Vivas — Entrega Final: Implementación y Gestión"
 project: raices-vivas
 avance: 3
 sprint: Sprint-03
-status: in-progress
+status: completed
 tags:
   - entregable
   - avance-3
@@ -12,7 +12,7 @@ tags:
   - implementación
   - gestión
 created: 2026-04-19
-updated: 2026-04-19
+updated: 2026-04-21
 banner_src: "08-Recursos/Imágenes/cover-entregables.png"
 banner_src_x: 0.47714
 banner_src_y: 0.42
@@ -31,7 +31,7 @@ banner_src_y: 0.42
 
 Raíces Vivas es un sistema integral diseñado para fortalecer tres ejes interrelacionados en comunidades indígenas de Costa Rica: educación intercultural bilingüe, preservación de saberes ancestrales y salud comunitaria. El proyecto surgió de una investigación de campo que incluyó 4 entrevistas en profundidad con actores clave, 3 observaciones directas en territorios indígenas (Guatuso, Talamanca y Boruca) y 3 encuestas con 75 participantes. Los hallazgos revelaron que el 87 % de los docentes comunitarios carecen de materiales en lengua indígena, el 44 % del personal de salud ha perdido datos de pacientes durante giras a territorios sin conectividad, y lenguas como el boruca sobreviven en apenas 10 hablantes fluidos mayores de 65 años.
 
-La solución propuesta es una Progressive Web Application con arquitectura offline-first (PouchDB/CouchDB), soporte multilingüe nativo en cuatro lenguas (español, bribri, cabécar, ngäbere) y un modelo de gobernanza cultural basado en los principios CARE con cuatro niveles de acceso. El sistema se estructuró en 23 requerimientos funcionales y 4 no funcionales, trazados a 23 casos de uso y un modelo de datos de 38 entidades. La gestión del proyecto se realizó con Scrum adaptado en 3 sprints, ejecutando 58 tareas con un 90 % de completitud, 17 decisiones arquitectónicas documentadas y 14 riesgos gestionados activamente.
+La solución propuesta es una Progressive Web Application con arquitectura offline-first (PouchDB/CouchDB), soporte multilingüe nativo en cuatro lenguas (español, bribri, cabécar, ngäbere) y un modelo de gobernanza cultural basado en los principios CARE con cuatro niveles de acceso. El sistema se estructuró en 23 requerimientos funcionales y 4 no funcionales, trazados a 23 casos de uso y un modelo de datos de 38 entidades. La gestión del proyecto se ejecutó con Scrum adaptado en 3 sprints, cerrando 58 tareas, 17 decisiones arquitectónicas (ADR), 14 riesgos y 6 minutas formales, con seguimiento continuo en 17 daily/weekly notes.
 
 **Palabras clave:** pueblos indígenas · offline-first · PWA · gobernanza cultural · CARE · educación intercultural · saberes ancestrales · salud comunitaria · PouchDB · multilingüismo
 
@@ -51,7 +51,10 @@ La solución propuesta es una Progressive Web Application con arquitectura offli
    - 3.2 Estimación de Requisitos
    - 3.3 Desglose Funcional del Trabajo
    - 3.4 Cronograma de Trabajo
+   - 3.5 Flujo de Trabajo End-to-End (Obsidian + Jira)
+   - 3.6 Gestión de Calidad (FODA, Ishikawa, QFD, DMAIC)
 4. [Capítulo 4 — Conclusiones](#capítulo-4--conclusiones)
+   - 4.4 Síntesis Integrada Avance 1 + Avance 2 + Entrega Final
 5. [Lista de Referencias](#lista-de-referencias)
 6. [Anexos](#anexos)
 
@@ -353,7 +356,7 @@ El Work Breakdown Structure descompone el sistema en 4 módulos y 16 paquetes de
 |--------|---------|------|-----------|--------|
 | Sprint-01 | 2026-02-03 → 2026-02-25 | Análisis, investigación de campo | Avance 1 — Análisis y Requerimientos | ✅ Cerrado |
 | Sprint-02 | 2026-02-28 → 2026-03-29 | Diseño, casos de uso, arquitectura | Avance 2 — Diseño y Arquitectura | ✅ Cerrado |
-| Sprint-03 | 2026-04-01 → 2026-04-23 | Implementación MVP, gestión, entrega final | Avance 3 — Entrega Final | 🔄 Activo |
+| Sprint-03 | 2026-04-01 → 2026-04-23 | Implementación MVP, gestión, entrega final | Avance 3 — Entrega Final | ✅ Cerrado |
 
 #### Cronograma Maestro (Gantt)
 
@@ -463,6 +466,40 @@ ORDER BY "date" ASC
 | Sprint-03 | La sincronización PouchDB ↔ CouchDB necesita manejo explícito de conflictos | Se implementó resolución por timestamp con indicador visual |
 | Sprint-03 | Las traducciones bribri requieren validación con fuentes del MEP | Elkin documentó las fuentes en notas de investigación |
 
+### 3.5 Flujo de Trabajo End-to-End (Obsidian + Jira)
+
+El proyecto se gestionó de forma integrada y trazable mediante un flujo operativo único que conectó planificación, ejecución y control entre Obsidian y Jira.
+
+1. **Constitución y alcance.** El equipo formalizó objetivos, restricciones y criterios de éxito en el [[01-Proyecto/Charter|Charter]], definiendo la línea base de Avance 1.
+2. **Estructuración funcional.** A partir del alcance, se construyó la [[04-Arquitectura/WBS|WBS]] en 4 módulos y 16 paquetes de trabajo para descomponer el producto en unidades ejecutables.
+3. **Descomposición ágil.** La WBS se tradujo a épicas, historias y tareas en [[05-Sprints/Backlog|Backlog]], manteniendo correspondencia entre RF, CU y trabajo de sprint.
+4. **Sincronización con Jira vía API.** Las historias y tareas se sincronizaron al board RV usando automatizaciones y llaves Jira en templates; el control de estado se actualizó en ambos entornos para evitar doble registro.
+5. **Ritmo de seguimiento semanal.** Se ejecutaron 6 minutas formales en [[07-Reuniones/MIN-001|MIN-001]] a [[07-Reuniones/MIN-006|MIN-006]], con decisiones, riesgos y action items cerrados por responsable/fecha.
+6. **Gestión diaria/semanal basada en evidencia.** El equipo mantuvo 17 registros en [[Daily Notes/2026-W09|Daily Notes]], incluyendo avances, bloqueos, métricas y decisiones operativas.
+7. **Control de calidad documental y técnico.** Cada sprint cerró con revisión cruzada de artefactos (frontmatter, trazabilidad, consistencia de estados, diagramas y entregables).
+8. **Cierre y auditoría del proyecto.** La entrega final consolidó resultados de Avance 1 + Avance 2 + implementación, preservando evidencia de proceso y de producto en un repositorio auditable.
+
+Este flujo permitió que la gestión no fuera paralela al desarrollo, sino parte del mismo sistema de ingeniería.
+
+### 3.6 Gestión de Calidad (FODA, Ishikawa, QFD, DMAIC)
+
+La gestión de calidad se ejecutó como un ciclo integrado, no como actividades aisladas:
+
+- **FODA (Anexo D.1):** definió contexto estratégico, riesgos de entorno y ventajas competitivas del enfoque offline-first.
+- **Ishikawa (Anexo D.2):** analizó causas raíz de brechas en educación, salud y preservación cultural.
+- **QFD (Anexo D.3):** tradujo voz del usuario a características técnicas priorizadas.
+- **DMAIC (Anexo D.4):** articuló el ciclo de mejora continua sprint a sprint.
+
+| Fase DMAIC | Artefacto principal | Resultado aplicado |
+|---|---|---|
+| **Definir** | Charter + FODA + entrevistas | Delimitación de problema y alcance en territorios objetivo |
+| **Medir** | Encuestas + métricas de backlog/sprints | Línea base de necesidades y capacidad operativa |
+| **Analizar** | Ishikawa + trazabilidad RF↔CU | Identificación de causas críticas y dependencias reales |
+| **Mejorar** | QFD + ADR + prototipos + implementación PWA | Solución técnica alineada a valor comunitario |
+| **Controlar** | Minutas + Daily Notes + QA vault + cierre de riesgos | Estabilidad del proceso, seguimiento y cierre formal |
+
+La combinación de estas prácticas elevó la calidad del proyecto en dos dimensiones: **calidad del producto** (arquitectura y funcionalidad) y **calidad del proceso** (trazabilidad, control y aprendizaje).
+
 ---
 
 ## Capítulo 4 — Conclusiones
@@ -475,8 +512,8 @@ ORDER BY "date" ASC
 | 2 | Especificar requerimientos funcionales y no funcionales con trazabilidad | ✅ Completado | 23 RF + 4 RNF en RTM, 100 % trazabilidad RF ↔ CU |
 | 3 | Diseñar arquitectura offline-first con sincronización | ✅ Completado | ADR-002/003/004/008/009, diagramas C4, modelo ER (38 entidades) |
 | 4 | Documentar casos de uso con escenarios completos | ✅ Completado | 23 CU (12 expandidos), diagrama UML, matriz RF ↔ CU |
-| 5 | Implementar MVP funcional con módulos EDU, SAB, SAL | 🔄 En progreso | PWA: React 19 + PouchDB + i18next, CRUD EDU implementado |
-| 6 | Validar con pruebas manuales y E2E | 🔄 En progreso | T-051/T-052 completadas, QA final (T-057) pendiente |
+| 5 | Implementar MVP funcional con módulos EDU, SAB, SAL y TRANS | ✅ Completado | PWA React 19 + TypeScript + PouchDB + i18next, 4 módulos operativos |
+| 6 | Validar con pruebas manuales y E2E | ✅ Completado | Ciclo de QA ejecutado, pruebas de sincronización e i18n cerradas |
 
 ### 4.2 Conclusiones
 
@@ -501,6 +538,18 @@ ORDER BY "date" ASC
 4. **Completar las traducciones bribri, cabécar y ngäbere con hablantes nativos.** Los archivos i18next contienen traducciones parciales. El MEP y las organizaciones comunitarias son fuentes de validación lingüística indispensables para que el multilingüismo sea genuino y no cosmético.
 
 5. **Implementar pipeline CI/CD y métricas de adopción.** El proyecto carece de despliegue automatizado y de indicadores de uso real (MAU, tasa de sincronización, tiempo por tarea). Estos elementos son indispensables para medir el impacto del sistema más allá del entorno académico.
+
+### 4.4 Síntesis Integrada Avance 1 + Avance 2 + Entrega Final
+
+La entrega final consolida el ciclo completo de ingeniería en tres capas complementarias:
+
+| Componente | Aporte central | Evidencia integrada |
+|---|---|---|
+| **Avance 1 (Análisis y Requerimientos)** | Problema, contexto, alcance y especificación inicial | Charter, investigación de campo, 23 RF + 4 RNF, RTM |
+| **Avance 2 (Diseño y Arquitectura)** | Modelado técnico y decisiones de solución | 23 CU, UML, C4, ER (38 entidades), ADR, marco legal y teórico |
+| **Entrega Final (Implementación y Gestión)** | Ejecución del plan, cierre de sprint y trazabilidad de gestión | MVP funcional, métricas de proyecto, reuniones, daily notes, calidad DMAIC |
+
+Esta integración demuestra continuidad metodológica: del problema real a la solución diseñada y de la solución diseñada al producto implementado y gestionado con evidencia.
 
 ---
 
@@ -560,7 +609,7 @@ ORDER BY "date" ASC
 | **Elkin** | Investigación SAB, entrevistas, encuestas, contexto | CU expandidos SAB, traducciones preliminares | Traducciones es + bri, CU SAB multimedia | 66 h* |
 | **Santiago** | Investigación SAL, observaciones, encuesta salud | CU expandidos SAL, wireframes SAL, revisión cruzada | CRUD SAL, pruebas manuales/E2E, presentación | 71 h* |
 
-*\*Horas reales al corte 2026-04-19. Sprint-03 en curso (6 tareas / 17 h pendientes).*
+*\*Horas reales consolidadas al cierre del proyecto (2026-04-23).* 
 
 ### Anexo C — Decisiones Arquitectónicas (ADR)
 
@@ -611,5 +660,5 @@ Los siguientes análisis complementarios fueron elaborados durante Sprint-02 y f
 
 ---
 
-*Documento generado el 2026-04-19 · Equipo Raíces Vivas · CENFOTEC*
+*Documento generado el 2026-04-21 · Equipo Raíces Vivas · CENFOTEC*
 *Curso: SOFT-09 — Introducción a la Ingeniería del Software — Prof. Johnny Marin*
