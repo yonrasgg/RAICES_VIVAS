@@ -300,19 +300,19 @@ El sistema cuenta con **23 requerimientos funcionales** y **4 no funcionales**, 
 #### Requerimientos Funcionales
 
 ```sqlseal
-SELECT name AS "ID", title AS "Requerimiento", priority AS "Prioridad", status AS "Estado"
+SELECT name as "ID", module as "Módulo", wbs as "WBS", title as "Descripción", priority as "MoSCoW", status as "Estado"
 FROM files
-WHERE type = 'requirement' AND path LIKE '03-Requerimientos/Funcionales%'
-ORDER BY name ASC
+WHERE type = 'requirement/functional' AND path LIKE '03-Requerimientos/Funcionales%'
+ORDER BY wbs ASC
 ```
 
 #### Requerimientos No Funcionales
 
 ```sqlseal
-SELECT name AS "ID", title AS "Requerimiento", priority AS "Prioridad", status AS "Estado"
+SELECT name as "ID", category as "Categoría", wbs as "WBS", title as "Descripción", priority as "MoSCoW", status as "Estado"
 FROM files
-WHERE type = 'requirement' AND path LIKE '03-Requerimientos/No Funcionales%'
-ORDER BY name ASC
+WHERE type = 'requirement/non-functional' AND path LIKE '03-Requerimientos/No Funcionales%'
+ORDER BY wbs ASC
 ```
 
 #### Cobertura por prioridad MoSCoW
@@ -665,6 +665,5 @@ Los siguientes análisis complementarios fueron elaborados durante Sprint-02 y f
 ![[Modelo de Datos#Diagrama ER — Módulo Salud Comunitaria (SAL)]]
 
 ---
-
-*Documento generado el 2026-04-21 · Equipo Raíces Vivas · CENFOTEC*
+*Equipo Raíces Vivas · CENFOTEC*
 *Curso: SOFT-09 — Introducción a la Ingeniería del Software — Prof. Johnny Marin*

@@ -1962,6 +1962,14 @@ El diagrama sigue la notación clásica de espina de pescado (fishbone) con las 
 
 > Despliegue de la Función de Calidad (Quality Function Deployment) que traduce las necesidades de los stakeholders ("Qué") en características técnicas del sistema ("Cómo"), con correlaciones y priorización.
 
+### E.0 Casa de la Calidad — Vista Integrada
+
+La siguiente figura muestra la Casa de la Calidad completa siguiendo el formato clásico de la ASQ (*American Society for Quality*): techo de correlaciones (sinergias/tensiones entre características técnicas), matriz central de relaciones QUÉ × CÓMO, columna de importancia y fila inferior de priorización técnica ponderada.
+
+![Casa de la Calidad (QFD) — Raíces Vivas](../../08-Recursos/Imágenes/diagram_qfd.png)
+
+El detalle tabular de cada habitación se desarrolla en §E.1–§E.4.
+
 ### E.1 Voz del Cliente — Necesidades Priorizadas
 
 | # | Necesidad (Qué) | Stakeholder | Importancia (1-5) | Fuente |
