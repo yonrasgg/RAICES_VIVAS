@@ -1,4 +1,4 @@
-import PouchDB from 'pouchdb'
+import PouchDB from 'pouchdb-browser'
 import { databases } from './pouchdb'
 
 export type SyncStatus = 'offline' | 'syncing' | 'online' | 'error'
@@ -83,22 +83,23 @@ class SyncManager {
  * Build sync managers for each module.
  * Remote URL comes from env — defaults to localhost CouchDB for dev.
  */
-const COUCH_BASE =
-  import.meta.env.VITE_COUCHDB_URL ?? 'http://localhost:5984'
+const COUCH_BASE = import.meta.env.VITE_COUCHDB_URL as string | undefined
 
 export const syncManagers: Record<string, SyncManager> = Object.fromEntries(
   Object.entries(databases).map(([mod, db]) => [
     mod,
-    new SyncManager(db, `${COUCH_BASE}/raices_${mod}`),
+    new SyncManager(db, `${COUCH_BASE ?? ''}/raices_${mod}`),
   ]),
 )
 
-/** Start all sync managers */
+/** Start all sync managers (no-op when VITE_COUCHDB_URL is not set). */
 export function startAllSync() {
+  if (!COUCH_BASE) return
   Object.values(syncManagers).forEach((m) => m.start())
 }
 
 /** Stop all sync managers */
 export function stopAllSync() {
+  if (!COUCH_BASE) return
   Object.values(syncManagers).forEach((m) => m.stop())
 }
