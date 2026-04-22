@@ -94,7 +94,7 @@ const brigadas: Brigada[] = [
 /*  Seed runner                                                        */
 /* ------------------------------------------------------------------ */
 
-async function seedDB(mod: string, docs: Array<{ _id: string; [k: string]: unknown }>) {
+async function seedDB(mod: string, docs: Array<{ _id: string }>) {
   const db = databases[mod]
   if (!db) return
   for (const doc of docs) {

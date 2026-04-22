@@ -28,7 +28,7 @@ export default function TransDashboard() {
         module="trans"
         title={t('trans.title')}
         subtitle="Capa transversal: sincronización, identidades y auditoría"
-        cover="/img/cover-rf-trans.png"
+        cover={`${import.meta.env.BASE_URL}img/cover-rf-trans.png`}
         quote="El sistema debe trabajar igual con señal o sin señal, todos los días."
         quoteSource="OBS-002 · observación de campo"
       />

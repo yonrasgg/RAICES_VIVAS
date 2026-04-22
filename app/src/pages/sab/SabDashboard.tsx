@@ -25,7 +25,7 @@ export default function SabDashboard() {
         module="sab"
         title={t('sab.title')}
         subtitle="Gobernanza CARE: Beneficio colectivo · Autoridad · Responsabilidad · Ética"
-        cover="/img/cover-rf-sab.png"
+        cover={`${import.meta.env.BASE_URL}img/cover-rf-sab.png`}
         quote="Si yo digo quiten eso, se pueda quitar. Esa es la palabra."
         quoteSource="ENT-003 · portador de saber, Talamanca"
       />

@@ -2,22 +2,32 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDB } from '@/hooks/useDB'
 import type { MaterialEducativo } from '@/types/edu'
+import PageHeader from '@/components/layout/PageHeader'
 import SearchBar from '@/components/ui/SearchBar'
+import Chip from '@/components/ui/Chip'
+import SyncDot from '@/components/ui/SyncDot'
+import Fab from '@/components/ui/Fab'
 import Button from '@/components/ui/Button'
-import Badge from '@/components/ui/Badge'
 import Modal from '@/components/ui/Modal'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import EmptyState from '@/components/ui/EmptyState'
+import TribalIcon, { type TribalIconName } from '@/components/icons/TribalIcon'
+import type { ChipTone } from '@/components/ui/Chip'
 
-const formatoColor = { texto: 'green', audio: 'blue', video: 'purple', imagen: 'amber' } as const
+const formatoMeta: Record<string, { glyph: TribalIconName; tone: ChipTone; label: string }> = {
+  texto: { glyph: 'tejido', tone: 'sal', label: 'Texto' },
+  audio: { glyph: 'ola', tone: 'jungle', label: 'Audio' },
+  video: { glyph: 'eye', tone: 'terracotta', label: 'Video' },
+  imagen: { glyph: 'esfera', tone: 'ocre', label: 'Imagen' },
+}
 
 export default function EduMateriales() {
   const { t } = useTranslation()
   const { docs, loading, put } = useDB<MaterialEducativo>({ mod: 'edu', type: 'material_educativo' })
   const [search, setSearch] = useState('')
   const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState({ titulo: '', idioma: 'es', nivel: '', tema: '', formato: 'texto' as const, asignatura: '', competencia: '' })
+  const [form, setForm] = useState<{ titulo: string; idioma: string; nivel: string; tema: string; formato: MaterialEducativo['formato']; asignatura: string; competencia: string }>({ titulo: '', idioma: 'es', nivel: '', tema: '', formato: 'texto', asignatura: '', competencia: '' })
 
   const filtered = docs.filter((m) =>
     `${m.titulo} ${m.tema} ${m.idioma}`.toLowerCase().includes(search.toLowerCase()),
@@ -37,31 +47,54 @@ export default function EduMateriales() {
 
   return (
     <div className="mx-auto max-w-lg space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-green-800">{t('edu.materiales')}</h2>
-        <Button icon="＋" onClick={() => setShowForm(true)}>{t('edu.addMaterial')}</Button>
-      </div>
+      <PageHeader
+        module="edu"
+        title={t('edu.materiales')}
+        subtitle={t('edu.submateriales', { defaultValue: 'Biblioteca bilingüe offline' })}
+        icon="tejido"
+      />
 
       <SearchBar value={search} onChange={setSearch} />
 
-      {loading && <p className="text-sm text-gray-500">{t('common.loading')}</p>}
+      {loading && <p className="text-sm text-[color:var(--color-charcoal-500)]">{t('common.loading')}</p>}
 
       {!loading && filtered.length === 0 && <EmptyState icon="📖" message={t('edu.sinResultados')} />}
 
       <ul className="space-y-3">
-        {filtered.map((m) => (
-          <li key={m._id} className="rounded-lg bg-white p-4 shadow-sm">
-            <div className="flex items-start justify-between">
-              <h3 className="font-semibold text-gray-800">{m.titulo}</h3>
-              <Badge color={formatoColor[m.formato]}>{m.formato}</Badge>
-            </div>
-            <p className="mt-1 text-sm text-gray-500">
-              {m.tema} · {m.nivel} · {m.idioma}
-            </p>
-            {m.asignatura && <p className="mt-0.5 text-xs text-gray-400">{m.asignatura}</p>}
-          </li>
-        ))}
+        {filtered.map((m) => {
+          const fm = formatoMeta[m.formato] ?? formatoMeta.texto
+          return (
+            <li key={m._id} className="rv-card p-4">
+              <div className="flex items-start gap-3">
+                <span
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+                  style={{ background: 'var(--color-ocre-50)', color: 'var(--color-ocre-700)', boxShadow: 'inset 0 0 0 1px var(--color-ocre-200)' }}
+                  aria-hidden
+                >
+                  <TribalIcon name={fm.glyph} size={20} />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-semibold text-[color:var(--color-jungle-700)]">{m.titulo}</h3>
+                    <Chip glyph={fm.glyph} tone={fm.tone}>{fm.label}</Chip>
+                  </div>
+                  <p className="mt-1 text-sm text-[color:var(--color-charcoal-500)]">{m.tema} · {m.nivel}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                    {m.idioma && <Chip glyph="espiral" tone="jungle">{m.idioma}</Chip>}
+                    {m.asignatura && <Chip tone="neutral">{m.asignatura}</Chip>}
+                    {m.competencia && <Chip tone="ocre">{m.competencia}</Chip>}
+                  </div>
+                  <div className="mt-2">
+                    <SyncDot state="synced" />
+                  </div>
+                </div>
+              </div>
+            </li>
+          )
+        })}
       </ul>
+
+      <Fab label={t('edu.addMaterial')} onClick={() => setShowForm(true)} />
 
       <Modal open={showForm} onClose={() => setShowForm(false)} title={t('edu.addMaterial')}>
         <div className="space-y-3">

@@ -161,3 +161,31 @@ h1, h2, h3, h4 {
   scrollbar-width: thin;
   scrollbar-color: var(--color-bone-300) transparent;
 }
+
+/* ---------------------------------------------------------
+ * Modo alto contraste (RF-SAL-004 · profesionales de salud).
+ * Activado con <html data-contrast="high">.
+ * ------------------------------------------------------- */
+html[data-contrast='high'] {
+  --color-charcoal-500: #1a1714;
+  --color-charcoal-600: #110e0c;
+  --color-bone-100: #f7f2e8;
+  --color-border-soft: #2a2725;
+  --color-border-strong: #1e1a17;
+}
+
+html[data-contrast='high'] body {
+  background: #fbf7ee;
+}
+
+html[data-contrast='high'] .rv-card {
+  box-shadow: 0 0 0 2px var(--color-jungle-700);
+}
+
+html[data-contrast='high'] a,
+html[data-contrast='high'] button:focus-visible,
+html[data-contrast='high'] [role='button']:focus-visible {
+  outline: 3px solid var(--color-ocre-600);
+  outline-offset: 2px;
+}
+

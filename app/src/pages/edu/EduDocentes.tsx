@@ -2,13 +2,17 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDB } from '@/hooks/useDB'
 import type { Docente } from '@/types/edu'
+import PageHeader from '@/components/layout/PageHeader'
 import SearchBar from '@/components/ui/SearchBar'
+import Chip from '@/components/ui/Chip'
+import SyncDot from '@/components/ui/SyncDot'
+import Fab from '@/components/ui/Fab'
 import Button from '@/components/ui/Button'
-import Badge from '@/components/ui/Badge'
 import Modal from '@/components/ui/Modal'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import EmptyState from '@/components/ui/EmptyState'
+import TribalIcon from '@/components/icons/TribalIcon'
 
 export default function EduDocentes() {
   const { t } = useTranslation()
@@ -34,33 +38,55 @@ export default function EduDocentes() {
 
   return (
     <div className="mx-auto max-w-lg space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-green-800">{t('edu.docentes')}</h2>
-        <Button icon="＋" onClick={() => setShowForm(true)}>{t('edu.addDocente')}</Button>
-      </div>
+      <PageHeader
+        module="edu"
+        title={t('edu.docentes')}
+        subtitle={t('edu.subdocentes', { defaultValue: 'Portadores del aula' })}
+        icon="mascara"
+      />
 
       <SearchBar value={search} onChange={setSearch} />
 
-      {loading && <p className="text-sm text-gray-500">{t('common.loading')}</p>}
+      {loading && <p className="text-sm text-[color:var(--color-charcoal-500)]">{t('common.loading')}</p>}
 
       {!loading && filtered.length === 0 && <EmptyState icon="👩‍🏫" message={t('edu.sinResultados')} />}
 
       <ul className="space-y-3">
         {filtered.map((d) => (
-          <li key={d._id} className="rounded-lg bg-white p-4 shadow-sm">
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="font-semibold text-gray-800">{d.nombre}</h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  {d.territorio} · {d.lengua_dominante}
-                </p>
-                {d.rol && <p className="mt-0.5 text-xs text-gray-400">{d.rol}</p>}
+          <li key={d._id} className="rv-card p-4">
+            <div className="flex items-start gap-3">
+              <span
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+                style={{ background: 'var(--color-ocre-50)', color: 'var(--color-ocre-700)', boxShadow: 'inset 0 0 0 1px var(--color-ocre-200)' }}
+                aria-hidden
+              >
+                <TribalIcon name="mascara" size={20} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="font-semibold text-[color:var(--color-jungle-700)]">{d.nombre}</h3>
+                  <Chip tone={d.activo ? 'sal' : 'neutral'}>
+                    {d.activo ? t('edu.activo') : t('edu.inactivo')}
+                  </Chip>
+                </div>
+                {d.rol && (
+                  <p className="mt-1 text-sm text-[color:var(--color-charcoal-500)]">{d.rol}</p>
+                )}
+                <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                  {d.territorio && <Chip glyph="rancho" tone="jungle">{d.territorio}</Chip>}
+                  {d.lengua_dominante && <Chip glyph="espiral" tone="ocre">{d.lengua_dominante}</Chip>}
+                  {d.nivel_academico && <Chip tone="neutral">{d.nivel_academico}</Chip>}
+                </div>
+                <div className="mt-2">
+                  <SyncDot state="synced" />
+                </div>
               </div>
-              <Badge color={d.activo ? 'green' : 'gray'}>{d.activo ? t('edu.activo') : t('edu.inactivo')}</Badge>
             </div>
           </li>
         ))}
       </ul>
+
+      <Fab label={t('edu.addDocente')} onClick={() => setShowForm(true)} />
 
       <Modal open={showForm} onClose={() => setShowForm(false)} title={t('edu.addDocente')}>
         <div className="space-y-3">

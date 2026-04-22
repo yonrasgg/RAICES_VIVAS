@@ -2,12 +2,17 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDB } from '@/hooks/useDB'
 import type { Estudiante } from '@/types/edu'
+import PageHeader from '@/components/layout/PageHeader'
 import SearchBar from '@/components/ui/SearchBar'
+import Chip from '@/components/ui/Chip'
+import SyncDot from '@/components/ui/SyncDot'
+import Fab from '@/components/ui/Fab'
 import Button from '@/components/ui/Button'
 import Modal from '@/components/ui/Modal'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import EmptyState from '@/components/ui/EmptyState'
+import TribalIcon from '@/components/icons/TribalIcon'
 
 export default function EduEstudiantes() {
   const { t } = useTranslation()
@@ -28,28 +33,48 @@ export default function EduEstudiantes() {
 
   return (
     <div className="mx-auto max-w-lg space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-green-800">{t('edu.estudiantes')}</h2>
-        <Button icon="＋" onClick={() => setShowForm(true)}>{t('edu.addEstudiante')}</Button>
-      </div>
+      <PageHeader
+        module="edu"
+        title={t('edu.estudiantes')}
+        subtitle={t('edu.subestudiantes', { defaultValue: 'Nuevas raíces' })}
+        icon="hoja"
+      />
 
       <SearchBar value={search} onChange={setSearch} />
 
-      {loading && <p className="text-sm text-gray-500">{t('common.loading')}</p>}
+      {loading && <p className="text-sm text-[color:var(--color-charcoal-500)]">{t('common.loading')}</p>}
 
       {!loading && filtered.length === 0 && <EmptyState icon="🎒" message={t('edu.sinResultados')} />}
 
       <ul className="space-y-3">
         {filtered.map((e) => (
-          <li key={e._id} className="rounded-lg bg-white p-4 shadow-sm">
-            <h3 className="font-semibold text-gray-800">{e.nombre}</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              {e.nivel_educativo} · {e.lengua_principal}
-            </p>
-            <p className="mt-0.5 text-xs text-gray-400">{e.centro_educativo} — {e.territorio}</p>
+          <li key={e._id} className="rv-card p-4">
+            <div className="flex items-start gap-3">
+              <span
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+                style={{ background: 'var(--color-ocre-50)', color: 'var(--color-ocre-700)', boxShadow: 'inset 0 0 0 1px var(--color-ocre-200)' }}
+                aria-hidden
+              >
+                <TribalIcon name="hoja" size={20} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-semibold text-[color:var(--color-jungle-700)]">{e.nombre}</h3>
+                <p className="mt-1 text-sm text-[color:var(--color-charcoal-500)]">{e.centro_educativo}</p>
+                <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                  {e.nivel_educativo && <Chip tone="ocre">{e.nivel_educativo}</Chip>}
+                  {e.lengua_principal && <Chip glyph="espiral" tone="jungle">{e.lengua_principal}</Chip>}
+                  {e.territorio && <Chip glyph="rancho" tone="sal">{e.territorio}</Chip>}
+                </div>
+                <div className="mt-2">
+                  <SyncDot state="synced" />
+                </div>
+              </div>
+            </div>
           </li>
         ))}
       </ul>
+
+      <Fab label={t('edu.addEstudiante')} onClick={() => setShowForm(true)} />
 
       <Modal open={showForm} onClose={() => setShowForm(false)} title={t('edu.addEstudiante')}>
         <div className="space-y-3">

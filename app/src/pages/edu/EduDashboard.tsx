@@ -26,7 +26,7 @@ export default function EduDashboard() {
         module="edu"
         title={t('edu.title')}
         subtitle="Materiales y prácticas en cuatro lenguas originarias"
-        cover="/img/cover-rf-edu.png"
+        cover={`${import.meta.env.BASE_URL}img/cover-rf-edu.png`}
         quote="El 87 % de docentes reporta materiales insuficientes en lengua originaria."
         quoteSource="Análisis de entrevistas · ENT-002"
       />

@@ -109,7 +109,7 @@ export default function HomePage() {
       {/* HERO */}
       <section className="relative overflow-hidden rounded-[var(--radius-tribal-lg)] shadow-[var(--shadow-tribal)]">
         <img
-          src="/img/hero-raices-vivas.png"
+          src={`${import.meta.env.BASE_URL}img/hero-raices-vivas.png`}
           alt="Paisaje cultural de las comunidades indígenas de Costa Rica"
           className="h-60 w-full object-cover sm:h-72 md:h-80"
           loading="eager"

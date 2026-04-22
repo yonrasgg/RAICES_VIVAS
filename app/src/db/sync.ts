@@ -24,11 +24,13 @@ class SyncManager {
   private state: SyncState = { ...INITIAL_STATE }
   private listeners = new Set<Listener>()
   private replication: PouchDB.Replication.Sync<object> | null = null
+  private local: PouchDB.Database
+  private remoteUrl: string
 
-  constructor(
-    private local: PouchDB.Database,
-    private remoteUrl: string,
-  ) {}
+  constructor(local: PouchDB.Database, remoteUrl: string) {
+    this.local = local
+    this.remoteUrl = remoteUrl
+  }
 
   /** Subscribe to state changes; returns unsubscribe fn */
   subscribe(fn: Listener): () => void {
@@ -59,7 +61,7 @@ class SyncManager {
         this.emit({ status: 'online', lastSynced: new Date() }),
       )
       .on('change', (info) => {
-        const pending = info.change?.pending ?? 0
+        const pending = (info.change as { pending?: number })?.pending ?? 0
         this.emit({ pending })
       })
       .on('denied', (err) =>

@@ -2,26 +2,27 @@
   "name": "Raíces Vivas",
   "short_name": "RaícesVivas",
   "description": "Sistema Integral para Comunidades Indígenas de Costa Rica",
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#15803d",
   "orientation": "any",
   "icons": [
     {
-      "src": "/icons/icon-192.png",
+      "src": "./icons/icon-192.svg",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/svg+xml"
     },
     {
-      "src": "/icons/icon-512.png",
+      "src": "./icons/icon-512.svg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/svg+xml"
     },
     {
-      "src": "/icons/icon-512.png",
+      "src": "./icons/icon-512.svg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "maskable"
     }
   ]

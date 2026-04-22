@@ -2,26 +2,24 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDB } from '@/hooks/useDB'
 import type { Ejercicio } from '@/types/edu'
+import PageHeader from '@/components/layout/PageHeader'
 import SearchBar from '@/components/ui/SearchBar'
+import Chip from '@/components/ui/Chip'
+import SyncDot from '@/components/ui/SyncDot'
+import Fab from '@/components/ui/Fab'
 import Button from '@/components/ui/Button'
-import Badge from '@/components/ui/Badge'
 import Modal from '@/components/ui/Modal'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import EmptyState from '@/components/ui/EmptyState'
+import TribalIcon, { type TribalIconName } from '@/components/icons/TribalIcon'
+import type { ChipTone } from '@/components/ui/Chip'
 
-const tipoColor = {
-  opcion_multiple: 'blue',
-  completar: 'green',
-  pareo: 'amber',
-  produccion_oral: 'purple',
-} as const
-
-const tipoLabel: Record<string, string> = {
-  opcion_multiple: 'Opción múltiple',
-  completar: 'Completar',
-  pareo: 'Pareo',
-  produccion_oral: 'Producción oral',
+const tipoMeta: Record<string, { glyph: TribalIconName; tone: ChipTone; label: string }> = {
+  opcion_multiple: { glyph: 'tejido', tone: 'jungle', label: 'Opción múltiple' },
+  completar: { glyph: 'espiral', tone: 'ocre', label: 'Completar' },
+  pareo: { glyph: 'esfera', tone: 'terracotta', label: 'Pareo' },
+  produccion_oral: { glyph: 'ola', tone: 'cinabrio', label: 'Producción oral' },
 }
 
 export default function EduEjercicios() {
@@ -43,30 +41,52 @@ export default function EduEjercicios() {
 
   return (
     <div className="mx-auto max-w-lg space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-green-800">{t('edu.ejercicios')}</h2>
-        <Button icon="＋" onClick={() => setShowForm(true)}>{t('edu.addEjercicio')}</Button>
-      </div>
+      <PageHeader
+        module="edu"
+        title={t('edu.ejercicios')}
+        subtitle={t('edu.subejercicios', { defaultValue: 'Práctica viva de la lengua' })}
+        icon="espiral"
+      />
 
       <SearchBar value={search} onChange={setSearch} />
 
-      {loading && <p className="text-sm text-gray-500">{t('common.loading')}</p>}
+      {loading && <p className="text-sm text-[color:var(--color-charcoal-500)]">{t('common.loading')}</p>}
 
       {!loading && filtered.length === 0 && <EmptyState icon="✏️" message={t('edu.sinResultados')} />}
 
       <ul className="space-y-3">
-        {filtered.map((e) => (
-          <li key={e._id} className="rounded-lg bg-white p-4 shadow-sm">
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="font-semibold text-gray-800">{e.tema}</h3>
-                <p className="mt-1 text-sm text-gray-500">{e.nivel}</p>
+        {filtered.map((e) => {
+          const tm = tipoMeta[e.tipo_item] ?? tipoMeta.opcion_multiple
+          return (
+            <li key={e._id} className="rv-card p-4">
+              <div className="flex items-start gap-3">
+                <span
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+                  style={{ background: 'var(--color-ocre-50)', color: 'var(--color-ocre-700)', boxShadow: 'inset 0 0 0 1px var(--color-ocre-200)' }}
+                  aria-hidden
+                >
+                  <TribalIcon name={tm.glyph} size={20} />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-semibold text-[color:var(--color-jungle-700)]">{e.tema}</h3>
+                    <Chip glyph={tm.glyph} tone={tm.tone}>{tm.label}</Chip>
+                  </div>
+                  <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                    {e.nivel && <Chip tone="ocre">{e.nivel}</Chip>}
+                    {e.material_id && <Chip glyph="tejido" tone="neutral">Material</Chip>}
+                  </div>
+                  <div className="mt-2">
+                    <SyncDot state="synced" />
+                  </div>
+                </div>
               </div>
-              <Badge color={tipoColor[e.tipo_item]}>{tipoLabel[e.tipo_item] ?? e.tipo_item}</Badge>
-            </div>
-          </li>
-        ))}
+            </li>
+          )
+        })}
       </ul>
+
+      <Fab label={t('edu.addEjercicio')} onClick={() => setShowForm(true)} />
 
       <Modal open={showForm} onClose={() => setShowForm(false)} title={t('edu.addEjercicio')}>
         <div className="space-y-3">

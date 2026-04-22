@@ -43,7 +43,7 @@ const syncLogs: SyncLog[] = [
   { _id: 'sync-006', type: 'sync_log', device_id: 'device-shiroles-01', fecha_sync: '2026-04-14T11:30:00', estado: 'completado', registros_enviados: 7, registros_recibidos: 9, conflictos_detectados: 0, conflictos_resueltos: 0, modulo: 'EDU' },
 ]
 
-async function seedDB(docs: Array<{ _id: string; [k: string]: unknown }>) {
+async function seedDB(docs: Array<{ _id: string }>) {
   const db = databases['trans']
   if (!db) return
   for (const doc of docs) {

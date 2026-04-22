@@ -26,7 +26,7 @@ export default function SalDashboard() {
         module="sal"
         title={t('sal.title')}
         subtitle="Atención comunitaria con historial offline-first"
-        cover="/img/cover-rf-sal.png"
+        cover={`${import.meta.env.BASE_URL}img/cover-rf-sal.png`}
         quote="Se nos perdieron datos de dos brigadas enteras cuando cruzamos el río."
         quoteSource="ENT-003 · ATAP, Chirripó"
       />

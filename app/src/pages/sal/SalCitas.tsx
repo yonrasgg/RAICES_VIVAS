@@ -2,16 +2,31 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDB } from '@/hooks/useDB'
 import type { Cita } from '@/types/sal'
+import PageHeader from '@/components/layout/PageHeader'
 import SearchBar from '@/components/ui/SearchBar'
+import Chip from '@/components/ui/Chip'
+import SyncDot from '@/components/ui/SyncDot'
+import Fab from '@/components/ui/Fab'
 import Button from '@/components/ui/Button'
-import Badge from '@/components/ui/Badge'
 import Modal from '@/components/ui/Modal'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import EmptyState from '@/components/ui/EmptyState'
+import TribalIcon, { type TribalIconName } from '@/components/icons/TribalIcon'
+import type { ChipTone } from '@/components/ui/Chip'
 
-const estadoColor = { pendiente: 'amber', realizada: 'green', cancelada: 'rose' } as const
-const tipoLabel: Record<string, string> = { consulta: '🩺', control: '📋', seguimiento: '🔄', emergencia: '🚨' }
+const tipoMeta: Record<string, { glyph: TribalIconName; tone: ChipTone; label: string }> = {
+  consulta: { glyph: 'rana', tone: 'sal', label: 'Consulta' },
+  control: { glyph: 'tejido', tone: 'jungle', label: 'Control' },
+  seguimiento: { glyph: 'espiral', tone: 'ocre', label: 'Seguimiento' },
+  emergencia: { glyph: 'jaguar', tone: 'cinabrio', label: 'Emergencia' },
+}
+
+const estadoTone: Record<Cita['estado'], ChipTone> = {
+  pendiente: 'ocre',
+  realizada: 'sal',
+  cancelada: 'cinabrio',
+}
 
 export default function SalCitas() {
   const { t } = useTranslation()
@@ -38,36 +53,56 @@ export default function SalCitas() {
 
   return (
     <div className="mx-auto max-w-lg space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-green-800">{t('sal.citas')}</h2>
-        <Button icon="＋" onClick={() => setShowForm(true)}>{t('sal.addCita')}</Button>
-      </div>
+      <PageHeader
+        module="sal"
+        title={t('sal.citas')}
+        subtitle={t('sal.subcitas', { defaultValue: 'Agenda de atención territorial' })}
+        icon="ola"
+      />
 
       <SearchBar value={search} onChange={setSearch} placeholder={t('sal.buscar')} />
 
-      {loading && <p className="text-sm text-gray-500">{t('common.loading')}</p>}
+      {loading && <p className="text-sm text-[color:var(--color-charcoal-500)]">{t('common.loading')}</p>}
 
       {!loading && filtered.length === 0 && <EmptyState icon="📅" message={t('sal.sinResultados')} />}
 
       <ul className="space-y-3">
-        {filtered.map((c) => (
-          <li key={c._id} className="rounded-lg bg-white p-4 shadow-sm">
-            <div className="flex items-start justify-between gap-2">
-              <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-gray-800">
-                  {tipoLabel[c.tipo_atencion]} {c.paciente_nombre}
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  {c.fecha} · {c.hora_inicio}–{c.hora_fin}
-                </p>
-                <p className="mt-0.5 text-xs text-gray-400">{c.responsable} · {c.lugar}</p>
+        {filtered.map((c) => {
+          const tm = tipoMeta[c.tipo_atencion] ?? tipoMeta.consulta
+          return (
+            <li key={c._id} className="rv-card p-4">
+              <div className="flex items-start gap-3">
+                <span
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+                  style={{ background: 'var(--color-jungle-50)', color: 'var(--color-jungle-700)', boxShadow: 'inset 0 0 0 1px var(--color-jungle-200)' }}
+                  aria-hidden
+                >
+                  <TribalIcon name={tm.glyph} size={20} />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-semibold text-[color:var(--color-jungle-700)]">{c.paciente_nombre}</h3>
+                    <Chip glyph={tm.glyph} tone={tm.tone}>{tm.label}</Chip>
+                  </div>
+                  <p className="mt-1 text-sm text-[color:var(--color-charcoal-500)]">
+                    {c.fecha} · {c.hora_inicio}–{c.hora_fin}
+                  </p>
+                  <p className="mt-0.5 text-xs text-[color:var(--color-charcoal-500)]">{c.responsable} · {c.lugar}</p>
+                  {c.notas && (
+                    <p className="mt-2 text-sm text-[color:var(--color-charcoal-600)] line-clamp-2">{c.notas}</p>
+                  )}
+                  <div className="mt-2 flex items-center gap-2">
+                    <Chip tone={estadoTone[c.estado]}>{t(`sal.${c.estado}`)}</Chip>
+                    <SyncDot state="synced" />
+                  </div>
+                </div>
               </div>
-              <Badge color={estadoColor[c.estado]}>{t(`sal.${c.estado}`)}</Badge>
-            </div>
-            {c.notas && <p className="mt-2 text-sm text-gray-600 line-clamp-2">{c.notas}</p>}
-          </li>
-        ))}
+            </li>
+          )
+        })}
       </ul>
+
+      <Fab label={t('sal.addCita')} onClick={() => setShowForm(true)} />
 
       <Modal open={showForm} onClose={() => setShowForm(false)} title={t('sal.addCita')}>
         <div className="space-y-3">

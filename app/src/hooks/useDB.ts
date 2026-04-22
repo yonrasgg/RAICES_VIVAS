@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { databases } from '@/db/pouchdb'
 
-interface UseDBOptions<T> {
+interface UseDBOptions {
   /** Module key: 'edu' | 'sab' | 'sal' */
   mod: string
   /** PouchDB doc type to filter (e.g. 'docente') */
@@ -23,7 +23,7 @@ interface UseDBResult<T> {
  * CRUD hook for a PouchDB collection filtered by doc type.
  */
 export function useDB<T extends { type: string }>(
-  opts: UseDBOptions<T>,
+  opts: UseDBOptions,
 ): UseDBResult<T> {
   const { mod, type, selector } = opts
   const db = databases[mod]
