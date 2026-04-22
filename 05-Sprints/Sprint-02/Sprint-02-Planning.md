@@ -127,9 +127,6 @@ graph LR
     T021 -->|bloquea| T022
     T021 -->|bloquea| T023
     T021 -->|bloquea| T024
-    T025 -->|bloquea| T026
-    T025 -->|bloquea| T027
-    T025 -->|bloquea| T028
     T022 -->|bloquea| T026
     T023 -->|bloquea| T027
     T024 -->|bloquea| T028
@@ -156,7 +153,6 @@ graph LR
     T037 -->|bloquea| T039
     T038 -->|bloquea| T041
     T039 -->|bloquea| T041
-    T040 -->|bloquea| T041
     T041 -->|bloquea| T042
 
     style T021 fill:#4CAF50,color:#fff

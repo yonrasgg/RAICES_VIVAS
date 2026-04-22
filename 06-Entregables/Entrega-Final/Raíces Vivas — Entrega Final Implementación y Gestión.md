@@ -153,15 +153,15 @@ El proyecto adoptó una investigación aplicada de enfoque mixto (QUAL → QUAN)
 
 #### 1.3.1 Diagrama de Flujo de Datos — Nivel 0 (Contexto)
 
-El diagrama de contexto del sistema, modelado con notación C4 (equivalente funcional al DFD Nivel 0), muestra a Raíces Vivas como un sistema integral que interactúa con cinco tipos de usuarios primarios y tres sistemas externos:
+El **DFD Nivel 0** (notación **DeMarco–Yourdon**) representa a Raíces Vivas como un único proceso central (círculo `0`) rodeado por sus entidades externas (rectángulos): seis actores humanos (docente comunitario, estudiante, líder comunal, personal de salud, portador de saber, Consejo de Mayores/ADI) y tres sistemas externos (MEP, CCSS/EDUS, ODS/UNESCO). Cada arista es un flujo de datos etiquetado con el contenido informacional intercambiado.
 
-![[Visión General#Diagrama de Contexto (C4 - Nivel 1)]]
+![Diagrama DFD Nivel 0 — DeMarco–Yourdon (Contexto)](../../08-Recursos/Imágenes/diagram_dfd_nivel0.png)
 
-#### 1.3.2 Diagrama de Flujo de Datos — Nivel 1 (Módulos)
+#### 1.3.2 Diagrama de Flujo de Datos — Nivel 1 (Descomposición Funcional)
 
-La descomposición en módulos y servicios transversales (C4 Nivel 2, equivalente a DFD Nivel 1) muestra los tres módulos funcionales (EDU, SAB, SAL) soportados por cuatro servicios compartidos: autenticación y roles, sincronización offline/online, motor multilingüe y auditoría.
+El **DFD Nivel 1** descompone el proceso `0` en cuatro procesos hijos (`1` EDU, `2` SAB, `3` SAL, `4` Servicios Transversales) y explicita cinco almacenes de datos (rectángulos abiertos a los lados según la convención DeMarco): **D1** Catálogo multimedia bilingüe, **D2** Réplica local PouchDB, **D3** Log inmutable de auditoría, **D4** Catálogo i18n y **D5** CouchDB servidor. Todos los flujos están etiquetados con su contenido y dirección.
 
-![[Visión General#Diagrama de Módulos (C4 - Nivel 2)]]
+![Diagrama DFD Nivel 1 — DeMarco–Yourdon (Descomposición Funcional)](../../08-Recursos/Imágenes/diagram_dfd_nivel1.png)
 
 #### 1.3.3 Casos de Uso
 
