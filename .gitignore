@@ -2,6 +2,17 @@
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 
+# Obsidian - plugin data con secretos (NUNCA commitear)
+.obsidian/plugins/*/data.json
+
+# Secretos locales
+.env
+.env.*
+!.env.example
+*.secret
+*_token*
+*_api_key*
+
 # Trash de Obsidian
 .trash/
 
