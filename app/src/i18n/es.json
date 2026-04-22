@@ -3,6 +3,27 @@
     "name": "Raíces Vivas",
     "tagline": "Sistema Integral para Comunidades Indígenas"
   },
+  "home": {
+    "modules": "Módulos del sistema",
+    "registros": "registros",
+    "moduleDesc": {
+      "edu": "Materiales, docentes y ejercicios en lenguas originarias.",
+      "sab": "Catálogo de saberes con gobernanza CARE por portador.",
+      "sal": "Atención comunitaria con historial clínico offline.",
+      "trans": "Sincronización, roles y auditoría del sistema."
+    },
+    "kpi": {
+      "title": "El proyecto en cifras",
+      "participantes": "Participantes",
+      "requerimientos": "Requerimientos",
+      "idiomas": "Idiomas",
+      "pueblos": "Pueblos"
+    },
+    "territorios": {
+      "title": "Territorios piloto",
+      "subtitle": "Conectividad típica"
+    }
+  },
   "nav": {
     "home": "Inicio",
     "edu": "Educación",

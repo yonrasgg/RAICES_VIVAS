@@ -3,6 +3,27 @@
     "name": "Raíces Vivas",
     "tagline": "Jkö kë̀ tjawö ès kö"
   },
+  "home": {
+    "modules": "Jkö kë̀",
+    "registros": "tè",
+    "moduleDesc": {
+      "edu": "Kë̀ tsö́, shtákapa, kë̀ sá.",
+      "sab": "Jkö kë̀ wö̀tnaska.",
+      "sal": "Batsú tè jökrä.",
+      "trans": "Kë̀ duwö̀, kë̀ jökrä, shtë̀."
+    },
+    "kpi": {
+      "title": "Jkö jökrä tè",
+      "participantes": "Klë̀rë",
+      "requerimientos": "Kë̀ sá",
+      "idiomas": "Kë̀è",
+      "pueblos": "Ës"
+    },
+    "territorios": {
+      "title": "Kö wö̀tnaska",
+      "subtitle": "Kë̀ duwö̀"
+    }
+  },
   "nav": {
     "home": "Ú",
     "edu": "Tjawö",

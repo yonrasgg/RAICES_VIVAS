@@ -3,6 +3,27 @@
     "name": "Raíces Vivas",
     "tagline": "Ñaka kë̀ klöwö ès wö̀tnaska"
   },
+  "home": {
+    "modules": "Kë̀ klö jökrä",
+    "registros": "tè",
+    "moduleDesc": {
+      "edu": "Kë̀ tsö́, shtákapa, kë̀ sá.",
+      "sab": "Siwawa kë̀ wë̀tnaska.",
+      "sal": "Tso̱' tè jökrä.",
+      "trans": "Kë̀ duwö̀, kë̀ jökrä, shtë̀."
+    },
+    "kpi": {
+      "title": "Kë̀ jökrä tè",
+      "participantes": "Klë̀rë",
+      "requerimientos": "Kë̀ sá",
+      "idiomas": "Kë̀è",
+      "pueblos": "Ës"
+    },
+    "territorios": {
+      "title": "Kö wö̀tnaska",
+      "subtitle": "Kë̀ duwö̀"
+    }
+  },
   "nav": {
     "home": "Ú kìtè",
     "edu": "Kë̀ klö",

@@ -3,6 +3,27 @@
     "name": "Raíces Vivas",
     "tagline": "Ngöbe kuin kwe"
   },
+  "home": {
+    "modules": "Kukwe jökrä",
+    "registros": "tö",
+    "moduleDesc": {
+      "edu": "Kukwe tödëga, ni tödëkä, kukwe nuä.",
+      "sab": "Kukwe kira kwe.",
+      "sal": "Kä ngwen nüne tö.",
+      "trans": "Kä nüne, kukwe jökrä, ñô."
+    },
+    "kpi": {
+      "title": "Kukwe jökrä tö",
+      "participantes": "Ni nuä",
+      "requerimientos": "Kukwe sá",
+      "idiomas": "Blite",
+      "pueblos": "Juta"
+    },
+    "territorios": {
+      "title": "Kä nüne",
+      "subtitle": "Kä nüne tö"
+    }
+  },
   "nav": {
     "home": "Ñô",
     "edu": "Tödëga",

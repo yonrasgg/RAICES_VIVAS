@@ -1,1 +1,163 @@
 @import "tailwindcss";
+
+/* ============================================================
+   Raíces Vivas — Sistema de diseño tribal
+   Paleta inspirada en tierras cocidas, tintes vegetales y
+   textiles de los pueblos Bribri, Cabécar, Maleku, Boruca,
+   Ngäbe, Térraba y Huetar de Costa Rica.
+   ============================================================ */
+
+@theme {
+  /* Tipografías */
+  --font-display: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Manrope", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Tierras (núcleo cromático) */
+  --color-terracotta-50: #fbf2ec;
+  --color-terracotta-100: #f1d9c8;
+  --color-terracotta-200: #e4b69c;
+  --color-terracotta-300: #d18c6b;
+  --color-terracotta-400: #c26d48;
+  --color-terracotta-500: #b85c38;
+  --color-terracotta-600: #9d4a2b;
+  --color-terracotta-700: #7d3a23;
+  --color-terracotta-800: #5e2c1b;
+  --color-terracotta-900: #3f1d12;
+
+  --color-ocre-50: #faf4e4;
+  --color-ocre-100: #f1e3bc;
+  --color-ocre-200: #e6cd8a;
+  --color-ocre-300: #d4b46b;
+  --color-ocre-400: #c5a05a;
+  --color-ocre-500: #a88645;
+  --color-ocre-600: #876b33;
+  --color-ocre-700: #665024;
+  --color-ocre-800: #463618;
+  --color-ocre-900: #2a2010;
+
+  --color-cinabrio-500: #8b2e1f;
+  --color-cinabrio-600: #6f2418;
+  --color-cinabrio-700: #541a11;
+
+  --color-jungle-50: #e8efe9;
+  --color-jungle-100: #c4d5c7;
+  --color-jungle-200: #94b49a;
+  --color-jungle-300: #6a9473;
+  --color-jungle-400: #4e6e66;
+  --color-jungle-500: #2e4a3b;
+  --color-jungle-600: #1f3a2d;
+  --color-jungle-700: #133a32;
+  --color-jungle-800: #0c2620;
+  --color-jungle-900: #081814;
+
+  --color-cream-50: #fcf8f1;
+  --color-cream-100: #f5ede0;
+  --color-bone-100: #e9dec9;
+  --color-bone-200: #d9ceb7;
+  --color-bone-300: #c5b99d;
+  --color-charcoal-500: #555150;
+  --color-charcoal-700: #2a2725;
+  --color-charcoal-900: #1e1a17;
+
+  --color-surface: #f5ede0;
+  --color-surface-raised: #fcf8f1;
+  --color-ink: #1e1a17;
+  --color-ink-muted: #555150;
+  --color-border-soft: #e9dec9;
+  --color-border-strong: #c5b99d;
+
+  --color-edu: #2e4a3b;
+  --color-sab: #b85c38;
+  --color-sal: #c5a05a;
+  --color-trans: #133a32;
+
+  --color-care-publico: #6a9473;
+  --color-care-comunitario: #c5a05a;
+  --color-care-restringido: #b85c38;
+  --color-care-ceremonial: #541a11;
+
+  --shadow-tribal-sm: 0 1px 2px rgba(71, 46, 20, 0.08);
+  --shadow-tribal: 0 4px 12px rgba(71, 46, 20, 0.10), 0 1px 3px rgba(71, 46, 20, 0.06);
+  --shadow-tribal-lg: 0 10px 28px rgba(71, 46, 20, 0.14), 0 2px 6px rgba(71, 46, 20, 0.08);
+
+  --radius-tribal: 0.875rem;
+  --radius-tribal-lg: 1.25rem;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background-color: var(--color-cream-100);
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(197, 160, 90, 0.10) 1.5px, transparent 2px),
+    radial-gradient(circle at 78% 62%, rgba(184, 92, 56, 0.08) 1.5px, transparent 2px),
+    radial-gradient(circle at 42% 88%, rgba(46, 74, 59, 0.07) 1.5px, transparent 2px),
+    repeating-linear-gradient(45deg, rgba(71, 46, 20, 0.025) 0px, rgba(71, 46, 20, 0.025) 1px, transparent 1px, transparent 14px),
+    repeating-linear-gradient(-45deg, rgba(71, 46, 20, 0.02) 0px, rgba(71, 46, 20, 0.02) 1px, transparent 1px, transparent 14px);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  color: var(--color-jungle-700);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-ocre-400);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-terracotta-200);
+  color: var(--color-jungle-800);
+}
+
+/* Cenefa / guarda tribal reutilizable */
+.rv-cenefa {
+  height: 8px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='8' viewBox='0 0 32 8'><path d='M0 4 L4 0 L8 4 L12 0 L16 4 L20 0 L24 4 L28 0 L32 4 L32 8 L0 8 Z' fill='%23b85c38'/><path d='M0 4 L4 8 L8 4 L12 8 L16 4 L20 8 L24 4 L28 8 L32 4 L32 0 L0 0 Z' fill='%23c5a05a' opacity='0.7'/></svg>");
+  background-repeat: repeat-x;
+  background-size: 32px 8px;
+}
+
+.rv-cenefa-diamantes {
+  height: 10px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='10' viewBox='0 0 24 10'><path d='M12 0 L24 5 L12 10 L0 5 Z' fill='none' stroke='%23133a32' stroke-width='1.2'/><circle cx='12' cy='5' r='1.5' fill='%23c5a05a'/></svg>");
+  background-repeat: repeat-x;
+  background-size: 24px 10px;
+}
+
+/* Tarjeta tribal (esquina asimétrica dorada) */
+.rv-card {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-tribal);
+  box-shadow: var(--shadow-tribal-sm);
+  position: relative;
+  overflow: hidden;
+}
+.rv-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  background: var(--color-ocre-400);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  opacity: 0.9;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-bone-300) transparent;
+}
