@@ -327,10 +327,9 @@ RAICES_VIVAS/
 │   ├── Imágenes/                  29 archivos: covers, logos, diagramas UML pre-renderizados
 │   ├── PDFs/                      Documentos de referencia
 │   └── scripts/                   Scripts de automatización
-│       ├── md_to_pdf.py               Pipeline MD→PDF (WeasyPrint + Mermaid + UML)
-│       ├── generate_covers.py         Generador de banners del vault
 │       ├── extract-frontmatter-to-csv.py  Extractor de frontmatter a CSV
-│       └── setup-hooks.sh             Configuración de Git hooks
+│       ├── jira-sync-tasks.py             Sincronización con Jira Cloud
+│       └── setup-hooks.sh                 Configuración de Git hooks
 │
 ├── 09-QA/                     ← Control de calidad
 │   └── README.md                  Lineamientos de QA
@@ -373,37 +372,7 @@ El proyecto se gestiona con un enfoque **ágil adaptado** para contexto académi
 
 ---
 
-## 📄 Pipeline de Generación de PDF (Avance 2)
-
-El documento **Avance 2 — Diseño y Arquitectura** se genera automáticamente desde Markdown:
-
-```bash
-source .venv/bin/activate
-python 08-Recursos/scripts/md_to_pdf.py
-```
-
-**Stack de generación:**
-
-| Componente | Versión | Función |
-|---|---|---|
-| WeasyPrint | 68.1 | Renderizado HTML → PDF con CSS paged media |
-| Mermaid CLI | 11.12.0 | 11 diagramas renderizados como PNG (@scale 4) |
-| CairoSVG | 2.9.0 | 2 diagramas UML pre-renderizados (SVG → PNG) |
-| Python Markdown | — | Conversión MD → HTML con extensiones |
-
-**Características del PDF:**
-
-- 📑 ~65 páginas, ~4.9 MB
-- 🗂️ Tabla de contenido con hipervínculos de navegación
-- 📊 13 diagramas Mermaid (ER, flujo, arquitectura, Ishikawa, QFD…)
-- 🎭 2 diagramas UML con stick figures (Actores ↔ Módulos, Casos de Uso)
-- 🏛️ Portada con logo CENFOTEC
-- 📐 CSS optimizado para impresión APA con control de page-breaks
-- 📎 Anexos Lean Six Sigma: FODA, Ishikawa, QFD, DMAIC
-
----
-
-## 🚢 Despliegue del Prototipo (GitHub Pages)
+##  Despliegue del Prototipo (GitHub Pages)
 
 El prototipo se publica automáticamente en cada push a `main` que toque `app/**`, mediante el workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml):
 

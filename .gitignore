@@ -26,3 +26,7 @@ desktop.ini
 *.swp
 node_modules
 node_modules
+
+# Python tooling
+.mypy_cache/
+__pycache__/

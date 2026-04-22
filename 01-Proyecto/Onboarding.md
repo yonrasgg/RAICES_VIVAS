@@ -185,7 +185,7 @@ Contiene todas las minutas de reunión (`MIN-001`..`MIN-XXX`).
 | `Imágenes/` | Capturas, logos, banners de portada (`cover-*.png`) |
 | `PDFs/` | Documentos externos de referencia |
 | `Datos/` | Datasets y archivos de datos |
-| `scripts/` | Scripts de automatización: `generate_covers.py` (genera banners), `setup-hooks.sh` (histórico) |
+| `scripts/` | Scripts de automatización: `extract-frontmatter-to-csv.py`, `jira-sync-tasks.py`, `setup-hooks.sh` |
 
 ### ✅ `09-QA/` — Control de Calidad
 
